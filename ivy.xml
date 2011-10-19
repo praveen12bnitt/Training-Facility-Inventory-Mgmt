@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info
+        organisation=""
+        module="inventory-mgmt"
+        status="integration">
+	</info>
+	<configurations defaultconfmapping="build->default;compile->compile(*),master(*);test,runtime->runtime(*),master(*)">
+        <conf name="build"/>
+        <conf name="compile"/>
+        <conf name="test" extends="compile"/>
+        <conf name="runtime" extends="compile"/>
+    </configurations>
+    <dependencies>		
+		<dependency org="org.springframework" name="org.springframework.spring-library" rev="3.0.6.RELEASE" conf="runtime"/>
+		<dependency org="org.hibernate" name="hibernate-core" rev="3.5.3-Final" conf="runtime" />
+	</dependencies>
+</ivy-module>
