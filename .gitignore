@@ -38,3 +38,6 @@ Thumbs.db
 .project
 .classpath
 /.settings/*
+
+# Java Rebel file
+rebel.xml
