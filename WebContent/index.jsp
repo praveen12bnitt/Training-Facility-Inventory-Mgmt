@@ -7,6 +7,6 @@
 <title>Welcome Page</title>
 </head>
 <body>
-Welcome :)
+Welcome :) Test page
 </body>
 </html>
