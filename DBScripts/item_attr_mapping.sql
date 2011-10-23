@@ -1,0 +1,19 @@
+
+CREATE TABLE `item_attr_mapping` (
+  `ITEM_ID` int(11) NOT NULL,
+  `ATTR_ID` varchar(45) NOT NULL,
+  `ATTR_VALUE_ID` varchar(45) NOT NULL,
+  `MAPPING_ID` int(11) NOT NULL,
+  PRIMARY KEY (`MAPPING_ID`),
+  KEY `ITEM_ID` (`ITEM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'1','1',1);
+INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','11',2);
+INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','12',3);
+INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','13',4);
+INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','14',5);
+INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','15',6);
+INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','16',7);
