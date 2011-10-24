@@ -1,18 +1,15 @@
 package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "item_attribute")
-public class ItemAttribute implements Serializable {
+public class ItemAttribute implements Serializable,Comparable<ItemAttribute> {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -38,4 +35,23 @@ public class ItemAttribute implements Serializable {
 	public void setAttributeName(String attributeName) {
 		this.attributeName = attributeName;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return attibuteId.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return attibuteId.hashCode();
+	}
+
+	@Override
+	public int compareTo(ItemAttribute o) {
+		return attibuteId.compareTo(o.getAttibuteId());
+	}
+
+	
+	
+	
 }

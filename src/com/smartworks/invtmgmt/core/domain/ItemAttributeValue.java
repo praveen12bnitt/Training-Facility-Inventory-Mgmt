@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="item_attribute_values")
-public class ItemAttributeValue implements Serializable {
+public class ItemAttributeValue implements Serializable,Comparable<ItemAttributeValue> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -34,6 +34,21 @@ public class ItemAttributeValue implements Serializable {
 
 	public void setAttributeValue(String attributeValue) {
 		this.attributeValue = attributeValue;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return attributeValueId.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return attributeValueId.hashCode();
+	}
+
+	@Override
+	public int compareTo(ItemAttributeValue o) {
+		return attributeValueId.compareTo(o.getAttributeValueId());
 	}
 
 }

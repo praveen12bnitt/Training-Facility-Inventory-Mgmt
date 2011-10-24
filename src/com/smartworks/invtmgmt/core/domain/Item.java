@@ -2,6 +2,8 @@ package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,8 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Proxy;
+
 @Entity
 @Table(name="item")
+@Proxy(lazy=false)
 public class Item implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -32,6 +37,9 @@ public class Item implements Serializable {
 	
 	@OneToMany (mappedBy="item")
 	Set<ItemAttributeMapping> attributeMappings = new HashSet<ItemAttributeMapping>();
+	
+	@Transient
+	Map<ItemAttribute, List<ItemAttributeValue>> attributeDetails;
 	
 	/**
 	 * Default constructor, mainly for hibernate use.
@@ -97,5 +105,24 @@ public class Item implements Serializable {
 	public void setAttributeMappings(Set<ItemAttributeMapping> attributeMappings) {
 		this.attributeMappings = attributeMappings;
 	}	
+	
+	public Map<ItemAttribute, List<ItemAttributeValue>> getAttributeDetails() {
+		return attributeDetails;
+	}
+
+	public void setAttributeDetails(
+			Map<ItemAttribute, List<ItemAttributeValue>> attributeDetails) {
+		this.attributeDetails = attributeDetails;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return id.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
 	
 }

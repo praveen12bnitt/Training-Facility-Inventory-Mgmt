@@ -1,3 +1,9 @@
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.Set"%>
+<%@page import="com.smartworks.invtmgmt.core.domain.ItemAttributeValue"%>
+<%@page import="java.util.List"%>
+<%@page import="com.smartworks.invtmgmt.core.domain.ItemAttribute"%>
+<%@page import="java.util.Map"%>
 <%@page import="com.smartworks.invtmgmt.core.manager.ItemMgr"%>
 <%@page import="com.smartworks.invtmgmt.core.domain.Item"%>
 <%@page import="com.smartworks.invtmgmt.core.dao.ItemDao"%>
@@ -13,8 +19,6 @@
 </head>
 <body>
 <%
-TestBean bean = AppContextUtil.getBean("testBean");
-out.println(bean.sayHello());
 
 ItemMgr mgr = AppContextUtil.getBean("itemMgr");
 Item i = mgr.getItem(new Integer(1));
@@ -24,8 +28,29 @@ int id = i.getId();
 String name = i.getName();
 
 out.println("id:"+id);
-out.println("name:"+name);
-out.println("desc:"+desc);
+out.println(" name:"+name);
+out.println(" desc:"+desc);
+
+out.println("<br/>*****************************************************<br/>");
+
+// Get the attribute details
+
+Map<ItemAttribute, List<ItemAttributeValue>> itemAttrDetails = i.getAttributeDetails();
+
+Set<ItemAttribute> attrs = itemAttrDetails.keySet();
+
+for(ItemAttribute itemAttribute : attrs) {
+	out.println("Attribute Name:"+itemAttribute.getAttributeName());
+	List<ItemAttributeValue> values = itemAttrDetails.get(itemAttribute);	
+	Collections.sort(values);
+	out.println("<br/>Attribute Values:");
+	for(ItemAttributeValue itemAttributeValue : values) {
+		out.println(itemAttributeValue.getAttributeValue()+",");
+	}	
+	out.println("<br/>");
+}
+
+
 
 
 %>
