@@ -21,6 +21,9 @@
 <%
 
 ItemMgr mgr = AppContextUtil.getBean("itemMgr");
+
+out.println("Loading a single item<br/>");
+
 Item i = mgr.getItem(new Integer(1));
 
 String desc = i.getDesc();
@@ -50,7 +53,38 @@ for(ItemAttribute itemAttribute : attrs) {
 	out.println("<br/>");
 }
 
+out.println("<br/><br/><br/>Loading all items based on transactions......<br/>");
 
+List<Item> items = mgr.getItemsForTransaction(1);
+
+for(Item item : items) {
+	String desc1 = item.getDesc();
+	int id1 = item.getId();
+	String name1 = item.getName();
+
+	out.println("id:"+id1);
+	out.println(" name:"+name1);
+	out.println(" desc:"+desc1);
+
+	out.println("<br/>*****************************************************<br/>");
+
+	// Get the attribute details
+
+	itemAttrDetails = item.getAttributeDetails();
+
+	attrs = itemAttrDetails.keySet();
+
+	for(ItemAttribute itemAttribute : attrs) {
+		out.println("Attribute Name:"+itemAttribute.getAttributeName());
+		List<ItemAttributeValue> values = itemAttrDetails.get(itemAttribute);	
+		Collections.sort(values);
+		out.println("<br/>Attribute Values:");
+		for(ItemAttributeValue itemAttributeValue : values) {
+			out.println(itemAttributeValue.getAttributeValue()+",");
+		}	
+		out.println("<br/><br/>");
+	}
+}
 
 
 %>

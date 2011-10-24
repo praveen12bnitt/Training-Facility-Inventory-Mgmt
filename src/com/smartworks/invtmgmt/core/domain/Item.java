@@ -1,13 +1,16 @@
 package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,7 +38,7 @@ public class Item implements Serializable {
 	@Column(name="name", length=50)
 	private String name;
 	
-	@OneToMany (mappedBy="item")
+	@OneToMany (mappedBy="item",fetch=FetchType.EAGER)
 	Set<ItemAttributeMapping> attributeMappings = new HashSet<ItemAttributeMapping>();
 	
 	@Transient
@@ -107,6 +110,23 @@ public class Item implements Serializable {
 	}	
 	
 	public Map<ItemAttribute, List<ItemAttributeValue>> getAttributeDetails() {
+		if(attributeDetails == null) {
+			attributeDetails = new TreeMap<ItemAttribute, List<ItemAttributeValue>>();
+			for (ItemAttributeMapping itemAttributeMapping : attributeMappings) {				
+				ItemAttribute attribute = itemAttributeMapping.getAttribute();
+				ItemAttributeValue attributeVAl = itemAttributeMapping.getAttributeValue();
+				
+				if(!attributeDetails.containsKey(attribute)) {
+					List<ItemAttributeValue> vals = new ArrayList<ItemAttributeValue>();
+					vals.add(attributeVAl);
+					attributeDetails.put(attribute, vals);
+				} else
+				{
+					List<ItemAttributeValue> vals = attributeDetails.get(attribute);
+					vals.add(attributeVAl);
+				}					
+			}		
+		}		
 		return attributeDetails;
 	}
 
