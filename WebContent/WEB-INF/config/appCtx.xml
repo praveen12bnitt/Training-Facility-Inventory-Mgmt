@@ -15,12 +15,10 @@
 	
 	 <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="annotatedClasses">
+        <property name="packagesToScan">
             <list>
-                <value>com.smartworks.invtmgmt.core.domain.Item</value>
-                <value>com.smartworks.invtmgmt.core.domain.ItemAttribute</value>
-                <value>com.smartworks.invtmgmt.core.domain.ItemAttributeValue</value>
-                <value>com.smartworks.invtmgmt.core.domain.ItemAttributeMapping</value>
+                <value>com.smartworks.invtmgmt.core.domain</value>
+                <value>com.smartworks.invtmgmt.core.domain.*</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -46,9 +44,17 @@
 	
 	<bean id="itemDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemDaoImpl" parent="abstractDao" />
 	<bean id="itemAttributeDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemAttributeDaoImpl" parent="abstractDao" />
+	<bean id="transactionTypeDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTypeDaoImpl" parent="abstractDao" />
+	<bean id="transactionItemMappingDaoImpl" class="com.smartworks.invtmgmt.core.dao.impl.TransactionItemMappingDaoImpl" parent="abstractDao" />
+	
 	
 	<bean id="itemMgr" class="com.smartworks.invtmgmt.core.manager.ItemMgrImpl">
-		<property name="dao" ref="itemDao" /> 
+		<property name="itemDao" ref="itemDao" /> 
+		<property name="transactionItemMappingDao" ref="transactionItemMappingDaoImpl" /> 
+	</bean>
+	
+	<bean id="invtTransMgr" class="com.smartworks.invtmgmt.core.manager.InvtTransMgrImpl">
+		<property name="tranTypeDao" ref="transactionTypeDao" /> 
 	</bean>
 	
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
