@@ -55,7 +55,7 @@ for(ItemAttribute itemAttribute : attrs) {
 
 out.println("<br/><br/><br/>Loading all items based on transactions......<br/>");
 
-List<Item> items = mgr.getItemsForTransaction(1);
+/* List<Item> items = mgr.getItemsForTransaction(1);
 
 for(Item item : items) {
 	String desc1 = item.getDesc();
@@ -84,7 +84,7 @@ for(Item item : items) {
 		}	
 		out.println("<br/><br/>");
 	}
-}
+} */
 
 
 %>
