@@ -20,7 +20,7 @@ public class ItemAttributeMapping implements Serializable {
 	@Column(name="mapping_id")
 	Integer mappingId;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn (name="ITEM_ID")
 	Item item;	
 	
