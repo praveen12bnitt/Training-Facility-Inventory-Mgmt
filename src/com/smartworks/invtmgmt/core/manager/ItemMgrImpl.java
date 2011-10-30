@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.smartworks.invtmgmt.core.dao.ItemDao;
 import com.smartworks.invtmgmt.core.dao.TransactionItemMappingDao;
-import com.smartworks.invtmgmt.core.dao.impl.TransactionItemMappingDaoImpl;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.TransactionItemMapping;
 import com.smartworks.invtmgmt.core.domain.TransactionType;
@@ -23,22 +22,42 @@ public class ItemMgrImpl implements ItemMgr {
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
 	public Item getItem(Integer itemId) {
-		Item i = itemDao.load(itemId);	
+		Item i = itemDao.load(itemId);
+		//Explicitly load attributes
+		i.getAttributeDetails();
 		return i;
 	}
 	
-	public List<Item> getItemsForTransaction(TransactionType transactionType) {
-		
+	public List<Item> getItemsForTransaction(TransactionType transactionType) {		
 		// Get the list of UI items for this transactions		
 		List<Item> itemList = new ArrayList<Item>();		
 		List<TransactionItemMapping> mappings = transactionItemMappingDao.loadMappingForTransaction(transactionType);		
 		for(TransactionItemMapping mapping : mappings) {
-			itemList.add(mapping.getTransItemMappingPk().getItem());
-		}
-		
+			Item i = mapping.getTransItemMappingPk().getItem();
+			// Explicitly load attributes
+			i.getAttributeDetails();
+			itemList.add(i);
+		}		
 		return itemList;
 	}
-
+	
+	@Override
+	public List<Item> getAllItems() {
+		List<Item> itemList =  itemDao.loadAll();
+		for (Item item : itemList) {
+			item.getAttributeDetails();
+		}
+		return itemList;
+	}
+	
+	public List<Item> getAllItemsWithoutAttribute() {
+		return itemDao.loadAll();
+	}
+	
+	public Item getItemWithoutAttribute(Integer itemId) {
+		return itemDao.load(itemId);
+	}
+	
 	public ItemDao getItemDao() {
 		return itemDao;
 	}
@@ -54,8 +73,6 @@ public class ItemMgrImpl implements ItemMgr {
 	public void setTransactionItemMappingDao(
 			TransactionItemMappingDao transactionItemMappingDao) {
 		this.transactionItemMappingDao = transactionItemMappingDao;
-	}
-
-	
+	}	
 
 }
