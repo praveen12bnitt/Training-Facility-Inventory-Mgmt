@@ -14,7 +14,19 @@ TestClass test = new TestClass();
 
 //test.testTransLocation();
 
-test.getItemsForTransactions();
+//test.getItemsForTransactions();
+
+//test.getItemsWithoutAttributes();
+
+//test.getItemWithoutAttributes();
+
+//test.receiveInventory();
+
+//test.transferInventory();
+
+//test.processInvChange();
+test.processInvChange1();
+
 
 %>
 </body>
