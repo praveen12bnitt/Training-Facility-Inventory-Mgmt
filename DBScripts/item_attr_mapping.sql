@@ -1,19 +1,25 @@
 
 CREATE TABLE `item_attr_mapping` (
+  `MAPPING_ID` int(11) NOT NULL,
   `ITEM_ID` int(11) NOT NULL,
   `ATTR_ID` varchar(45) NOT NULL,
   `ATTR_VALUE_ID` varchar(45) NOT NULL,
-  `MAPPING_ID` int(11) NOT NULL,
   PRIMARY KEY (`MAPPING_ID`),
   KEY `ITEM_ID` (`ITEM_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
-INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'1','1',1);
-INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','11',2);
-INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','12',3);
-INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','13',4);
-INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','14',5);
-INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','15',6);
-INSERT INTO `item_attr_mapping` (`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`,`MAPPING_ID`) VALUES (1,'2','16',7);
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (1,1,'1','1');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (2,1,'2','11');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (3,1,'2','12');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (4,1,'2','13');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (5,1,'2','14');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (6,1,'2','15');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (7,1,'2','16');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (8,2,'1','2');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (9,2,'2','11');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (10,2,'2','12');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (11,2,'2','13');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (12,2,'2','14');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (13,2,'2','15');
+INSERT INTO `item_attr_mapping` (`MAPPING_ID`,`ITEM_ID`,`ATTR_ID`,`ATTR_VALUE_ID`) VALUES (14,2,'2','16');

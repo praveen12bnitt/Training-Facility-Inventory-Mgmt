@@ -10,13 +10,13 @@ import java.util.TreeMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Proxy;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="item")
@@ -25,20 +25,21 @@ public class Item implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	/** Field mapping. */
 	@Column(name="item_desc",length=200)
 	private String desc;
 	
-	/** Field mapping. */
 	@Id
 	@Column(name="item_id")
 	private Integer id;
 	
-	/** Field mapping. */
 	@Column(name="name", length=50)
 	private String name;
 	
-	@OneToMany (mappedBy="item",fetch=FetchType.EAGER)
+	@Type(type="yes_no")
+	@Column(name="REQUIRES_PROCESSING")
+	private Boolean requiresProcessing;
+	
+	@OneToMany (mappedBy="item")
 	Set<ItemAttributeMapping> attributeMappings = new HashSet<ItemAttributeMapping>();
 	
 	@Transient
@@ -112,20 +113,23 @@ public class Item implements Serializable {
 	public Map<ItemAttribute, List<ItemAttributeValue>> getAttributeDetails() {
 		if(attributeDetails == null) {
 			attributeDetails = new TreeMap<ItemAttribute, List<ItemAttributeValue>>();
-			for (ItemAttributeMapping itemAttributeMapping : attributeMappings) {				
-				ItemAttribute attribute = itemAttributeMapping.getAttribute();
-				ItemAttributeValue attributeVAl = itemAttributeMapping.getAttributeValue();
+			if(attributeMappings != null) {
+				for (ItemAttributeMapping itemAttributeMapping : attributeMappings) {				
+					ItemAttribute attribute = itemAttributeMapping.getAttribute();
+					ItemAttributeValue attributeVAl = itemAttributeMapping.getAttributeValue();
+					
+					if(!attributeDetails.containsKey(attribute)) {
+						List<ItemAttributeValue> vals = new ArrayList<ItemAttributeValue>();
+						vals.add(attributeVAl);
+						attributeDetails.put(attribute, vals);
+					} else
+					{
+						List<ItemAttributeValue> vals = attributeDetails.get(attribute);
+						vals.add(attributeVAl);
+					}				
+				}	
+			}
 				
-				if(!attributeDetails.containsKey(attribute)) {
-					List<ItemAttributeValue> vals = new ArrayList<ItemAttributeValue>();
-					vals.add(attributeVAl);
-					attributeDetails.put(attribute, vals);
-				} else
-				{
-					List<ItemAttributeValue> vals = attributeDetails.get(attribute);
-					vals.add(attributeVAl);
-				}					
-			}		
 		}		
 		return attributeDetails;
 	}
@@ -133,6 +137,14 @@ public class Item implements Serializable {
 	public void setAttributeDetails(
 			Map<ItemAttribute, List<ItemAttributeValue>> attributeDetails) {
 		this.attributeDetails = attributeDetails;
+	}
+
+	public Boolean getRequiresProcessing() {
+		return requiresProcessing;
+	}
+
+	public void setRequiresProcessing(Boolean requiresProcessing) {
+		this.requiresProcessing = requiresProcessing;
 	}
 
 	@Override

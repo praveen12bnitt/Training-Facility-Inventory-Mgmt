@@ -2,6 +2,8 @@ package com.smartworks.invtmgmt.core.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.FetchMode;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.smartworks.invtmgmt.core.dao.ItemDao;
@@ -19,4 +21,5 @@ public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 		List<Item> items = getHibernateTemplate().find(query);
 		return items;
 	}
+	
 }

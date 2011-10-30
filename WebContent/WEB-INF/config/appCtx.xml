@@ -11,16 +11,14 @@
         
     <context:component-scan base-package="com.smartworks.invtmgmt.core.manager" />	
 
-	<bean id="appCtxHolder" class="com.smartworks.platform.AppContextHolder" />
+	<bean id="appCtxHolder" class="com.smartworks.platform.AppContextHolder"  />
 	
 	 <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="annotatedClasses">
+        <property name="packagesToScan">
             <list>
-                <value>com.smartworks.invtmgmt.core.domain.Item</value>
-                <value>com.smartworks.invtmgmt.core.domain.ItemAttribute</value>
-                <value>com.smartworks.invtmgmt.core.domain.ItemAttributeValue</value>
-                <value>com.smartworks.invtmgmt.core.domain.ItemAttributeMapping</value>
+                <value>com.smartworks.invtmgmt.core.domain</value>
+                <value>com.smartworks.invtmgmt.core.domain.*</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -46,14 +44,42 @@
 	
 	<bean id="itemDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemDaoImpl" parent="abstractDao" />
 	<bean id="itemAttributeDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemAttributeDaoImpl" parent="abstractDao" />
+	<bean id="transactionTypeDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTypeDaoImpl" parent="abstractDao" />
+	<bean id="transactionItemMappingDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionItemMappingDaoImpl" parent="abstractDao" />
+	<bean id="inventoryDao" class="com.smartworks.invtmgmt.core.dao.impl.InventoryDaoImpl" parent="abstractDao" />
+	
+	
 	
 	<bean id="itemMgr" class="com.smartworks.invtmgmt.core.manager.ItemMgrImpl">
-		<property name="dao" ref="itemDao" /> 
+		<property name="itemDao" ref="itemDao" /> 
+		<property name="transactionItemMappingDao" ref="transactionItemMappingDao" /> 
+	</bean>
+	
+	<bean id="invtTransMgr" class="com.smartworks.invtmgmt.core.manager.InvtTransMgrImpl">
+		<property name="tranTypeDao" ref="transactionTypeDao" /> 
+		<property name="inventoryDao" ref="inventoryDao" /> 
+		<property name="invProcessorFactory" ref="inventoryProcessorFactory" />
 	</bean>
 	
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory"><ref local="sessionFactory"/></property>
     </bean>
+    
+    <bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
+    	<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />
+    	<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />
+    	<property name="missingInventoryProcessor" ref="missingInventoryProcessor" />
+    </bean>
+    
+    <bean id="abstractInventoryProcessor" abstract="true">
+    	<property name="inventoryDao" ref="inventoryDao" />
+    </bean>
+    
+    
+    <bean id="returnsInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.ReturnsInventoryProcessor" parent="abstractInventoryProcessor" />
+    <bean id="missingInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.MissingInventoryProcessor" parent="abstractInventoryProcessor" />
+    <bean id="dispatchInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.DispatchInventoryProcessor" parent="abstractInventoryProcessor" />
+    
     
     <tx:annotation-driven transaction-manager="transactionManager"/>
     
