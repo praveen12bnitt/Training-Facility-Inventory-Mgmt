@@ -8,5 +8,11 @@
 </head>
 <body>
 Welcome :) Test page
+
+<form name="test" method="post" action="/imgmt/createtransaction.form">
+	<input type="text" name="transactionId" value="1">
+	<input type="submit" name="trans" value="select trans">
+</form>
+
 </body>
 </html>
