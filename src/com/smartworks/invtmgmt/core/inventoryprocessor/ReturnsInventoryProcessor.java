@@ -1,23 +1,24 @@
 package com.smartworks.invtmgmt.core.inventoryprocessor;
 
-import java.util.List;
-
 import com.smartworks.invtmgmt.business.ItemSku;
+import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
+import com.smartworks.invtmgmt.converter.TransactionTraceObjectConverter;
 import com.smartworks.invtmgmt.core.dao.InventoryDao;
 import com.smartworks.invtmgmt.core.domain.Location;
+import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
 import com.smartworks.invtmgmt.util.ItemSkuUtil;
 
-public class ReturnsInventoryProcessor implements InventoryChangeProcessor {
-
-	InventoryDao inventoryDao;
+public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 	
-	public void process(Integer locationId, List<ItemSku> skus) {
-		// First reduce the inventory	
-		for (ItemSku itemSku : skus) {
+	public void process(TransactionDetailsHolder transDetails) {
+		// First reduce the inventory
+		//TODO : Throw exception if refTransactionId is null
+		//TODO : Compare this transaction with the original issue transaction and find out missing items
+		for (ItemSku itemSku : transDetails.getItemSkus()) {
 			InventoryPk inventoryPk = new InventoryPk();
 			Location loc = new Location();
-			loc.setLocationId(locationId);
+			loc.setLocationId(transDetails.getLocationId());
 			inventoryPk.setLocation(loc);
 			
 			String itemSkuCode = ItemSkuUtil.getItemSkuCode(itemSku);
@@ -29,6 +30,11 @@ public class ReturnsInventoryProcessor implements InventoryChangeProcessor {
 				inventoryDao.addAvailableInventory(inventoryPk, itemSku.getQuantity());
 			}
 		}
+		
+		TransactionTrace transTrace = TransactionTraceObjectConverter.getTransactionTrace(transDetails);
+		transactionTraceDao.save(transTrace);			
+		// Load the original transaction and mark it as closed.
+		transactionTraceDao.markTransactionClosed(transTrace.getRefTransactionId());
 	}
 
 	public InventoryDao getInventoryDao() {

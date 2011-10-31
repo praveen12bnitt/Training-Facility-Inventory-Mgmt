@@ -3,16 +3,25 @@ package com.smartworks.invtmgmt.core.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
+@Entity
+@Table(name="TRANSACTION_DETAILS")
+@Proxy(lazy=false)
 public class TransactionDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue
 	@Column(name="TRANSACTION_DETAILS_ID")
 	private Integer transactionDetailsId;
 	

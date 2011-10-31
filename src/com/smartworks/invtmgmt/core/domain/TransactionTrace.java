@@ -4,24 +4,35 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 
+@Entity
+@Table(name="TRANSACTION_TRACE")
+@Proxy(lazy=false)
 public class TransactionTrace implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue
 	@Column(name="TRANSACTION_ID")
 	private Integer trasactionId;
 	
-	@Column(name="TIMESTAMP")
+	@Column(name="CREATED_DTTM")
 	private Timestamp createdDttm;
 	
 	@Column(name="LOCATION_ID")
@@ -31,6 +42,7 @@ public class TransactionTrace implements Serializable {
 	private Integer employeeId;
 	
 	@Column(name="TRANSACTION_TYPE")
+	@Enumerated(EnumType.STRING)
 	private TransactionTypeEnum transType;
 	
 	@Column(name="USER_ID")
@@ -47,9 +59,9 @@ public class TransactionTrace implements Serializable {
 	
 	@Type(type="yes_no")
 	@Column(name="CLOSED")
-	private Boolean closed;
+	private Boolean closed = false;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "trasactionTrace")
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "trasactionTrace" )
 	Set<TransactionDetails> transDetails;
 
 	public static long getSerialversionuid() {
@@ -134,6 +146,14 @@ public class TransactionTrace implements Serializable {
 
 	public void setClosed(Boolean closed) {
 		this.closed = closed;
+	}
+
+	public Set<TransactionDetails> getTransDetails() {
+		return transDetails;
+	}
+
+	public void setTransDetails(Set<TransactionDetails> transDetails) {
+		this.transDetails = transDetails;
 	}
 	
 	
