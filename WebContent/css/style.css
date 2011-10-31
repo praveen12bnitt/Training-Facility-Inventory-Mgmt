@@ -1,0 +1,83 @@
+<style type="text/css">
+		table.reference {
+background-color: white;
+border: 1px solid #C3C3C3;
+border-top-width: 1px;
+border-right-width: 1px;
+border-bottom-width: 1px;
+border-left-width: 1px;
+border-top-style: solid;
+border-right-style: solid;
+border-bottom-style: solid;
+border-left-style: solid;
+border-top-color: #C3C3C3;
+border-right-color: #C3C3C3;
+border-bottom-color: #C3C3C3;
+border-left-color: #C3C3C3;
+border-collapse: collapse;
+width: 40%;
+}
+table.reference th
+{
+background-color:#e5eecc;
+border:1px solid #c3c3c3;
+padding:3px;
+vertical-align:top;
+}
+table.reference td 
+{
+border:1px solid #c3c3c3;
+padding:3px;
+vertical-align:top;
+}
+body {
+font: 69% Arial, Helvetica, "Lucida Grande", Verdana, sans-serif;
+background-color: White;
+color: Black;
+margin: 0;
+padding: 0;
+}
+input {
+font-family: Arial, Helvetica, "Lucida Grande", Verdana, sans-serif;
+visibility: visible;
+border: 1px solid #666;
+color: Black;
+vertical-align: middle;
+background: White url(http://www.fletc.gov/input_background.gif) repeat-x;
+}
+button {
+font-family: Arial, Helvetica, "Lucida Grande", Verdana, sans-serif;
+visibility: visible;
+border: 1px solid #666;
+color: Black;
+vertical-align: middle;
+background-color: #999999;
+padding: 1px;
+cursor: pointer;
+font-size: 85%;
+text-transform: ;
+}
+select {
+border: 1px solid #666;
+color: Black;
+background-color: White;
+vertical-align: top;
+}
+#portal-header {
+background-image: url(/portal_skins/custom/home_background.gif);
+background-color:#00568d;
+background-repeat: no-repeat;
+background-position: right top;
+margin-top: 0;
+margin-left: 0;
+margin-right: 0;
+margin-bottom: 0;
+}
+.LSBox {
+clear: left;
+float: left;
+text-align: right;
+padding-right: 1px;
+display: block;
+}
+</style>		

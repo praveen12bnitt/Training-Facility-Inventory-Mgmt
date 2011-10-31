@@ -52,8 +52,10 @@ public class TransactionFormController {
 		ModelMap myModel = new ModelMap();
         myModel.put("itemList", items);
         TransactionForm transactionForm = populateUIFormObjects(transactionType);
-        request.setAttribute("transactionForm", transactionForm);
+        //request.setAttribute("transactionForm", transactionForm);
 		ModelAndView mav = new ModelAndView("createtransaction","model",myModel);
+		mav.addObject("transactionForm", transactionForm);
+		
 		
 		return mav;
 	}
@@ -73,10 +75,11 @@ public class TransactionFormController {
 	
 	private TransactionForm populateUIFormObjects(TransactionType transactionType) {
 		
-		ItemMgr mgr = AppContextUtil.getBean("itemMgr");
+
 		
-		List<Item> items = mgr.getItemsForTransaction(transactionType);
+		List<Item> items = itemMgr.getItemsForTransaction(transactionType);
 		TransactionForm transactionForm = new TransactionForm();
+		transactionForm.setTransactionType(transactionType.getTransactionDesc());
 		List<UIFormItem> uiFormItems = new ArrayList<UIFormItem>();
 		for(Item item: items) {
 			UIFormItem uiFormItem = new UIFormItem();

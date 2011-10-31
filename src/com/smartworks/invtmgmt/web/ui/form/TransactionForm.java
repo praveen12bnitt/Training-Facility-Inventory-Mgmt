@@ -14,12 +14,22 @@ public class TransactionForm {
 	
 	private UIFormTransactionReceiver uiTransactionReceiver;
 	
+	private String transactionType;
+	
 	public TransactionForm() {
 		uiTransactionReceiver = new UIFormTransactionReceiver();
 		dummyStrings = new ArrayList<DummyString>();
 		dummyStrings.add(new DummyString());
 		dummyStrings.add(new DummyString());
 		dummyStrings.add(new DummyString());
+	}
+
+	public String getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
 	}
 
 	public List<DummyString> getDummyStrings() {

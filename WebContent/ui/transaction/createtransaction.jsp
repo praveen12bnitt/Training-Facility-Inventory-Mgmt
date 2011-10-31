@@ -8,18 +8,44 @@
   <title><fmt:message key="title"/></title>
   <style>
     .error { color: red; }
-  </style>  
+  </style> 
+ <link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css' />" />
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
  </head>
 
 
 
 <body>
-<h1>Staff Uniform</h1>
+
+<div id="portal-header">
+
+<a id="portal-logo" accesskey="1" href="http://www.fletc.gov">
+
+    <img src="<c:url value='/images/logo.jpg' />" alt="" title="logo.gif" height="78" width="345"></a>
+
+
+
+</div>
+
+
+
+
 
 <form:form method="post" commandName="transactionForm" >
 
-    <table width="65%" bgcolor="f8f8ff" border="1" cellspacing="1" cellpadding="1">
+<table width="65%" class="reference">
+<tr>
+	<th colspan="2" align="left">Transaction Type:</th>
+	<td colspan="2" align="left">
+		<c:out value="${transactionForm.transactionType}" />
+	</td>
+
+</tr>
+</table>
+<br>
+</br>
+
+    <table width="65%" class="reference" >
     	<tr>
     		<td>Last Name</td>
     		<td><form:input type="text" path="uiTransactionReceiver.lastName" /></td>
@@ -36,11 +62,11 @@
 
   
   <br>
-  <table  id="tblTransactionForm" width="95%" bgcolor="f8f8ff" border="1" cellspacing="1" cellpadding="1">
+  <table  id="tblTransactionForm" class="reference" width="80%">
     <tr id="rowx">
-      <td align="left" width="20%">Item</td>
-       <td align="left" width="20%">Attributes</td>
-      <td align="left" width="20%">Quantity</td>
+      <th align="left" width="20%">Item</th>
+      <th align="left" width="20%">Attributes</th>
+      <th align="left" width="20%">Quantity</th>
     </tr>
    
      <c:forEach items="${transactionForm.listUIFormItems}" var="uiFormItem" varStatus="uifItemRow">
@@ -100,7 +126,5 @@ $('a').click(function(){
 
 			});
 </script>
-
-
 </body>
 </html>
