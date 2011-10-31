@@ -21,5 +21,7 @@
 		<dependency org="commons-dbcp" name="commons-dbcp" rev="1.4" conf="runtime" />
 		<dependency org="mysql" name="mysql-connector-java" rev="5.1.18" conf="runtime" />
 		<dependency org="javassist" name="javassist" rev="3.7.1.GA" conf="runtime" />
+		<dependency org="jstl" name="jstl" rev="1.2" conf="runtime" />
+		<dependency org="org.springframework.webflow" name="org.springframework.webflow-library" rev="2.3.0.RELEASE" conf="runtime" />
 	</dependencies>
 </ivy-module>

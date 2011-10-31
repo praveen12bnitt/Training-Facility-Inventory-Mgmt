@@ -7,7 +7,7 @@
 <%@page import="com.smartworks.invtmgmt.core.manager.ItemMgr"%>
 <%@page import="com.smartworks.invtmgmt.core.domain.Item"%>
 <%@page import="com.smartworks.invtmgmt.core.dao.ItemDao"%>
-<%@page import="com.smartworks.test.TestBean"%>
+
 <%@page import="com.smartworks.platform.AppContextUtil"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>

@@ -9,6 +9,20 @@
    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+  
+  
+  <servlet>
+        <servlet-name>invtmgmt</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+   <!-- maps the sample dispatcher to *.form -->
+    <servlet-mapping>
+        <servlet-name>invtmgmt</servlet-name>
+        <url-pattern>*.form</url-pattern>
+    </servlet-mapping>
+    
     
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
