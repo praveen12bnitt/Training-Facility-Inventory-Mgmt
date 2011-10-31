@@ -9,7 +9,7 @@
             http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
         
-    <context:component-scan base-package="com.smartworks.invtmgmt.core.manager" />	
+    <context:component-scan base-package="com.smartworks.invtmgmt.*" />	
 
 	<bean id="appCtxHolder" class="com.smartworks.platform.AppContextHolder"  />
 	

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,10 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.ItemAttribute;
 import com.smartworks.invtmgmt.core.domain.ItemAttributeValue;
+import com.smartworks.invtmgmt.core.domain.TransactionType;
+import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
+import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 import com.smartworks.invtmgmt.web.ui.form.TransactionForm;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItem;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItemAttribute;
@@ -30,17 +35,23 @@ import com.smartworks.platform.AppContextUtil;
 @RequestMapping("/createtransaction")
 public class TransactionFormController {
 	
+	@Autowired
+	ItemMgr itemMgr = null;
+	@Autowired
+	TransactionTypeDao transactionTypeDao = null;
+	@Autowired
+	InvtTransManager invtTransMgr = null;
   
 	@RequestMapping(value="/issue.form", method=RequestMethod.GET)
-	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionTypeId) {
+	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId) {
 		
-		ItemMgr mgr = AppContextUtil.getBean("itemMgr");
 		
-		List<Item> items = mgr.getItemsForTransaction(transactionTypeId);
+		TransactionType transactionType = transactionTypeDao.load(transactionTypeId);
+		List<Item> items = itemMgr.getItemsForTransaction(transactionType);
 		
 		ModelMap myModel = new ModelMap();
         myModel.put("itemList", items);
-        TransactionForm transactionForm = populateUIFormObjects(transactionTypeId);
+        TransactionForm transactionForm = populateUIFormObjects(transactionType);
         request.setAttribute("transactionForm", transactionForm);
 		ModelAndView mav = new ModelAndView("createtransaction","model",myModel);
 		
@@ -60,11 +71,11 @@ public class TransactionFormController {
 		return null;
 	}
 	
-	private TransactionForm populateUIFormObjects(int transactionTypeId) {
+	private TransactionForm populateUIFormObjects(TransactionType transactionType) {
 		
 		ItemMgr mgr = AppContextUtil.getBean("itemMgr");
 		
-		List<Item> items = mgr.getItemsForTransaction(transactionTypeId);
+		List<Item> items = mgr.getItemsForTransaction(transactionType);
 		TransactionForm transactionForm = new TransactionForm();
 		List<UIFormItem> uiFormItems = new ArrayList<UIFormItem>();
 		for(Item item: items) {
