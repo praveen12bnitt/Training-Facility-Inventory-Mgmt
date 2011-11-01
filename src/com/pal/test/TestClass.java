@@ -1,13 +1,17 @@
 package com.pal.test;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.smartworks.invtmgmt.business.ItemSku;
+import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
+import com.smartworks.invtmgmt.business.UserTransactionDetails;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.ItemAttribute;
 import com.smartworks.invtmgmt.core.domain.ItemAttributeValue;
@@ -193,7 +197,17 @@ public class TestClass {
 		itemSku.add(sku);
 		
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
-		inventoryMgr.processInventoryChange(TransactionTypeEnum.ISSUE_UNIFORM_STAFF, 2, itemSku);
+		
+		TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
+		transDetails.setLocationId(2);
+		transDetails.setItemSkus(itemSku);
+		transDetails.setEmployeeId(100);
+		Date date= new Date();
+		System.out.println(new Timestamp(date.getTime()));
+		transDetails.setDttm(new Timestamp(date.getTime()));
+		transDetails.setTransactionType(TransactionTypeEnum.ISSUE_UNIFORM_STUDENT);
+		
+		inventoryMgr.processInventoryChange(transDetails);
 		
 	}
 	
@@ -222,8 +236,35 @@ public class TestClass {
 		itemSku.add(sku);
 		
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
-		inventoryMgr.processInventoryChange(TransactionTypeEnum.RETURN_UNIFORM_STUDENT, 2, itemSku);
 		
+		TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
+		transDetails.setLocationId(2);
+		transDetails.setItemSkus(itemSku);
+		transDetails.setTransactionType(TransactionTypeEnum.RETURN_UNIFORM_STUDENT);
+		
+		inventoryMgr.processInventoryChange(transDetails);
+		
+	}
+	
+	public void getTransactionForUser() {
+		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
+		List<UserTransactionDetails> utransDetails = inventoryMgr.getAllOpenTransactionForUser(2, 1, TransactionTypeEnum.ISSUE_UNIFORM_STUDENT);
+		System.out.println("Result");
+	}
+	
+	public void getTransDetails() {
+		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
+		TransactionDetailsHolder details = inventoryMgr.getTransDetails(8);
+		System.out.println("Transaction details retrived");
+	}
+	
+	public void processReturs() {
+		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
+		TransactionDetailsHolder details = inventoryMgr.getTransDetails(8);
+		details.setTransactionType(TransactionTypeEnum.RETURN_UNIFORM_STUDENT);
+		details.setRefTransactionId(8);
+		System.out.println("Transaction details retrived");
+		inventoryMgr.processInventoryChange(details);
 	}
 	
 	

@@ -25,7 +25,14 @@ TestClass test = new TestClass();
 //test.transferInventory();
 
 //test.processInvChange();
-test.processInvChange1();
+
+//test.processInvChange1();
+
+//test.getTransactionForUser();
+
+//test.getTransDetails();
+
+test.processReturs();
 
 
 %>

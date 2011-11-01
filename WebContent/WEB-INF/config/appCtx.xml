@@ -47,6 +47,7 @@
 	<bean id="transactionTypeDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTypeDaoImpl" parent="abstractDao" />
 	<bean id="transactionItemMappingDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionItemMappingDaoImpl" parent="abstractDao" />
 	<bean id="inventoryDao" class="com.smartworks.invtmgmt.core.dao.impl.InventoryDaoImpl" parent="abstractDao" />
+	<bean id="transactionTraceDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTraceDaoImpl" parent="abstractDao" />
 	
 	
 	
@@ -59,6 +60,7 @@
 		<property name="tranTypeDao" ref="transactionTypeDao" /> 
 		<property name="inventoryDao" ref="inventoryDao" /> 
 		<property name="invProcessorFactory" ref="inventoryProcessorFactory" />
+		<property name="transactionTraceDao" ref="transactionTraceDao" />
 	</bean>
 	
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
@@ -73,6 +75,7 @@
     
     <bean id="abstractInventoryProcessor" abstract="true">
     	<property name="inventoryDao" ref="inventoryDao" />
+    	<property name="transactionTraceDao" ref="transactionTraceDao" />    	
     </bean>
     
     
