@@ -1,4 +1,4 @@
-<%@ include file="/ui/commoninclude.jsp" %>
+<%@ include file="/WEB-INF/ui/commoninclude.jsp" %>
 <%@ page language="java" import="java.util.*,com.smartworks.invtmgmt.core.domain.*" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
