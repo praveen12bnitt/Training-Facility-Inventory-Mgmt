@@ -16,9 +16,9 @@
     
    
     <bean id="inventory" class="com.smartworks.invtmgmt.core.domain.Inventory" />
-     
+   
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/ui/transaction/"></property>
+        <property name="prefix" value="/WEB-INF/ui/"></property>
         <property name="suffix" value=".jsp"></property>     
     </bean>
             

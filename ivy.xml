@@ -23,5 +23,7 @@
 		<dependency org="javassist" name="javassist" rev="3.7.1.GA" conf="runtime" />
 		<dependency org="jstl" name="jstl" rev="1.2" conf="runtime" />
 		<dependency org="org.springframework.webflow" name="org.springframework.webflow-library" rev="2.3.0.RELEASE" conf="runtime" />
+		<dependency org="org.springframework.security" name="org.springframework.security.acls" rev="3.0.4.RELEASE" conf="runtime" />
+		<dependency org="org.springframework.security" name="org.springframework.security.config" rev="3.0.4.RELEASE" conf="runtime" />
 	</dependencies>
 </ivy-module>
