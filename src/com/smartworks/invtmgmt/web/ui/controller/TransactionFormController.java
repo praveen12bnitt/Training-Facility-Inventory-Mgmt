@@ -60,6 +60,7 @@ public class TransactionFormController {
 		return mav;
 	}
 	
+		
 	@RequestMapping(value="/sayHai.form", method=RequestMethod.GET)
 	public void sayHai(@RequestParam String str,  HttpServletResponse response) throws IOException{
 		response.getWriter().println("Said Hai to:"+str);

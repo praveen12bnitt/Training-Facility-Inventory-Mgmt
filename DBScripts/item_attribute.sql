@@ -1,9 +1,0 @@
-
-CREATE TABLE `item_attribute` (
-  `ATTR_ID` int(11) NOT NULL,
-  `ATTR_NAME` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`ATTR_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `item_attribute` (`ATTR_ID`,`ATTR_NAME`) VALUES (1,'COLOR');
-INSERT INTO `item_attribute` (`ATTR_ID`,`ATTR_NAME`) VALUES (2,'SIZE');

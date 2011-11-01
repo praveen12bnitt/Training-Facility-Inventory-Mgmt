@@ -11,7 +11,7 @@
     
     <!-- the application context definition for the springapp DispatcherServlet -->
   
-    <context:component-scan base-package="com.smartworks.invtmgmt"/>
+    <context:component-scan base-package="com.smartworks.invtmgmt.*"/>
     
     
    
