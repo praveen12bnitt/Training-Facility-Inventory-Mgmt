@@ -292,6 +292,44 @@ public class TestClass {
 		inventoryMgr.processInventoryChange(details);
 	}
 	
+	public void reportMissingItem() {
+		List<ItemSku> itemSku = new ArrayList<ItemSku>();
+		ItemSku sku = new ItemSku();
+		sku.setItemId(1);
+		sku.setQuantity(3);
+		sku.setReqProcessing(true);
+		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
+		attrMap.put(1, 1);
+		attrMap.put(2, 11);
+		sku.setItemAttribute(attrMap);
+		
+		itemSku.add(sku);
+		
+		sku = new ItemSku();
+		sku.setItemId(1);
+		sku.setQuantity(4);
+		sku.setReqProcessing(true);
+		attrMap = new HashMap<Integer, Integer>();
+		attrMap.put(1, 2);
+		attrMap.put(2, 11);
+		sku.setItemAttribute(attrMap);
+		
+		itemSku.add(sku);
+		
+		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
+		
+		TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
+		transDetails.setLocationId(2);
+		transDetails.setItemSkus(itemSku);
+		transDetails.setUserId(100);
+		transDetails.setTraineeId(1);
+		transDetails.setTransactionType(TransactionTypeEnum.REPORT_MISSING_UNIFORM_STUDENT);
+		
+		inventoryMgr.processInventoryChange(transDetails);
+	}
+	
+	
+	
 	
 
 }
