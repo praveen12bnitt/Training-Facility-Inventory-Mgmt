@@ -1,19 +1,12 @@
 package com.smartworks.invtmgmt.core.inventoryprocessor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.converter.TransactionTraceObjectConverter;
 import com.smartworks.invtmgmt.core.dao.InventoryDao;
 import com.smartworks.invtmgmt.core.domain.Location;
-import com.smartworks.invtmgmt.core.domain.TransactionDetails;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
-import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 import com.smartworks.invtmgmt.util.ItemSkuUtil;
 
 public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
@@ -41,17 +34,18 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 		// Load the original transaction and mark it as closed.
 		transactionTraceDao.markTransactionClosed(transTrace.getRefTransactionId());
 		
-		TransactionTrace issuedTrace = transactionTraceDao.load(transTrace.getRefTransactionId());		
-		TransactionTrace missingTrace = findMissingItems(issuedTrace,transTrace);		
-		if(missingTrace != null) {
-			for(TransactionDetails d : missingTrace.getTransDetails()) {
-				d.setTrasactionTrace(missingTrace);
-			}
-			transactionTraceDao.save(missingTrace);
-		}
+//		TransactionTrace issuedTrace = transactionTraceDao.load(transTrace.getRefTransactionId());		
+//		TransactionTrace missingTrace = findMissingItems(issuedTrace,transTrace);		
+//		if(missingTrace != null) {
+//			for(TransactionDetails d : missingTrace.getTransDetails()) {
+//				d.setTrasactionTrace(missingTrace);
+//			}
+//			transactionTraceDao.save(missingTrace);
+//		}
 			
 	}
 	
+	/**
 	private TransactionTrace findMissingItems(TransactionTrace issued, TransactionTrace returned ){
 		List<TransactionDetails> issuedDetails = issued.getTransDetails();
 		List<TransactionDetails> returnedDetails = returned.getTransDetails();
@@ -95,10 +89,10 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 			return missingTrace;
 		} else {
 			return null;
-		}
-		
-		
+		}		
 	}
+	
+	**/
 
 	public InventoryDao getInventoryDao() {
 		return inventoryDao;
