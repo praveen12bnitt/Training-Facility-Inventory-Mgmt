@@ -12,8 +12,7 @@ public class MissingInventoryProcessor extends InventoryChangeProcessor {
 	public void process(TransactionDetailsHolder transDetails) {
 		// First reduce the inventory
 		InventoryPk inventoryPk = new InventoryPk();
-		Location loc = new Location();
-		loc.setLocationId(transDetails.getLocationId());
+		Location loc = new Location(transDetails.getLocationId());
 		inventoryPk.setLocation(loc);
 
 		for (ItemSku itemSku : transDetails.getItemSkus()) {

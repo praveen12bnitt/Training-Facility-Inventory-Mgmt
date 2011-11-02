@@ -15,8 +15,7 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 		// First reduce the inventory 				
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
 			InventoryPk inventoryPk = new InventoryPk();
-			Location loc = new Location();
-			loc.setLocationId(transDetails.getLocationId());
+			Location loc = new Location(transDetails.getLocationId());
 			inventoryPk.setLocation(loc);
 			String itemSkuCode = ItemSkuUtil.getItemSkuCode(itemSku);
 			inventoryPk.setSkuCode(itemSkuCode);

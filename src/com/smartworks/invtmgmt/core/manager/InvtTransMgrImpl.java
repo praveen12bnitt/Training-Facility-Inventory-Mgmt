@@ -51,7 +51,7 @@ public class InvtTransMgrImpl implements InvtTransManager {
 		boolean returnVal = false;		
 		for (ItemSku itemSku : skus) {
 			InventoryPk inventoryPk = new InventoryPk();
-			Location loc = new Location();
+			Location loc = new Location(locationId);
 			inventoryPk.setLocation(loc);
 			loc.setLocationId(locationId);
 			String itemSkuCode = ItemSkuUtil.getItemSkuCode(itemSku);
@@ -64,18 +64,17 @@ public class InvtTransMgrImpl implements InvtTransManager {
 	@Transactional(readOnly=false,propagation=Propagation.REQUIRED)
 	public boolean transferInventory(Integer sourceLoc,Integer targetLoc,List<ItemSku> skus) {		
 		for (ItemSku itemSku : skus) {
-			InventoryPk inventoryPk = new InventoryPk();
-			Location srcLoc = new Location();
-			srcLoc.setLocationId(sourceLoc);
-			Location tarLoc = new Location();
-			tarLoc.setLocationId(targetLoc);
-			String itemSkuCode = ItemSkuUtil.getItemSkuCode(itemSku);
-			inventoryPk.setSkuCode(itemSkuCode);
-			inventoryPk.setLocation(srcLoc);
-			inventoryDao.reduceAvailableInventory(inventoryPk, itemSku.getQuantity());
+			InventoryPk srcInventoryPk = new InventoryPk();
+			InventoryPk targetInventoryPk = new InventoryPk();
 			
-			inventoryPk.setLocation(tarLoc);
-			inventoryDao.addAvailableInventory(inventoryPk, itemSku.getQuantity());			
+			srcInventoryPk.setLocation(new Location(sourceLoc));
+			srcInventoryPk.setSkuCode(ItemSkuUtil.getItemSkuCode(itemSku));
+			
+			targetInventoryPk.setLocation(new Location(targetLoc));
+			targetInventoryPk.setSkuCode(ItemSkuUtil.getItemSkuCode(itemSku));
+						
+			inventoryDao.reduceAvailableInventory(srcInventoryPk, itemSku.getQuantity());			
+			inventoryDao.addAvailableInventory(targetInventoryPk, itemSku.getQuantity());			
 		}
 		return true;		
 	}
@@ -98,9 +97,9 @@ public class InvtTransMgrImpl implements InvtTransManager {
 		return transDetails;
 	}
 	
-	public List<UserTransactionDetails> getAllOpenTransactionForUser(Integer locationId,Integer userId,TransactionTypeEnum transType) {		
+	public List<UserTransactionDetails> getAllOpenTransactionForUser(Integer locationId,Integer traineeId,TransactionTypeEnum transType) {		
 		List<UserTransactionDetails> userTransDetails = new ArrayList<UserTransactionDetails>();
-		List<TransactionTrace> transTraceList =  transactionTraceDao.loadAllOpenTrans(locationId, userId, transType);
+		List<TransactionTrace> transTraceList =  transactionTraceDao.loadAllOpenTrans(locationId, traineeId, transType);
 		for (TransactionTrace transactionTrace : transTraceList) {
 			userTransDetails.add(TransactionTraceObjectConverter.getUserTransactions(transactionTrace));			
 		}

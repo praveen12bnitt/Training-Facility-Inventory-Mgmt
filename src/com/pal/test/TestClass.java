@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -113,6 +114,38 @@ public class TestClass {
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
 		sku.setItemId(1);
+		sku.setQuantity(500);
+		sku.setReqProcessing(true);
+		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
+		attrMap.put(1, 1);
+		attrMap.put(2, 11);
+		sku.setItemAttribute(attrMap);
+		
+		itemSku.add(sku);
+		
+		sku = new ItemSku();
+		sku.setItemId(1);
+		sku.setQuantity(600);
+		sku.setReqProcessing(true);
+		attrMap = new HashMap<Integer, Integer>();
+		attrMap.put(1, 2);
+		attrMap.put(2, 11);
+		sku.setItemAttribute(attrMap);
+		
+		itemSku.add(sku);
+		
+
+		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
+		
+		inventoryMgr.transferInventory(1, 2, itemSku);
+		
+		
+	}
+	
+	public void receiveInventory() {
+		List<ItemSku> itemSku = new ArrayList<ItemSku>();
+		ItemSku sku = new ItemSku();
+		sku.setItemId(1);
 		sku.setQuantity(1000);
 		sku.setReqProcessing(true);
 		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
@@ -133,38 +166,6 @@ public class TestClass {
 		
 		itemSku.add(sku);
 		
-
-		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
-		
-		inventoryMgr.transferInventory(1, 2, itemSku);
-		
-		
-	}
-	
-	public void receiveInventory() {
-		List<ItemSku> itemSku = new ArrayList<ItemSku>();
-		ItemSku sku = new ItemSku();
-		sku.setItemId(2);
-		sku.setQuantity(1000);
-		sku.setReqProcessing(true);
-		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 1);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
-		
-		itemSku.add(sku);
-		
-		sku = new ItemSku();
-		sku.setItemId(2);
-		sku.setQuantity(1000);
-		sku.setReqProcessing(true);
-		attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 2);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
-		
-		itemSku.add(sku);
-		
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
 		
 		inventoryMgr.receiveInventory(1, itemSku);
@@ -175,7 +176,7 @@ public class TestClass {
 	public void processInvChange() {
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
-		sku.setItemId(2);
+		sku.setItemId(1);
 		sku.setQuantity(50);
 		sku.setReqProcessing(true);
 		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
@@ -186,7 +187,7 @@ public class TestClass {
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
-		sku.setItemId(2);
+		sku.setItemId(1);
 		sku.setQuantity(100);
 		sku.setReqProcessing(true);
 		attrMap = new HashMap<Integer, Integer>();
@@ -201,7 +202,8 @@ public class TestClass {
 		TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
 		transDetails.setLocationId(2);
 		transDetails.setItemSkus(itemSku);
-		transDetails.setEmployeeId(100);
+		transDetails.setUserId(100);
+		transDetails.setTraineeId(1);
 		Date date= new Date();
 		System.out.println(new Timestamp(date.getTime()));
 		transDetails.setDttm(new Timestamp(date.getTime()));
@@ -214,7 +216,7 @@ public class TestClass {
 	public void processInvChange1() {
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
-		sku.setItemId(2);
+		sku.setItemId(1);
 		sku.setQuantity(50);
 		sku.setReqProcessing(true);
 		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
@@ -225,7 +227,7 @@ public class TestClass {
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
-		sku.setItemId(2);
+		sku.setItemId(1);
 		sku.setQuantity(100);
 		sku.setReqProcessing(true);
 		attrMap = new HashMap<Integer, Integer>();
@@ -259,10 +261,33 @@ public class TestClass {
 	}
 	
 	public void processReturs() {
+		
+		// Get the transaction for the user..
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
-		TransactionDetailsHolder details = inventoryMgr.getTransDetails(8);
+		List<UserTransactionDetails> utransDetails = inventoryMgr.getAllOpenTransactionForUser(2, 1, TransactionTypeEnum.ISSUE_UNIFORM_STUDENT);
+		
+		
+		TransactionDetailsHolder details = inventoryMgr.getTransDetails(utransDetails.get(0).getTrasactionId());
 		details.setTransactionType(TransactionTypeEnum.RETURN_UNIFORM_STUDENT);
-		details.setRefTransactionId(8);
+		details.setRefTransactionId(utransDetails.get(0).getTrasactionId());
+		System.out.println("Transaction details retrived");
+		inventoryMgr.processInventoryChange(details);
+	}
+	
+	public void processRetursWithMissing() {
+		
+		// Get the transaction for the user..
+		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
+		List<UserTransactionDetails> utransDetails = inventoryMgr.getAllOpenTransactionForUser(2, 1, TransactionTypeEnum.ISSUE_UNIFORM_STUDENT);
+		
+		
+		TransactionDetailsHolder details = inventoryMgr.getTransDetails(utransDetails.get(0).getTrasactionId());
+		details.setTransactionType(TransactionTypeEnum.RETURN_UNIFORM_STUDENT);
+		
+		ItemSku s = details.getItemSkus().get(0);
+		s.setQuantity(s.getQuantity() - 5);
+		
+		details.setRefTransactionId(utransDetails.get(0).getTrasactionId());
 		System.out.println("Transaction details retrived");
 		inventoryMgr.processInventoryChange(details);
 	}

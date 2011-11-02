@@ -2,6 +2,7 @@ package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -38,15 +39,15 @@ public class TransactionTrace implements Serializable {
 	@Column(name="LOCATION_ID")
 	private Integer locationId;
 	
-	@Column(name="EMPLOYEE_ID")
-	private Integer employeeId;
-	
 	@Column(name="TRANSACTION_TYPE")
 	@Enumerated(EnumType.STRING)
 	private TransactionTypeEnum transType;
 	
 	@Column(name="USER_ID")
 	private Integer userId;
+	
+	@Column(name="TRAINEE_ID")
+	private Integer traineeId;
 	
 	@Column(name="STAFF_ID")
 	private Integer staffId;
@@ -62,7 +63,7 @@ public class TransactionTrace implements Serializable {
 	private Boolean closed = false;
 	
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "trasactionTrace" )
-	Set<TransactionDetails> transDetails;
+	List<TransactionDetails> transDetails;
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -78,10 +79,6 @@ public class TransactionTrace implements Serializable {
 
 	public Integer getLocationId() {
 		return locationId;
-	}
-
-	public Integer getEmployeeId() {
-		return employeeId;
 	}
 
 	public TransactionTypeEnum getTransType() {
@@ -120,10 +117,6 @@ public class TransactionTrace implements Serializable {
 		this.locationId = locationId;
 	}
 
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
-	}
-
 	public void setTransType(TransactionTypeEnum transType) {
 		this.transType = transType;
 	}
@@ -148,12 +141,20 @@ public class TransactionTrace implements Serializable {
 		this.closed = closed;
 	}
 
-	public Set<TransactionDetails> getTransDetails() {
+	public List<TransactionDetails> getTransDetails() {
 		return transDetails;
 	}
 
-	public void setTransDetails(Set<TransactionDetails> transDetails) {
+	public void setTransDetails(List<TransactionDetails> transDetails) {
 		this.transDetails = transDetails;
+	}
+
+	public Integer getTraineeId() {
+		return traineeId;
+	}
+
+	public void setTraineeId(Integer traineeId) {
+		this.traineeId = traineeId;
 	}
 	
 	

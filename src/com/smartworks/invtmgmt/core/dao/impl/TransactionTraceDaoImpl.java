@@ -23,10 +23,10 @@ public class TransactionTraceDaoImpl extends HibernateDaoSupport implements Tran
 		getHibernateTemplate().update(transTrace);		
 	}
 	
-	public List<TransactionTrace> loadAllOpenTrans(Integer locationId,Integer userId,TransactionTypeEnum transType) {		
-		String sql = "from TransactionTrace where locationId= ? and userId= ? and transType= ? and closed=false";
+	public List<TransactionTrace> loadAllOpenTrans(Integer locationId,Integer traineeId,TransactionTypeEnum transType) {		
+		String sql = "from TransactionTrace where locationId= ? and traineeId= ? and transType= ? and closed=false";
 		List<TransactionTrace> transList = new ArrayList<TransactionTrace>();
-		transList = getHibernateTemplate().find(sql, locationId,userId,transType);
+		transList = getHibernateTemplate().find(sql, locationId,traineeId,transType);
 		return transList;
 	}
 

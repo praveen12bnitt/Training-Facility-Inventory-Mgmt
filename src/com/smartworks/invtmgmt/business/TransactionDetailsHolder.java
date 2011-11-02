@@ -2,14 +2,15 @@ package com.smartworks.invtmgmt.business;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 
 public class TransactionDetailsHolder {
 	TransactionTypeEnum transactionType;
-	List<ItemSku> itemSkus;
-	Integer employeeId;
+	List<ItemSku> itemSkus;	
 	Integer userId;
+	Integer traineeId;
 	Integer staffId;
 	Timestamp dttm;
 	Integer locationId;
@@ -28,9 +29,7 @@ public class TransactionDetailsHolder {
 	public void setItemSkus(List<ItemSku> itemSkus) {
 		this.itemSkus = itemSkus;
 	}
-	public Integer getEmployeeId() {
-		return employeeId;
-	}
+	
 	public Integer getUserId() {
 		return userId;
 	}
@@ -49,9 +48,7 @@ public class TransactionDetailsHolder {
 	public Integer getRefTransactionId() {
 		return refTransactionId;
 	}
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
-	}
+	
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
@@ -69,5 +66,11 @@ public class TransactionDetailsHolder {
 	}
 	public void setRefTransactionId(Integer refTransactionId) {
 		this.refTransactionId = refTransactionId;
+	}
+	public Integer getTraineeId() {
+		return traineeId;
+	}
+	public void setTraineeId(Integer traineeId) {
+		this.traineeId = traineeId;
 	}	
 }
