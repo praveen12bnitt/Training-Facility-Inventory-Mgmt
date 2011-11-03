@@ -2,12 +2,10 @@ package com.smartworks.invtmgmt.core.inventoryprocessor;
 
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
-import com.smartworks.invtmgmt.converter.TransactionTraceObjectConverter;
 import com.smartworks.invtmgmt.core.dao.InventoryDao;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
-import com.smartworks.invtmgmt.util.ItemSkuUtil;
 
 public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 	
@@ -19,9 +17,9 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 			Location loc = new Location(transDetails.getLocationId());
 			inventoryPk.setLocation(loc);
 			
-			String itemSkuCode = ItemSkuUtil.getItemSkuCode(itemSku);
+			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
 			inventoryPk.setSkuCode(itemSkuCode);
-			boolean processingReq = itemSku.getReqProcessing();
+			boolean processingReq = itemSku.getItem().getRequiresProcessing();
 			if(processingReq) {
 				inventoryDao.addUnusableInventory(inventoryPk, itemSku.getQuantity());				
 			} else {
@@ -29,7 +27,7 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 			}
 		}
 		
-		TransactionTrace transTrace = TransactionTraceObjectConverter.getTransactionTrace(transDetails);
+		TransactionTrace transTrace = transactionTraceObjectConverter.getTransactionTrace(transDetails);
 		transactionTraceDao.save(transTrace);			
 		// Load the original transaction and mark it as closed.
 		transactionTraceDao.markTransactionClosed(transTrace.getRefTransactionId());

@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 @Entity
 @Table(name="item_attribute_values")
+@Proxy(lazy=false)
 public class ItemAttributeValue implements Serializable,Comparable<ItemAttributeValue> {
 
 	private static final long serialVersionUID = 1L;

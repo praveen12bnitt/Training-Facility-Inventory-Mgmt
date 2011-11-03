@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.business.UserTransactionDetails;
+import com.smartworks.invtmgmt.converter.ItemSkuConverter;
 import com.smartworks.invtmgmt.converter.TransactionTraceObjectConverter;
 import com.smartworks.invtmgmt.core.dao.InventoryDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTraceDao;
@@ -20,7 +21,6 @@ import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
 import com.smartworks.invtmgmt.core.inventoryprocessor.InventoryChangeProcessor;
 import com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
-import com.smartworks.invtmgmt.util.ItemSkuUtil;
 
 @Transactional
 public class InvtTransMgrImpl implements InvtTransManager {
@@ -29,6 +29,9 @@ public class InvtTransMgrImpl implements InvtTransManager {
 	InventoryDao inventoryDao;
 	InventoryProcessorFactory invProcessorFactory;
 	TransactionTraceDao transactionTraceDao;
+	
+	TransactionTraceObjectConverter transactionTraceObjectConverter;
+	ItemSkuConverter itemSkuConverter;
 	
 	@Override
 	public TransactionType getTransType(TransactionTypeEnum transType) {
@@ -54,7 +57,7 @@ public class InvtTransMgrImpl implements InvtTransManager {
 			Location loc = new Location(locationId);
 			inventoryPk.setLocation(loc);
 			loc.setLocationId(locationId);
-			String itemSkuCode = ItemSkuUtil.getItemSkuCode(itemSku);
+			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
 			inventoryPk.setSkuCode(itemSkuCode);
 			inventoryDao.addAvailableInventory(inventoryPk, itemSku.getQuantity());
 		}
@@ -68,10 +71,10 @@ public class InvtTransMgrImpl implements InvtTransManager {
 			InventoryPk targetInventoryPk = new InventoryPk();
 			
 			srcInventoryPk.setLocation(new Location(sourceLoc));
-			srcInventoryPk.setSkuCode(ItemSkuUtil.getItemSkuCode(itemSku));
+			srcInventoryPk.setSkuCode(itemSkuConverter.getItemSkuCode(itemSku));
 			
 			targetInventoryPk.setLocation(new Location(targetLoc));
-			targetInventoryPk.setSkuCode(ItemSkuUtil.getItemSkuCode(itemSku));
+			targetInventoryPk.setSkuCode(itemSkuConverter.getItemSkuCode(itemSku));
 						
 			inventoryDao.reduceAvailableInventory(srcInventoryPk, itemSku.getQuantity());			
 			inventoryDao.addAvailableInventory(targetInventoryPk, itemSku.getQuantity());			
@@ -92,7 +95,7 @@ public class InvtTransMgrImpl implements InvtTransManager {
 		List<TransactionTrace> transTraceList =  transactionTraceDao.loadAllOpenTrans(locationId, userId, transType);
 		
 		for (TransactionTrace transactionTrace : transTraceList) {
-			transDetails.add(TransactionTraceObjectConverter.getTransactionDetailsHolder(transactionTrace));
+			transDetails.add(transactionTraceObjectConverter.getTransactionDetailsHolder(transactionTrace));
 		}		
 		return transDetails;
 	}
@@ -101,14 +104,14 @@ public class InvtTransMgrImpl implements InvtTransManager {
 		List<UserTransactionDetails> userTransDetails = new ArrayList<UserTransactionDetails>();
 		List<TransactionTrace> transTraceList =  transactionTraceDao.loadAllOpenTrans(locationId, traineeId, transType);
 		for (TransactionTrace transactionTrace : transTraceList) {
-			userTransDetails.add(TransactionTraceObjectConverter.getUserTransactions(transactionTrace));			
+			userTransDetails.add(transactionTraceObjectConverter.getUserTransactions(transactionTrace));			
 		}
 		return userTransDetails;
 	}
 	
 	public TransactionDetailsHolder getTransDetails(Integer transId) {
 		TransactionTrace tranTrace = transactionTraceDao.load(transId);
-		return TransactionTraceObjectConverter.getTransactionDetailsHolder(tranTrace);
+		return transactionTraceObjectConverter.getTransactionDetailsHolder(tranTrace);
 	}	
 	
 	public TransactionTypeDao getTranTypeDao() {
@@ -141,6 +144,23 @@ public class InvtTransMgrImpl implements InvtTransManager {
 
 	public void setTransactionTraceDao(TransactionTraceDao transactionTraceDao) {
 		this.transactionTraceDao = transactionTraceDao;
+	}
+
+	public TransactionTraceObjectConverter getTransactionTraceObjectConverter() {
+		return transactionTraceObjectConverter;
+	}
+
+	public ItemSkuConverter getItemSkuConverter() {
+		return itemSkuConverter;
+	}
+
+	public void setTransactionTraceObjectConverter(
+			TransactionTraceObjectConverter transactionTraceObjectConverter) {
+		this.transactionTraceObjectConverter = transactionTraceObjectConverter;
+	}
+
+	public void setItemSkuConverter(ItemSkuConverter itemSkuConverter) {
+		this.itemSkuConverter = itemSkuConverter;
 	}
 
 }

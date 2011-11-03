@@ -1,5 +1,7 @@
 package com.smartworks.invtmgmt.core.dao;
 
-public interface ItemAttributeDao {
+import com.smartworks.invtmgmt.core.domain.ItemAttribute;
 
+public interface ItemAttributeDao {
+	public ItemAttribute load(Integer itemAttrId) ;
 }

@@ -10,8 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 @Entity
 @Table(name="item_attr_mapping")
+@Proxy(lazy=false)
 public class ItemAttributeMapping implements Serializable {
 
 	private static final long serialVersionUID = 1L;

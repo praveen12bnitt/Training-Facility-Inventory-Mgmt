@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +12,9 @@ import java.util.Set;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.business.UserTransactionDetails;
+import com.smartworks.invtmgmt.core.dao.ItemAttributeDao;
+import com.smartworks.invtmgmt.core.dao.ItemAttributeValueDao;
+import com.smartworks.invtmgmt.core.dao.ItemDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.ItemAttribute;
 import com.smartworks.invtmgmt.core.domain.ItemAttributeValue;
@@ -111,26 +113,28 @@ public class TestClass {
 	}
 	
 	public void transferInventory() {
+		ItemDao itemDao = AppContextUtil.getBean("itemDao");
+		ItemAttributeDao itemAttributeDao = AppContextUtil.getBean("itemAttributeDao");
+		ItemAttributeValueDao itemAttributeValueDao = AppContextUtil.getBean("itemAttributeValueDao");
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
-		sku.setItemId(1);
+		sku.setItem(itemDao.load(1));
 		sku.setQuantity(500);
-		sku.setReqProcessing(true);
-		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 1);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
+		Map<ItemAttribute,ItemAttributeValue> attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		
+		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(1));
+		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
+		sku.setItemAttributeDetails(attrMap);
 		
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
-		sku.setItemId(1);
+		sku.setItem(itemDao.load(1));
 		sku.setQuantity(600);
-		sku.setReqProcessing(true);
-		attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 2);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
+		attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(2));
+		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
+		sku.setItemAttributeDetails(attrMap);
 		
 		itemSku.add(sku);
 		
@@ -143,26 +147,29 @@ public class TestClass {
 	}
 	
 	public void receiveInventory() {
+		
+		ItemDao itemDao = AppContextUtil.getBean("itemDao");
+		ItemAttributeDao itemAttributeDao = AppContextUtil.getBean("itemAttributeDao");
+		ItemAttributeValueDao itemAttributeValueDao = AppContextUtil.getBean("itemAttributeValueDao");
+		
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
-		sku.setItemId(1);
+		sku.setItem(itemDao.load(1));
 		sku.setQuantity(1000);
-		sku.setReqProcessing(true);
-		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 1);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
+		Map<ItemAttribute,ItemAttributeValue> attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(1));
+		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
+		sku.setItemAttributeDetails(attrMap);
 		
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
-		sku.setItemId(1);
+		sku.setItem(itemDao.load(1));
 		sku.setQuantity(1000);
-		sku.setReqProcessing(true);
-		attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 2);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
+		attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(2));
+		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
+		sku.setItemAttributeDetails(attrMap);
 		
 		itemSku.add(sku);
 		
@@ -174,26 +181,30 @@ public class TestClass {
 	}
 	
 	public void processInvChange() {
+		
+		ItemDao itemDao = AppContextUtil.getBean("itemDao");
+		ItemAttributeDao itemAttributeDao = AppContextUtil.getBean("itemAttributeDao");
+		ItemAttributeValueDao itemAttributeValueDao = AppContextUtil.getBean("itemAttributeValueDao");
+		
+		
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
-		sku.setItemId(1);
-		sku.setQuantity(50);
-		sku.setReqProcessing(true);
-		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 1);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
+		sku.setItem(itemDao.load(1));
+		sku.setQuantity(100);
+		Map<ItemAttribute,ItemAttributeValue> attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(1));
+		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
+		sku.setItemAttributeDetails(attrMap);
 		
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
-		sku.setItemId(1);
-		sku.setQuantity(100);
-		sku.setReqProcessing(true);
-		attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 2);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
+		sku.setItem(itemDao.load(1));
+		sku.setQuantity(50);
+		attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(2));
+		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
+		sku.setItemAttributeDetails(attrMap);
 		
 		itemSku.add(sku);
 		
@@ -213,40 +224,7 @@ public class TestClass {
 		
 	}
 	
-	public void processInvChange1() {
-		List<ItemSku> itemSku = new ArrayList<ItemSku>();
-		ItemSku sku = new ItemSku();
-		sku.setItemId(1);
-		sku.setQuantity(50);
-		sku.setReqProcessing(true);
-		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 1);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
-		
-		itemSku.add(sku);
-		
-		sku = new ItemSku();
-		sku.setItemId(1);
-		sku.setQuantity(100);
-		sku.setReqProcessing(true);
-		attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 2);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
-		
-		itemSku.add(sku);
-		
-		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
-		
-		TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
-		transDetails.setLocationId(2);
-		transDetails.setItemSkus(itemSku);
-		transDetails.setTransactionType(TransactionTypeEnum.RETURN_UNIFORM_STUDENT);
-		
-		inventoryMgr.processInventoryChange(transDetails);
-		
-	}
+	
 	
 	public void getTransactionForUser() {
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
@@ -293,26 +271,29 @@ public class TestClass {
 	}
 	
 	public void reportMissingItem() {
+		
+		ItemAttributeDao itemAttributeDao = AppContextUtil.getBean("itemAttributeDao");
+		ItemAttributeValueDao itemAttributeValueDao = AppContextUtil.getBean("itemAttributeValueDao");
+		ItemDao itemDao = AppContextUtil.getBean("itemDao");
+		
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
-		sku.setItemId(1);
-		sku.setQuantity(3);
-		sku.setReqProcessing(true);
-		Map<Integer,Integer> attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 1);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
+		sku.setItem(itemDao.load(1));
+		sku.setQuantity(10);
+		Map<ItemAttribute,ItemAttributeValue> attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(1));
+		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
+		sku.setItemAttributeDetails(attrMap);
 		
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
-		sku.setItemId(1);
-		sku.setQuantity(4);
-		sku.setReqProcessing(true);
-		attrMap = new HashMap<Integer, Integer>();
-		attrMap.put(1, 2);
-		attrMap.put(2, 11);
-		sku.setItemAttribute(attrMap);
+		sku.setItem(itemDao.load(1));
+		sku.setQuantity(5);
+		attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(2));
+		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
+		sku.setItemAttributeDetails(attrMap);
 		
 		itemSku.add(sku);
 		

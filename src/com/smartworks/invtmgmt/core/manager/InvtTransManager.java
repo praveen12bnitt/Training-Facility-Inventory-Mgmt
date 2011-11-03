@@ -27,4 +27,5 @@ public interface InvtTransManager {
 	public List<UserTransactionDetails> getAllOpenTransactionForUser(Integer locationId,Integer traineeId,TransactionTypeEnum transType) ;
 	
 	public TransactionDetailsHolder getTransDetails(Integer transId);
+	
 }

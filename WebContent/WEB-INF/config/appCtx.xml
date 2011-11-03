@@ -44,11 +44,23 @@
 	
 	<bean id="itemDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemDaoImpl" parent="abstractDao" />
 	<bean id="itemAttributeDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemAttributeDaoImpl" parent="abstractDao" />
+	<bean id="itemAttributeValueDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemAttributeValueDaoImpl" parent="abstractDao" />
 	<bean id="transactionTypeDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTypeDaoImpl" parent="abstractDao" />
 	<bean id="transactionItemMappingDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionItemMappingDaoImpl" parent="abstractDao" />
 	<bean id="inventoryDao" class="com.smartworks.invtmgmt.core.dao.impl.InventoryDaoImpl" parent="abstractDao" />
 	<bean id="transactionTraceDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTraceDaoImpl" parent="abstractDao" />
 	
+	<!--  Converters  -->
+	
+	<bean id="itemSkuConverter" class="com.smartworks.invtmgmt.converter.ItemSkuConverter" >
+		<property name="itemDao" ref="itemDao" /> 
+		<property name="itemAttributeDao" ref="itemAttributeDao" /> 
+		<property name="itemAttributeValueDao" ref="itemAttributeValueDao" /> 
+	</bean>	
+	
+	<bean id="transactionTraceObjectConverter" class="com.smartworks.invtmgmt.converter.TransactionTraceObjectConverter" >
+		<property name="itemSkuConverter" ref="itemSkuConverter" />		
+	</bean>	
 	
 	
 	<bean id="itemMgr" class="com.smartworks.invtmgmt.core.manager.ItemMgrImpl">
@@ -61,6 +73,8 @@
 		<property name="inventoryDao" ref="inventoryDao" /> 
 		<property name="invProcessorFactory" ref="inventoryProcessorFactory" />
 		<property name="transactionTraceDao" ref="transactionTraceDao" />
+		<property name="itemSkuConverter" ref="itemSkuConverter" />    	
+    	<property name="transactionTraceObjectConverter" ref="transactionTraceObjectConverter" />    
 	</bean>
 	
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
@@ -76,6 +90,8 @@
     <bean id="abstractInventoryProcessor" abstract="true">
     	<property name="inventoryDao" ref="inventoryDao" />
     	<property name="transactionTraceDao" ref="transactionTraceDao" />    	
+    	<property name="itemSkuConverter" ref="itemSkuConverter" />    	
+    	<property name="transactionTraceObjectConverter" ref="transactionTraceObjectConverter" />    	
     </bean>
     
     

@@ -1,23 +1,19 @@
 package com.smartworks.invtmgmt.converter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.business.UserTransactionDetails;
-import com.smartworks.invtmgmt.core.dao.ItemDao;
-import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.TransactionDetails;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
-import com.smartworks.invtmgmt.util.ItemSkuUtil;
-import com.smartworks.platform.AppContextUtil;
 
 public class TransactionTraceObjectConverter {
 	
-	public static TransactionTrace getTransactionTrace(TransactionDetailsHolder transDetails) {		
+	ItemSkuConverter itemSkuConverter = new ItemSkuConverter();
+	
+	public TransactionTrace getTransactionTrace(TransactionDetailsHolder transDetails) {		
 		TransactionTrace transTrace = new TransactionTrace();
 		transTrace.setTransType(transDetails.getTransactionType());
 		transTrace.setTraineeId(transDetails.getTraineeId());
@@ -32,7 +28,7 @@ public class TransactionTraceObjectConverter {
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
 			TransactionDetails detail = new TransactionDetails();
 			detail.setQuantity(itemSku.getQuantity());
-			String itemSkuCode = ItemSkuUtil.getItemSkuCode(itemSku);
+			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
 			detail.setSkuCode(itemSkuCode);
 			detail.setTrasactionTrace(transTrace);
 			details.add(detail);
@@ -41,7 +37,7 @@ public class TransactionTraceObjectConverter {
 		return transTrace;
 	}
 	
-	public static TransactionDetailsHolder getTransactionDetailsHolder(TransactionTrace transTrace) {
+	public TransactionDetailsHolder getTransactionDetailsHolder(TransactionTrace transTrace) {
 		TransactionDetailsHolder holder = new TransactionDetailsHolder();
 		holder.setDttm(transTrace.getCreatedDttm());
 		holder.setTraineeId(transTrace.getTraineeId());
@@ -58,21 +54,27 @@ public class TransactionTraceObjectConverter {
 		
 		for(TransactionDetails details : transTrace.getTransDetails() ) {
 			ItemSku sku = new ItemSku();
-			sku = ItemSkuUtil.getItemSku(details.getSkuCode());
+			sku = itemSkuConverter.getItemSku(details.getSkuCode());
 			sku.setQuantity(details.getQuantity());			
-			ItemDao itemDao = AppContextUtil.getBean("itemDao");
-			Item i = itemDao.load(sku.getItemId());
-			sku.setReqProcessing(i.getRequiresProcessing());
+			sku.setItem(sku.getItem());
 			itemSkus.add(sku);			
 		}		
 		holder.setItemSkus(itemSkus);
 		return holder;		
 	}
 	
-	public static UserTransactionDetails getUserTransactions(TransactionTrace transTrace) {
+	public UserTransactionDetails getUserTransactions(TransactionTrace transTrace) {
 		UserTransactionDetails details = new UserTransactionDetails();
 		details.setTimeStamp(transTrace.getCreatedDttm());
 		details.setTrasactionId(transTrace.getTrasactionId());
 		return details;
+	}
+
+	public ItemSkuConverter getItemSkuConverter() {
+		return itemSkuConverter;
+	}
+
+	public void setItemSkuConverter(ItemSkuConverter itemSkuConverter) {
+		this.itemSkuConverter = itemSkuConverter;
 	}
 }
