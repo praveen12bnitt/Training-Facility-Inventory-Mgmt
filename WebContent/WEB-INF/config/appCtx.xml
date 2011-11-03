@@ -85,6 +85,7 @@
     	<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />
     	<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />
     	<property name="missingInventoryProcessor" ref="missingInventoryProcessor" />
+    	<property name="transferInventoryProcessor" ref="transferInventoryProcessor" />
     </bean>
     
     <bean id="abstractInventoryProcessor" abstract="true">
@@ -98,6 +99,9 @@
     <bean id="returnsInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.ReturnsInventoryProcessor" parent="abstractInventoryProcessor" />
     <bean id="missingInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.MissingInventoryProcessor" parent="abstractInventoryProcessor" />
     <bean id="dispatchInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.DispatchInventoryProcessor" parent="abstractInventoryProcessor" />
+    <bean id="laundryReturnsProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.LaundryReturnsProcessor" parent="abstractInventoryProcessor" />
+    <bean id="transferInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.TransferInventoryProcessor" parent="abstractInventoryProcessor" />
+    
     
     
     <tx:annotation-driven transaction-manager="transactionManager"/>

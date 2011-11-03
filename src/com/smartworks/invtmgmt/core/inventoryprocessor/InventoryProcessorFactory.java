@@ -6,7 +6,9 @@ public class InventoryProcessorFactory {
 	DispatchInventoryProcessor dispatchInventoryProcessor;
 	ReturnsInventoryProcessor returnsInventoryProcessor;
 	MissingInventoryProcessor missingInventoryProcessor;
-
+	LaundryReturnsProcessor laundryReturnsProcessor;
+	TransferInventoryProcessor transferInventoryProcessor;
+	
 	public InventoryChangeProcessor getInventoryProcessor(
 			TransactionTypeEnum tranType) {
 
@@ -24,6 +26,12 @@ public class InventoryProcessorFactory {
 		case REPORT_MISSING_UNIFORM_STAFF:
 		case REPORT_MISSING_UNIFORM_STUDENT:
 			processor = missingInventoryProcessor;
+			break;
+		case ACCEPT_UNIFORM_FROM_LAUNDRY:
+			processor = laundryReturnsProcessor;
+			break;
+		case TRANSFER_INVENTORY:
+			processor = transferInventoryProcessor;
 			break;
 		}
 
@@ -56,4 +64,24 @@ public class InventoryProcessorFactory {
 			MissingInventoryProcessor missingInventoryProcessor) {
 		this.missingInventoryProcessor = missingInventoryProcessor;
 	}
+
+	public LaundryReturnsProcessor getLaundryReturnsProcessor() {
+		return laundryReturnsProcessor;
+	}
+
+	public TransferInventoryProcessor getTransferInventoryProcessor() {
+		return transferInventoryProcessor;
+	}
+
+	public void setLaundryReturnsProcessor(
+			LaundryReturnsProcessor laundryReturnsProcessor) {
+		this.laundryReturnsProcessor = laundryReturnsProcessor;
+	}
+
+	public void setTransferInventoryProcessor(
+			TransferInventoryProcessor transferInventoryProcessor) {
+		this.transferInventoryProcessor = transferInventoryProcessor;
+	}
+	
+	
 }
