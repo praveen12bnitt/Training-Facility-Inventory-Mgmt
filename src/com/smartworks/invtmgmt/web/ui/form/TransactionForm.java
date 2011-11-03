@@ -5,6 +5,7 @@ import java.util.List;
 import com.pal.test.DummyString;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItem;
+import com.smartworks.invtmgmt.web.ui.transfer.UIFormLocation;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormTransactionReceiver;
 
 public class TransactionForm {
@@ -15,6 +16,16 @@ public class TransactionForm {
 	private UIFormTransactionReceiver uiTransactionReceiver;
 	
 	private String transactionType;
+	
+	private List <UIFormLocation> locationList;
+	
+	public List<UIFormLocation> getLocationList() {
+		return locationList;
+	}
+
+	public void setLocationList(List<UIFormLocation> locationList) {
+		this.locationList = locationList;
+	}
 	
 	public TransactionForm() {
 		uiTransactionReceiver = new UIFormTransactionReceiver();
