@@ -75,7 +75,6 @@
      			<a id="plusgif" href="#"><img src="<c:url value='/images/plus.gif' />" height="10px" width="10px" /></a>
       			&nbsp;
      			<form:input type="hidden" path="listUIFormItems[${uifItemRow.index}].itemId" value="${ uiFormItem.itemId }"/>${ uiFormItem.itemName}
-      			
      		 </td>
      		<td>
      			
