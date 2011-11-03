@@ -23,6 +23,11 @@ public class Location implements Serializable {
 	@Column(name="location_name")
 	String locationName;
 
+	public Location(Integer locationId) {
+		super();
+		this.locationId = locationId;
+	}
+
 	public Integer getLocationId() {
 		return locationId;
 	}

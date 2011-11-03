@@ -20,7 +20,7 @@ public class TransactionTraceObjectConverter {
 	public static TransactionTrace getTransactionTrace(TransactionDetailsHolder transDetails) {		
 		TransactionTrace transTrace = new TransactionTrace();
 		transTrace.setTransType(transDetails.getTransactionType());
-		transTrace.setEmployeeId(transDetails.getEmployeeId());
+		transTrace.setTraineeId(transDetails.getTraineeId());
 		transTrace.setLocationId(transDetails.getLocationId());
 		transTrace.setSrcLocationId(transDetails.getSrcLocationId());
 		transTrace.setRefTransactionId(transDetails.getRefTransactionId());
@@ -28,7 +28,7 @@ public class TransactionTraceObjectConverter {
 		transTrace.setUserId(transDetails.getUserId());
 		
 		// Not create trans details object from itemSku
-		Set<TransactionDetails> details = new HashSet<TransactionDetails>();
+		List<TransactionDetails> details = new ArrayList<TransactionDetails>();
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
 			TransactionDetails detail = new TransactionDetails();
 			detail.setQuantity(itemSku.getQuantity());
@@ -44,7 +44,7 @@ public class TransactionTraceObjectConverter {
 	public static TransactionDetailsHolder getTransactionDetailsHolder(TransactionTrace transTrace) {
 		TransactionDetailsHolder holder = new TransactionDetailsHolder();
 		holder.setDttm(transTrace.getCreatedDttm());
-		holder.setEmployeeId(transTrace.getEmployeeId());
+		holder.setTraineeId(transTrace.getTraineeId());
 		holder.setLocationId(transTrace.getLocationId());
 		holder.setRefTransactionId(transTrace.getRefTransactionId());
 		holder.setSrcLocationId(transTrace.getSrcLocationId());

@@ -1,4 +1,4 @@
-<%@ include file="/ui/commoninclude.jsp" %>
+<%@ include file="/WEB-INF/ui/commoninclude.jsp" %>
 <%@ page language="java" import="java.util.*,com.smartworks.invtmgmt.core.domain.*" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
@@ -24,11 +24,10 @@
     <img src="<c:url value='/images/logo.jpg' />" alt="" title="logo.gif" height="78" width="345"></a>
 
 
-
 </div>
 
 
-
+<a id="logout" accesskey="2" href="<c:url value='/j_spring_security_logout' />">logout</a>
 
 
 <form:form method="post" commandName="transactionForm" >

@@ -3,7 +3,10 @@
   <display-name>Inventory Management</display-name>
   <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/config/appCtx.xml</param-value>
+        <param-value>
+        	/WEB-INF/config/appCtx.xml
+        	/WEB-INF/config/spring-security.xml
+        </param-value>
     </context-param>
     
    <listener>
@@ -23,6 +26,17 @@
         <url-pattern>*.form</url-pattern>
     </servlet-mapping>
     
+      
+    <!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
     
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

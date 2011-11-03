@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +28,6 @@ import com.smartworks.invtmgmt.web.ui.form.TransactionForm;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItem;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItemAttribute;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItemAttributeValue;
-import com.smartworks.platform.AppContextUtil;
 
 @Controller
 @RequestMapping("/createtransaction")
@@ -43,27 +41,26 @@ public class TransactionFormController {
 	InvtTransManager invtTransMgr = null;
   
 	@RequestMapping(value="/issue.form", method=RequestMethod.GET)
-	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId) {
+	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId, 
+			@RequestParam(required = false) Integer id) {
 		
 		
 		TransactionType transactionType = transactionTypeDao.load(transactionTypeId);
-		List<Item> items = itemMgr.getItemsForTransaction(transactionType);
 		
-		ModelMap myModel = new ModelMap();
-        myModel.put("itemList", items);
         TransactionForm transactionForm = populateUIFormObjects(transactionType);
         //request.setAttribute("transactionForm", transactionForm);
-		ModelAndView mav = new ModelAndView("createtransaction","model",myModel);
+		ModelAndView mav = new ModelAndView("transaction/createtransaction");
 		mav.addObject("transactionForm", transactionForm);
-		
-		
 		return mav;
 	}
 	
-	@RequestMapping(value="/sayHai.form", method=RequestMethod.GET)
-	public void sayHai(@RequestParam String str,  HttpServletResponse response) throws IOException{
-		response.getWriter().println("Said Hai to:"+str);
+	
+	@RequestMapping(value="/login.form", method=RequestMethod.GET)
+	public ModelAndView getItemPrice(HttpServletResponse response) throws IOException{		
+		ModelAndView mav = new ModelAndView("transaction/login");
+		return mav;
 	}
+	
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView createTransaction(HttpServletRequest request,
@@ -74,9 +71,7 @@ public class TransactionFormController {
 	}
 	
 	private TransactionForm populateUIFormObjects(TransactionType transactionType) {
-		
-
-		
+			
 		List<Item> items = itemMgr.getItemsForTransaction(transactionType);
 		TransactionForm transactionForm = new TransactionForm();
 		transactionForm.setTransactionType(transactionType.getTransactionDesc());
@@ -115,23 +110,5 @@ public class TransactionFormController {
 		return transactionForm;
 	}
 	
-	 
-	
-	/**public List getInventoryListItems(List<Item> items) {
-		Inventory inventory = null;
-		for(Item itemObject: items) {
-			inventory = new Inventory();
-			inventory.setItemId(itemObject.getId());
-			
-			Map<ItemAttribute, List<ItemAttributeValue>> itemAttributeDetails = itemObject.getAttributeDetails();
-			for(ItemAttribute itemAttribute: itemAttributeDetails.keySet()) {
-				inventory.set
-			}
-			
-		}
-		return null;
-	}*/
-	
-
 
 }

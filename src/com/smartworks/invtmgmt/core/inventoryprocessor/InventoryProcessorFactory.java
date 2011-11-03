@@ -21,6 +21,10 @@ public class InventoryProcessorFactory {
 		case RETURN_UNIFORM_STUDENT:
 			processor = returnsInventoryProcessor;
 			break;
+		case REPORT_MISSING_UNIFORM_STAFF:
+		case REPORT_MISSING_UNIFORM_STUDENT:
+			processor = missingInventoryProcessor;
+			break;
 		}
 
 		return processor;

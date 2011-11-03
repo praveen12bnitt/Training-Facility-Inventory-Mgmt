@@ -10,7 +10,7 @@ public interface TransactionTraceDao {
 	public void save(TransactionTrace transTrace);
 	public TransactionTrace load(Integer transactionTraceId);
 	public void update(TransactionTrace transTrace);
-	public List<TransactionTrace> loadAllOpenTrans(Integer locationId,Integer userId,TransactionTypeEnum transType);
+	public List<TransactionTrace> loadAllOpenTrans(Integer locationId,Integer traineeId,TransactionTypeEnum transType);
 	public void markTransactionClosed(Integer transactionId);
 	
 }
