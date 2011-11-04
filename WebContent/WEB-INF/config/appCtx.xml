@@ -49,7 +49,7 @@
 	<bean id="transactionItemMappingDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionItemMappingDaoImpl" parent="abstractDao" />
 	<bean id="inventoryDao" class="com.smartworks.invtmgmt.core.dao.impl.InventoryDaoImpl" parent="abstractDao" />
 	<bean id="transactionTraceDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTraceDaoImpl" parent="abstractDao" />
-	
+	<bean id="locationDao" class="com.smartworks.invtmgmt.core.dao.impl.LocationDaoImpl" parent="abstractDao" />
 	<!--  Converters  -->
 	
 	<bean id="itemSkuConverter" class="com.smartworks.invtmgmt.converter.ItemSkuConverter" >
