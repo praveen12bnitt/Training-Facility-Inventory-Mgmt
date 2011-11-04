@@ -8,6 +8,15 @@ public class UIFormLocation  implements Serializable {
 	private Integer location_id;
 	private String locationName;
 	private String selectedValue;
+	private String error;
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
 	public String getSelectedValue() {
 		return selectedValue;
 	}

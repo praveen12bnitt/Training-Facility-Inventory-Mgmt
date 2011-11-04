@@ -23,6 +23,14 @@ public class ItemAttributeValue implements Serializable,Comparable<ItemAttribute
 	@Column(name="attr_value")
 	String attributeValue;
 
+	public ItemAttributeValue(String attributeValue) {
+		this.attributeValue = attributeValue;
+	}
+
+	public ItemAttributeValue() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Integer getAttributeValueId() {
 		return attributeValueId;
 	}

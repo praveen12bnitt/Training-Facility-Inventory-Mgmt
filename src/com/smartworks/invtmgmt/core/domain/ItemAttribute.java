@@ -23,6 +23,10 @@ public class ItemAttribute implements Serializable,Comparable<ItemAttribute> {
 	@Column(name="attr_name")
 	String attributeName;
 	
+	public ItemAttribute() {
+		
+	}
+
 	public Integer getAttibuteId() {
 		return attibuteId;
 	}
