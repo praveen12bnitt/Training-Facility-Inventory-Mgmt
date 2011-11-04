@@ -9,7 +9,7 @@
             http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
         
-    <context:component-scan base-package="com.smartworks.invtmgmt.*" />	
+    <context:component-scan base-package="com.smartworks.invtmgmt.*" />
 
 	<bean id="appCtxHolder" class="com.smartworks.platform.AppContextHolder"  />
 	
@@ -62,6 +62,12 @@
 		<property name="itemSkuConverter" ref="itemSkuConverter" />		
 	</bean>	
 	
+	<bean id="inventoryConverter" class="com.smartworks.invtmgmt.converter.InventoryConverter" >
+		<property name="itemSkuConverter" ref="itemSkuConverter" />		
+	</bean>	
+	
+	
+	
 	
 	<bean id="itemMgr" class="com.smartworks.invtmgmt.core.manager.ItemMgrImpl">
 		<property name="itemDao" ref="itemDao" /> 
@@ -79,6 +85,10 @@
 	
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory"><ref local="sessionFactory"/></property>
+    </bean>
+    
+    <bean id="inventoryManager" class="com.smartworks.invtmgmt.core.manager.InventoryManagerImpl">
+        <property name="inventoryDao"><ref local="inventoryDao"/></property>
     </bean>
     
     <bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">

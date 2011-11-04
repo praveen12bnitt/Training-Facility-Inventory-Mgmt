@@ -72,7 +72,7 @@ public class ItemSkuConverter {
 				ItemAttributeValue attrValObj = itemAttributeValueDao.load(attVal);
 				attDetails.put(attrObj, attrValObj);
 			}
-		}		
+		}	
 		return itemSku;
 	}
 	
