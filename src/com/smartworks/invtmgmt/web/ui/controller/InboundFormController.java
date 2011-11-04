@@ -1,6 +1,5 @@
 package com.smartworks.invtmgmt.web.ui.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.business.ItemSku;
+import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.ItemAttribute;
@@ -31,7 +31,6 @@ import com.smartworks.invtmgmt.web.ui.form.TransactionForm;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItem;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItemAttribute;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItemAttributeValue;
-import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormLocation;
 
 
@@ -49,7 +48,7 @@ public class InboundFormController {
 	LocationDao locDao = null;
   
 	@RequestMapping(value="/transfer.form", method=RequestMethod.GET)
-	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId) {
+	public ModelAndView displayTransaction() {
 		List<Item> items = itemMgr.getAllItems();
 		ModelMap myModel = new ModelMap();
         myModel.put("itemList", items);
