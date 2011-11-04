@@ -1,6 +1,8 @@
 package com.smartworks.invtmgmt.core.manager;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Propagation;
@@ -43,43 +45,52 @@ public class InvtTransMgrImpl implements InvtTransManager {
 		return tranTypeDao.loadAll();
 	}
 
+	
 	@Override
 	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
 	public List<TransactionType> getTransactionsForLocation(Integer locationId) {
 		return tranTypeDao.getTransactionsForLocation(locationId);
 	}
 	
+	/**
+	 * @deprecated Use {@link #processInventoryChange(TransactionDetailsHolder)} method directly by setting {@link TransactionTypeEnum} to TRANSFER_INVENTORY and setting the 
+	 * srcLocation to -1
+	 */
+	@Deprecated
 	@Transactional(readOnly=false,propagation=Propagation.REQUIRED)
 	public boolean receiveInventory(Integer locationId,List<ItemSku> skus) {
-		boolean returnVal = false;		
-		for (ItemSku itemSku : skus) {
-			InventoryPk inventoryPk = new InventoryPk();
-			Location loc = new Location(locationId);
-			inventoryPk.setLocation(loc);
-			loc.setLocationId(locationId);
-			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
-			inventoryPk.setSkuCode(itemSkuCode);
-			inventoryDao.addAvailableInventory(inventoryPk, itemSku.getQuantity());
-		}
-		return returnVal;
+		
+		//TODO : Create dummy TransactionDetailsHolder pojo and delegate the call to processInventoryChange() method. When time permits, remove this method and 
+		// delege the call directly to processInventoryChange method		
+		TransactionDetailsHolder transDetailsHolder = new TransactionDetailsHolder();
+		Date date= new Date();
+		System.out.println(new Timestamp(date.getTime()));
+		transDetailsHolder.setDttm(new Timestamp(date.getTime()));
+		transDetailsHolder.setItemSkus(skus);
+		transDetailsHolder.setLocationId(locationId);
+		transDetailsHolder.setSrcLocationId(-1);
+		transDetailsHolder.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
+		return processInventoryChange(transDetailsHolder);		
+		
 	}
 	
+	/**
+	 * @deprecated Use {@link #processInventoryChange(TransactionDetailsHolder)} method directly by setting {@link TransactionTypeEnum} to TRANSFER_INVENTORY and setting the 
+	 * locationId and srcLocation.
+	 */
+	@Deprecated
 	@Transactional(readOnly=false,propagation=Propagation.REQUIRED)
 	public boolean transferInventory(Integer sourceLoc,Integer targetLoc,List<ItemSku> skus) {		
-		for (ItemSku itemSku : skus) {
-			InventoryPk srcInventoryPk = new InventoryPk();
-			InventoryPk targetInventoryPk = new InventoryPk();
-			
-			srcInventoryPk.setLocation(new Location(sourceLoc));
-			srcInventoryPk.setSkuCode(itemSkuConverter.getItemSkuCode(itemSku));
-			
-			targetInventoryPk.setLocation(new Location(targetLoc));
-			targetInventoryPk.setSkuCode(itemSkuConverter.getItemSkuCode(itemSku));
-						
-			inventoryDao.reduceAvailableInventory(srcInventoryPk, itemSku.getQuantity());			
-			inventoryDao.addAvailableInventory(targetInventoryPk, itemSku.getQuantity());			
-		}
-		return true;		
+		
+		TransactionDetailsHolder transDetailsHolder = new TransactionDetailsHolder();
+		Date date= new Date();
+		System.out.println(new Timestamp(date.getTime()));
+		transDetailsHolder.setDttm(new Timestamp(date.getTime()));
+		transDetailsHolder.setItemSkus(skus);
+		transDetailsHolder.setLocationId(targetLoc);
+		transDetailsHolder.setSrcLocationId(sourceLoc);
+		transDetailsHolder.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
+		return processInventoryChange(transDetailsHolder);	
 	}
 	
 	@Transactional(readOnly=false,propagation=Propagation.REQUIRED)

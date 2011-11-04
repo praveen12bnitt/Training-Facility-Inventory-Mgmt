@@ -16,10 +16,20 @@ public interface InvtTransManager {
 	
 	public List<TransactionType> getTransactionsForLocation(Integer locationId);
 	
+	/**
+	 * @deprecated Use {@link #processInventoryChange(TransactionDetailsHolder)} method directly by setting {@link TransactionTypeEnum} to TRANSFER_INVENTORY and setting the 
+	 * srcLocation to -1
+	 */
+	@Deprecated
 	public boolean transferInventory(Integer sourceLoc,Integer targetLoc,List<ItemSku> skus);
 	
 	public boolean processInventoryChange(TransactionDetailsHolder transDetails);
 	
+	/**
+	 * @deprecated Use {@link #processInventoryChange(TransactionDetailsHolder)} method directly by setting {@link TransactionTypeEnum} to TRANSFER_INVENTORY and setting the 
+	 * srcLocation to -1
+	 */
+	@Deprecated
 	public boolean receiveInventory(Integer locationId,List<ItemSku> skus) ;
 	
 	public List<TransactionDetailsHolder> loadAllOpenTrans(Integer locationId,Integer userId,TransactionTypeEnum transType) ;

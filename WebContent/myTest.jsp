@@ -24,7 +24,7 @@ TestClass test = new TestClass();
 
 //test.transferInventory();
 
-//test.processInvChange();
+test.processInvChange();
 
 //test.processInvChange1();
 
@@ -35,7 +35,7 @@ TestClass test = new TestClass();
 //test.processReturs();
 //test.processRetursWithMissing();
 
-test.reportMissingItem();
+//test.reportMissingItem();
 
 
 

@@ -94,7 +94,7 @@ CREATE TABLE `location` (
   PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+INSERT INTO `location` (`location_id`,`LOCATION_NAME`) VALUES (-1,'External Location');
 INSERT INTO `location` (`location_id`,`LOCATION_NAME`) VALUES (1,'Equipment');
 INSERT INTO `location` (`location_id`,`LOCATION_NAME`) VALUES (2,'Uniform ');
 INSERT INTO `location` (`location_id`,`LOCATION_NAME`) VALUES (3,'Gym');
@@ -112,11 +112,14 @@ CREATE TABLE `transaction_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('ACCEPT_UNIFORM_FROM_LAUNDRY',2,'Receive uniform from Laundry');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('ISSUE_UNIFORM_STAFF',2,'Issue Uniform to Staff');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('ISSUE_UNIFORM_STUDENT',2,'Issue Uniform to Students');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('REPORT_MISSING_UNIFORM_STAFF',2,'Report missing uniform by Staff');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('REPORT_MISSING_UNIFORM_STUDENT',2,'Report missing uniform by Student');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('RETURN_UNIFORM_STUDENT',2,'Uniform returns by Students');
+INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('TRANSFER_INVENTORY',-1,'Transfer inventory from one location to other');
+
 
 
 -- Transaction item mapping

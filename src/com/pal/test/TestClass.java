@@ -141,7 +141,17 @@ public class TestClass {
 
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
 		
-		inventoryMgr.transferInventory(1, 2, itemSku);
+		TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
+		transDetails.setLocationId(2);
+		transDetails.setSrcLocationId(1);
+		transDetails.setItemSkus(itemSku);
+		transDetails.setUserId(100);
+		Date date= new Date();
+		System.out.println(new Timestamp(date.getTime()));
+		transDetails.setDttm(new Timestamp(date.getTime()));
+		transDetails.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
+		
+		inventoryMgr.processInventoryChange(transDetails);
 		
 		
 	}
@@ -173,9 +183,19 @@ public class TestClass {
 		
 		itemSku.add(sku);
 		
+		TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
+		transDetails.setLocationId(1);
+		transDetails.setSrcLocationId(-1);
+		transDetails.setItemSkus(itemSku);
+		transDetails.setUserId(100);
+		Date date= new Date();
+		System.out.println(new Timestamp(date.getTime()));
+		transDetails.setDttm(new Timestamp(date.getTime()));
+		transDetails.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
+		
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
 		
-		inventoryMgr.receiveInventory(1, itemSku);
+		inventoryMgr.processInventoryChange(transDetails);
 		
 		
 	}
