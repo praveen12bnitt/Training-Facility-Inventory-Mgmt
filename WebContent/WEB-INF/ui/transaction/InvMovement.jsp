@@ -42,14 +42,23 @@
 	To Location
 </td>
 <td>
-     	<form:select path="locationList[0].selectedValue" id="tolocn">
+     <!--  <form:select path="locationList[0].selectedValue" id="tolocn">
      					<c:forEach items="${transactionForm.locationList}" var="uiFormLocation">
      							<form:option value="${uiFormLocation.location_id}">
      							${uiFormLocation.locationName}
      						</form:option>
      						
      					</c:forEach>
-     		</form:select>		
+     		</form:select>		-->	
+     		 <form:select path="targetLocation" >
+     					<c:forEach items="${locationList}" var="location">
+     							<form:option value="${location.locationId}">
+     								${location.locationName}
+     						</form:option>
+     						
+     					</c:forEach>
+     		</form:select>	
+     		
 	
 </td>
 </tr>
