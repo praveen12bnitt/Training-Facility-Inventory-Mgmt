@@ -2,7 +2,7 @@ package com.smartworks.invtmgmt.web.ui.transfer;
 
 import java.io.Serializable;
 
-public class UIFormItemAttributeValue implements Serializable {
+public class UIFormItemAttributeValue implements Serializable,Comparable {
 	
 	private Integer itemId;
 	private Integer itemAttributeId;
@@ -33,6 +33,11 @@ public class UIFormItemAttributeValue implements Serializable {
 	}
 	public void setItemAttributeValue(String itemAttributeValue) {
 		this.itemAttributeValue = itemAttributeValue;
+	}
+	@Override
+	public int compareTo(Object o) {
+		UIFormItemAttributeValue o1 = (UIFormItemAttributeValue)o;	
+		return itemAttributeValueId.compareTo(o1.getItemAttributeValueId());
 	}
 	
 	
