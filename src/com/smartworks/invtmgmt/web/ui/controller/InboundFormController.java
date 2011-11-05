@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.business.ItemSku;
+import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
@@ -67,8 +68,17 @@ public class InboundFormController {
 		mav.addObject("receiveForm", transactionForm);
 		return mav;
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(value="/transferToMW.form", method=RequestMethod.GET)
+	public ModelAndView displayInventoryToMW(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId) {
+		List<Item> items = itemMgr.getAllItems();
+		ModelMap myModel = new ModelMap();
+        myModel.put("itemList", items);
+        TransactionForm transactionForm = populateUIFormObjects();
+        ModelAndView mav = new ModelAndView("transaction/InvTransferToMW","model",myModel);
+		mav.addObject("transferForm", transactionForm);
+		return mav;
+	}	
+	@RequestMapping(value="/transfer.form", method=RequestMethod.POST)
 	public ModelAndView transferSKU(HttpServletRequest request,
 			HttpServletResponse response, @ModelAttribute("transactionForm") TransactionForm transactionForm) 
 	{
@@ -111,7 +121,14 @@ public class InboundFormController {
 				 }
 				}
 			
-			boolean retval= invtTransMgr.transferInventory(fromLocn,toLocn,skus);
+			//boolean retval= invtTransMgr.transferInventory(fromLocn,toLocn,skus);
+			TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
+			transDetails.setItemSkus(skus);
+			transDetails.setUserId(100);
+			transDetails.setSrcLocationId(fromLocn);
+			transDetails.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
+			transDetails.setLocationId(toLocn);
+			boolean retval = invtTransMgr.processInventoryChange(transDetails);
 			} catch (Exception e) {
 				// TODO: handle exception
 				error = true;
@@ -133,7 +150,80 @@ public class InboundFormController {
 		
 		return mav;
 	}
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(value="/transferToMW.form", method=RequestMethod.POST)
+	public ModelAndView transferToMW(HttpServletRequest request,
+			HttpServletResponse response, @ModelAttribute("transactionForm") TransactionForm transactionForm) 
+	{
+		boolean error = false;
+		try {
+			
+			List<UIFormItem> uiFormItems = transactionForm.getListUIFormItems();
+			List<UIFormLocation> uiFormLocations = transactionForm.getLocationList();
+			
+			List<ItemSku> skus = new ArrayList<ItemSku>();
+			int fromLocn = 0; 
+			int toLocn = 4; // Master Warehouse
+			for (UIFormLocation uiFormLocation: uiFormLocations) {
+				fromLocn = Integer.parseInt(uiFormLocation.getSelectedValue());
+			}
+			
+			for (UIFormItem uiformItem: uiFormItems) {
+				if(uiformItem.getItemQty() !=null && uiformItem.getItemQty() > 0) {
+					ItemSku sku = new ItemSku();
+					Item item = new Item(uiformItem.getItemId());
+					sku.setQuantity(uiformItem.getItemQty());
+					sku.setItem(item);
+					
+					Map<ItemAttribute, ItemAttributeValue> itemAttributeDetails = new HashMap<ItemAttribute, ItemAttributeValue>();
+					List<UIFormItemAttribute> uiFormItemAttributes = uiformItem.getUiFormItemAttributes();
+					if(uiFormItemAttributes != null){
+						for (UIFormItemAttribute uiFormItemAttribute: uiFormItemAttributes) {
+							ItemAttribute itemAttrib = new ItemAttribute();
+							ItemAttributeValue itemAttributeVal = new ItemAttributeValue();
+							itemAttrib.setAttibuteId(uiFormItemAttribute.getItemAttributeId());
+							itemAttributeVal.setAttributeValueId(Integer.parseInt(uiFormItemAttribute.getSelectedAttributeValue()));
+							System.out.println("Name"+uiFormItemAttribute.getItemAttributeId());
+							System.out.println("Value"+uiFormItemAttribute.getSelectedAttributeValue());
+							itemAttributeDetails.put(itemAttrib, itemAttributeVal);
+						}
+						sku.setItemAttributeDetails(itemAttributeDetails);
+						uiFormItemAttributes = null;
+					}
+					skus.add(sku);
+				 }
+				}
+			
+			//boolean retval= invtTransMgr.transferInventory(fromLocn,toLocn,skus);
+			
+			TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
+			transDetails.setItemSkus(skus);
+			transDetails.setUserId(100);
+			transDetails.setSrcLocationId(fromLocn);
+			transDetails.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
+			transDetails.setLocationId(toLocn);
+			boolean retval = invtTransMgr.processInventoryChange(transDetails);
+			} catch (Exception e) {
+				// TODO: handle exception
+				error = true;
+			}
+	
+		
+		List<Item> items = itemMgr.getAllItems();
+		ModelMap myModel = new ModelMap();
+        myModel.put("itemList", items);
+        transactionForm = populateUIFormObjects();
+        if(error) {
+        	transactionForm.getLocationList().get(0).setError("Failed to transfer");
+        } else {
+        	transactionForm.getLocationList().get(0).setError("success");
+        }
+       
+		ModelAndView mav = new ModelAndView("transaction/InvTransferToMW","model",myModel);
+		mav.addObject("transferForm", transactionForm);
+		
+		return mav;
+	}
+	@RequestMapping(value="/receive.form",method=RequestMethod.POST)
 	public ModelAndView receiveInventory(HttpServletRequest request,
 			HttpServletResponse response, @ModelAttribute("receiveForm") TransactionForm transactionForm) 
 	{
@@ -171,9 +261,18 @@ public class InboundFormController {
 				 }
 				}
 			
-			boolean retval= invtTransMgr.receiveInventory(toLocation, skus);
+			//boolean retval= invtTransMgr.receiveInventory(toLocation, skus);
+		
+			TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
+			transDetails.setItemSkus(skus);
+			transDetails.setUserId(100);
+			transDetails.setSrcLocationId(-1); //Vendor
+			transDetails.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
+			transDetails.setLocationId(toLocation);
+			
+			boolean retval = invtTransMgr.processInventoryChange(transDetails);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 				error = true;
 			}
 	

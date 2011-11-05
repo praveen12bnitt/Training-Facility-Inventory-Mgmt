@@ -52,7 +52,6 @@
 	To Location
 </td>
 <td>
-	
      	<form:select path="locationList[0].selectedValue" id="tolocn">
      					<c:forEach items="${transactionForm.locationList}" var="uiFormLocation">
      							<form:option value="${uiFormLocation.location_id}">
@@ -108,6 +107,7 @@
 
 
   <input type="submit" name="submit" value="Transfer">
+  <input type="reset" value="Reset Form">
   
 </form:form>
 <script>

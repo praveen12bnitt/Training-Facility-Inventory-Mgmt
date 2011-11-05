@@ -1,5 +1,3 @@
-<%@ page errorPage ="ErrorPage.jsp" %>
-
 
 <%@ include file="/WEB-INF/ui/commoninclude.jsp" %>
 <%@ page language="java" import="java.util.*,com.smartworks.invtmgmt.core.domain.*" %>
@@ -26,27 +24,56 @@
     <img src="<c:url value='/images/logo.jpg' />" alt="" title="logo.gif" height="78" width="345"></a>
 </div>
 <a id="logout" accesskey="2" href="<c:url value='/j_spring_security_logout' />">logout</a>
-<form:form method="post" commandName="receiveForm" >
+<form:form method="post" commandName="transferForm" >
 <form:errors path="locationList[0].error" cssClass="errors"/>
 <table width="65%" class="reference">
 <tr>
 	<th colspan="2" align="left">Transaction Type:</th>
 	<td colspan="2" align="left">
-		<c:out value="Receive Inventory" />
+		<c:out value="Transfer Inventory To MW" />
 	</td>
 
 </tr>
 </table>
+<table>
+<tr>
+<td>
+	From Location
+</td>
+<td>
 
+     	<form:select path="locationList[0].selectedValue" id="tolocn">
+     					<c:forEach items="${transferForm.locationList}" var="uiFormLocation">
+     							<form:option value="${uiFormLocation.location_id}">
+     							${uiFormLocation.locationName}
+     						</form:option>
+     						
+     					</c:forEach>
+     		</form:select>		
+	
+</td>
+</tr>
+<tr>
+<td>
+	To Location
+</td>
+<td>
+
+	<select id="fromlocn">
+	<option value="UI">WM</option>option></select>
+	
+</td>
+</tr>
+</table>
 <br>
- <table  id="tblTransactionForm" class="reference" width="80%">
+ <table  id="tblTransferToMWForm" class="reference" width="80%">
     <tr id="rowx">
       <th align="left" width="20%">Item</th>
       <th align="left" width="20%">Attributes</th>
       <th align="left" width="20%">Quantity</th>
     </tr>
    
-     <c:forEach items="${receiveForm.listUIFormItems}" var="uiFormItem" varStatus="uifItemRow">
+     <c:forEach items="${transferForm.listUIFormItems}" var="uiFormItem" varStatus="uifItemRow">
      	<tr id="${ uiFormItem.itemId }">
      		<td>
      			<a id="plusgif" href="#"><img src="<c:url value='/images/plus.gif' />" height="10px" width="10px" /></a>
@@ -80,15 +107,16 @@
 </br>
 
 
-  <input type="submit" name="submit" value="Receive">
+  <input type="submit" name="submit" value="Transfer To MW">
   <input type="reset" value="Reset Form">
+  
 </form:form>
 <script>
 $('a').click(function(){	    
 	   
 	var rowIndex = $(this).parent().parent().parent().children()
 						.index($(this).parent().parent());
-				var tableObj = document.getElementById("tblTransactionForm");
+				var tableObj = document.getElementById("tblTransferToMWForm");
 				var refRow = tableObj.rows[rowIndex];
 				var newRow = tableObj.insertRow(rowIndex + 1);
 				var oldHTML = refRow.innerHTML;
