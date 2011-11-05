@@ -1,7 +1,6 @@
-	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/memu-0.1.css" />
+<link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/memu-0.1.css" />' />
 
 <div id="portal-header">
-
 <a id="portal-logo" accesskey="1" href="http://www.fletc.gov">
 
     <img src="<c:url value='/images/logo.jpg' />" alt="" title="logo.gif" height="78" width="345"></a>
@@ -15,15 +14,15 @@
 				<li class="memu-root">
 					<a href="#">Warehouse</a>
 					<ul>						
-						<li><a href="${pageContext.request.contextPath}/inbound/receive.form?transactionTypeId="><div class="memu-icon sprite-folder"></div>Receive</a></li>
-						<li><a href="${pageContext.request.contextPath}/"><div class="memu-icon sprite-folder"></div>Outbound</a></li>
-						<li><a href="${pageContext.request.contextPath}/inbound/transfer.form?transactionTypeId="><div class="memu-icon sprite-disk"></div>Transfer Inventory</a></li>
+						<li><a href='<c:url value="/inbound/receive.form?transactionTypeId=" />'><div class="memu-icon sprite-folder"></div>Receive</a></li>
+						<li><a href='<c:url value="/" />'><div class="memu-icon sprite-folder"></div>Outbound</a></li>
+						<li><a href='<c:url value="/inbound/transfer.form?transactionTypeId=" />'><div class="memu-icon sprite-disk"></div>Transfer Inventory</a></li>
 					</ul>
 				</li>
 				<li class="memu-root">
 					<a href="#">Uniform</a>
 					<ul>
-						<li><a href="#">Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT" />'>Issue</a></li>
 						<li><a href="#">Return</a></li>
 						<li><a href="#">Transfer Inventory</a></li>
 											</ul>
@@ -58,7 +57,7 @@
 						
 						<li><a href="#">Location</a></li>
 						<li><a href="#">Item Inventory</a></li>
-						<li><a href="${pageContext.request.contextPath}/reports/inventory-all.form">Inventory - Misc</a></li>						
+						<li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>						
 						</ul>
 				</li>
 					<li class="memu-root">
@@ -88,6 +87,6 @@
 			});
 		  });
 		</script>
-		<script src="${pageContext.request.contextPath}/js/jquery/jquery.memu-0.1.min.js" type="text/javascript"></script>
+		<script src='<c:url value="/js/jquery/jquery.memu-0.1.min.js" />' type="text/javascript"></script>
 		
 	

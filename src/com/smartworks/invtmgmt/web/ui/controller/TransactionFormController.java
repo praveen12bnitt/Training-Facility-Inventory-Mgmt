@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
+import com.smartworks.invtmgmt.converter.UIDomainConverter;
+import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.ItemAttribute;
@@ -28,6 +31,7 @@ import com.smartworks.invtmgmt.web.ui.form.TransactionForm;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItem;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItemAttribute;
 import com.smartworks.invtmgmt.web.ui.transfer.UIFormItemAttributeValue;
+import com.smartworks.invtmgmt.web.ui.transfer.UIFormLocation;
 
 @Controller
 @RequestMapping("/createtransaction")
@@ -39,18 +43,23 @@ public class TransactionFormController {
 	TransactionTypeDao transactionTypeDao = null;
 	@Autowired
 	InvtTransManager invtTransMgr = null;
+	@Autowired
+	LocationDao locationDao = null;
   
 	@RequestMapping(value="/issue.form", method=RequestMethod.GET)
 	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId, 
-			@RequestParam(required = false) Integer id) {
+			@RequestParam(required = false) Integer locationId) {
 		
 		
 		TransactionType transactionType = transactionTypeDao.load(transactionTypeId);
 		
-        TransactionForm transactionForm = populateUIFormObjects(transactionType);
+        TransactionForm transactionForm = populateUIFormObjects(transactionType, request);
         //request.setAttribute("transactionForm", transactionForm);
 		ModelAndView mav = new ModelAndView("transaction/createtransaction");
 		mav.addObject("transactionForm", transactionForm);
+		if(locationId != null) {
+			mav.addObject("location", locationDao.load(locationId));
+		}
 		return mav;
 	}
 	
@@ -66,16 +75,29 @@ public class TransactionFormController {
 	public ModelAndView createTransaction(HttpServletRequest request,
 			HttpServletResponse response, @ModelAttribute("transactionForm") TransactionForm transactionForm) 
 	{
-		System.out.println(request);
-		return null;
+		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(transactionForm);
+		boolean qtyIssued = false;
+		try {
+			qtyIssued =	invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		ModelAndView mav = new ModelAndView("transaction/createtransaction");
+		mav.addObject("transactionForm", transactionForm);
+		mav.addObject("location", locationDao.load(transactionForm.getTargetLocation()));
+		String transactionFormMessage = (qtyIssued)?"Quantity Issue Succeeded":"Quantity Issue Failed";
+		mav.addObject("transactionFormMessage", transactionFormMessage);
+		return mav;
+		
 	}
 	
-	private TransactionForm populateUIFormObjects(TransactionType transactionType) {
+	private TransactionForm populateUIFormObjects(TransactionType transactionType,HttpServletRequest request) {
 			
 		List<Item> items = itemMgr.getItemsForTransaction(transactionType);
 		TransactionForm transactionForm = new TransactionForm();
 		transactionForm.setTransactionType(transactionType.getTransactionDesc());
 		List<UIFormItem> uiFormItems = new ArrayList<UIFormItem>();
+		
 		for(Item item: items) {
 			UIFormItem uiFormItem = new UIFormItem();
 			uiFormItem.setItemId(item.getId());
@@ -106,6 +128,7 @@ public class TransactionFormController {
 			uiFormItem.setUiFormItemAttributes(uiFormItemAttributes);
 			uiFormItems.add(uiFormItem);
 		}
+		transactionForm.setTargetLocation(2);
 		transactionForm.setListUIFormItems(uiFormItems);
 		return transactionForm;
 	}

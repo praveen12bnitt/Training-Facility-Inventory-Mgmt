@@ -22,9 +22,9 @@ TestClass test = new TestClass();
 
 //test.receiveInventory();
 
-//test.transferInventory();
+test.transferInventory();
 
-test.processInvChange();
+//test.processInvChange();
 
 //test.processInvChange1();
 
