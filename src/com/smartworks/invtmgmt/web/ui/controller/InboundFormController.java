@@ -1,6 +1,7 @@
 package com.smartworks.invtmgmt.web.ui.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +113,7 @@ public class InboundFormController {
 							System.out.println("Value"+uiFormItemAttribute.getSelectedAttributeValue());
 							itemAttributeDetails.put(itemAttrib, itemAttributeVal);
 						}
-						sku.setItemAttributeDetails(itemAttributeDetails);
+						//sku.setItemAttributeDetails(itemAttributeDetails);
 						uiFormItemAttributes = null;
 					}
 					skus.add(sku);
@@ -184,7 +185,7 @@ public class InboundFormController {
 							System.out.println("Value"+uiFormItemAttribute.getSelectedAttributeValue());
 							itemAttributeDetails.put(itemAttrib, itemAttributeVal);
 						}
-						sku.setItemAttributeDetails(itemAttributeDetails);
+						//sku.setItemAttributeDetails(itemAttributeDetails);
 						uiFormItemAttributes = null;
 					}
 					skus.add(sku);
@@ -252,7 +253,7 @@ public class InboundFormController {
 							System.out.println("Value"+uiFormItemAttribute.getSelectedAttributeValue());
 							itemAttributeDetails.put(itemAttrib, itemAttributeVal);
 						}
-						sku.setItemAttributeDetails(itemAttributeDetails);
+						//sku.setItemAttributeDetails(itemAttributeDetails);
 						uiFormItemAttributes = null;
 					}
 					skus.add(sku);
@@ -325,6 +326,7 @@ private TransactionForm populateUIFormObjects() {
 			uiFormItemAttribute.setItemAttributeName(itemAttribute.getAttributeName());
 			
 			List<UIFormItemAttributeValue> uiFormItemAttributeValues = new ArrayList<UIFormItemAttributeValue>();
+			
 			for(ItemAttributeValue itemAttributeValue: itemAttributeMapping.get(itemAttribute)) {
 				UIFormItemAttributeValue uiFormItemAttributeValue = new UIFormItemAttributeValue();
 				uiFormItemAttributeValue.setItemId(item.getId());
@@ -333,7 +335,7 @@ private TransactionForm populateUIFormObjects() {
 				uiFormItemAttributeValue.setItemAttributeValue(itemAttributeValue.getAttributeValue());
 				uiFormItemAttributeValues.add(uiFormItemAttributeValue);
 			}
-			
+			Collections.sort(uiFormItemAttributeValues);
 			uiFormItemAttribute.setItemAttributeValues(uiFormItemAttributeValues);
 			uiFormItemAttributes.add(uiFormItemAttribute);
 		}

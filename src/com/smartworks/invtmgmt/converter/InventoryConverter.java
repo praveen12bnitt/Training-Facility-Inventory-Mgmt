@@ -1,5 +1,6 @@
 package com.smartworks.invtmgmt.converter;
 
+import com.smartworks.invtmgmt.business.ItemAttributeDetails;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.ItemAttribute;
@@ -15,10 +16,11 @@ public class InventoryConverter {
 		uiInventory.setItemId(itemSku.getItem().getId());
 		uiInventory.setItemDesc(itemSku.getItem().getName());
 		uiInventory.setQuantity(inventory.getAvailableQty());
-		StringBuilder sb = new StringBuilder();
-		for(ItemAttribute attr : itemSku.getItemAttributeDetails().keySet()) {
-			String attrName = attr.getAttributeName();
-			String attrVal = itemSku.getItemAttributeDetails().get(attr).getAttributeValue();
+		StringBuilder sb = new StringBuilder();	
+		
+		for(ItemAttributeDetails itemAttributeDetails : itemSku.getItemAttributeDtls()) {
+			String attrName = itemAttributeDetails.getItemAttribute().getAttributeName();			
+			String attrVal = itemAttributeDetails.getItemAttributeValue().getAttributeValue();
 			sb.append(attrName);
 			sb.append(":");
 			sb.append(attrVal);

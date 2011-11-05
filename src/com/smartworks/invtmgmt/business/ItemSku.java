@@ -1,60 +1,46 @@
 package com.smartworks.invtmgmt.business;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
+import org.springframework.util.AutoPopulatingList;
 
 import com.smartworks.invtmgmt.converter.ItemSkuConverter;
 import com.smartworks.invtmgmt.core.domain.Item;
-import com.smartworks.invtmgmt.core.domain.ItemAttribute;
-import com.smartworks.invtmgmt.core.domain.ItemAttributeValue;
 import com.smartworks.platform.AppContextUtil;
 
 public class ItemSku {
 	
-	Item item;
-	Map<ItemAttribute,ItemAttributeValue> itemAttributeDetails = new HashMap<ItemAttribute, ItemAttributeValue>();
+	Item item = new Item();
+		
+	List<ItemAttributeDetails> itemAttributeDtls = new AutoPopulatingList<ItemAttributeDetails>(ItemAttributeDetails.class);;
 	
 	String skuCode;		
 	Integer quantity;
 	
 	ItemSkuConverter itemSkuConverter = AppContextUtil.getBean("itemSkuConverter");
 	
-	public ItemSku(Item item,
-			Map<ItemAttribute, ItemAttributeValue> itemAttributeDetails) {
+	public ItemSku(Item item, List<ItemAttributeDetails> itemAttributeDtls) {
 		super();
 		this.item = item;
-		this.itemAttributeDetails = itemAttributeDetails;
+		this.itemAttributeDtls = itemAttributeDtls;
 	}
-	
-	
-	
+		
 	public ItemSku() {
 		super();
 	}
-
-
 
 	public ItemSku(String skuCode) {
 		super();
 		this.skuCode = skuCode;
 	}
 
-	public Map<ItemAttribute, ItemAttributeValue> getItemAttributeDetails() {
-		return itemAttributeDetails;
-	}
-
-	public void setItemAttributeDetails(
-			Map<ItemAttribute, ItemAttributeValue> itemAttributeDetails) {
-		this.itemAttributeDetails = itemAttributeDetails;
-	}
-
 	public Item getItem() {
-		if(item == null) {
+		if(item == null || item.getId() == null) {
 			// Check generate item and itemAttributeDetails object if skuCode is not null
 			if(skuCode != null) {
 				ItemSku s = itemSkuConverter.getItemSku(skuCode);
 				item = s.getItem();
-				itemAttributeDetails = s.getItemAttributeDetails();
+				itemAttributeDtls = s.getItemAttributeDtls();
 			}
 		}
 		return item;
@@ -84,5 +70,29 @@ public class ItemSku {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+
+
+	public List<ItemAttributeDetails> getItemAttributeDtls() {
+		return itemAttributeDtls;
+	}
+
+
+
+	public void setItemAttributeDtls(List<ItemAttributeDetails> itemAttributeDtls) {
+		this.itemAttributeDtls = itemAttributeDtls;
+	}
+
+
+
+	public ItemSkuConverter getItemSkuConverter() {
+		return itemSkuConverter;
+	}
+
+
+
+	public void setItemSkuConverter(ItemSkuConverter itemSkuConverter) {
+		this.itemSkuConverter = itemSkuConverter;
 	}
 }
