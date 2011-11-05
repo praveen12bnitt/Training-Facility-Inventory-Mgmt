@@ -19,27 +19,20 @@
 
 <body>
 
-<div id="portal-header">
+<%@ include file="/WEB-INF/ui/menu.jsp" %>
+<br>
 
-<a id="portal-logo" accesskey="1" href="http://www.fletc.gov">
-
-    <img src="<c:url value='/images/logo.jpg' />" alt="" title="logo.gif" height="78" width="345"></a>
-</div>
-<a id="logout" accesskey="2" href="<c:url value='/j_spring_security_logout' />">logout</a>
 <form:form method="post" commandName="receiveForm" >
 <form:errors path="locationList[0].error" cssClass="errors"/>
-<table width="65%" class="reference">
-<tr>
-	<th colspan="2" align="left">Transaction Type:</th>
-	<td colspan="2" align="left">
-		<c:out value="Receive Inventory" />
-	</td>
 
-</tr>
-</table>
 
 <br>
  <table  id="tblTransactionForm" class="reference" width="80%">
+<tr>
+<th colspan="3"><div>
+<c:out value="Receive Inventory" />
+</div></th>
+</tr>
     <tr id="rowx">
       <th align="left" width="20%">Item</th>
       <th align="left" width="20%">Attributes</th>
@@ -77,7 +70,6 @@
      </c:forEach>
     
     </table>
-</br>
 
 
   <input type="submit" name="submit" value="Receive">
