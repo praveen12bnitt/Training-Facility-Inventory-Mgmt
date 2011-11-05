@@ -7,12 +7,11 @@ import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 
 public class InventoryConverter {
 
-	ItemSkuConverter itemSkuConverter;
 	
 	public UIInventory getUIInventory(Inventory inventory) {
 		UIInventory uiInventory = new UIInventory();		
 		uiInventory.setLocation(inventory.getSkuLocation().getLocation().getLocationName());
-		ItemSku itemSku = itemSkuConverter.getItemSku(inventory.getSkuLocation().getSkuCode());
+		ItemSku itemSku = inventory.getItemSku();
 		uiInventory.setItemId(itemSku.getItem().getId());
 		uiInventory.setItemDesc(itemSku.getItem().getName());
 		uiInventory.setQuantity(inventory.getAvailableQty());
@@ -29,11 +28,5 @@ public class InventoryConverter {
 		return uiInventory;
 	}
 
-	public ItemSkuConverter getItemSkuConverter() {
-		return itemSkuConverter;
-	}
-
-	public void setItemSkuConverter(ItemSkuConverter itemSkuConverter) {
-		this.itemSkuConverter = itemSkuConverter;
-	}
+	
 }

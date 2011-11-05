@@ -59,7 +59,7 @@ public class InboundFormController {
 		return mav;
 	}
 	@RequestMapping(value="/receive.form", method=RequestMethod.GET)
-	public ModelAndView displayInventory(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId) {
+	public ModelAndView displayInventory(HttpServletRequest request, HttpServletResponse response) {
 		List<Item> items = itemMgr.getAllItems();
 		ModelMap myModel = new ModelMap();
         myModel.put("itemList", items);

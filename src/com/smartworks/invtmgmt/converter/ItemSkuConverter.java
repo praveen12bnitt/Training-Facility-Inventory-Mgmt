@@ -1,5 +1,6 @@
 package com.smartworks.invtmgmt.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,14 +55,13 @@ public class ItemSkuConverter {
 	 * @return {@link ItemSku} object
 	 */
 	public ItemSku getItemSku(String itemSkuCode) {
-		ItemSku itemSku = new ItemSku();
-		Map<ItemAttribute, ItemAttributeValue> attDetails = itemSku.getItemAttributeDetails();
+		Map<ItemAttribute, ItemAttributeValue> attDetails = new HashMap<ItemAttribute, ItemAttributeValue>();
 		
 		String[] skuSplit = itemSkuCode.split("-");
 		//First entry is always the items
 		Integer itemId = Integer.valueOf(skuSplit[0]);
 		Item item = itemDao.load(itemId);
-		itemSku.setItem(item);
+		
 		
 		if(skuSplit.length > 1) {
 			for(int i = 1 ; i < skuSplit.length ; i++) {
@@ -72,7 +72,8 @@ public class ItemSkuConverter {
 				ItemAttributeValue attrValObj = itemAttributeValueDao.load(attVal);
 				attDetails.put(attrObj, attrValObj);
 			}
-		}	
+		}			
+		ItemSku itemSku = new ItemSku(item,attDetails);	
 		return itemSku;
 	}
 	
@@ -98,18 +99,5 @@ public class ItemSkuConverter {
 
 	public void setItemDao(ItemDao itemDao) {
 		this.itemDao = itemDao;
-	}
-
-	public void main(String[] args) {
-		String itemCodeStrSample = "1-6:3-4:5";
-		getItemSku(itemCodeStrSample);		
-		ItemSku sku = new ItemSku();
-//		sku.setItemId(10);
-		Map<ItemAttribute,ItemAttributeValue> attDetails = sku.getItemAttributeDetails();
-//		attDetails.put(1, 2);
-//		attDetails.put(3, 4);
-		System.out.println(getItemSkuCode(sku));
-		
-		
 	}
 }

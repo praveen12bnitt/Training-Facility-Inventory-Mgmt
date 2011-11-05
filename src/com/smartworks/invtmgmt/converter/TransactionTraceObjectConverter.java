@@ -23,7 +23,7 @@ public class TransactionTraceObjectConverter {
 		transTrace.setStaffId(transDetails.getStaffId());
 		transTrace.setUserId(transDetails.getUserId());
 		
-		// Not create trans details object from itemSku
+		// Now create trans details object from itemSku
 		List<TransactionDetails> details = new ArrayList<TransactionDetails>();
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
 			TransactionDetails detail = new TransactionDetails();
@@ -53,10 +53,9 @@ public class TransactionTraceObjectConverter {
 		List<ItemSku> itemSkus = new ArrayList<ItemSku>();
 		
 		for(TransactionDetails details : transTrace.getTransDetails() ) {
-			ItemSku sku = new ItemSku();
+			ItemSku sku;
 			sku = itemSkuConverter.getItemSku(details.getSkuCode());
-			sku.setQuantity(details.getQuantity());			
-			sku.setItem(sku.getItem());
+			sku.setQuantity(details.getQuantity());
 			itemSkus.add(sku);			
 		}		
 		holder.setItemSkus(itemSkus);

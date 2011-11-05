@@ -45,10 +45,10 @@ public class InventoryDetailsController {
 
 		List<UIInventory> uiInvtList = new ArrayList<UIInventory>();
 
-		for (Inventory inventory : invtList) {
-			uiInvtList.add(inventoryConverter.getUIInventory(inventory));
+		
+			for (Inventory inventory : invtList) {
+				uiInvtList.add(inventoryConverter.getUIInventory(inventory));
 		}
-
 		response.setRows(uiInvtList);
 		response.setPage("1");
 		response.setTotal("10");

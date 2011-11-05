@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Proxy;
 
+import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
 
 /**
@@ -31,6 +33,9 @@ public class Inventory implements Serializable {
 	
 	@Column(name="unusable_qty")
 	private Integer unusableQty;
+	
+	@Transient
+	public ItemSku itemSku;
 
 	public Integer getAvailableQty() {
 		return availableQty;
@@ -54,6 +59,30 @@ public class Inventory implements Serializable {
 
 	public void setUnusableQty(Integer unusableQty) {
 		this.unusableQty = unusableQty;
+	}
+	
+	public ItemSku getItemSku() {
+		return itemSku;
+	}
+
+	public void setItemSku(ItemSku itemSku) {
+		this.itemSku = itemSku;
+	}
+	
+	public Location getLocation() {
+		return skuLocation.getLocation();
+	}
+	
+	public void setLocation(Location l) {
+		skuLocation.setLocation(l);		
+	}
+	
+	public String getSkuCode() {
+		return skuLocation.getSkuCode();
+	}
+	
+	public void setSkuCode(String skuCode) {
+		skuLocation.setSkuCode(skuCode);
 	}
 	
 }

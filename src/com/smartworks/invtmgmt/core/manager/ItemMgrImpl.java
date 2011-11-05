@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.smartworks.invtmgmt.core.dao.ItemAttributeDao;
+import com.smartworks.invtmgmt.core.dao.ItemAttributeValueDao;
 import com.smartworks.invtmgmt.core.dao.ItemDao;
 import com.smartworks.invtmgmt.core.dao.TransactionItemMappingDao;
 import com.smartworks.invtmgmt.core.domain.Item;
@@ -16,6 +18,8 @@ import com.smartworks.invtmgmt.core.domain.TransactionType;
 public class ItemMgrImpl implements ItemMgr {
 
 	ItemDao itemDao; 
+	ItemAttributeDao itemAttributeDao;
+	ItemAttributeValueDao itemAttributeValueDao;
 	TransactionItemMappingDao transactionItemMappingDao;
 	
 	
@@ -50,6 +54,15 @@ public class ItemMgrImpl implements ItemMgr {
 		return itemList;
 	}
 	
+	public void test() {
+		for(int i = 1;i<20;i++) {
+			System.out.println("Loop:"+i);
+			itemDao.load(new Integer(1));
+			itemAttributeDao.load(new Integer(1));
+			itemAttributeValueDao.load(new Integer(1));
+		}
+	}
+	
 	public List<Item> getAllItemsWithoutAttribute() {
 		return itemDao.loadAll();
 	}
@@ -73,6 +86,22 @@ public class ItemMgrImpl implements ItemMgr {
 	public void setTransactionItemMappingDao(
 			TransactionItemMappingDao transactionItemMappingDao) {
 		this.transactionItemMappingDao = transactionItemMappingDao;
+	}
+
+	public ItemAttributeDao getItemAttributeDao() {
+		return itemAttributeDao;
+	}
+
+	public ItemAttributeValueDao getItemAttributeValueDao() {
+		return itemAttributeValueDao;
+	}
+
+	public void setItemAttributeDao(ItemAttributeDao itemAttributeDao) {
+		this.itemAttributeDao = itemAttributeDao;
+	}
+
+	public void setItemAttributeValueDao(ItemAttributeValueDao itemAttributeValueDao) {
+		this.itemAttributeValueDao = itemAttributeValueDao;
 	}	
 
 }
