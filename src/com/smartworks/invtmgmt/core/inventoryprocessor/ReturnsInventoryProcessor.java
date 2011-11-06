@@ -19,8 +19,8 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 			
 			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
 			inventoryPk.setSkuCode(itemSkuCode);
-			boolean processingReq = itemSku.getItem().getRequiresProcessing();
-			if(processingReq) {
+			Boolean processingReq = itemSku.getItem().getRequiresProcessing();
+			if(processingReq != null && processingReq.booleanValue()) {
 				inventoryDao.addUnusableInventory(inventoryPk, itemSku.getQuantity());				
 			} else {
 				inventoryDao.addAvailableInventory(inventoryPk, itemSku.getQuantity());

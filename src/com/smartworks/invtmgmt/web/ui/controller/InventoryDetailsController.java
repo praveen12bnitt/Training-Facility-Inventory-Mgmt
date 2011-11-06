@@ -14,7 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smartworks.invtmgmt.converter.InventoryConverter;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.manager.InventoryManager;
-import com.smartworks.invtmgmt.web.ui.transfer.inventory.InventoryDetailsResponse;
+import com.smartworks.invtmgmt.core.manager.InvtTransManager;
+import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 
 @Controller
@@ -22,6 +23,10 @@ import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 public class InventoryDetailsController {
 	@Autowired
 	InventoryManager inventoryManager;
+	
+	@Autowired
+	InvtTransManager invtTransMgr;
+	
 
 	@Autowired
 	InventoryConverter inventoryConverter;
@@ -38,8 +43,8 @@ public class InventoryDetailsController {
 
 	@RequestMapping(value = "/allinvt.form", method = RequestMethod.GET)
 	public @ResponseBody
-	InventoryDetailsResponse getAll() {
-		InventoryDetailsResponse response = new InventoryDetailsResponse();
+	ReportDetailsResponse getAll() {
+		ReportDetailsResponse response = new ReportDetailsResponse();
 
 		List<Inventory> invtList = inventoryManager.getAllInventory();
 
@@ -55,5 +60,9 @@ public class InventoryDetailsController {
 		response.setRecords(String.valueOf(uiInvtList.size()));
 		return response;
 	}
-
+	
+	
+	
+	
+	
 }

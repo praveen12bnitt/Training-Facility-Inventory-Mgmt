@@ -23,7 +23,7 @@
 					<a href="#">Uniform</a>
 					<ul>
 						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT" />'>Issue</a></li>
-						<li><a href="#">Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Return</a></li>
 						<li><a href="#">Transfer Inventory</a></li>
 											</ul>
 				</li>

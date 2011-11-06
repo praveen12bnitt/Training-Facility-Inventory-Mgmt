@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.smartworks.invtmgmt.business.ItemAttributeDetails;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
@@ -22,6 +24,7 @@ import com.smartworks.invtmgmt.core.domain.TransactionType;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
+import com.smartworks.invtmgmt.web.ui.transfer.UITransactionTrace;
 import com.smartworks.platform.AppContextUtil;
 
 public class TestClass {
@@ -440,4 +443,7 @@ List<ItemAttributeDetails> attributeDtls = new ArrayList<ItemAttributeDetails>()
 		transDetails.setTransactionType(TransactionTypeEnum.REPORT_MISSING_UNIFORM_STUDENT);
 		
 		inventoryMgr.processInventoryChange(transDetails);
-	}}
+	}
+	
+	
+}

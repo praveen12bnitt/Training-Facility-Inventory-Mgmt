@@ -5,6 +5,7 @@ import java.util.List;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.business.UserTransactionDetails;
+import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.TransactionType;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 
@@ -35,6 +36,8 @@ public interface InvtTransManager {
 	public List<TransactionDetailsHolder> loadAllOpenTrans(Integer locationId,Integer userId,TransactionTypeEnum transType) ;
 	
 	public List<UserTransactionDetails> getAllOpenTransactionForUser(Integer locationId,Integer traineeId,TransactionTypeEnum transType) ;
+	
+	public List<TransactionTrace> getOpenTransactionsForUser(Integer locationId,Integer traineeId,TransactionTypeEnum transType);
 	
 	public TransactionDetailsHolder getTransDetails(Integer transId);
 	

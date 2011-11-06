@@ -2,7 +2,7 @@ package com.smartworks.invtmgmt.web.ui.transfer.inventory;
 
 import java.util.List;
 
-public class InventoryDetailsResponse {
+public class ReportDetailsResponse {
 
 	/**
 	* Current page of the query
@@ -22,10 +22,10 @@ public class InventoryDetailsResponse {
 	/**
 	* An array that contains the actual objects
 	*/
-	private List<UIInventory> rows;
+	private List<?> rows;
 	 
 	 
-	public InventoryDetailsResponse() {
+	public ReportDetailsResponse() {
 	}
 	 
 	public String getPage() {
@@ -52,11 +52,11 @@ public class InventoryDetailsResponse {
 	this.records = records;
 	}
 	 
-	public List<UIInventory> getRows() {
+	public List<?> getRows() {
 	return rows;
 	}
 	 
-	public void setRows(List<UIInventory> rows) {
+	public void setRows(List<?> rows) {
 	this.rows = rows;
 	}
 }

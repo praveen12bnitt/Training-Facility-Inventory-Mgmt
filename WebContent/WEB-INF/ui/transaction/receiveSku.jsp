@@ -20,19 +20,17 @@
 
 <div align="center" style="width: 100%" >
 
-<div>
-	${transactionFormMessage}
-</div>
 
 <form:form method="post" commandName="issueSkuForm" >
-	<form:hidden path="transactionType" />
+	<form:hidden path="transactionType" value="${issueSkuForm.transactionType }" />
 	<form:input type="hidden" path="locationId" value="2" />
 	<form:hidden path="trainee.traineeId" />
+	<form:hidden path="refTransactionId" value="${issueSkuForm.refTransactionId }" />
 	<table width="65%" class="reference">
 	<tr>
 		<th colspan="2" align="left">Transaction Type:</th>
 		<td colspan="2" align="left">
-			${issueSkuForm.transactionDescription}
+			${issueSkuForm.transactionType}
 		</td>
 	</tr>
 	</table>
@@ -60,29 +58,23 @@
       <th align="left" width="20%">Quantity</th>
     </tr>
    
-     <c:forEach items="${issueSkuForm.items}" var="item" varStatus="itemRow">
+     <c:forEach items="${transDetails.itemSkus}" var="itemSku" varStatus="itemSkuRow">
       	<tr>
      		<td>     
-     		    <a id="plusgif" href="#" class="addR"><img src="<c:url value='/images/plus.gif' />" height="10px" width="10px" /></a>
-      			&nbsp;			
-     			<form:input type="hidden" path="itemSkus[${itemRow.index}].item.id" value="${item.id}"/>${item.desc}
+     		    <form:input type="hidden" path="itemSkus[${itemSkuRow.index}].item.id" value="${itemSku.item.id}"/>${itemSku.item.desc}
      		 </td>
      		 
      		 <td>
-     		 <c:forEach var="attribute" items="${item.attributeDetails}" varStatus="i">
-     		 	${attribute.key.attributeName}
-     		 	<form:hidden path="itemSkus[${itemRow.index}].itemAttributeDtls[${i.index}].itemAttribute.attibuteId" value="${attribute.key.attibuteId}" />
-     		 	<form:select path="itemSkus[${itemRow.index}].itemAttributeDtls[${i.index}].itemAttributeValue.attributeValueId">
-     					<c:forEach items="${attribute.value}" var="attributeValue">
-     						<form:option value="${attributeValue.attributeValueId}">
-     							${attributeValue.attributeValue}
-     						</form:option>
-     					</c:forEach>
-     			</form:select>
-     		 </c:forEach>     		     		 	
+     		 	<c:forEach var="itemAttributeDetails" items="${itemSku.itemAttributeDtls}" varStatus="itemAttributeRow">
+     		 		<form:input type="hidden" path="itemSkus[${itemSkuRow.index}].itemAttributeDtls[${itemAttributeRow.index }].itemAttribute.attibuteId"
+     		 			value="${itemAttributeDetails.itemAttribute.attibuteId}" /> ${ itemAttributeDetails.itemAttribute.attributeName }
+     		 		:
+     		 		<form:input type="hidden" path="itemSkus[${itemSkuRow.index}].itemAttributeDtls[${itemAttributeRow.index }].itemAttributeValue.attributeValueId"
+     		 			value="${itemAttributeDetails.itemAttributeValue.attributeValueId}" /> ${ itemAttributeDetails.itemAttributeValue.attributeValue}
+     		 	</c:forEach>     		 	
      		
      		</td>     		
-     		<td><form:input type="text" path="itemSkus[${itemRow.index}].quantity" value=""/>
+     		<td><form:input type="text" path="itemSkus[${itemSkuRow.index}].quantity" value="${ itemSku.quantity }"/> </td>
      	</tr>
      	
      </c:forEach>
@@ -92,26 +84,7 @@
 </form:form>
 </div>
 
-<script>
-$('.addR').click(function(){	    
-	   
-	var rowIndex = $(this).parent().parent().parent().children()
-						.index($(this).parent().parent());
-				var tableObj = document.getElementById("tblTransactionForm");
-				var refRow = tableObj.rows[rowIndex];
-				var newRow = tableObj.insertRow(rowIndex + 1);
-				var oldHTML = refRow.innerHTML;
-				//alert(rowIndex-1);
-				//alert(oldHTML);  		
-				var searchString = new RegExp('itemSkus\\[*[0-9]*\\]',
-						"gi");
-				//alert(searchString);
-				newRow.innerHTML = oldHTML.replace(searchString,
-						'itemSkus[' + (tableObj.rows.length - 1) + ']');
-				//alert(newRow.innerHTML);
 
-			});
-</script>
 
 </body>
 </html>

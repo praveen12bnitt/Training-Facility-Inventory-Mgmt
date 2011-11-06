@@ -9,6 +9,7 @@
 </head>
 <body>
 <%
+
 TestClass test = new TestClass();
 //test.testTransLoading();
 
@@ -22,7 +23,7 @@ TestClass test = new TestClass();
 
 //test.receiveInventory();
 
-test.transferInventory();
+//test.transferInventory();
 
 //test.processInvChange();
 
@@ -36,6 +37,8 @@ test.transferInventory();
 //test.processRetursWithMissing();
 
 //test.reportMissingItem();
+
+out.println(test.getUITransactionDetails());
 
 
 
