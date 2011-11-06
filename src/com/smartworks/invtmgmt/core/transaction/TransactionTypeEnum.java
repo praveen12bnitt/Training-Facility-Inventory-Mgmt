@@ -10,6 +10,23 @@ public enum TransactionTypeEnum {
 	RETURN_UNIFORM_STAFF,
 	ACCEPT_UNIFORM_FROM_LAUNDRY,
 	
-	TRANSFER_INVENTORY,	
+	TRANSFER_INVENTORY;
+	
+	public static TransactionTypeEnum getReturnTransaction(TransactionTypeEnum transTypeEnum)
+	{
+		TransactionTypeEnum returnEnum = null;
+		switch(transTypeEnum) {
+			case ISSUE_UNIFORM_STUDENT:
+				returnEnum = RETURN_UNIFORM_STUDENT;
+				break;
+			
+			case ISSUE_UNIFORM_STAFF:
+				returnEnum = RETURN_UNIFORM_STAFF;
+				break;
+		}
+		
+		return returnEnum;
+			
+	}
 	
 }

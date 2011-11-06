@@ -17,6 +17,8 @@ public class IssueSkuForm {
 	Integer locationId;
 	String locationName;
 	
+	Integer refTransactionId;
+	
 	Trainee trainee;
 	
 	private List<Item> items;	
@@ -27,6 +29,14 @@ public class IssueSkuForm {
 
 	public TransactionTypeEnum getTransactionType() {
 		return transactionType;
+	}
+
+	public Integer getRefTransactionId() {
+		return refTransactionId;
+	}
+
+	public void setRefTransactionId(Integer refTransactionId) {
+		this.refTransactionId = refTransactionId;
 	}
 
 	public String getTransactionDescription() {

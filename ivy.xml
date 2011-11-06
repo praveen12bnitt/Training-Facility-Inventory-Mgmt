@@ -26,5 +26,6 @@
 		<dependency org="org.springframework.security" name="org.springframework.security.acls" rev="3.0.4.RELEASE" conf="runtime" />
 		<dependency org="org.springframework.security" name="org.springframework.security.config" rev="3.0.4.RELEASE" conf="runtime" />
 		<dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.4.2" />
+		<dependency org="org.json" name="json" rev="20090211" />
 	</dependencies>
 </ivy-module>
