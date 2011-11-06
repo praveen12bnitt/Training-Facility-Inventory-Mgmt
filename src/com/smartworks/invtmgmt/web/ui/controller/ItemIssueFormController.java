@@ -56,7 +56,7 @@ public class ItemIssueFormController {
 		
 		Trainee trainee = new Trainee();
 		trainee.setFirstName("Palanivel");
-		trainee.setLastName("rajan");
+		trainee.setLastName("Rajan");
 		trainee.setTraineeId(1);
 		
 		
@@ -131,7 +131,7 @@ public class ItemIssueFormController {
 		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
 		Trainee trainee = new Trainee();
 		trainee.setFirstName("Palanivel");
-		trainee.setLastName("rajan");
+		trainee.setLastName("Rajan");
 		trainee.setTraineeId(1);
 		logger.info(transDetails.getItemSkus());
 		IssueSkuForm issueSkuForm = new IssueSkuForm();
