@@ -17,44 +17,69 @@
 }
 </style>
 <link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/styles.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/redmond/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
+<link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/memu-0.1.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/jqgrid/ui.jqgrid.css" />
 <script src="${pageContext.request.contextPath}/js/jquery/jquery-1.6.2.min.js" 	type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jquery/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jqgrid/grid.locale-en.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.json-2.3.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.memu-0.1.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-
-$('')
+$(document).ready(function($) {
+	$('.form-button').hover(
+			function(){ 
+				$(this).addClass("ui-state-hover"); 
+			},
+			function(){ 
+				$(this).removeClass("ui-state-hover"); 
+			}
+		);
+	
+	$('.js-enabled').memu({ 
+		icon: {
+			inset: true,
+			margin: {
+				top: 4,
+				right: 10
+			}
+		},
+		width: 150,
+		rootWidth: 75,
+		height: 25
+	});
+	
+	
+	
+	});
 
 </script>
 
 </head>
 
-<body>
-	<%@ include file="/WEB-INF/ui/menu.jsp"%>
+<body class="body-class" >	
 
-	<div id="main-content" class="ui-widget main-content" align="center">
+	<div id="main-content" class="ui-widget main-content" style="background: white;">
+	<%@ include file="/WEB-INF/ui/header.jsp" %>
+	<div id="top-navigation" class="top-navigation">
+		<%@ include file="/WEB-INF/ui/menu.jsp" %>
+	</div>
+	<br />
+	<form:form method="post" commandName="transactionForm">
 
-		<div id="Header" class="ui-widget-content">Content goes here...
-		</div>
-
-		<br />
-
-		<div id="heading" class="ui-widget-header">Inventory Details</div>
-		
-		<div id="content" class="ui-widget-content">
-			<form:form method="post" commandName="transactionForm">
-				<form:errors path="locationList[0].error" cssClass="errors" />				
-				<table>
-					<tr>
-						<td>From Location</td>
-						<td>
-						<select id="fromlocn">
-								<option value="UI">WM</option>
-						</select>
-						</td>
+		<div id="heading" class="ui-widget-header">Transaction Details</div>
+		<div id="Header" class="ui-widget-content" align="left">
+		<form:errors path="locationList[0].error" cssClass="errors" />	
+		<table>
+			<tr>
+			<td>From Location</td>
+			<td>
+			<select id="fromlocn">
+			<option value="UI">WM</option>
+				</select>
+				</td>
 					</tr>
 					<tr>
 						<td>To Location</td>
@@ -70,26 +95,32 @@ $('')
 							</form:select></td>
 					</tr>
 				</table>
-				<br>
-				<table id="tblTransactionForm" class="ui-widget">
-				<thead class="ui-widget-header">					
+		</div>
+
+		<br />
+
+		<div id="heading" class="ui-widget-header">Inventory Details</div>
+		
+		<div id="content" class="ui-widget-content" style="padding: 10px;">			
+				<table id="tblTransactionForm" class="ui-widget item-table">
+				<thead class="ui-state-default item-table-header">					
 					<tr id="rowx">
-						<th align="left" width="20%">Item</th>
-						<th align="left" width="20%">Attributes</th>
-						<th align="left" width="20%">Quantity</th>
+						<th>Item</th>
+						<th>Item Specification</th>
+						<th>Quantity</th>
 					</tr>
 					</thead>
-					<tbody class="ui-widget-content">
+					<tbody class="ui-widget-content" >
 
 					<c:forEach items="${transactionForm.listUIFormItems}"
 						var="uiFormItem" varStatus="uifItemRow">
 						<tr id="${ uiFormItem.itemId }">
-							<td><a id="plusgif" href="#"><img
+							<td style="width: 400px;"><a id="plusgif" href="#" tabindex="-1"><img
 									src="<c:url value='/images/plus.gif' />" height="10px"
 									width="10px" /></a> &nbsp; <form:input type="hidden"
 									path="listUIFormItems[${uifItemRow.index}].itemId"
 									value="${ uiFormItem.itemId }" />${ uiFormItem.itemName}</td>
-							<td><c:forEach items="${uiFormItem.uiFormItemAttributes}"
+							<td style="width: 300px;"><c:forEach items="${uiFormItem.uiFormItemAttributes}"
 									var="uiFormItemAttribute" varStatus="uifItemAttrRow">
      				${uiFormItemAttribute.itemAttributeName } &nbsp;
      				<form:input type="hidden"
@@ -109,46 +140,19 @@ $('')
 
 								</c:forEach></td>
 							<td><form:input type="text"
-									path="listUIFormItems[${uifItemRow.index}].itemQty"
+									path="listUIFormItems[${uifItemRow.index}].itemQty" size="10"
 									value="${ uiFormItem.itemQty }" />
 						</tr>
 
 					</c:forEach>
-					</tbody>
-
-				</table>
-
-
-
-				<button type="submit" class="ui-state-default ui-corner-all">Transfer</button>
-			</form:form>
+					</tbody>			
+				</table>	
+				<div id="actions" align="center" class="actions">
+					<button type="submit" class="ui-state-default ui-corner-all form-button">Transfer</button>
+				</div>		
 		</div>
-
+	</form:form>
 	</div>
-	<br>
-
-	<script>
-		$('a').click(
-				function() {
-
-					var rowIndex = $(this).parent().parent().parent()
-							.children().index($(this).parent().parent());
-					var tableObj = document
-							.getElementById("tblTransactionForm");
-					var refRow = tableObj.rows[rowIndex];
-					var newRow = tableObj.insertRow(rowIndex + 1);
-					var oldHTML = refRow.innerHTML;
-					//alert(rowIndex-1);
-					//alert(oldHTML);  		
-					var searchString = new RegExp(
-							'listUIFormItems\\[*[0-9]*\\]', "gi");
-					//alert(searchString);
-					newRow.innerHTML = oldHTML.replace(searchString,
-							'listUIFormItems[' + (tableObj.rows.length - 1)
-									+ ']');
-					//alert(newRow.innerHTML);
-
-				});
-	</script>
+	<br>	
 </body>
 </html>

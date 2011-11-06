@@ -1,5 +1,57 @@
 .main-content {
 	width: 75%;
 	margin: auto;
+	background: white;
+	border-width: 5px;
+	border-color: white;
+	border-style: solid;
 }
 
+
+table.item-table {
+	color:#333333;
+	border-width: 1px;
+	border-color: #C5DBEC;
+	border-collapse: collapse;
+}
+table.item-table th {
+	font-size: 14px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #C5DBEC;;
+}
+table.item-table td {
+	font-size: 12px;
+	padding: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #C5DBEC;;
+}
+
+.form-button {   
+   text-decoration:none !important; 
+   cursor:pointer; 
+}
+
+.actions {
+	padding-top: 10px;
+}
+
+.page-header {
+	background-image: url(/portal_skins/custom/home_background.gif);
+	background-color:#00568d;
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+.top-navigation {
+	height: 20px; 
+	background: #CCC;
+	border-bottom: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: #690;
+}
+
+.body-class {
+	background: #CCC url(../images/grey-bg.png) 50% 50% repeat-x;
+}

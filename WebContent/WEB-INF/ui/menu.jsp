@@ -1,22 +1,14 @@
-<link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/memu-0.1.css" />' />
-
-<div id="portal-header">
-<a id="portal-logo" accesskey="1" href="http://www.fletc.gov">
-
-    <img src="<c:url value='/images/logo.jpg' />" alt="" title="logo.gif" height="78" width="345"></a>
-</div>
-
-		<div class="menu-container">
+<div class="menu-container">
 			<ul class="memu js-enabled">
 				<li class="memu-root">
 					<a href="#">Home</a>
-					</li>
+				</li>
 				<li class="memu-root">
 					<a href="#">Warehouse</a>
 					<ul>						
-						<li><a href='<c:url value="/inbound/receive.form?transactionTypeId=" />'><div class="memu-icon sprite-folder"></div>Receive</a></li>
-						<li><a href='<c:url value="/" />'><div class="memu-icon sprite-folder"></div>Outbound</a></li>
-						<li><a href='<c:url value="/inbound/transfer.form?transactionTypeId=" />'><div class="memu-icon sprite-disk"></div>Transfer Inventory</a></li>
+						<li><a href='<c:url value="/inbound/receive.form?transactionTypeId=" />'>Receive</a></li>
+						<li><a href='<c:url value="/" />'>Outbound</a></li>
+						<li><a href='<c:url value="/inbound/transfer.form?transactionTypeId=" />'>Transfer Inventory</a></li>
 					</ul>
 				</li>
 				<li class="memu-root">
@@ -65,28 +57,3 @@
 					</li>				
 			</ul>
 		</div>
-	<br />	
-	<br />
-	<div ></div>
-		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-		
-		<script type="text/javascript">
-		  google.load("jquery", "1.4.4");
-		  google.setOnLoadCallback(function() {
-			$('.js-enabled').memu({ 
-				icon: {
-					inset: true,
-					margin: {
-						top: 4,
-						right: 10
-					}
-				},
-				width: 250,
-				rootWidth: 100,
-				height: 25
-			});
-		  });
-		</script>
-		<script src='<c:url value="/js/jquery/jquery.memu-0.1.min.js" />' type="text/javascript"></script>
-		
-	
