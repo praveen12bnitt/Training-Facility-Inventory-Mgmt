@@ -47,12 +47,11 @@ $(document).ready(function($) {
 
 </script>
 </head>
-<body>
-
-
 <body class="body-class" >	
 	<form:form method="post" commandName="issueSkuForm" >
-	
+	<form:hidden path="transactionType" />
+	<form:input type="hidden" path="locationId" value="2" />
+	<form:hidden path="trainee.traineeId" />	
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
@@ -83,13 +82,7 @@ $(document).ready(function($) {
 					<td>Class</td><td>${issueSkuForm.trainee.classNumber}</td>
 				</tr>
 			</tbody>
-		</table>
-					
-			
-			<form:hidden path="transactionType" />
-			<form:input type="hidden" path="locationId" value="2" />
-			<form:hidden path="trainee.traineeId" />			
-					
+		</table>					
 		</div>
 				
 

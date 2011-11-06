@@ -27,6 +27,7 @@ public class UIDomainConverter {
 		transDetails.setItemSkus(itemSkus);		
 		transDetails.setLocationId(issueSkuForm.getLocationId());
 		transDetails.setUserId(100);
+		transDetails.setTraineeId(issueSkuForm.getTrainee().getTraineeId());
 		transDetails.setTransactionType(issueSkuForm.getTransactionType());
 		transDetails.setRefTransactionId(issueSkuForm.getRefTransactionId());
 		return transDetails;

@@ -15,13 +15,11 @@ table.item-table {
 	border-collapse: collapse;
 }
 table.item-table th {
-	font-size: 14px;
 	border-width: 1px;
 	border-style: solid;
 	border-color: #C5DBEC;;
 }
 table.item-table td {
-	font-size: 12px;
 	padding: 3px;
 	border-width: 1px;
 	border-style: solid;
@@ -58,9 +56,9 @@ table.trans-details td
 }
 
 .header-contents {
-	font-size: 12px;
+	
 }
 
 .body-class {
-	background: #CCC url(../images/grey-bg.png) 50% 50% repeat-x;
+	background: #CCC 50% 50% repeat-x;
 }

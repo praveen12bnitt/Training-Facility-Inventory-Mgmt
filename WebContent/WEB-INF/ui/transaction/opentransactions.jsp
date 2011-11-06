@@ -6,13 +6,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Open User Transation</title>
+<link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
-<script src='<c:url value="/js/jquery/jquery-1.6.2.min.js" />' type="text/javascript" /></script>
+<link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/memu-0.1.css" />
+<script src='<c:url value="/js/jquery/jquery-1.6.2.min.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jquery/jquery-ui-1.8.16.custom.min.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jqgrid/grid.locale-en.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jqgrid/jquery.jqGrid.min.js" />' type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href='<c:url value="/css/style.css" />' />
+<script src='<c:url value="/js/jquery.json-2.3.js" />' type="text/javascript"></script>
+<script src='<c:url value="/js/jquery.memu-0.1.min.js" />' type="text/javascript"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -33,8 +36,8 @@ $(document).ready(function() {
 	    sortorder: "desc",
 	    loadonce: true,
 	    caption: "Open User Transactions",
-	    height: 500,
-	    width: 1000,
+	    height: 200,
+	    width: 1050,
 	    jsonReader : {
 	          root: "rows",
 	          page: "page",
@@ -45,24 +48,67 @@ $(document).ready(function() {
 	          id: "id"
 	      }
 	});
+	
+	$('.form-button').hover(
+			function(){ 
+				$(this).addClass("ui-state-hover"); 
+			},
+			function(){ 
+				$(this).removeClass("ui-state-hover"); 
+			}
+		);
+	
+	$('.js-enabled').memu({ 
+		icon: {
+			inset: true,
+			margin: {
+				top: 4,
+				right: 10
+			}
+		},
+		width: 150,
+		rootWidth: 75,
+		height: 25
+	});
+	
 });
 
 </script>
 </head>
-<body>
-<div id="portal-header">
-
-<a id="portal-logo" accesskey="1" href="http://www.fletc.gov">
-    <img src="<c:url value='/images/logo.jpg' />" alt="" title="logo.gif" height="78" width="345"></a>
-</div>
-
-<br/>
-<br/>
-<div align="center" style="width: 100%" >
-<table id="list3"></table>
-<div id="pager3"></div>
-</div>
-
-
+<body class="body-class" >	
+<div id="main-content" class="ui-widget main-content" style="background: white;">
+	<%@ include file="/WEB-INF/ui/header.jsp" %>
+	<div id="top-navigation" class="top-navigation">
+		<%@ include file="/WEB-INF/ui/menu.jsp" %>
+	</div>
+	<br />
+	<div style="clear: both;"></div>
+	<div id="heading" class="ui-widget-header">Transaction Details</div>
+		<div id="header-contents" class="ui-widget-content" align="left" style="padding: 10px;">
+		
+		<table id="transDetails" class="ui-widget item-table trans-details">				
+			<tbody class="ui-widget-content trans-details" >
+				<tr>
+					<td>Transaction Description</td><td>Return from Student</td>
+				</tr>				
+			</tbody>
+		</table>					
+		</div>
+		
+		<br />
+		
+		<div id="heading" class="ui-widget-header">User Details</div>
+		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		</div>
+		<br />
+		
+		<div style="width: 100%;" >
+		<table id="list3" class="trans-details"></table>
+			<div id="pager3"></div>
+		</div>
+		<br/>
+		
+			
+		</div>
 </body>
 </html>
