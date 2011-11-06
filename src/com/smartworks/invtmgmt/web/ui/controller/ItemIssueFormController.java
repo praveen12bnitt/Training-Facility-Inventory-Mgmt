@@ -23,7 +23,6 @@ import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 import com.smartworks.invtmgmt.web.ui.form.IssueSkuForm;
-import com.smartworks.invtmgmt.web.ui.form.TransactionForm;
 
 @Controller
 @RequestMapping("/inventory")

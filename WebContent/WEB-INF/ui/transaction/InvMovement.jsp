@@ -1,4 +1,4 @@
-<%@ page errorPage="ErrorPage.jsp"%>
+
 
 
 <%@ include file="/WEB-INF/ui/commoninclude.jsp"%>
@@ -60,99 +60,87 @@ $(document).ready(function($) {
 </head>
 
 <body class="body-class" >	
-
+<form:form method="post" commandName="issueSkuForm">
+<form:hidden path="transactionType" />
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
 	<br />
-	<form:form method="post" commandName="transactionForm">
+	
 
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
-		<div id="Header" class="ui-widget-content" align="left">
-		<form:errors path="locationList[0].error" cssClass="errors" />	
-		<table>
-			<tr>
-			<td>From Location</td>
-			<td>
-			<select id="fromlocn">
-			<option value="UI">WM</option>
-				</select>
-				</td>
-					</tr>
-					<tr>
-						<td>To Location</td>
-						<td><form:select path="locationList[0].selectedValue"
-								id="tolocn">
-								<c:forEach items="${transactionForm.locationList}"
-									var="uiFormLocation">
-									<form:option value="${uiFormLocation.location_id}">
-     							${uiFormLocation.locationName}
-     						</form:option>
-
-								</c:forEach>
-							</form:select></td>
-					</tr>
-				</table>
+		<div id="header-contents" class="ui-widget-content header-contents" style="padding: 10px;">
+		<table id="transDetails" class="ui-widget item-table trans-details">				
+			<tbody class="ui-widget-content trans-details" >
+				<tr>
+					<td>Transaction Description</td><td>Move Inventory </td>
+				</tr>
+				<tr>
+					<td>To Location</td>
+					<td>
+					<form:select path="locationId">
+								<c:forEach items="${locationList}" var="location">
+									<form:option value="${location.locationId}">
+     										${location.locationName}
+     								</form:option>
+     						</c:forEach>
+     					</form:select>
+					</td>
+				</tr>				
+			</tbody>
+		</table>		
 		</div>
 
 		<br />
 
 		<div id="heading" class="ui-widget-header">Inventory Details</div>
 		
-		<div id="content" class="ui-widget-content" style="padding: 10px;">			
-				<table id="tblTransactionForm" class="ui-widget item-table">
-				<thead class="ui-state-default item-table-header">					
+		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+			<table id="tblTransactionForm" class="ui-widget item-table">
+				<thead class="ui-state-default item-table-header">
 					<tr id="rowx">
 						<th>Item</th>
 						<th>Item Specification</th>
 						<th>Quantity</th>
-					</tr>
-					</thead>
-					<tbody class="ui-widget-content" >
-
-					<c:forEach items="${transactionForm.listUIFormItems}"
-						var="uiFormItem" varStatus="uifItemRow">
-						<tr id="${ uiFormItem.itemId }">
-							<td style="width: 400px;"><a id="plusgif" href="#" tabindex="-1"><img
-									src="<c:url value='/images/plus.gif' />" height="10px"
-									width="10px" /></a> &nbsp; <form:input type="hidden"
-									path="listUIFormItems[${uifItemRow.index}].itemId"
-									value="${ uiFormItem.itemId }" />${ uiFormItem.itemName}</td>
-							<td style="width: 300px;"><c:forEach items="${uiFormItem.uiFormItemAttributes}"
-									var="uiFormItemAttribute" varStatus="uifItemAttrRow">
-     				${uiFormItemAttribute.itemAttributeName } &nbsp;
-     				<form:input type="hidden"
-										path="listUIFormItems[${uifItemRow.index}].uiFormItemAttributes[${uifItemAttrRow.index }].itemAttributeId"
-										value="${uiFormItemAttribute.itemAttributeId}" />
-									<form:select
-										path="listUIFormItems[${uifItemRow.index}].uiFormItemAttributes[${uifItemAttrRow.index }].selectedAttributeValue">
-										<c:forEach items="${uiFormItemAttribute.itemAttributeValues}"
-											var="uiFormItemAttributeValue">
-											<form:option
-												value="${uiFormItemAttributeValue.itemAttributeValueId}">
-     							${uiFormItemAttributeValue.itemAttributeValue}
+					</tr>				
+				</thead>
+				<tbody class="ui-widget-content" >
+				<c:forEach items="${issueSkuForm.items}" var="item" varStatus="itemRow">
+      			<tr>
+     			<td style="width: 400px;">     
+     		    <a id="plusgif" href="#" class="addR" tabindex="-1"><img src="<c:url value='/images/plus.gif' />" height="10px" width="10px" /></a>
+      			&nbsp;			
+     			<form:input type="hidden" path="itemSkus[${itemRow.index}].item.id" value="${item.id}"/>${item.desc}
+     		 </td>
+     		 
+     		 <td style="width: 300px;">
+     		 <c:forEach var="attribute" items="${item.attributeDetails}" varStatus="i">
+     		 	${attribute.key.attributeName}
+     		 	<form:hidden path="itemSkus[${itemRow.index}].itemAttributeDtls[${i.index}].itemAttribute.attibuteId" value="${attribute.key.attibuteId}" />
+     		 	<form:select path="itemSkus[${itemRow.index}].itemAttributeDtls[${i.index}].itemAttributeValue.attributeValueId">
+     					<c:forEach items="${attribute.value}" var="attributeValue">
+     						<form:option value="${attributeValue.attributeValueId}">
+     							${attributeValue.attributeValue}
      						</form:option>
-										</c:forEach>
-									</form:select>
-
-
-								</c:forEach></td>
-							<td><form:input type="text"
-									path="listUIFormItems[${uifItemRow.index}].itemQty" size="10"
-									value="${ uiFormItem.itemQty }" />
-						</tr>
-
-					</c:forEach>
-					</tbody>			
-				</table>	
-				<div id="actions" align="center" class="actions">
+     					</c:forEach>
+     			</form:select>
+     		 </c:forEach>     		     		 	
+     		
+     		</td>     		
+     		<td><form:input type="text" path="itemSkus[${itemRow.index}].quantity" size="10" />
+     		</tr>
+     		</c:forEach>
+			</tbody>
+			</table>
+			<div id="actions" align="center" class="actions">
 					<button type="submit" class="ui-state-default ui-corner-all form-button">Transfer</button>
-				</div>		
-		</div>
-	</form:form>
+				</div>			
+		</div>	
+	
 	</div>
 	<br>	
+	</form:form>
 </body>
 </html>

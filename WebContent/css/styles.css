@@ -28,6 +28,11 @@ table.item-table td {
 	border-color: #C5DBEC;;
 }
 
+table.trans-details td
+{
+	width: 200px;
+}
+
 .form-button {   
    text-decoration:none !important; 
    cursor:pointer; 
@@ -50,6 +55,10 @@ table.item-table td {
 	border-bottom: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: #690;
+}
+
+.header-contents {
+	font-size: 12px;
 }
 
 .body-class {
