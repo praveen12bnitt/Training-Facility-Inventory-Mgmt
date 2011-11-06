@@ -19,6 +19,10 @@ public class TransactionForm {
 	
 	private List <UIFormLocation> locationList;
 	
+	private Integer srcLocation;
+	
+	private Integer targetLocation;
+	
 	public List<UIFormLocation> getLocationList() {
 		return locationList;
 	}
@@ -33,6 +37,22 @@ public class TransactionForm {
 		dummyStrings.add(new DummyString());
 		dummyStrings.add(new DummyString());
 		dummyStrings.add(new DummyString());
+	}
+
+	public Integer getSrcLocation() {
+		return srcLocation;
+	}
+
+	public void setSrcLocation(Integer srcLocation) {
+		this.srcLocation = srcLocation;
+	}
+
+	public Integer getTargetLocation() {
+		return targetLocation;
+	}
+
+	public void setTargetLocation(Integer targetLocation) {
+		this.targetLocation = targetLocation;
 	}
 
 	public String getTransactionType() {

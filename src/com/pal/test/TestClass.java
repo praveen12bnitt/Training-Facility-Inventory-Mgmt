@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.smartworks.invtmgmt.business.ItemAttributeDetails;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.business.UserTransactionDetails;
@@ -118,25 +118,54 @@ public class TestClass {
 		ItemAttributeValueDao itemAttributeValueDao = AppContextUtil.getBean("itemAttributeValueDao");
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
-		sku.setItem(itemDao.load(1));
-		sku.setQuantity(500);
-		Map<ItemAttribute,ItemAttributeValue> attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
+		sku.setItem(itemDao.load(2));
+		sku.setQuantity(500);	 
 		
-		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(1));
-		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
-		sku.setItemAttributeDetails(attrMap);
+		List<ItemAttributeDetails> attributeDtls = new ArrayList<ItemAttributeDetails>();
+		
+		ItemAttributeDetails itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(1));
+		
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(2));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(11));
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		sku.setItemAttributeDtls(attributeDtls);
+		
 		
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
-		sku.setItem(itemDao.load(1));
+		sku.setItem(itemDao.load(2));
 		sku.setQuantity(600);
-		attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
-		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(2));
-		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
-		sku.setItemAttributeDetails(attrMap);
+		
+		
+		attributeDtls = new ArrayList<ItemAttributeDetails>();
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(2));
+		
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(2));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(11));
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		sku.setItemAttributeDtls(attributeDtls);
+		
 		
 		itemSku.add(sku);
+		
 		
 
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
@@ -164,22 +193,50 @@ public class TestClass {
 		
 		List<ItemSku> itemSku = new ArrayList<ItemSku>();
 		ItemSku sku = new ItemSku();
-		sku.setItem(itemDao.load(1));
+		sku.setItem(itemDao.load(2));
 		sku.setQuantity(1000);
-		Map<ItemAttribute,ItemAttributeValue> attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
-		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(1));
-		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
-		sku.setItemAttributeDetails(attrMap);
+List<ItemAttributeDetails> attributeDtls = new ArrayList<ItemAttributeDetails>();
+		
+		ItemAttributeDetails itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(1));
+		
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(2));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(11));
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		sku.setItemAttributeDtls(attributeDtls);
+		
 		
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
-		sku.setItem(itemDao.load(1));
-		sku.setQuantity(1000);
-		attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
-		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(2));
-		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
-		sku.setItemAttributeDetails(attrMap);
+		sku.setItem(itemDao.load(2));
+		sku.setQuantity(600);
+		
+		
+		attributeDtls = new ArrayList<ItemAttributeDetails>();
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(2));
+		
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(2));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(11));
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		sku.setItemAttributeDtls(attributeDtls);
+		
 		
 		itemSku.add(sku);
 		
@@ -211,22 +268,50 @@ public class TestClass {
 		ItemSku sku = new ItemSku();
 		sku.setItem(itemDao.load(1));
 		sku.setQuantity(100);
-		Map<ItemAttribute,ItemAttributeValue> attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
-		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(1));
-		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
-		sku.setItemAttributeDetails(attrMap);
+List<ItemAttributeDetails> attributeDtls = new ArrayList<ItemAttributeDetails>();
+		
+		ItemAttributeDetails itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(1));
+		
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(2));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(11));
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		sku.setItemAttributeDtls(attributeDtls);
+		
 		
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
 		sku.setItem(itemDao.load(1));
-		sku.setQuantity(50);
-		attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
-		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(2));
-		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
-		sku.setItemAttributeDetails(attrMap);
+		sku.setQuantity(600);
 		
-		itemSku.add(sku);
+		
+		attributeDtls = new ArrayList<ItemAttributeDetails>();
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(2));
+		
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(2));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(11));
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		sku.setItemAttributeDtls(attributeDtls);
+		
+		
+		itemSku.add(sku); 
 		
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
 		
@@ -300,20 +385,48 @@ public class TestClass {
 		ItemSku sku = new ItemSku();
 		sku.setItem(itemDao.load(1));
 		sku.setQuantity(10);
-		Map<ItemAttribute,ItemAttributeValue> attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
-		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(1));
-		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
-		sku.setItemAttributeDetails(attrMap);
+List<ItemAttributeDetails> attributeDtls = new ArrayList<ItemAttributeDetails>();
+		
+		ItemAttributeDetails itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(1));
+		
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(2));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(11));
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		sku.setItemAttributeDtls(attributeDtls);
+		
 		
 		itemSku.add(sku);
 		
 		sku = new ItemSku();
 		sku.setItem(itemDao.load(1));
-		sku.setQuantity(5);
-		attrMap = new HashMap<ItemAttribute, ItemAttributeValue>();
-		attrMap.put(itemAttributeDao.load(1), itemAttributeValueDao.load(2));
-		attrMap.put(itemAttributeDao.load(2), itemAttributeValueDao.load(11));
-		sku.setItemAttributeDetails(attrMap);
+		sku.setQuantity(600);
+		
+		
+		attributeDtls = new ArrayList<ItemAttributeDetails>();
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(2));
+		
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		itemAttributeDetail = new ItemAttributeDetails();
+		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(2));
+		itemAttributeDetail.setItemAttributeValue(itemAttributeValueDao.load(11));
+		
+		attributeDtls.add(itemAttributeDetail);
+		
+		sku.setItemAttributeDtls(attributeDtls);
+		
 		
 		itemSku.add(sku);
 		
@@ -327,10 +440,4 @@ public class TestClass {
 		transDetails.setTransactionType(TransactionTypeEnum.REPORT_MISSING_UNIFORM_STUDENT);
 		
 		inventoryMgr.processInventoryChange(transDetails);
-	}
-	
-	
-	
-	
-
-}
+	}}

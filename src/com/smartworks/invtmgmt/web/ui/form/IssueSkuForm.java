@@ -20,7 +20,7 @@ public class IssueSkuForm {
 	Trainee trainee;
 	
 	private List<Item> items;	
-	//private List<ItemSku> itemSkus = new AutoPopulatingList<ItemSku>(elementFactory)
+	
 			
 	private List<ItemSku> itemSkus = new AutoPopulatingList<ItemSku>(new ItemSkuElementFactory());
 	

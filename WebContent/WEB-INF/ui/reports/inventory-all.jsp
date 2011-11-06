@@ -6,13 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/redmond/jquery-ui-1.8.16.custom.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/jqgrid/ui.jqgrid.css" />
-<script src="${pageContext.request.contextPath}/js/jquery/jquery-1.6.2.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/jquery/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/jqgrid/grid.locale-en.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
+<link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
+<link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
+<script src='<c:url value="/js/jquery/jquery-1.6.2.min.js" />' type="text/javascript" />></script>
+<script src='<c:url value="/js/jquery/jquery-ui-1.8.16.custom.min.js" />' type="text/javascript"></script>
+<script src='<c:url value="/js/jqgrid/grid.locale-en.js" />' type="text/javascript"></script>
+<script src='<c:url value="/js/jqgrid/jquery.jqGrid.min.js" />' type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href='<c:url value="/css/style.css" />' />
 
 <script type="text/javascript">
 $(document).ready(function() {

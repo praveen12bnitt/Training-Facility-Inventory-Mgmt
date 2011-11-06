@@ -10,7 +10,7 @@
     .error { color: red; }
   </style> 
  <link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css' />" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <script src="<c:url value='/js/jquery-1.6.4.js' />"></script>
  </head>
 
 
@@ -43,7 +43,7 @@
 </table>
 <br>
 </br>
-
+	<h> ${transactionFormMessage} </h>
     <table width="65%" class="reference" >
     	<tr>
     		<td>Last Name</td>
@@ -79,6 +79,9 @@
      			
      			<c:forEach items="${uiFormItem.uiFormItemAttributes}" var="uiFormItemAttribute" varStatus="uifItemAttrRow">
      				${uiFormItemAttribute.itemAttributeName } &nbsp;
+     					
+     				<form:input type="hidden" path="listUIFormItems[${uifItemRow.index}].uiFormItemAttributes[${uifItemAttrRow.index}].itemAttributeId" 
+     					value="${uiFormItemAttribute.itemAttributeId}"/>
      				
      				<form:select path="listUIFormItems[${uifItemRow.index}].uiFormItemAttributes[${uifItemAttrRow.index }].selectedAttributeValue">
      					<c:forEach items="${uiFormItemAttribute.itemAttributeValues}" var="uiFormItemAttributeValue">
@@ -99,8 +102,10 @@
     </table>
   <br>
 
-
-  <input type="submit" name="submit" value="issue">
+   ${location.locationName}
+   <form:input type="hidden" path="targetLocation" value="${location.locationId}" />
+  	
+  <input type="submit" name="submit" value="Issue">
   
 </form:form>
 

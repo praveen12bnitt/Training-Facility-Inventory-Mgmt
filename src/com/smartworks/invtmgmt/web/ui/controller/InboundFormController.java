@@ -57,6 +57,8 @@ public class InboundFormController {
         TransactionForm transactionForm = populateUIFormObjects();
         ModelAndView mav = new ModelAndView("transaction/InvMovement","model",myModel);
 		mav.addObject("transactionForm", transactionForm);
+		List<Location> listLocations = locDao.loadAll();
+		mav.addObject("locationList", listLocations);
 		return mav;
 	}
 	@RequestMapping(value="/receive.form", method=RequestMethod.GET)
@@ -91,10 +93,6 @@ public class InboundFormController {
 			
 			List<ItemSku> skus = new ArrayList<ItemSku>();
 			int fromLocn = 4; // Master Warehouse
-			int toLocn = -1;
-			for (UIFormLocation uiFormLocation: uiFormLocations) {
-				toLocn = Integer.parseInt(uiFormLocation.getSelectedValue());
-			}
 			
 			for (UIFormItem uiformItem: uiFormItems) {
 				if(uiformItem.getItemQty() !=null && uiformItem.getItemQty() > 0) {
@@ -128,7 +126,7 @@ public class InboundFormController {
 			transDetails.setUserId(100);
 			transDetails.setSrcLocationId(fromLocn);
 			transDetails.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
-			transDetails.setLocationId(toLocn);
+			transDetails.setLocationId(transactionForm.getTargetLocation());
 			boolean retval = invtTransMgr.processInventoryChange(transDetails);
 			} catch (Exception e) {
 				// TODO: handle exception
