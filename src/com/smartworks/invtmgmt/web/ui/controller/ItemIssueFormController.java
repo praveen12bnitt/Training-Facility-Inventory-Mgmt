@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.converter.UIDomainConverter;
+import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Trainee;
@@ -44,6 +45,9 @@ public class ItemIssueFormController {
 	@Autowired
 	InvtTransManager invtTransMgr = null;
 	
+	@Autowired
+	TraineeDao traineeDao = null;
+
 	
 	protected static Logger logger = Logger
 			.getLogger(ItemIssueFormController.class);
@@ -129,14 +133,13 @@ public class ItemIssueFormController {
 	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {		
 		
 		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
-		Trainee trainee = new Trainee();
-		trainee.setFirstName("Palanivel");
-		trainee.setLastName("Rajan");
-		trainee.setTraineeId(1);
+		Trainee trainee = traineeDao.load(transDetails.getTraineeId());
 		logger.info(transDetails.getItemSkus());
 		IssueSkuForm issueSkuForm = new IssueSkuForm();
-		TransactionTypeEnum transactionType = TransactionTypeEnum.getReturnTransaction(transDetails.getTransactionType());
-		issueSkuForm.setTransactionType(transactionType);
+		TransactionTypeEnum transactionTypeEnum = TransactionTypeEnum.getReturnTransaction(transDetails.getTransactionType());
+		issueSkuForm.setTransactionType(transactionTypeEnum);
+		TransactionType transactionType = transactionTypeDao.load(transactionTypeEnum);
+		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
 		issueSkuForm.setTrainee(trainee);
 		issueSkuForm.setRefTransactionId(transactionId);
 		ModelAndView mav = new ModelAndView("transaction/receiveSku");
