@@ -58,11 +58,11 @@ $(document).ready(function() {
 		datatype: "json",
 	   	colNames:['Id', 'Item Name', 'Item Specification', 'Quantity' , 'Location'],
 	   	colModel:[
-	   		{name:'itemId',index:'itemId', width:60, sorttype:"int"},
+	   		{name:'itemId',index:'itemId', width:30, sorttype:"int"},
 	   		{name:'itemDesc',index:'itemDesc', width:200},
 	   		{name:'itemAttributeDetails',index:'itemAttributeDetails', width:200},
-	   		{name:'quantity',index:'quantity', width:80, align:"right",sorttype:"int"},
-	   		{name:'location',index:'location', width:150, align:"right"}
+	   		{name:'quantity',index:'quantity', width:50, align:"left",sorttype:"int"},
+	   		{name:'location',index:'location', width:100, align:"left"}
 	   	],
 	   	rowNum:50,
 	   	rowList:[50,100,150],
@@ -73,7 +73,7 @@ $(document).ready(function() {
 	    loadonce: true,
 	    caption: "Item Inventory Details",
 	    height: 500,
-	    width: 850,
+	    width: 1050,
 	    jsonReader : {
 	          root: "rows",
 	          page: "page",
@@ -95,14 +95,18 @@ $(document).ready(function() {
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	<div style="clear: both"></div>
 	<br />
+	<div id="report" class="ui-widget ui-widget-content" style="padding: 10px;" >
+		<table id="list3"></table>
+		<div id="pager3"></div>
+	</div>
+	
 		
-		<table id="list3" class="ui-widget item-table"></table>
-<div id="pager3"></div>
 		
 
 		<br />
-
-
+		
+		</div>
 </body>
 </html>
