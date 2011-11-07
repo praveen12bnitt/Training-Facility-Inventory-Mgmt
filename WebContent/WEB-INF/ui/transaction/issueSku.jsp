@@ -42,16 +42,58 @@ $(document).ready(function($) {
 	});
 	
 	
+	jQuery("#list2").jqGrid({
+	   	url:'${pageContext.request.contextPath}/common/listtrainees.form',
+		datatype: "json",
+	   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
+	   	colModel:[
+			{name:'traineeId',index:'traineeId', align:'center', width:200},
+	   		{name:'firstName',index:'firstName', align:'center', width:200},
+	   		{name:'lastName',index:'lastName', align:'center', width:200},
+	   		{name:'middleName',index:'middleName', align:'center', width:200},
+	   		{name:'classNumber',index:'classNumber', align:'center', width:200}
+	   	],
+	   	rowNum:10,
+	   	rowList:[10,20,30],
+	   	pager: '#pager2',
+	   	sortname: 'firstName',
+	    viewrecords: true,
+	    sortorder: "desc",
+	    loadonce: true,
+	    caption: "Trainee List",
+	    height: 125,
+	    width: 750,
+	    onSelectRow: function(rowId){
+	    	
+	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
+	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
+	    	if(rowData){
+				jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
+			}
+	    	
+	    	$('input[name="trainee.traineeId"]').val(traineeId);
+	    	
+	    	
+	  
+	    },
+	    jsonReader : {
+	          root: "rows",
+	          page: "page",
+	          total: "total",
+	          records: "records",
+	          repeatitems: false,
+	          cell: "cell",
+	          id: "id"
+	      }
+	});
+	
 	
 	});
 
 </script>
 </head>
 <body class="body-class" >	
-	<form:form method="post" commandName="issueSkuForm" >
-	<form:hidden path="transactionType" />
-	<form:input type="hidden" path="locationId" value="2" />
-	<form:hidden path="trainee.traineeId" />	
+	
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
@@ -59,9 +101,18 @@ $(document).ready(function($) {
 	</div>
 	<br />
 	<div style="clear: both;"></div>
+	<form:form method="post" commandName="issueSkuForm" >
+	<form:hidden path="transactionType" />
+	<form:input type="hidden" path="locationId" value="2" />
 	
-
+	<form:hidden path="trainee.traineeId" />	
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
+		
+		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		<table id="list2" class="trans-details"></table>
+			<div id="pager2"></div>
+		</div>
+		
 		<div id="header-contents" class="ui-widget-content" align="left" style="padding: 10px;">
 		
 		<table id="transDetails" class="ui-widget item-table trans-details">				
@@ -70,16 +121,16 @@ $(document).ready(function($) {
 					<td>Transaction Description</td><td>${issueSkuForm.transactionDescription}</td>
 				</tr>
 				<tr>
-					<td>Last Name</td><td>${issueSkuForm.trainee.lastName}</td>
+					<td>Last Name</td><td><input type="text" name="lastName" value="" readOnly="true"/></td>
 				</tr>
 				<tr>
-					<td>First Name</td><td>${issueSkuForm.trainee.firstName}</td>
+					<td>First Name</td><td><input type="text" name="firstName" value=""  readOnly="true" /></td>
 				</tr>
 				<tr>
-					<td>MiddleName Name</td><td>${issueSkuForm.trainee.middleName}</td>
+					<td>MiddleName Name</td><td><input type="text" name="middleName" value="" readOnly="true" /></td>
 				</tr>
 				<tr>
-					<td>Class</td><td>${issueSkuForm.trainee.classNumber}</td>
+					<td>Class</td><td><input type="text" name="classNumber" value="" readOnly="true" /></td>
 				</tr>
 			</tbody>
 		</table>					

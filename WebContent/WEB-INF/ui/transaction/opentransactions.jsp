@@ -55,7 +55,7 @@ loadOpenTrans = function(traineeId, transactionType, locationId) {
     
   }
 
-$(document).ready(function() {
+  $(document).ready(function() {
 	jQuery("#list2").jqGrid({
 	   	url:'${pageContext.request.contextPath}/common/listtrainees.form',
 		datatype: "json",

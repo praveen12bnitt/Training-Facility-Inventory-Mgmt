@@ -67,7 +67,7 @@ public class ItemIssueFormController {
 		issueSkuForm.setTrainee(trainee);
 		issueSkuForm.setLocationId(1);
 		issueSkuForm.setLocationName("My Location");
-		issueSkuForm.setTransactionDescription("My description");
+		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
 		issueSkuForm.setTransactionType(TransactionTypeEnum.ISSUE_UNIFORM_STUDENT);		
 		issueSkuForm.setItems(items);
 		
