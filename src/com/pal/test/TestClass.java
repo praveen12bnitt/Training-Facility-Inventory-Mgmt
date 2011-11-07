@@ -445,5 +445,10 @@ List<ItemAttributeDetails> attributeDtls = new ArrayList<ItemAttributeDetails>()
 		inventoryMgr.processInventoryChange(transDetails);
 	}
 	
+	public void itemLikeQuerySearch() {
+		ItemDao itemDao = AppContextUtil.getBean("itemDao");
+		List<String> abc = itemDao.getItemNamesLike("ATF Student");
+	}
+	
 	
 }

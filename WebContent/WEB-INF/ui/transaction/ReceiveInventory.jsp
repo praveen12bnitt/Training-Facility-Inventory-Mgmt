@@ -26,9 +26,11 @@
 <script src="${pageContext.request.contextPath}/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.json-2.3.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.memu-0.1.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/invt-common.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-$(document).ready(function($) {
+$(document).ready(function() {
+	
 	$('.form-button').hover(
 			function(){ 
 				$(this).addClass("ui-state-hover"); 
@@ -51,9 +53,46 @@ $(document).ready(function($) {
 		height: 25
 	});
 	
+	jQuery("#itemName").autocomplete({
+        source: function(request, response) {
+         jQuery.ajax({
+                   url : '${pageContext.request.contextPath}/itemlookup/name.form',
+                   dataType : 'json',
+                   data : {
+                       name : request.term
+                   },
+                   success : function(data) {
+                       response(jQuery.map(data, function(item) {
+                            return {
+                               label: item,
+                               value: item
+                            }
+                       }))
+                   }
+            })
+        },
+        minLength : 2,
+        open: function() {          	
+        	jQuery(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+        },
+        
+        close: function() {
+           jQuery(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+        }
+  });
 	
+  
+ $('#item-add-btn').click(function(){
+	var addBtn = $(this);
+	var itemName = addBtn.prev().val();	
+	var rowCount = $('#tblTransactionForm >tbody >tr').length;
+	addItem('${pageContext.request.contextPath}',itemName,rowCount);
+ });
+  
 	
-	});
+});
+
+
 
 </script>
 
@@ -68,7 +107,7 @@ $(document).ready(function($) {
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
 	<br />
-	
+	<div style="clear: both;"></div>
 
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
 		<div id="header-contents" class="ui-widget-content header-contents" style="padding: 10px;">
@@ -86,7 +125,15 @@ $(document).ready(function($) {
 
 		<div id="heading" class="ui-widget-header">Inventory Details</div>
 		
-		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		<div id="content" class="ui-widget-content" style="padding: 20px;">	
+			<label class="ui-widget">
+        		<span> Item Name: </span>
+        		<input type="text" id="itemName" name="itemName" size="70" />   
+        		<a id="item-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
+			</label>
+			<br/>	
+			<br/>		
+			
 			<table id="tblTransactionForm" class="ui-widget item-table">
 				<thead class="ui-state-default item-table-header">
 					<tr id="rowx">

@@ -52,15 +52,18 @@ public class ItemMgrImpl implements ItemMgr {
 			item.getAttributeDetails();
 		}
 		return itemList;
+	}	
+	
+	public List<Item> getItemsByName(String name) {
+		List<Item> itemList = itemDao.getItemsByName(name);
+		for (Item item : itemList) {
+			item.getAttributeDetails();
+		}		
+		return itemList;
 	}
 	
-	public void test() {
-		for(int i = 1;i<20;i++) {
-			System.out.println("Loop:"+i);
-			itemDao.load(new Integer(1));
-			itemAttributeDao.load(new Integer(1));
-			itemAttributeValueDao.load(new Integer(1));
-		}
+	public List<String> getItemNamesLike(String name) {
+		return itemDao.getItemNamesLike(name);
 	}
 	
 	public List<Item> getAllItemsWithoutAttribute() {

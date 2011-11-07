@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,8 +30,8 @@ import com.smartworks.invtmgmt.core.domain.TransactionType;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
+import com.smartworks.invtmgmt.core.util.VelocityTemplateUtil;
 import com.smartworks.invtmgmt.web.ui.form.IssueSkuForm;
-
 import com.smartworks.invtmgmt.web.ui.transfer.UITransactionTrace;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
 
@@ -165,6 +168,22 @@ public class ItemIssueFormController {
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	
+	}
+	
+	@RequestMapping(value = "/itemHtmlEl.form", method = RequestMethod.GET)
+	public @ResponseBody String getItemHtmlData(HttpServletRequest request, @RequestParam String itemName,@RequestParam Integer rowNum) {
+		String htmlData = null;		
+		List<Item> items = itemMgr.getItemsByName(itemName);
+		// Convert this object into html el data
+		
+		VelocityEngine ve = VelocityTemplateUtil.getVelocityEngine();
+		Template t = ve.getTemplate( "com/smartworks/invtmgmt/web/ui/template/itemtablerow.vm" );
+		VelocityContext context = new VelocityContext();
+        context.put("items", items);
+        context.put("rowNum", rowNum);        
+        htmlData = VelocityTemplateUtil.getData(context, t);
+        
+		return htmlData;
 	}
 	
 	

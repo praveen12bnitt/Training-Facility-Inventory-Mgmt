@@ -2,6 +2,7 @@ package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -128,6 +129,11 @@ public class Item implements Serializable {
 						vals.add(attributeVAl);
 					}				
 				}	
+			}
+			
+			// Sort the attributeValue list
+			for(List<ItemAttributeValue> valList : attributeDetails.values()) {
+				Collections.sort(valList);
 			}
 				
 		}		

@@ -38,7 +38,9 @@ TestClass test = new TestClass();
 
 //test.reportMissingItem();
 
-out.println(test.getUITransactionDetails());
+//out.println(test.getUITransactionDetails());
+
+test.itemLikeQuerySearch();
 
 
 
