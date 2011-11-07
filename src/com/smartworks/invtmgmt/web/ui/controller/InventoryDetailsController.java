@@ -45,24 +45,15 @@ public class InventoryDetailsController {
 	public @ResponseBody
 	ReportDetailsResponse getAll() {
 		ReportDetailsResponse response = new ReportDetailsResponse();
-
 		List<Inventory> invtList = inventoryManager.getAllInventory();
-
-		List<UIInventory> uiInvtList = new ArrayList<UIInventory>();
-
-		
-			for (Inventory inventory : invtList) {
-				uiInvtList.add(inventoryConverter.getUIInventory(inventory));
+		List<UIInventory> uiInvtList = new ArrayList<UIInventory>();	
+		for (Inventory inventory : invtList) {
+			uiInvtList.add(inventoryConverter.getUIInventory(inventory));			
 		}
 		response.setRows(uiInvtList);
 		response.setPage("1");
 		response.setTotal("10");
 		response.setRecords(String.valueOf(uiInvtList.size()));
 		return response;
-	}
-	
-	
-	
-	
-	
+	}	
 }

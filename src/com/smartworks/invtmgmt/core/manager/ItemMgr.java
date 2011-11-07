@@ -11,5 +11,6 @@ public interface ItemMgr  {
 	public List<Item> getItemsForTransaction(TransactionType transactionType);
 	public List<Item> getAllItems() ;
 	public List<Item> getAllItemsWithoutAttribute();
-	public void test() ;
+	public List<String> getItemNamesLike(String name);
+	public List<Item> getItemsByName(String name);
 }
