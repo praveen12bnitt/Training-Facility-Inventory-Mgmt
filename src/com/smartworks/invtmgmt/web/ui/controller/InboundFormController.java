@@ -88,6 +88,19 @@ public class InboundFormController {
 	}	
 	
 	
+	@RequestMapping(value="/outbound.form", method=RequestMethod.GET)
+	public ModelAndView displayInventoryToOutbound(HttpServletRequest request, HttpServletResponse response) {
+		List<Item> items = itemMgr.getAllItems();
+		
+		IssueSkuForm issueSkuForm = new IssueSkuForm();		
+		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
+		issueSkuForm.setItems(items);
+				
+        ModelAndView mav = new ModelAndView("transaction/OutboundInventory");
+        mav.addObject("issueSkuForm", issueSkuForm);
+        
+		return mav;
+	}
 	@RequestMapping(value="/transfer.form", method=RequestMethod.POST)
 	public ModelAndView transferSKU(HttpServletRequest request,
 			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
@@ -150,7 +163,25 @@ public class InboundFormController {
 		return mav;
 	}
 	
-	
+
+	@RequestMapping(value="/outbound.form",method=RequestMethod.POST)
+	public ModelAndView outboundInventory(HttpServletRequest request,
+			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
+	{
+		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
+		transDetailsHolder.setSrcLocationId(4);
+		transDetailsHolder.setLocationId(-1); //To Vendor
+				
+		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
+		
+		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
+		List<Item> items =   itemMgr.getAllItems();
+		issueSkuForm.setItems(items);
+		ModelAndView mav = new ModelAndView("transaction/OutboundInventory");
+		mav.addObject("issueSkuForm", issueSkuForm);
+		mav.addObject("transactionFormMessage","Issued Successfully");
+		return mav;
+	}
 
 
 }
