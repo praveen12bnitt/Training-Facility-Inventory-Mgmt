@@ -74,25 +74,10 @@ $(document).ready(function($) {
 		<div id="header-contents" class="ui-widget-content header-contents" style="padding: 10px;">
 		<table id="transDetails" class="ui-widget item-table trans-details">				
 			<tbody class="ui-widget-content trans-details" >
-			<tr>
-					<td>Transaction Description</td><td>Move Inventory </td>
-			</tr>
-			<tr>
-					<td>From Location</td>
-					<td>
-					<form:select path="locationId">
-								<c:forEach items="${locationList}" var="location">
-									<form:option value="${location.locationId}">
-     										${location.locationName}
-     								</form:option>
-     						</c:forEach>
-     					</form:select>
-					</td>
-				</tr>	
-				
 				<tr>
-					<td>To Location</td>
-					<td>Warehouse</td>			
+					<td>Transaction Description</td><td>Move Inventory from warehouse </td>
+				</tr>
+			
 			</tbody>
 		</table>		
 		</div>
@@ -139,7 +124,7 @@ $(document).ready(function($) {
 			</tbody>
 			</table>
 			<div id="actions" align="center" class="actions">
-					<button type="submit" class="ui-state-default ui-corner-all form-button">Transfer</button>
+					<button type="submit" class="ui-state-default ui-corner-all form-button">Return</button>
 				</div>			
 		</div>	
 	
