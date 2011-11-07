@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
-<link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/memu-0.1.css" />
+<link rel="stylesheet" type="text/css" 	href='<c:url value="/css/memu-0.1.css" />' />
 <script src='<c:url value="/js/jquery/jquery-1.6.2.min.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jquery/jquery-ui-1.8.16.custom.min.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jqgrid/grid.locale-en.js" />' type="text/javascript"></script>

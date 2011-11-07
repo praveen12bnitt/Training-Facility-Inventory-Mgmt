@@ -73,18 +73,34 @@ public class InboundFormController {
 	}
 	@RequestMapping(value="/transferToMW.form", method=RequestMethod.GET)
 	public ModelAndView displayInventoryToMW(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId) {
-//		List<Item> items = itemMgr.getAllItems();
-//		ModelMap myModel = new ModelMap();
-//        myModel.put("itemList", items);
-//        TransactionForm transactionForm = populateUIFormObjects();
-//        ModelAndView mav = new ModelAndView("transaction/InvTransferToMW","model",myModel);
-//		mav.addObject("transferForm", transactionForm);
-//		return mav;
+		List<Item> items = itemMgr.getAllItems();
 		
-		return null;
+		IssueSkuForm issueSkuForm = new IssueSkuForm();		
+		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
+		issueSkuForm.setItems(items);
+				
+        ModelAndView mav = new ModelAndView("transaction/InvTransferToMW");
+        mav.addObject("issueSkuForm", issueSkuForm);
+        List<Location> listLocations = locDao.loadAll();
+		mav.addObject("locationList", listLocations);
+        
+		return mav;
 	}	
 	
 	
+	@RequestMapping(value="/outbound.form", method=RequestMethod.GET)
+	public ModelAndView displayInventoryToOutbound(HttpServletRequest request, HttpServletResponse response) {
+		List<Item> items = itemMgr.getAllItems();
+		
+		IssueSkuForm issueSkuForm = new IssueSkuForm();		
+		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
+		issueSkuForm.setItems(items);
+				
+        ModelAndView mav = new ModelAndView("transaction/OutboundInventory");
+        mav.addObject("issueSkuForm", issueSkuForm);
+        
+		return mav;
+	}
 	@RequestMapping(value="/transfer.form", method=RequestMethod.POST)
 	public ModelAndView transferSKU(HttpServletRequest request,
 			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
@@ -97,6 +113,8 @@ public class InboundFormController {
 		List<Item> items =   itemMgr.getAllItems();
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/InvMovement");
+		List<Location> listLocations = locDao.loadAll();
+		mav.addObject("locationList", listLocations);
 		mav.addObject("issueSkuForm", issueSkuForm);
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
@@ -108,75 +126,21 @@ public class InboundFormController {
 			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
 	{
 		
-		return null;
-//		boolean error = false;
-//		try {
-//			
-//			List<UIFormItem> uiFormItems = transactionForm.getListUIFormItems();
-//			List<UIFormLocation> uiFormLocations = transactionForm.getLocationList();
-//			
-//			List<ItemSku> skus = new ArrayList<ItemSku>();
-//			int fromLocn = 0; 
-//			int toLocn = 4; // Master Warehouse
-//			for (UIFormLocation uiFormLocation: uiFormLocations) {
-//				fromLocn = Integer.parseInt(uiFormLocation.getSelectedValue());
-//			}
-//			
-//			for (UIFormItem uiformItem: uiFormItems) {
-//				if(uiformItem.getItemQty() !=null && uiformItem.getItemQty() > 0) {
-//					ItemSku sku = new ItemSku();
-//					Item item = new Item(uiformItem.getItemId());
-//					sku.setQuantity(uiformItem.getItemQty());
-//					sku.setItem(item);
-//					
-//					Map<ItemAttribute, ItemAttributeValue> itemAttributeDetails = new HashMap<ItemAttribute, ItemAttributeValue>();
-//					List<UIFormItemAttribute> uiFormItemAttributes = uiformItem.getUiFormItemAttributes();
-//					if(uiFormItemAttributes != null){
-//						for (UIFormItemAttribute uiFormItemAttribute: uiFormItemAttributes) {
-//							ItemAttribute itemAttrib = new ItemAttribute();
-//							ItemAttributeValue itemAttributeVal = new ItemAttributeValue();
-//							itemAttrib.setAttibuteId(uiFormItemAttribute.getItemAttributeId());
-//							itemAttributeVal.setAttributeValueId(Integer.parseInt(uiFormItemAttribute.getSelectedAttributeValue()));
-//							System.out.println("Name"+uiFormItemAttribute.getItemAttributeId());
-//							System.out.println("Value"+uiFormItemAttribute.getSelectedAttributeValue());
-//							itemAttributeDetails.put(itemAttrib, itemAttributeVal);
-//						}
-//						//sku.setItemAttributeDetails(itemAttributeDetails);
-//						uiFormItemAttributes = null;
-//					}
-//					skus.add(sku);
-//				 }
-//				}
-//			
-//			//boolean retval= invtTransMgr.transferInventory(fromLocn,toLocn,skus);
-//			
-//			TransactionDetailsHolder transDetails = new TransactionDetailsHolder();
-//			transDetails.setItemSkus(skus);
-//			transDetails.setUserId(100);
-//			transDetails.setSrcLocationId(fromLocn);
-//			transDetails.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
-//			transDetails.setLocationId(toLocn);
-//			boolean retval = invtTransMgr.processInventoryChange(transDetails);
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//				error = true;
-//			}
-//	
-//		
-//		List<Item> items = itemMgr.getAllItems();
-//		ModelMap myModel = new ModelMap();
-//        myModel.put("itemList", items);
-//        transactionForm = populateUIFormObjects();
-//        if(error) {
-//        	transactionForm.getLocationList().get(0).setError("Failed to transfer");
-//        } else {
-//        	transactionForm.getLocationList().get(0).setError("success");
-//        }
-//       
-//		ModelAndView mav = new ModelAndView("transaction/InvTransferToMW","model",myModel);
-//		mav.addObject("transferForm", transactionForm);
-//		
-//		return mav;
+		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
+		transDetailsHolder.setLocationId(4);
+		transDetailsHolder.setSrcLocationId(issueSkuForm.getLocationId());
+		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
+		
+		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
+		List<Item> items =   itemMgr.getAllItems();
+		issueSkuForm.setItems(items);
+		ModelAndView mav = new ModelAndView("transaction/InvTransferToMW");
+		mav.addObject("issueSkuForm", issueSkuForm);
+		List<Location> listLocations = locDao.loadAll();
+		mav.addObject("locationList", listLocations);
+		mav.addObject("transactionFormMessage","Issued Successfully");
+		return mav;
+
 	}
 	
 	
@@ -199,7 +163,25 @@ public class InboundFormController {
 		return mav;
 	}
 	
-	
+
+	@RequestMapping(value="/outbound.form",method=RequestMethod.POST)
+	public ModelAndView outboundInventory(HttpServletRequest request,
+			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
+	{
+		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
+		transDetailsHolder.setSrcLocationId(4);
+		transDetailsHolder.setLocationId(-1); //To Vendor
+				
+		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
+		
+		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
+		List<Item> items =   itemMgr.getAllItems();
+		issueSkuForm.setItems(items);
+		ModelAndView mav = new ModelAndView("transaction/OutboundInventory");
+		mav.addObject("issueSkuForm", issueSkuForm);
+		mav.addObject("transactionFormMessage","Issued Successfully");
+		return mav;
+	}
 
 
 }

@@ -1,11 +1,36 @@
 package com.smartworks.invtmgmt.core.domain;
 
-public class Trainee {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Proxy;
+
+
+@Entity
+@Table(name="trainee")
+@Proxy(lazy=false)
+
+public class Trainee implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name="trainee_id")
 	Integer traineeId;
+	
+	@Column(name="last_name", length=100)
 	String lastName;
+	@Column(name="first_name", length=100)
 	String firstName;
+	@Column(name="middle_name", length=50)
 	String middleName;
+	@Column(name="class_number", length=50)
 	String classNumber;
 	
 	public Integer getTraineeId() {

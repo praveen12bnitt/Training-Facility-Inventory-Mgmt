@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
-<link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/memu-0.1.css" />
+<link rel="stylesheet" type="text/css" 	href='<c:url value="/css/memu-0.1.css" />'/>
 <script src='<c:url value="/js/jquery/jquery-1.6.2.min.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jquery/jquery-ui-1.8.16.custom.min.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jqgrid/grid.locale-en.js" />' type="text/javascript"></script>
@@ -18,9 +18,12 @@
 <script src='<c:url value="/js/jquery.memu-0.1.min.js" />' type="text/javascript"></script>
 
 <script type="text/javascript">
-$(document).ready(function() {
+
+loadOpenTrans = function(traineeId, transactionType, locationId) {
+	jQuery("#list3").jqGrid('clearGridData','clearfooter');
+	
 	jQuery("#list3").jqGrid({
-	   	url:'${pageContext.request.contextPath}/inventory/opentransactions.form?userId=${userId}&transactionTypeEnum=${transactionTypeEnum}&locationId=${locationId}',
+	   	url:'${pageContext.request.contextPath}/inventory/opentransactions.form?userId='+traineeId+'&transactionTypeEnum='+transactionType+'&locationId='+locationId,
 		datatype: "json",
 	   	colNames:['Transaction Id', 'Location Name', 'Issued Time'],
 	   	colModel:[
@@ -34,10 +37,10 @@ $(document).ready(function() {
 	   	sortname: 'itemId',
 	    viewrecords: true,
 	    sortorder: "desc",
-	    loadonce: true,
+	    loadonce: false,
 	    caption: "Open User Transactions",
 	    height: 200,
-	    width: 1050,
+	    width: 750,
 	    jsonReader : {
 	          root: "rows",
 	          page: "page",
@@ -48,6 +51,53 @@ $(document).ready(function() {
 	          id: "id"
 	      }
 	});
+	$("#list3").setGridParam({url:'${pageContext.request.contextPath}/inventory/opentransactions.form?userId='+traineeId+'&transactionTypeEnum='+transactionType+'&locationId='+locationId}).trigger('reloadGrid');
+    
+  }
+
+$(document).ready(function() {
+	jQuery("#list2").jqGrid({
+	   	url:'${pageContext.request.contextPath}/common/listtrainees.form',
+		datatype: "json",
+	   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
+	   	colModel:[
+			{name:'traineeId',index:'traineeId', align:'center', width:200},
+	   		{name:'firstName',index:'firstName', align:'center', width:200},
+	   		{name:'lastName',index:'lastName', align:'center', width:200},
+	   		{name:'middleName',index:'middleName', align:'center', width:200},
+	   		{name:'classNumber',index:'classNumber', align:'center', width:200}
+	   	],
+	   	rowNum:10,
+	   	rowList:[10,20,30],
+	   	pager: '#pager2',
+	   	sortname: 'firstName',
+	    viewrecords: true,
+	    sortorder: "desc",
+	    loadonce: true,
+	    caption: "Trainee List",
+	    height: 200,
+	    width: 750,
+	    onSelectRow: function(rowId){
+	    	
+	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
+	    	var transType='${transactionTypeEnum}';
+	    	var locationId=${locationId};
+	    	loadOpenTrans(traineeId,transType,locationId);
+	       	
+	    },
+	    jsonReader : {
+	          root: "rows",
+	          page: "page",
+	          total: "total",
+	          records: "records",
+	          repeatitems: false,
+	          cell: "cell",
+	          id: "id"
+	      }
+	});
+	
+	
+	
 	
 	$('.form-button').hover(
 			function(){ 
@@ -97,12 +147,14 @@ $(document).ready(function() {
 		
 		<br />
 		
-		<div id="heading" class="ui-widget-header">User Details</div>
-		<div id="content" class="ui-widget-content" style="padding: 10px;">	
-		</div>
-		<br />
 		
-		<div style="width: 100%;" >
+		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		<table id="list2" class="trans-details"></table>
+			<div id="pager2"></div>
+		</div>
+		
+		
+		<div id="content" class="ui-widget-content" style="padding: 10px;">	
 		<table id="list3" class="trans-details"></table>
 			<div id="pager3"></div>
 		</div>
@@ -110,5 +162,6 @@ $(document).ready(function() {
 		
 			
 		</div>
+
 </body>
 </html>
