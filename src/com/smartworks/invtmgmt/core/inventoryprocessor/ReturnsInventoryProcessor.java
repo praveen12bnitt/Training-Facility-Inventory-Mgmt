@@ -12,7 +12,12 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 	public void process(TransactionDetailsHolder transDetails) {
 		// First reduce the inventory
 		//TODO : Throw exception if refTransactionId is null
-		for (ItemSku itemSku : transDetails.getItemSkus()) {
+		for (ItemSku itemSku : transDetails.getItemSkus()) {			
+			
+			if(itemSku.getQuantity() == null || itemSku.getQuantity() < 0) {
+				continue;
+			}
+			
 			InventoryPk inventoryPk = new InventoryPk();
 			Location loc = new Location(transDetails.getLocationId());
 			inventoryPk.setLocation(loc);

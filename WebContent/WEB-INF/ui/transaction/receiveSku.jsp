@@ -61,6 +61,7 @@ $(document).ready(function($) {
 	<br />
 	<div style="clear: both;"></div>
 	
+	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
 
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
 		<div id="header-contents" class="ui-widget-content" align="left" style="padding: 10px;">

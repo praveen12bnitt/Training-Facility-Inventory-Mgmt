@@ -11,6 +11,9 @@ import com.smartworks.invtmgmt.core.dao.InventoryDao;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
+import com.smartworks.invtmgmt.core.exception.NoInventoryException;
+import com.smartworks.invtmgmt.core.exception.NoUnusableInventoryException;
+import com.smartworks.invtmgmt.core.exception.NotEnoughInventoryException;
 
 public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDao {
 
@@ -20,8 +23,7 @@ public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDa
 		Inventory inventory = null;
 		try {
 			inventory = getHibernateTemplate().load(Inventory.class, skuLocation);
-			populateItemSku(inventory);
-			
+			populateItemSku(inventory);			
 		} catch(HibernateObjectRetrievalFailureException objNotFound) {
 			System.out.println("Object not found with skuCode:"+skuLocation.getSkuCode()+",location:"+skuLocation.getLocation().getLocationId());
 			System.out.println(objNotFound.getMessage());
@@ -57,11 +59,12 @@ public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDa
 	public void reduceAvailableInventory(InventoryPk skuLocation, Integer qty) {
 		Inventory inventory = load(skuLocation);
 		if(inventory == null) {
-			// No inventory available. So create a new one
-			inventory = new Inventory();
-			inventory.setSkuLocation(skuLocation);			
+			throw new NoInventoryException(skuLocation.getSkuCode(), qty,skuLocation.getLocation().getLocationName());			
 		}		
 		Integer avaQty = inventory.getAvailableQty();
+		if(avaQty < qty) {
+			throw new NotEnoughInventoryException(skuLocation.getSkuCode(), qty, skuLocation.getLocation().getLocationName(), avaQty);
+		}
 		avaQty = avaQty-qty;
 		inventory.setAvailableQty(avaQty);
 		saveOrUpdate(inventory);	
@@ -84,13 +87,6 @@ public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDa
 	
 	public void addUnusableInventory(InventoryPk skuLocation, Integer qty) {
 		Inventory inventory = load(skuLocation);
-		if(inventory == null) {
-			// No inventory available. So create a new one
-			inventory = new Inventory();
-			inventory.setSkuLocation(skuLocation);	
-			inventory.setAvailableQty(0);
-			inventory.setUnusableQty(0);
-		}		
 		Integer unusableQty = inventory.getUnusableQty();
 		unusableQty = unusableQty+qty;
 		inventory.setUnusableQty(unusableQty);
@@ -99,14 +95,10 @@ public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDa
 	
 	public void reduceUnusableInventory(InventoryPk skuLocation, Integer qty) {
 		Inventory inventory = load(skuLocation);
-		if(inventory == null) {
-			// No inventory available. So create a new one
-			inventory = new Inventory();
-			inventory.setSkuLocation(skuLocation);
-			inventory.setAvailableQty(0);
-			inventory.setUnusableQty(0);
-		}		
 		Integer unusableQty = inventory.getUnusableQty();
+		if(unusableQty < qty) {
+			throw new NoUnusableInventoryException(skuLocation.getSkuCode(),qty,skuLocation.getLocation().getLocationName(),unusableQty);
+		}
 		unusableQty = unusableQty-qty;
 		inventory.setUnusableQty(unusableQty);
 		saveOrUpdate(inventory);

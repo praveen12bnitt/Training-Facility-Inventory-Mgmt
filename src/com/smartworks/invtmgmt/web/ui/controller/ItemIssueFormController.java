@@ -27,6 +27,7 @@ import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.TransactionType;
+import com.smartworks.invtmgmt.core.exception.InventoryAllocationException;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
@@ -85,13 +86,24 @@ public class ItemIssueFormController {
 		
 		logger.info("process Incevntory change");
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
-		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
+		
+		InventoryAllocationException ex = null;
+		try {
+			invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch(InventoryAllocationException iae) {
+			ex = iae;
+		}		
 		
 		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
 		List<Item> items =   itemMgr.getItemsForTransaction(transactionType);
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/issueSku");
 		mav.addObject("issueSkuForm", issueSkuForm);
+		if(ex != null) {
+			mav.addObject("exception", ex);
+		} else {
+			mav.addObject("success", "success");
+		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	}
@@ -117,9 +129,7 @@ public class ItemIssueFormController {
 		ReportDetailsResponse response = new ReportDetailsResponse();
 		
 		List<TransactionTrace> transTraceList = invtTransMgr.getOpenTransactionsForUser(locationId, userId, transactionTypeEnum);
-
 		List<UITransactionTrace> uiTransTraceList = new ArrayList<UITransactionTrace>();
-
 		
 		for (TransactionTrace transTrace : transTraceList) {
 			uiTransTraceList.add(UITransactionTrace.extractFromUserTransactionTrace(transTrace, contextPath));
@@ -158,13 +168,24 @@ public class ItemIssueFormController {
 		
 		logger.info("process Incevntory change");
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
-		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
+		
+		InventoryAllocationException ex = null;
+		try {
+			invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch(InventoryAllocationException iae) {
+			ex = iae;
+		}		
 		
 		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
 		List<Item> items =   itemMgr.getItemsForTransaction(transactionType);
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/issueSku");
 		mav.addObject("issueSkuForm", issueSkuForm);
+		if(ex != null) {
+			mav.addObject("exception", ex);
+		} else {
+			mav.addObject("success", "success");
+		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	

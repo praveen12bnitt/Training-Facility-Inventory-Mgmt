@@ -19,7 +19,7 @@ import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
-import com.smartworks.invtmgmt.core.domain.TransactionType;
+import com.smartworks.invtmgmt.core.exception.InventoryAllocationException;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
@@ -72,7 +72,7 @@ public class InboundFormController {
 		return mav;
 	}
 	@RequestMapping(value="/transferToMW.form", method=RequestMethod.GET)
-	public ModelAndView displayInventoryToMW(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeId) {
+	public ModelAndView displayInventoryToMW(HttpServletRequest request, HttpServletResponse response) {
 		List<Item> items = itemMgr.getAllItems();
 		
 		IssueSkuForm issueSkuForm = new IssueSkuForm();		
@@ -107,15 +107,24 @@ public class InboundFormController {
 	{
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
 		transDetailsHolder.setSrcLocationId(4);
-		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
+		InventoryAllocationException ex = null;
+		try {
+			invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch(InventoryAllocationException iae) {
+			ex = iae;
+		}		
 		
-		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
 		List<Item> items =   itemMgr.getAllItems();
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/InvMovement");
 		List<Location> listLocations = locDao.loadAll();
 		mav.addObject("locationList", listLocations);
 		mav.addObject("issueSkuForm", issueSkuForm);
+		if(ex != null) {
+			mav.addObject("exception", ex);
+		} else {
+			mav.addObject("success", "success");
+		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	}
@@ -129,15 +138,24 @@ public class InboundFormController {
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
 		transDetailsHolder.setLocationId(4);
 		transDetailsHolder.setSrcLocationId(issueSkuForm.getLocationId());
-		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
-		
-		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
+		InventoryAllocationException ex = null;
+		try {
+			invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch (InventoryAllocationException iae) {
+			ex = iae;
+		}
+				
 		List<Item> items =   itemMgr.getAllItems();
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/InvTransferToMW");
 		mav.addObject("issueSkuForm", issueSkuForm);
 		List<Location> listLocations = locDao.loadAll();
 		mav.addObject("locationList", listLocations);
+		if(ex != null) {
+			mav.addObject("exception", ex);
+		} else {
+			mav.addObject("success", "success");
+		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 
@@ -151,14 +169,23 @@ public class InboundFormController {
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
 		transDetailsHolder.setSrcLocationId(-1);
 		transDetailsHolder.setLocationId(4);
-				
-		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
 		
-		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
+		InventoryAllocationException ex = null;
+		try {
+			invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch (InventoryAllocationException iae) {
+			ex = iae;
+		}		
+		
 		List<Item> items =   itemMgr.getAllItems();
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/ReceiveInventory");
 		mav.addObject("issueSkuForm", issueSkuForm);
+		if(ex != null) {
+			mav.addObject("exception", ex);
+		} else {
+			mav.addObject("success", "success");
+		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	}
@@ -171,14 +198,21 @@ public class InboundFormController {
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
 		transDetailsHolder.setSrcLocationId(4);
 		transDetailsHolder.setLocationId(-1); //To Vendor
-				
-		boolean issueSkuSucceded = invtTransMgr.processInventoryChange(transDetailsHolder);
-		
-		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
+		InventoryAllocationException ex = null;
+		try {
+			invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch (InventoryAllocationException iae) {
+			ex = iae;
+		}		
 		List<Item> items =   itemMgr.getAllItems();
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/OutboundInventory");
 		mav.addObject("issueSkuForm", issueSkuForm);
+		if(ex != null) {
+			mav.addObject("exception", ex);
+		} else {
+			mav.addObject("success", "success");
+		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	}

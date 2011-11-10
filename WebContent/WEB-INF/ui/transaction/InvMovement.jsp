@@ -10,12 +10,7 @@
 
 <html>
 <head>
-<title><fmt:message key="title" /></title>
-<style>
-.error {
-	color: red;
-}
-</style>
+<title>Move Inventory</title>
 <link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/styles.css" />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/memu-0.1.css" />
@@ -67,9 +62,9 @@ $(document).ready(function($) {
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
-	<br />
+	<br /> 	
+	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %> 
 	
-
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
 		<div id="header-contents" class="ui-widget-content header-contents" style="padding: 10px;">
 		<table id="transDetails" class="ui-widget item-table trans-details">				
@@ -136,7 +131,7 @@ $(document).ready(function($) {
 			</table>
 			<div id="actions" align="center" class="actions">
 					<button type="submit" class="ui-state-default ui-corner-all form-button">Transfer</button>
-				</div>			
+			</div>			
 		</div>	
 	
 	</div>

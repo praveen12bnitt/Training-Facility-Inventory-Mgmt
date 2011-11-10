@@ -68,7 +68,7 @@ $(document).ready(function($) {
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
 	<br />
-	
+	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
 
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
 		<div id="header-contents" class="ui-widget-content header-contents" style="padding: 10px;">

@@ -12,10 +12,14 @@ public class LaundryReturnsProcessor extends InventoryChangeProcessor {
 	public void process(TransactionDetailsHolder transDetails) {
 		
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
+			
+			if(itemSku.getQuantity() == null || itemSku.getQuantity() < 0) {
+				continue;
+			}			
+			
 			InventoryPk inventoryPk = new InventoryPk();
 			Location loc = new Location(transDetails.getLocationId());
-			inventoryPk.setLocation(loc);
-			
+			inventoryPk.setLocation(loc);			
 			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
 			inventoryPk.setSkuCode(itemSkuCode);
 			boolean processingReq = itemSku.getItem().getRequiresProcessing();

@@ -6,9 +6,10 @@
 				<li class="memu-root">
 					<a href="#">Warehouse</a>
 					<ul>						
-						<li><a href='<c:url value="/inbound/receive.form?transactionTypeId=" />'>Receive</a></li>
-						<li><a href='<c:url value="/" />'>Outbound</a></li>
-						<li><a href='<c:url value="/inbound/transfer.form?transactionTypeId=" />'>Transfer Inventory</a></li>
+						<li><a href='<c:url value="/inbound/receive.form"/>'>Receive</a></li>						
+						<li><a href='<c:url value="/inbound/outbound.form"/>'>Outbound</a></li>
+						<li><a href='<c:url value="/inbound/transfer.form"/>'>Transfer Inventory</a></li>
+						<li><a href='<c:url value="/inbound/transferToMW.form" />'>Transfer to WM</a></li>
 					</ul>
 				</li>
 				<li class="memu-root">

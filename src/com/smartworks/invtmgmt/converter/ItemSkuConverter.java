@@ -94,6 +94,20 @@ public class ItemSkuConverter {
 		return itemSku;
 	}
 	
+	public String getItemSkuAsStr(String itemSkuCode) {
+		StringBuilder itemSkuStr = new StringBuilder();		
+		ItemSku itemSku = getItemSku(itemSkuCode);
+		itemSkuStr.append(itemSku.getItem().getName());
+		itemSkuStr.append(" ");
+		for(ItemAttributeDetails dtls : itemSku.getItemAttributeDtls()) {
+			itemSkuStr.append(dtls.getItemAttribute().getAttributeName());
+			itemSkuStr.append("[");
+			itemSkuStr.append(dtls.getItemAttributeValue().getAttributeValue());
+			itemSkuStr.append("] ");
+		}
+		return itemSkuStr.toString();
+	}
+	
 	public ItemAttributeDao getItemAttributeDao() {
 		return itemAttributeDao;
 	}

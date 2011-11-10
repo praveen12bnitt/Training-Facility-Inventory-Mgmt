@@ -10,7 +10,7 @@
 
 <html>
 <head>
-<title><fmt:message key="title" /></title>
+<title>Receive Inventory into Warehouse</title>
 <style>
 .error {
 	color: red;
@@ -87,13 +87,9 @@ $(document).ready(function() {
 	var itemName = addBtn.prev().val();	
 	var rowCount = $('#tblTransactionForm >tbody >tr').length;
 	addItem('${pageContext.request.contextPath}',itemName,rowCount);
- });
-  
+ }); 
 	
 });
-
-
-
 </script>
 
 </head>
@@ -108,7 +104,9 @@ $(document).ready(function() {
 	</div>
 	<br />
 	<div style="clear: both;"></div>
-
+	
+	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
+	
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
 		<div id="header-contents" class="ui-widget-content header-contents" style="padding: 10px;">
 		<table id="transDetails" class="ui-widget item-table trans-details">				
@@ -171,10 +169,9 @@ $(document).ready(function() {
 			</tbody>
 			</table>
 			<div id="actions" align="center" class="actions">
-					<button type="submit" class="ui-state-default ui-corner-all form-button">Receive</button>
-				</div>			
-		</div>	
-	
+				<button type="submit" class="ui-state-default ui-corner-all form-button">Receive</button>		
+			</div>			
+			</div>		
 	</div>
 	<br>	
 	</form:form>

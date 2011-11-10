@@ -93,19 +93,20 @@ $(document).ready(function($) {
 </script>
 </head>
 <body class="body-class" >	
-	
+	<form:form method="post" commandName="issueSkuForm" >
+	<form:hidden path="transactionType" />
+	<form:input type="hidden" path="locationId" value="2" />
+	<form:hidden path="trainee.traineeId" />	
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
 	<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
 	<br />
-	<div style="clear: both;"></div>
-	<form:form method="post" commandName="issueSkuForm" >
-	<form:hidden path="transactionType" />
-	<form:input type="hidden" path="locationId" value="2" />
+	<div style="clear: both;"></div>	
 	
-	<form:hidden path="trainee.traineeId" />	
+	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
+	
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
 		
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	

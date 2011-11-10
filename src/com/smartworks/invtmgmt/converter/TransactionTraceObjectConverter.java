@@ -26,6 +26,11 @@ public class TransactionTraceObjectConverter {
 		// Now create trans details object from itemSku
 		List<TransactionDetails> details = new ArrayList<TransactionDetails>();
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
+			
+			if(itemSku.getQuantity() == null || itemSku.getQuantity() < 0) {
+				continue;
+			}
+			
 			TransactionDetails detail = new TransactionDetails();
 			detail.setQuantity(itemSku.getQuantity());
 			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);

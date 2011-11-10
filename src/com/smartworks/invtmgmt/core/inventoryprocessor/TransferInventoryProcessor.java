@@ -10,7 +10,12 @@ public class TransferInventoryProcessor extends InventoryChangeProcessor {
 
 	@Override
 	public void process(TransactionDetailsHolder transDetails) {
-		for (ItemSku itemSku : transDetails.getItemSkus()) {			
+		for (ItemSku itemSku : transDetails.getItemSkus()) {
+			
+			if(itemSku.getQuantity() == null || itemSku.getQuantity() < 0) {
+				continue;
+			}
+			
 			InventoryPk srcInventoryPk = new InventoryPk();
 			InventoryPk targetInventoryPk = new InventoryPk();
 			

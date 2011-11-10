@@ -12,6 +12,11 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 	public void process(TransactionDetailsHolder transDetails) {
 		// First reduce the inventory 				
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
+			
+			if(itemSku.getQuantity() == null || itemSku.getQuantity() < 0) {
+				continue;
+			}
+			
 			InventoryPk inventoryPk = new InventoryPk();
 			Location loc = new Location(transDetails.getLocationId());
 			inventoryPk.setLocation(loc);
