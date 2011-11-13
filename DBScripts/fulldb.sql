@@ -146,11 +146,14 @@ CREATE TABLE `inventory` (
   `SKU_CODE` varchar(30) NOT NULL,
   `LOCATION_ID` int(11) NOT NULL,
   `AVAILABLE_QTY` int(11) NOT NULL,
+  `ISSUED_QTY` int(11) NOT NULL,
   `UNUSABLE_QTY` int(11) NOT NULL,
   PRIMARY KEY (`SKU_CODE`,`LOCATION_ID`),
   KEY `locfk` (`LOCATION_ID`),
   CONSTRAINT `locfk` FOREIGN KEY (`LOCATION_ID`) REFERENCES `location` (`location_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 -- transaction_trace table--Transaction table...so no data to fill
