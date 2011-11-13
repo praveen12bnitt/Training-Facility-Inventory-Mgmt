@@ -34,6 +34,9 @@ public class Inventory implements Serializable {
 	@Column(name="unusable_qty")
 	private Integer unusableQty;
 	
+	@Column(name="issued_qty")
+	private Integer issueQty;
+	
 	@Transient
 	public ItemSku itemSku;
 
@@ -83,6 +86,14 @@ public class Inventory implements Serializable {
 	
 	public void setSkuCode(String skuCode) {
 		skuLocation.setSkuCode(skuCode);
+	}
+
+	public Integer getIssueQty() {
+		return issueQty;
+	}
+
+	public void setIssueQty(Integer issueQty) {
+		this.issueQty = issueQty;
 	}
 	
 }
