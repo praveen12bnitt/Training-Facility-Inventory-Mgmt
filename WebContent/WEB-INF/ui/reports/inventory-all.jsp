@@ -40,11 +40,11 @@ $(document).ready(function($) {
 	   	colNames:['Id', 'Item Name', 'Item Specification', 'Available Qty' ,'Issued Qty', 'Unusable Qty', 'Location'],
 	   	colModel:[
 	   		{name:'itemId',index:'itemId', width:30, sorttype:"int"},
-	   		{name:'itemDesc',index:'itemDesc', width:200},
-	   		{name:'itemAttributeDetails',index:'itemAttributeDetails', width:200},
-	   		{name:'availableQty',index:'availableQty', width:50, align:"left",sorttype:"int"},
-	   		{name:'issuedQty',index:'issuedQty', width:50, align:"left",sorttype:"int"},
-	   		{name:'unusableQty',index:'unusableQty', width:50, align:"left",sorttype:"int"},
+	   		{name:'itemDesc',index:'itemDesc', width:180},
+	   		{name:'itemAttributeDetails',index:'itemAttributeDetails', width:170},
+	   		{name:'availableQty',index:'availableQty', width:70, align:"left",sorttype:"int"},
+	   		{name:'issuedQty',index:'issuedQty', width:70, align:"left",sorttype:"int"},
+	   		{name:'unusableQty',index:'unusableQty', width:70, align:"left",sorttype:"int"},
 	   		{name:'location',index:'location', width:100, align:"left"}
 	   	],
 	   	rowNum:50,
@@ -89,7 +89,7 @@ $(document).ready(function($) {
 	
 		
 		
-		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
 		<table id="list3" class="trans-details"></table>
 			<div id="pager3"></div>
 		</div>
