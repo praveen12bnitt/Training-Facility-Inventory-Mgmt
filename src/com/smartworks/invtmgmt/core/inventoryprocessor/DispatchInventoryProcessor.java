@@ -22,7 +22,9 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 			inventoryPk.setLocation(loc);
 			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
 			inventoryPk.setSkuCode(itemSkuCode);
-			inventoryDao.issueInventory(inventoryPk, itemSku.getQuantity());
+			inventoryDao.reduceAvailableInventory(inventoryPk, itemSku.getQuantity());
+			inventoryDao.addIssuedInventory(inventoryPk, itemSku.getQuantity());
+			
 		}
 		
 		TransactionTrace transTrace = transactionTraceObjectConverter.getTransactionTrace(transDetails);

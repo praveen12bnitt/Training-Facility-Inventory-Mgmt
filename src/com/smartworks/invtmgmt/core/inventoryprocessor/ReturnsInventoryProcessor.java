@@ -30,6 +30,9 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 			} else {
 				inventoryDao.addAvailableInventory(inventoryPk, itemSku.getQuantity());
 			}
+			
+			inventoryDao.reduceIssuedInventory(inventoryPk, itemSku.getQuantity());
+			
 		}
 		
 		TransactionTrace transTrace = transactionTraceObjectConverter.getTransactionTrace(transDetails);

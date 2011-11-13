@@ -56,23 +56,6 @@ public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDa
 		return inventoryList;
 	}
 	
-	public void issueInventory(InventoryPk skuLocation, Integer qty) {
-		Inventory inventory = load(skuLocation);
-		if(inventory == null) {
-			throw new NoInventoryException(skuLocation.getSkuCode(), qty,skuLocation.getLocation().getLocationName());			
-		}		
-		Integer avaQty = inventory.getAvailableQty();
-		Integer issuedQty = inventory.getIssueQty();
-		if(avaQty < qty) {
-			throw new NotEnoughInventoryException(skuLocation.getSkuCode(), qty, skuLocation.getLocation().getLocationName(), avaQty);
-		}
-		avaQty = avaQty-qty;
-		issuedQty = issuedQty + qty;
-		inventory.setIssueQty(issuedQty);
-		inventory.setAvailableQty(avaQty);
-		saveOrUpdate(inventory);	
-	}
-	
 	public void reduceAvailableInventory(InventoryPk skuLocation, Integer qty) {
 		Inventory inventory = load(skuLocation);
 		if(inventory == null) {
@@ -119,6 +102,22 @@ public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDa
 		}
 		unusableQty = unusableQty-qty;
 		inventory.setUnusableQty(unusableQty);
+		saveOrUpdate(inventory);
+	}
+	
+	public void addIssuedInventory(InventoryPk skuLocation, Integer qty) {
+		Inventory inventory = load(skuLocation);
+		Integer issuedInventory = inventory.getIssueQty();
+		issuedInventory = issuedInventory+qty;
+		inventory.setIssueQty(issuedInventory);
+		saveOrUpdate(inventory);
+	}
+	
+	public void reduceIssuedInventory(InventoryPk skuLocation, Integer qty) {
+		Inventory inventory = load(skuLocation);
+		Integer issuedInventory = inventory.getIssueQty();
+		issuedInventory = issuedInventory-qty;
+		inventory.setIssueQty(issuedInventory);
 		saveOrUpdate(inventory);
 	}
 

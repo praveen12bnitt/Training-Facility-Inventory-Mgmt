@@ -13,8 +13,9 @@ public interface InventoryDao {
 	public List<Inventory> loadAll() ;
 	public List<Inventory> loadAllInventory(Location location);
 	public void reduceAvailableInventory(InventoryPk skuLocation, Integer qty);
-	public void issueInventory(InventoryPk skuLocation, Integer qty);
 	public void addAvailableInventory(InventoryPk skuLocation, Integer qty);
 	public void addUnusableInventory(InventoryPk skuLocation, Integer qty);
 	public void reduceUnusableInventory(InventoryPk skuLocation, Integer qty);
+	public void addIssuedInventory(InventoryPk skuLocation, Integer qty);
+	public void reduceIssuedInventory(InventoryPk skuLocation, Integer qty);
 }
