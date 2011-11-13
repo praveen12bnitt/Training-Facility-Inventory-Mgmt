@@ -5,7 +5,9 @@ public class UIInventory {
 	String itemDesc;
 	String location;
 	String itemAttributeDetails;
-	Integer quantity;
+	Integer availableQty;
+	Integer issuedQty;
+	Integer unusableQty;
 	
 	public Integer getItemId() {
 		return itemId;
@@ -19,9 +21,7 @@ public class UIInventory {
 	public String getItemAttributeDetails() {
 		return itemAttributeDetails;
 	}
-	public Integer getQuantity() {
-		return quantity;
-	}
+	
 	public void setItemId(Integer itemId) {
 		this.itemId = itemId;
 	}
@@ -34,9 +34,25 @@ public class UIInventory {
 	public void setItemAttributeDetails(String itemAttributeDetails) {
 		this.itemAttributeDetails = itemAttributeDetails;
 	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public Integer getAvailableQty() {
+		return availableQty;
 	}
+	public Integer getIssuedQty() {
+		return issuedQty;
+	}
+	public Integer getUnusableQty() {
+		return unusableQty;
+	}
+	public void setAvailableQty(Integer availableQty) {
+		this.availableQty = availableQty;
+	}
+	public void setIssuedQty(Integer issuedQty) {
+		this.issuedQty = issuedQty;
+	}
+	public void setUnusableQty(Integer unusableQty) {
+		this.unusableQty = unusableQty;
+	}
+	
 	
 	
 }
