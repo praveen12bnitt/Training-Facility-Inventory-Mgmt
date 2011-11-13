@@ -106,6 +106,7 @@ $(document).ready(function($) {
       			<tr>
      			<td style="width: 400px;">     
      		    <form:input type="hidden" path="itemSkus[${itemSkuRow.index}].item.id" value="${itemSku.item.id}"/>${itemSku.item.desc}
+     		    <form:input type="hidden" path="itemSkus[${itemSkuRow.index}].item.requiresProcessing" value="${itemSku.item.requiresProcessing}"/>
      		 </td>
      		 
      		 <td style="width: 300px;">
