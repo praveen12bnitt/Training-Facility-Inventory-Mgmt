@@ -50,9 +50,14 @@
 	<bean id="inventoryDao" class="com.smartworks.invtmgmt.core.dao.impl.InventoryDaoImpl" parent="abstractDao">
 		<property name="itemSkuConverter" ref="itemSkuConverter" />		
 	</bean>
-	<bean id="transactionTraceDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTraceDaoImpl" parent="abstractDao" />
+	<bean id="transactionTraceDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTraceDaoImpl" parent="abstractDao" >
+		<property name="dateUtil" ref="dateUtil" /> 
+	</bean>
 	<bean id="locationDao" class="com.smartworks.invtmgmt.core.dao.impl.LocationDaoImpl" parent="abstractDao" />
 	<bean id="traineeDao" class="com.smartworks.invtmgmt.core.dao.impl.TraineeDaoImpl" parent="abstractDao" />
+	<bean id="laundryTrackingDao" class="com.smartworks.invtmgmt.core.dao.impl.LaundryTrackingDaoImpl" parent="abstractDao" >
+		<property name="dateUtil" ref="dateUtil" /> 
+	</bean>
 	<!--  Converters  -->
 	
 	<bean id="itemSkuConverter" class="com.smartworks.invtmgmt.converter.ItemSkuConverter" >
@@ -94,6 +99,10 @@
         <property name="inventoryDao"><ref local="inventoryDao"/></property>
     </bean>
     
+    <bean id="laundryMgr" class="com.smartworks.invtmgmt.core.manager.LaundryMgrImpl">
+        <property name="laundryTrackingDao"><ref local="laundryTrackingDao"/></property>
+    </bean>
+    
     <bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
     	<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />
     	<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />
@@ -115,6 +124,10 @@
     <bean id="laundryReturnsProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.LaundryReturnsProcessor" parent="abstractInventoryProcessor" />
     <bean id="transferInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.TransferInventoryProcessor" parent="abstractInventoryProcessor" />
     
+    
+    <bean id="dateUtil" class="com.smartworks.invtmgmt.core.db.util.DateUtil" >
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
     
     
     <tx:annotation-driven transaction-manager="transactionManager"/>

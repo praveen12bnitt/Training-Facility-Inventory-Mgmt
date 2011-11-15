@@ -26,6 +26,34 @@ table.item-table td {
 	border-color: #C5DBEC;;
 }
 
+table.laundry {
+	color:#333333;
+	border-width: 1px;
+	border-color: #C5DBEC;
+	border-collapse: collapse;
+	margin-top: 10px;
+}
+table.laundry th {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #C5DBEC;
+	background-color: #FFC;
+	
+}
+table.laundry td {
+	padding: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #C5DBEC;
+	background-color: #FFC;
+}
+
+
+
+
+
+
+
 table.trans-details td
 {
 	width: 200px;

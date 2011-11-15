@@ -198,7 +198,7 @@ public class TestClass {
 		ItemSku sku = new ItemSku();
 		sku.setItem(itemDao.load(2));
 		sku.setQuantity(1000);
-List<ItemAttributeDetails> attributeDtls = new ArrayList<ItemAttributeDetails>();
+		List<ItemAttributeDetails> attributeDtls = new ArrayList<ItemAttributeDetails>();
 		
 		ItemAttributeDetails itemAttributeDetail = new ItemAttributeDetails();
 		itemAttributeDetail.setItemAttribute(itemAttributeDao.load(1));
