@@ -233,5 +233,28 @@ INSERT INTO TRAINEE VALUES(3,'ALBERTO','RODRIGUEZ',NULL,'CLS-AX');
 INSERT INTO TRAINEE VALUES(4,'KEVIN','TURNER',NULL,'CLS-AN');
 
 
+CREATE TABLE `PRODUCT` (
+  `PRODUCT_ID` int(11) NOT NULL,
+  `PRODUCT_NAME` varchar(100) NOT NULL,
+  `PRODUCT_DESC` varchar(250) NOT NULL,
+  
+  PRIMARY KEY (`PRODUCT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+CREATE TABLE `PRODUCT_ITEMS` (
+  `PRODUCT_ID` int(11) NOT NULL,
+  `ITEM_ID` int(11) NOT NULL,
+  CONSTRAINT `fk_product_id` FOREIGN KEY (`PRODUCT_ID`) REFERENCES `PRODUCT` (`PRODUCT_ID`)
+  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into product_items values(1,1);
+insert into product_items values(1,2);
+insert into product_items values(1,3);
+insert into product_items values(1,4);
+
 
 

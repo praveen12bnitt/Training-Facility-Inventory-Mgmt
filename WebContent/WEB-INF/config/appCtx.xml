@@ -53,6 +53,8 @@
 	<bean id="transactionTraceDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTraceDaoImpl" parent="abstractDao" />
 	<bean id="locationDao" class="com.smartworks.invtmgmt.core.dao.impl.LocationDaoImpl" parent="abstractDao" />
 	<bean id="traineeDao" class="com.smartworks.invtmgmt.core.dao.impl.TraineeDaoImpl" parent="abstractDao" />
+	<bean id="userDao" class="com.smartworks.invtmgmt.core.dao.impl.UserDaoImpl" parent="abstractDao" />
+	<bean id="productDao" class="com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl" parent="abstractDao" />
 	<!--  Converters  -->
 	
 	<bean id="itemSkuConverter" class="com.smartworks.invtmgmt.converter.ItemSkuConverter" >

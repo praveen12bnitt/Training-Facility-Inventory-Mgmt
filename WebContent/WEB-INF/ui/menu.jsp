@@ -45,6 +45,12 @@
 											</ul>
 				</li>
 					<li class="memu-root">
+					<a href="#">&nbsp;Kit&nbsp;</a>
+					<ul>
+						<li><a href="#">Create</a></li>
+						</ul>
+				</li>
+					<li class="memu-root">
 					<a href="#">Report</a>
 					<ul>
 						

@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -40,7 +41,7 @@ public class Item implements Serializable {
 	@Column(name="REQUIRES_PROCESSING")
 	private Boolean requiresProcessing;
 	
-	@OneToMany (mappedBy="item")
+	@OneToMany (mappedBy="item", fetch=FetchType.EAGER)
 	Set<ItemAttributeMapping> attributeMappings = new HashSet<ItemAttributeMapping>();
 	
 	@Transient
