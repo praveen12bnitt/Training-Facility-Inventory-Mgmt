@@ -96,6 +96,8 @@
         <property name="inventoryDao"><ref local="inventoryDao"/></property>
     </bean>
     
+    <bean id="commonTransactionMgr" class="com.smartworks.invtmgmt.core.manager.CommonTransactionMgrImpl" />
+    
     <bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
     	<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />
     	<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />

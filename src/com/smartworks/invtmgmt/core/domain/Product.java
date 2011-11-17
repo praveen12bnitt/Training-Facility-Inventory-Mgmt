@@ -1,19 +1,24 @@
 package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Proxy;
 
 @Entity
@@ -27,6 +32,7 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue
 	@Column(name="product_id")
 	private Integer productId;
 	
@@ -44,12 +50,8 @@ public class Product implements Serializable {
 		this.productDesc = productDesc;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable(name = "PRODUCT_ITEMS", 
-	joinColumns = { @JoinColumn (name = "PRODUCT_ID") },
-	inverseJoinColumns = { @JoinColumn(name = "ITEM_ID") }
-	)
-	private Set<Item> itemSet = new HashSet<Item>();
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy="product")
+	private List<ProductItem> itemList;
 
 	public Integer getProductId() {
 		return productId;
@@ -66,13 +68,24 @@ public class Product implements Serializable {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-
-	public Set<Item> getItemSet() {
-		return itemSet;
+	
+	public List<ProductItem> getItemList() {
+		return itemList;
 	}
 
-	public void setItemSet(Set<Item> itemSet) {
-		this.itemSet = itemSet;
+	public void setItemList(List<ProductItem> itemList) {
+		this.itemList = itemList;
+	}
+	
+	@Transient
+	public List<Integer> getItemsIds() {
+		List<Integer> itemIds=new ArrayList<Integer>();
+		if(itemList !=null && itemList.size()>0) {
+			for(ProductItem productItem: itemList) {
+				itemIds.add(productItem.getItemId());
+			}
+		}
+		return itemIds;
 	}
 	
 }

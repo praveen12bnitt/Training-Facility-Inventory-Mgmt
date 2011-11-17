@@ -2,26 +2,26 @@ package com.smartworks.invtmgmt.web.ui.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.dao.UserDao;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.User;
-import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
+import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
 
 @Controller
@@ -35,7 +35,7 @@ public class CommonController {
 	private UserDao userDao; 
 	
 	@Autowired
-	private ProductDao productDao;
+	private CommonTransactionMgr commonTransactionMgr;
 	
 	protected static Logger logger = Logger
 			.getLogger(CommonController.class);
@@ -81,15 +81,36 @@ public class CommonController {
 		return mav;
 	}
 	
+	
+	@RequestMapping(value = "/createproduct.form", method = RequestMethod.GET)
+	public ModelAndView createProduct() {
+		ModelAndView mav = new ModelAndView("common/createproduct");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/saveproduct.form", method = RequestMethod.POST)
+	public ModelAndView saveProduct(@ModelAttribute Product product) {
+		logger.info("uiProduct:::"+product);
+		commonTransactionMgr.save(product);
+		ModelAndView mav = new ModelAndView("common/createproduct");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/deleteproduct.form", method = RequestMethod.GET)
+	public @ResponseBody String deleteProduct(@RequestParam Integer productId) {
+		logger.info("deleting productId:::"+productId);
+		commonTransactionMgr.delete(productId);
+		return "deleted";
+	}
+	
 	@RequestMapping(value = "/listproducts.form", method = RequestMethod.GET)
-	@Transactional
 	public @ResponseBody
 	ReportDetailsResponse getAllProducts(HttpServletRequest request) {
 		logger.info("Get All Products<>");
 		
 		List<Product> products = new ArrayList<Product>();
-
-		products = productDao.loadAll();
+			
+		products = commonTransactionMgr.getAllProducts();
 		ReportDetailsResponse response = new ReportDetailsResponse();
 		
 		response.setRows(products);
@@ -97,6 +118,13 @@ public class CommonController {
 		response.setTotal("10");
 		response.setRecords(String.valueOf(products.size()));
 		return response;
+	}
+	
+	@RequestMapping(value = "/getItemsByProductId.form", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<Integer,String> getItemsByProductId(@RequestParam Integer productId) {
+		Map itemMap = commonTransactionMgr.getItemsByProductId(productId);
+		return itemMap;
 	}
 	
 }

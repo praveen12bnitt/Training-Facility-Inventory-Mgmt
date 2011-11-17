@@ -1,6 +1,8 @@
 package com.smartworks.invtmgmt.core.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -26,11 +28,35 @@ public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 		return itemNames;
 	}
 	
+	public Map<Integer, String> getItemsByNameLike(String likeStr) {		
+		String query = "select id, name from Item where name like :name" ;				
+		List<Object[]> itemNames = getHibernateTemplate().findByNamedParam(query, "name", "%"+likeStr+"%");
+		Map<Integer,String> itemsMap = new HashMap<Integer, String>();
+		for(Object[] items: itemNames) {
+			itemsMap.put((Integer)items[0],(String)items[1]);
+		}
+		return itemsMap;
+	}
+	
 	public List<Item> getItemsByName(String name) {
 		String query = "from Item where name =  :name" ;
 		List<Item> items = getHibernateTemplate().findByNamedParam(query, "name", name);
 		return items;
 		
+	}
+
+	@Override
+	public Map<Integer, String> getItemNamesByIds(List itemIds) {
+		
+		String hql = "select id,name from Item where id in (:listParam)";
+		String[] params = { "listParam" };
+		Object[] values = { itemIds };
+		List<Object[]> itemNames = getHibernateTemplate().findByNamedParam(hql, params, values);
+		Map<Integer,String> itemsMap = new HashMap<Integer, String>();
+		for(Object[] items: itemNames) {
+			itemsMap.put((Integer)items[0],(String)items[1]);
+		}
+		return itemsMap;
 	}
 	
 }

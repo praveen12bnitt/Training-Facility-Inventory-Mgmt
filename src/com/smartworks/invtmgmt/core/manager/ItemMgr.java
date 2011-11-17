@@ -1,6 +1,7 @@
 package com.smartworks.invtmgmt.core.manager;
 
 import java.util.List;
+import java.util.Map;
 
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.TransactionType;
@@ -13,4 +14,5 @@ public interface ItemMgr  {
 	public List<Item> getAllItemsWithoutAttribute();
 	public List<String> getItemNamesLike(String name);
 	public List<Item> getItemsByName(String name);
+	public Map<Integer, String> getItemMaps(String name);
 }
