@@ -48,7 +48,7 @@ $(document).ready(function($) {
 	jQuery("#list2").jqGrid({
 		url:'${pageContext.request.contextPath}/common/listproducts.form',
 		datatype: "json",
-	   	colNames:['Product Id','Product Name', 'Product Desc'],
+	   	colNames:['Kit Id','Kit Name', 'Kit Desc'],
 	   	colModel:[
 			
 			{name:'productId',index:'productId', align:'center', width:200},
@@ -63,7 +63,7 @@ $(document).ready(function($) {
 	    viewrecords: true,
 	    sortorder: "desc",
 	    loadonce: false,
-	    caption: "Product List",
+	    caption: "Kit List",
 	    height: 125,
 	    width: 750,
 	    onSelectRow: function(rowId){
@@ -243,10 +243,10 @@ function showTransactionStatus() {
 				<table id="transDetails" class="ui-widget item-table trans-details">				
 			<tbody class="ui-widget-content trans-details" >
 				<tr>
-					<td>Product Name</td><td><input type=hidden name="productId" value="" /><input type="text" name="productName" value="" /></td>
+					<td>Kit Name</td><td><input type=hidden name="productId" value="" /><input type="text" name="productName" value="" /></td>
 				</tr>
 				<tr>
-					<td>Product Desc</td><td><input type="text" name="productDesc" value=""  /></td>
+					<td>Kit Desc</td><td><input type="text" name="productDesc" value=""  /></td>
 				</tr>
 				
 			</tbody>
