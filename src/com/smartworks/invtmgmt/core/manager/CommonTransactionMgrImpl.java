@@ -55,6 +55,10 @@ public class CommonTransactionMgrImpl implements CommonTransactionMgr {
 		productDao.delete(productId);		
 	}
 	
-	
+	@Override
+	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
+	public Map<Integer,String> findByProductNameLike(String name){
+		return productDao.findByProductNameLike(name);
+	}
 
 }

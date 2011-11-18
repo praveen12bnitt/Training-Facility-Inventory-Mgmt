@@ -1,6 +1,8 @@
 package com.smartworks.invtmgmt.core.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -46,6 +48,18 @@ public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
 	public void delete(Integer productId) {
 		Product product = load(productId);
 		getHibernateTemplate().delete(product);
+	}
+	
+	public Map<Integer,String> findByProductNameLike(String name){
+		
+		String query = "select productId,productName from Product " +
+				"         where productName like :name";
+		List<Object[]> productNames = getHibernateTemplate().findByNamedParam(query, "name", "%"+name+"%");
+		Map<Integer,String> productsMap = new HashMap<Integer, String>();
+		for(Object[] items: productNames) {
+			productsMap.put((Integer)items[0],(String)items[1]);
+		}
+		return productsMap;
 	}
 
 }

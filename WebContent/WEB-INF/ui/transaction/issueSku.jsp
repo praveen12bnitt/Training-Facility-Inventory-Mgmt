@@ -40,8 +40,7 @@ $(document).ready(function($) {
 		rootWidth: 75,
 		height: 25
 	});
-	
-	
+
 	jQuery("#list2").jqGrid({
 	   	url:'${pageContext.request.contextPath}/common/listtrainees.form',
 		datatype: "json",
@@ -88,6 +87,39 @@ $(document).ready(function($) {
 	});
 	
 	
+	$("#kitName").autocomplete({
+        source: function(request, response) {
+         jQuery.ajax({
+                   url : '${pageContext.request.contextPath}/common/findByProductNameLike.form',
+                   dataType : 'json',
+                   data : {
+                       name : request.term
+                   },
+                   success : function(data) {
+                	    response(jQuery.map(data, function(key,val) {
+                            return {
+                               label: key,
+                               value: key,
+                               optval: val
+                            }
+                       }))
+                   }
+            })
+        },
+        minLength : 2,
+        open: function() {          	
+        	jQuery(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+        },
+        
+        close: function() {
+           	jQuery(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+        },
+        
+        select: function(event,ui) {
+        	alert(ui.item.optval);
+        }
+   });
+	
 	});
 
 </script>
@@ -107,7 +139,7 @@ $(document).ready(function($) {
 	
 	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
 	
-		<div id="heading" class="ui-widget-header">Transaction Details</div>
+		<div id="heading12" class="ui-widget-header">Transaction Details</div>
 		
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	
 		<table id="list2" class="trans-details"></table>
@@ -141,7 +173,14 @@ $(document).ready(function($) {
 		<br />
 
 		<div id="heading" class="ui-widget-header">Inventory Details</div>
+		<div>
 		
+			<label class="ui-widget">
+        		<span> Kit Name: </span>
+        		<input type="text" id="kitName" name="kitName" size="70"  />   
+        		<a id="item-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
+			</label>
+		</div>
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	
 			<table id="tblTransactionForm" class="ui-widget item-table">
 				<thead class="ui-state-default item-table-header">
