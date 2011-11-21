@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Open User Transation</title>
+<title>Edit Laundry</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
@@ -30,24 +30,44 @@
 					$(this).removeClass("ui-state-hover"); 
 				}
 			);
+	  
+	  $('#complete').click(function() {
+		  $('#laundryEditForm').attr("action", "${pageContext.request.contextPath}/laundry/close-load.form");
+		  $('#laundryEditForm').submit();
+	  });
+	  
+	  $('#save').click(function() {
+		  $('#laundryEditForm').attr("action", "${pageContext.request.contextPath}/laundry/edit-load.form");
+		  $('#laundryEditForm').submit();
+	  });
 });
 
 </script>
 </head>
 <body class="body-class" >	
-<form:form method="post" commandName="laundryTrackingForm" >
+<form:form method="post" commandName="laundryTrackingForm" id="laundryEditForm">
 <div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
+	<form:hidden path="laundryTracking.laundryTrankingId"/>
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
 	<br />
 	<div style="clear: both;"></div>
-		<table>					
+		<table >
+			<tr>
+				<td>Load Id</td>
+				<td><input type="text" value="${laundryTrackingForm.laundryTracking.laundryTrankingId}" disabled="disabled" /></td>
+			</tr>	
+			
+			<tr>
+				<td>Date</td>
+				<td><input type="text" value="${laundryTrackingForm.laundryTracking.createdDttm}" disabled="disabled" /></td>
+			</tr>			
 			<tr>
 				<td>Code</td>
 				<td>
-				<form:input type="text" path="laundryTracking.code" size="1" />
+				<form:input type="text" path="laundryTracking.code" size="1"  />
 				</td>
 			</tr>
 		</table>
@@ -126,7 +146,8 @@
 		</div>
 		
 		<div id="actions" align="center" class="actions">
-			<button type="submit" class="ui-state-default ui-corner-all form-button">Create</button>
+			<button id="save" type="submit" class="ui-state-default ui-corner-all form-button">Save</button>
+			<button id="complete" type="submit" class="ui-state-default ui-corner-all form-button" onclick="" >Complete Load</button>
 		</div>	
 			
 </div>

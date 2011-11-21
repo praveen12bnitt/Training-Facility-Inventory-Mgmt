@@ -90,7 +90,7 @@ $(document).ready(function($) {
 		
 		
 		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
-		<table id="list3" class="trans-details"></table>
+			<table id="list3" class="trans-details"></table>
 			<div id="pager3"></div>
 		</div>
 		

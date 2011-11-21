@@ -70,9 +70,11 @@
 		<property name="itemSkuConverter" ref="itemSkuConverter" />		
 	</bean>	
 	
-	<bean id="inventoryConverter" class="com.smartworks.invtmgmt.converter.InventoryConverter" >
+	<bean id="inventoryConverter" class="com.smartworks.invtmgmt.converter.InventoryConverter" />
+	
+	<bean id="laundryLoadConverter" class="com.smartworks.invtmgmt.converter.LaundryLoadConverter" />
 			
-	</bean>	
+	
 	
 	
 	

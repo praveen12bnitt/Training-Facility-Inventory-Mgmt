@@ -13,6 +13,10 @@ public class LaundryTrackingDaoImpl extends HibernateDaoSupport implements Laund
 
 	DateUtil dateUtil;
 	
+	public LaundryTracking load(Integer loadId) {
+		return getHibernateTemplate().load(LaundryTracking.class, loadId);
+	}
+	
 	public List<LaundryTracking> loadAll() {
 		List<LaundryTracking> laundryTrackingList = new ArrayList<LaundryTracking>();
 		laundryTrackingList = getHibernateTemplate().loadAll(LaundryTracking.class);
@@ -28,7 +32,17 @@ public class LaundryTrackingDaoImpl extends HibernateDaoSupport implements Laund
 	
 	public void save(LaundryTracking laundryTracking) {
 		laundryTracking.setCreatedDttm(dateUtil.getCurrentDBTimeStamp());
-		getHibernateTemplate().save(laundryTracking);
+		getHibernateTemplate().saveOrUpdate(laundryTracking);
+	}
+	
+	public void update(LaundryTracking laundryTracking) {
+		getHibernateTemplate().update(laundryTracking);
+	}
+	
+	public void closeLoad(LaundryTracking laundryTracking) {
+		laundryTracking.setClosedDttm(dateUtil.getCurrentDBTimeStamp());
+		laundryTracking.setIsOpen(false);
+		getHibernateTemplate().update(laundryTracking);
 	}
 
 	public DateUtil getDateUtil() {

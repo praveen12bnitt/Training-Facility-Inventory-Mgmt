@@ -48,11 +48,15 @@ table.laundry td {
 	background-color: #FFC;
 }
 
-
-
-
-
-
+table.laundry-items {
+	border-width: 0px;	
+}
+table.laundry-items th {
+	border-width: 0px;	
+}
+table.laundry-items td {
+	border-width: 0px;
+}
 
 table.trans-details td
 {

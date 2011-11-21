@@ -24,7 +24,7 @@ public class LaundryTracking {
 	
 	@Type(type="yes_no")
 	@Column(name="is_open")	
-	Boolean isOpen;
+	Boolean isOpen = true;
 	
 	@Column(name="code")
 	String code;

@@ -63,18 +63,13 @@ $(document).ready(function($) {
 	    caption: "Trainee List",
 	    height: 125,
 	    width: 750,
-	    onSelectRow: function(rowId){
-	    	
+	    onSelectRow: function(rowId){	    	
 	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
 	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
 	    	if(rowData){
 				jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
-			}
-	    	
-	    	$('input[name="trainee.traineeId"]').val(traineeId);
-	    	
-	    	
-	  
+			}	    	
+	    	$('input[name="trainee.traineeId"]').val(traineeId);	  
 	    },
 	    jsonReader : {
 	          root: "rows",
