@@ -39,10 +39,9 @@
 					<li class="memu-root">
 					<a href="#">Laundry</a>
 					<ul>
-						<li><a href="#">Issue</a></li>
-						<li><a href="#">Return</a></li>
-						<li><a href="#">Transfer Inventory</a></li>
-											</ul>
+						<li><a href='<c:url value="/laundry/list-laundry.form" />'>List Loads</a></li>
+						<li><a href='<c:url value="/laundry/create-load.form" />'>Create New Load</a></li>
+					</ul>
 				</li>
 					<li class="memu-root">
 					<a href="#">&nbsp;Kit&nbsp;</a>
