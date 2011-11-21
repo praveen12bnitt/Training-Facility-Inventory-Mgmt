@@ -2,6 +2,7 @@ package com.smartworks.invtmgmt.web.ui.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +29,19 @@ public class ItemLookupController {
 		itemNames = itemMgr.getItemNamesLike(name);
 		return itemNames;	
 	}
+	
+	
+	@RequestMapping(value = "/itemNames.form", method = RequestMethod.GET)
+	public @ResponseBody
+	List<String> getItemMaps(HttpServletRequest request, @RequestParam String name) {
+		Map<Integer, String> itemMaps =  itemMgr.getItemMaps(name);
+		List<String> itemNames = new ArrayList();
+		for(Integer id : itemMaps.keySet()) {
+			itemNames.add(itemMaps.get(id)+"("+id+")");
+		}
+		return itemNames;
+	}
+	
 
 	public ItemMgr getItemMgr() {
 		return itemMgr;

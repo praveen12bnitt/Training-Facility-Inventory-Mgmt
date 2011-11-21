@@ -1,7 +1,9 @@
 package com.smartworks.invtmgmt.core.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +64,15 @@ public class ItemMgrImpl implements ItemMgr {
 		return itemList;
 	}
 	
+	
+	@Override
+	public Map<Integer, String> getItemMaps(String name) {
+			
+		Map<Integer, String> itemMap = itemDao.getItemsByNameLike(name);
+		
+		return itemMap;
+	}	
+	
 	public List<String> getItemNamesLike(String name) {
 		return itemDao.getItemNamesLike(name);
 	}
@@ -105,6 +116,8 @@ public class ItemMgrImpl implements ItemMgr {
 
 	public void setItemAttributeValueDao(ItemAttributeValueDao itemAttributeValueDao) {
 		this.itemAttributeValueDao = itemAttributeValueDao;
-	}	
+	}
+
+	
 
 }
