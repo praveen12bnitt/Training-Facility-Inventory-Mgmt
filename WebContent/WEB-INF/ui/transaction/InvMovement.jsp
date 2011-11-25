@@ -1,6 +1,4 @@
 
-
-
 <%@ include file="/WEB-INF/ui/commoninclude.jsp"%>
 <%@ page language="java"
 	import="java.util.*,com.smartworks.invtmgmt.core.domain.*"%>
@@ -13,14 +11,15 @@
 <title>Move Inventory</title>
 <link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/styles.css" />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
-<link rel="stylesheet" type="text/css" 	href="${pageContext.request.contextPath}/css/memu-0.1.css" />
+<link rel="stylesheet" type="text/css" 	href='<c:url value="/css/dropdown.css" />'/>
 <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/jqgrid/ui.jqgrid.css" />
 <script src="${pageContext.request.contextPath}/js/jquery/jquery-1.6.2.min.js" 	type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jquery/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jqgrid/grid.locale-en.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.json-2.3.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/jquery.memu-0.1.min.js" type="text/javascript"></script>
+<script src='<c:url value="/js/dropdown/jquery.dropdown.js" />' type="text/javascript"></script>
+<script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
 
 <script type="text/javascript">
 $(document).ready(function($) {

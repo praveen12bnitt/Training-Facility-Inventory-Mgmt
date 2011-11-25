@@ -160,7 +160,7 @@ CREATE TABLE `inventory` (
 
 CREATE TABLE `transaction_trace` (
   `TRANSACTION_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `CREATED_DTTM` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `CREATED_DTTM` timestamp NOT NULL,
   `LOCATION_ID` int(11) NOT NULL,
   `TRANSACTION_TYPE` varchar(45) NOT NULL,
   `USER_ID` int(11) NOT NULL,
@@ -261,6 +261,37 @@ insert into product_items(product_id, item_id) values(1,1);
 insert into product_items(product_id, item_id) values(1,2);
 insert into product_items(product_id, item_id) values(1,3);
 insert into product_items(product_id, item_id) values(1,4);
+
+
+CREATE TABLE `laundry_tracking` (
+  `laundry_trancking_id` int(11) NOT NULL AUTO_INCREMENT,
+  `is_open` varchar(10) DEFAULT NULL,
+  `code` varchar(45) DEFAULT NULL,
+  `createdDttm` timestamp NULL DEFAULT NULL,
+  `closedDttm` timestamp NULL DEFAULT NULL,
+  `lastUpdateDttm` timestamp NULL DEFAULT NULL,
+  `was_mc_no` int(11) DEFAULT NULL,
+  `tse_room` int(11) DEFAULT NULL,
+  `towels` int(11) DEFAULT NULL,
+  `gym` int(11) DEFAULT NULL,
+  `jock_sock_bra` int(11) DEFAULT NULL,
+  `uniform` int(11) DEFAULT NULL,
+  `reg_laundry` int(11) DEFAULT NULL,
+  `DMD_0006_G` int(11) DEFAULT NULL,
+  `FAD_0006_E` int(11) DEFAULT NULL,
+  `CTD_0006_D` int(11) DEFAULT NULL,
+  `ATF_SABT_0006_H` int(11) DEFAULT NULL,
+  `PTD_0006_F` int(11) DEFAULT NULL,
+  `USBOPB_0006_B` int(11) DEFAULT NULL,
+  `dryer_mc_no` int(11) DEFAULT NULL,
+  `weight_with_buggy` int(11) DEFAULT NULL,
+  `weight_buggy` int(11) DEFAULT NULL,
+  `dryer_temp` int(11) DEFAULT NULL,
+  `clean_dryer_filter` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`laundry_trancking_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+
 
 
 

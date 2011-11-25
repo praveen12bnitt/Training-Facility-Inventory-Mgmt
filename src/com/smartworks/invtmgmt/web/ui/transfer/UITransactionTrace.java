@@ -2,7 +2,10 @@ package com.smartworks.invtmgmt.web.ui.transfer;
 
 import java.text.SimpleDateFormat;
 
+import org.hsqldb.DatabaseURL;
+
 import com.smartworks.invtmgmt.core.dao.LocationDao;
+import com.smartworks.invtmgmt.core.db.util.DateUtil;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.platform.AppContextUtil;
 
@@ -47,8 +50,7 @@ public class UITransactionTrace {
 	
 		LocationDao locationDao = AppContextUtil.getBean("locationDao");
 		uiTransactionTrace.setLocationName(locationDao.load(transactionTrace.getLocationId()).getLocationName());
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-		uiTransactionTrace.setCreatedDttm(sdf.format(transactionTrace.getCreatedDttm()));
+		uiTransactionTrace.setCreatedDttm(com.smartworks.invtmgmt.core.util.DateUtil.getExpandedTimeStamp(transactionTrace.getCreatedDttm()));
 		
 		return uiTransactionTrace;
 	}
