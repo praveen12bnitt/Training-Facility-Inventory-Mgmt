@@ -20,10 +20,33 @@ public class LaundryLoadConverter {
 		uiLaundryLoad.setClosedDttm(DateUtil.getExpandedTimeStamp(laundryTracking.getClosedDttm()));
 		
 		uiLaundryLoad.setLaundryDetails(getLaundryDetailsStr(laundryTracking));
+		if(laundryTracking.getDryerMachineNo() != null) {
+			uiLaundryLoad.setDryerMachineNo(laundryTracking.getDryerMachineNo());	
+		}
+		
+		
+		
+		StringBuilder dryerWtDetails = new StringBuilder();
+		if(laundryTracking.getWeightWithBuggy() != null) {
+			dryerWtDetails.append("Weight with Buggy : "+laundryTracking.getWeightWithBuggy());
+			dryerWtDetails.append("</br>");
+		}
+		
+		if(laundryTracking.getWeightBuggy() != null) {
+			dryerWtDetails.append("Weight of Buggy : "+laundryTracking.getWeightBuggy());
+		}
+			
+		uiLaundryLoad.setDryerWeightDetails(dryerWtDetails.toString());
+		if(laundryTracking.getDryerTempSetting() != null)
+			uiLaundryLoad.setDryerTempSettings(laundryTracking.getDryerTempSetting().toString());
+		if(laundryTracking.getCleanedFilter() != null)
+			uiLaundryLoad.setFilterCleaned(laundryTracking.getCleanedFilter());
 		
 		return uiLaundryLoad;
 		
 	}
+	
+	
 	
 	private String getLaundryDetailsStr(LaundryTracking laundryTracking) {
 		StringBuilder laundryDetails = new StringBuilder();

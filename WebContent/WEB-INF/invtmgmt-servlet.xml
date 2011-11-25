@@ -25,5 +25,13 @@
         <property name="prefix" value="/WEB-INF/ui/"></property>
         <property name="suffix" value=".jsp"></property>     
     </bean>
+    
+   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basenames">
+        <list>
+            <value>error-message</value>               
+        </list>
+    </property>
+</bean>
             
 </beans>

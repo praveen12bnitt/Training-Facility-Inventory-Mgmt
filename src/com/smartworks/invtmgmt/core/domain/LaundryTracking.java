@@ -8,9 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
 @Table(name="laundry_tracking")
@@ -39,7 +43,9 @@ public class LaundryTracking {
 	@Column(name="lastUpdateDttm")
 	Timestamp lastUpdateDttm;
 	
+	@NotNull(message = "Waching machine number cannot be null")
 	@Column(name="was_mc_no")
+	@Min(value=0,message="Waching machine number should be a number")
 	Integer washingMachineNo;
 	
 	@Column(name="tse_room")

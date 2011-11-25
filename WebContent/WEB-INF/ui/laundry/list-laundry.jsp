@@ -35,13 +35,17 @@
 	  jQuery("#open-laundry").jqGrid({
 		   	url:'${pageContext.request.contextPath}/laundry/list-open-laundry.form',
 			datatype: "json",
-		   	colNames:['id', 'Wash Mc', 'code', 'Created Time' ,'Laundry Details'],
+		   	colNames:['id', 'Wash Mc', 'code', 'Created Time' ,'Laundry Details','Dryer','Weight','Temp','Filter Cleaned'],
 		   	colModel:[
 		   		{name:'loadId',index:'loadId', width:10, sorttype:"int"},
-		   		{name:'washingMachineNo',index:'washingMachineNo', width:30},
-		   		{name:'code',index:'code', width:10},
+		   		{name:'washingMachineNo',index:'washingMachineNo', width:20},
+		   		{name:'code',index:'code', width:11},
 		   		{name:'createDttm',index:'createDttm', width:30, align:"left"},
-		   		{name:'laundryDetails',index:'laundryDetails', width:100, align:"left"}
+		   		{name:'laundryDetails',index:'laundryDetails', width:90, align:"left"},
+		   		{name:'dryerMachineNo',index:'dryerMachineNo', width:12, align:"left"},
+		   		{name:'dryerWeightDetails',index:'dryerWeightDetails', width:40, align:"left"},
+		   		{name:'dryerTempSettings',index:'dryerTempSettings', width:13, align:"left"},
+		   		{name:'filterCleaned',index:'filterCleaned', width:25, align:"left"}
 		   	],
 		   	rowNum:50,
 		   	rowList:[50,100,150],
@@ -51,8 +55,7 @@
 		    sortorder: "desc",
 		    loadonce: true,
 		    caption: "Laundry Details",
-		    height: 500,
-		    width: 1050,
+		    width: 1110,
 		    onSelectRow: function(rowId){	    	
 		    	var rowData = jQuery("#open-laundry").jqGrid('getGridParam','selrow');
 		    	var laundryId = jQuery("#open-laundry").jqGrid('getCell',rowId,0);

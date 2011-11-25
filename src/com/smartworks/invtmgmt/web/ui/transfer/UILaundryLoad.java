@@ -1,5 +1,7 @@
 package com.smartworks.invtmgmt.web.ui.transfer;
 
+import javax.validation.constraints.NotNull;
+
 public class UILaundryLoad {
 
 	Integer loadId;
@@ -12,8 +14,11 @@ public class UILaundryLoad {
 	Integer washingMachineNo;
 	String laundryDetails;
 	
+	@NotNull
 	Integer dryerMachineNo;
-	String dryerDetails;
+	String dryerWeightDetails;
+	String dryerTempSettings;
+	boolean filterCleaned;
 	
 	public Integer getLoadId() {
 		return loadId;
@@ -42,9 +47,7 @@ public class UILaundryLoad {
 	public Integer getDryerMachineNo() {
 		return dryerMachineNo;
 	}
-	public String getDryerDetails() {
-		return dryerDetails;
-	}
+	
 	public void setLoadId(Integer loadId) {
 		this.loadId = loadId;
 	}
@@ -72,9 +75,25 @@ public class UILaundryLoad {
 	public void setDryerMachineNo(Integer dryerMachineNo) {
 		this.dryerMachineNo = dryerMachineNo;
 	}
-	public void setDryerDetails(String dryerDetails) {
-		this.dryerDetails = dryerDetails;
+	public String getDryerWeightDetails() {
+		return dryerWeightDetails;
 	}
+	public String getDryerTempSettings() {
+		return dryerTempSettings;
+	}
+	public boolean isFilterCleaned() {
+		return filterCleaned;
+	}
+	public void setDryerWeightDetails(String dryerWeightDetails) {
+		this.dryerWeightDetails = dryerWeightDetails;
+	}
+	public void setDryerTempSettings(String dryerTempSettings) {
+		this.dryerTempSettings = dryerTempSettings;
+	}
+	public void setFilterCleaned(boolean filterCleaned) {
+		this.filterCleaned = filterCleaned;
+	}
+	
 	
 	
 	

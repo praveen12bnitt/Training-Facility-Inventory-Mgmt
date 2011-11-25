@@ -1,10 +1,12 @@
 package com.smartworks.invtmgmt.web.ui.form;
 
+import javax.validation.Valid;
+
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
 
 public class LaundryTrackingForm {
-
-	LaundryTracking laundryTracking;
+	
+	@Valid LaundryTracking laundryTracking;
 
 	public LaundryTracking getLaundryTracking() {
 		return laundryTracking;
@@ -13,4 +15,5 @@ public class LaundryTrackingForm {
 	public void setLaundryTracking(LaundryTracking laundryTracking) {
 		this.laundryTracking = laundryTracking;
 	}
+
 }

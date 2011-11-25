@@ -55,6 +55,8 @@
 	</div>
 	<br />
 	<div style="clear: both;"></div>
+	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
+	<br/>
 		<table >
 			<tr>
 				<td>Load Id</td>
@@ -76,6 +78,7 @@
 		<div id="heading" class="ui-widget-header">Washing Tracking</div>
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	
 			Washing MC No : <form:input type="text" path="laundryTracking.washingMachineNo" size="2" />
+			<form:errors path="laundryTracking.washingMachineNo" cssClass="errors"/>
 			<table class="laundry">			
 			<tr>
 				<td>TSE Room</td>

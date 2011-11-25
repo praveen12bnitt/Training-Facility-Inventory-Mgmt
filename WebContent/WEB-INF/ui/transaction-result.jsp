@@ -24,3 +24,16 @@
 	</div>
 	<br />
 </c:if>
+<c:if test="${not empty validationErrors}">
+<div class="ui-widget">
+<div class="ui-corner-all ui-state-error">
+<p>
+<c:forEach var="error" items="${validationErrors}">      
+<span class="ui-icon ui-icon-alert"
+	style="float: left; margin-left: 1em;"></span> <strong>${error} </strong>			
+</c:forEach>
+</p>
+</div>
+</div> 
+</c:if>
+

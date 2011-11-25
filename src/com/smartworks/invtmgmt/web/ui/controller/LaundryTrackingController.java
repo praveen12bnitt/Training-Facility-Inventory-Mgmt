@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smartworks.invtmgmt.converter.LaundryLoadConverter;
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
 import com.smartworks.invtmgmt.core.manager.LaundryMgr;
+import com.smartworks.invtmgmt.web.ui.controller.util.ValidationUtil;
 import com.smartworks.invtmgmt.web.ui.form.LaundryTrackingForm;
 import com.smartworks.invtmgmt.web.ui.transfer.UILaundryLoad;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
@@ -30,6 +36,9 @@ public class LaundryTrackingController {
 	
 	@Autowired
 	LaundryLoadConverter laundryLoadConverter;
+	
+	@Autowired
+	private MessageSource messageSource;
 
 	@RequestMapping(value="/create-load.form", method=RequestMethod.GET)
 	public ModelAndView displayTransaction() {
@@ -65,20 +74,28 @@ public class LaundryTrackingController {
 	}
 	
 	@RequestMapping(value="/edit-load.form", method=RequestMethod.POST)
-	public String editLoady(HttpServletRequest request, @ModelAttribute("laundryTracking") LaundryTrackingForm laundryTrackingForm) {		
+	public ModelAndView editLoady(HttpServletRequest request, @ModelAttribute("laundryTracking") @Valid LaundryTrackingForm laundryTrackingForm,BindingResult result) {		
 		// Load load from db and modify the updated fields.
+		ModelAndView mav = new ModelAndView();
+		
+		if (result.hasErrors()) {  
+			List<String> errormsgs = ValidationUtil.getErrorMsgs(messageSource, result);
+			mav.setViewName("laundry/laundry-load-edit");
+			mav.addObject("validationErrors",errormsgs);
+			mav.addObject("laundryTrackingForm", laundryTrackingForm);
+			return mav;
+        }  
 		LaundryTracking laundryTracking = laundryMgr.load(laundryTrackingForm.getLaundryTracking().getLaundryTrankingId());		
 		LaundryTracking uiLaundryTracking = laundryTrackingForm.getLaundryTracking();		
 		modifyUpdatedFields(laundryTracking, uiLaundryTracking);		
 		laundryMgr.save(laundryTracking);
-		return "redirect:list-laundry.form";
+		mav.setViewName("redirect:list-laundry.form");
+		return mav;
 	}
 	
 	@RequestMapping(value="/list-laundry.form", method=RequestMethod.GET)
 	public ModelAndView listLaundry() {
 		ModelAndView mav = new ModelAndView("laundry/list-laundry");
-		List<LaundryTracking> laundryTrackingList = laundryMgr.loadAllOpenLoads();
-		mav.addObject("laundryTrackingList", laundryTrackingList);
 		return mav;
 	}
 	
