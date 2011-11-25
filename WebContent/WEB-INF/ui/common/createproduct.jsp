@@ -97,7 +97,7 @@ $(document).ready(function($) {
 	jQuery('#command').submit(function() { 
 	    // submit the form 
 	    jQuery(this).ajaxSubmit({
-	    	url: '/imgmt/common/saveproduct.form',
+	    	url: '${pageContext.request.contextPath}/common/saveproduct.form',
 	    	
 	    	success: showTransactionStatus
 	    }

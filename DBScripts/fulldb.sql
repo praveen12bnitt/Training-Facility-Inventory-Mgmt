@@ -257,10 +257,6 @@ CREATE TABLE `PRODUCT_ITEMS` (
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert into product_items(product_id, item_id) values(1,1);
-insert into product_items(product_id, item_id) values(1,2);
-insert into product_items(product_id, item_id) values(1,3);
-insert into product_items(product_id, item_id) values(1,4);
 
 
 CREATE TABLE `laundry_tracking` (
