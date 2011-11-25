@@ -3,6 +3,7 @@ package com.smartworks.invtmgmt.core.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Product;
 
 public interface ProductDao {
@@ -13,4 +14,5 @@ public interface ProductDao {
 	public List<Product> loadAllOnlyProducts();
 	public void delete(Integer productId);
 	public Map<Integer,String> findByProductNameLike(String name);
+	
 }

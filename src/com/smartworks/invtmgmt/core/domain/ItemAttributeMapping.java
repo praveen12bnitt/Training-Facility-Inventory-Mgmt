@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Proxy;
 
 @Entity
@@ -29,17 +30,19 @@ public class ItemAttributeMapping implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="ATTR_ID")
+	@JsonIgnore
 	private ItemAttribute attribute;	
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="ATTR_VALUE_ID")
+	@JsonIgnore
 	private ItemAttributeValue attributeValue;
 
-	
+	@JsonIgnore
 	public Item getItem() {
 		return item;
 	}
-
+	@JsonIgnore
 	public void setItem(Item item) {
 		this.item = item;
 	}
@@ -51,19 +54,20 @@ public class ItemAttributeMapping implements Serializable {
 	public void setMappingId(Integer mappingId) {
 		this.mappingId = mappingId;
 	}
-
+	@JsonIgnore
 	public ItemAttribute getAttribute() {
 		return attribute;
 	}
-
+	@JsonIgnore
 	public void setAttribute(ItemAttribute attribute) {
 		this.attribute = attribute;
 	}
-
+	
+	@JsonIgnore
 	public ItemAttributeValue getAttributeValue() {
 		return attributeValue;
 	}
-
+	@JsonIgnore
 	public void setAttributeValue(ItemAttributeValue attributeValue) {
 		this.attributeValue = attributeValue;
 	}

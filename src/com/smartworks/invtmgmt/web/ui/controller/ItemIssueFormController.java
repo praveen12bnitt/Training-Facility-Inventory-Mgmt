@@ -193,17 +193,33 @@ public class ItemIssueFormController {
 	
 	@RequestMapping(value = "/itemHtmlEl.form", method = RequestMethod.GET)
 	public @ResponseBody String getItemHtmlData(HttpServletRequest request, @RequestParam String itemName,@RequestParam Integer rowNum) {
-		String htmlData = null;		
+			
 		List<Item> items = itemMgr.getItemsByName(itemName);
 		// Convert this object into html el data
+		String htmlData = getTemplateData(request, items, rowNum);
+		return htmlData;
+	}
+	
+	
+	@RequestMapping(value="/loadProductItems.form", method=RequestMethod.GET)	
+	public @ResponseBody String loadProductItems(HttpServletRequest request,@RequestParam Integer productId, @RequestParam Integer rowNum) {
 		
+		List<Item> items = itemMgr.getItemsByProductId(productId);
+		
+		String htmlData = getTemplateData(request, items, rowNum);
+		return htmlData;
+	}
+	
+	
+	private String getTemplateData(HttpServletRequest request, List<Item> items, Integer rowNum) {
+		String htmlData = null;	
 		VelocityEngine ve = VelocityTemplateUtil.getVelocityEngine();
 		Template t = ve.getTemplate( "com/smartworks/invtmgmt/web/ui/template/itemtablerow.vm" );
 		VelocityContext context = new VelocityContext();
         context.put("items", items);
-        context.put("rowNum", rowNum);        
+        context.put("rowNum", rowNum); 
+        context.put("contextUrl", request.getContextPath());        
         htmlData = VelocityTemplateUtil.getData(context, t);
-        
 		return htmlData;
 	}
 	

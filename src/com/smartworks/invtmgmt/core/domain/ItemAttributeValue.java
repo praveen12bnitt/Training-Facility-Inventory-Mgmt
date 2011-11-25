@@ -61,5 +61,11 @@ public class ItemAttributeValue implements Serializable,Comparable<ItemAttribute
 	public int compareTo(ItemAttributeValue o) {
 		return attributeValueId.compareTo(o.getAttributeValueId());
 	}
+	
+	@Override
+	public String toString() {
+		return "attributeValueId:"+attributeValueId+", attributeValue:"+attributeValue;
+	}
+	
 
 }

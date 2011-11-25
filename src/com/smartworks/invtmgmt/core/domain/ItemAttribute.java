@@ -1,12 +1,16 @@
 package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
+import java.io.StringWriter;
+import java.io.Writer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.annotations.Proxy;
 
 @Entity
@@ -18,9 +22,11 @@ public class ItemAttribute implements Serializable,Comparable<ItemAttribute> {
 
 	@Id
 	@Column(name="attr_id")
+	@JsonProperty
 	Integer attibuteId;
 	
 	@Column(name="attr_name")
+	@JsonProperty
 	String attributeName;
 	
 	public ItemAttribute() {
@@ -72,6 +78,20 @@ public class ItemAttribute implements Serializable,Comparable<ItemAttribute> {
 	@Override
 	public int compareTo(ItemAttribute o) {
 		return attibuteId.compareTo(o.getAttibuteId());
+	}
+	
+	@Override
+	public String toString() {
+		ObjectMapper mapper = new ObjectMapper();
+		Writer strWriter = new StringWriter();
+		try {
+			mapper.writeValue(strWriter, this);
+		} catch(Exception ex) {
+			System.out.println(ex);
+			//return "{attributeId:"+attibuteId+", attributeName:"+attributeName+"}";
+		}
+		return strWriter.toString();
+		
 	}
 	
 	

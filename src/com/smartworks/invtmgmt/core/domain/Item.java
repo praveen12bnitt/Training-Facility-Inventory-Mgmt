@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.JsonSerializer;
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
@@ -118,6 +121,7 @@ public class Item implements Serializable {
 			if(attributeMappings != null) {
 				for (ItemAttributeMapping itemAttributeMapping : attributeMappings) {				
 					ItemAttribute attribute = itemAttributeMapping.getAttribute();
+					System.out.println("##############attribute#############"+attribute);
 					ItemAttributeValue attributeVAl = itemAttributeMapping.getAttributeValue();
 					
 					if(!attributeDetails.containsKey(attribute)) {

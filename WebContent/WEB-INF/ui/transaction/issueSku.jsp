@@ -116,11 +116,74 @@ $(document).ready(function($) {
         },
         
         select: function(event,ui) {
-        	alert(ui.item.optval);
+        	$('input[name="selectedProductId"]').val(ui.item.optval);
         }
    });
 	
+// 	$('#item-add-btn').click(function(){
+// 		var prdId =$('input[name="selectedProductId"]').val();
+// 		jQuery.ajax({
+//             url : '${pageContext.request.contextPath}/inventory/loadProductItems.form',
+//             dataType : 'json',
+//             data : {
+//                 productId : prdId
+//             },
+//             success : processProductItemResponse
+//      })
+//  	}
+// 	);
+
+	
+	$('#item-add-btn').click(function(){
+		var prdId =$('input[name="selectedProductId"]').val();
+		jQuery.ajax({
+        url : '${pageContext.request.contextPath}/inventory/loadProductItems.form',
+        data : {
+            productId : prdId,
+            rowNum : $('#tblTransactionForm >tbody >tr').size()
+        },
+        success : processProductItemsResponse
+ 		})
+		}
+	);
+
+	
+	
+	
 	});
+	
+	function processProductItemsResponse(data) {
+		$('#tblTransactionForm >tbody').append(data);
+	}
+	
+// 	function processProductItemResponse(data) {
+// 		var currentLength = $('#tblTransactionForm >tbody >tr').size();
+// 		jQuery(data).each(function(index,itemData) {
+			
+// 			var innerHtml = $("#itemRowTemplate").html();
+// 			innerHtml = innerHtml.replace("itemId", itemData.id); 
+// 			innerHtml = innerHtml.replace("itemDesc", itemData.name); 
+			
+// 			alert(innerHtml);
+// 			jQuery(itemData.attributeDetails).each(function(idx, attributeDetailData) {
+// 				$.map(attributeDetailData, function(value,key) {
+// 					var jsonAttributes = $.parseJSON(key);
+					
+// 					var selAttribute = document.createElement("select");
+// 					$(selAttribute).attr("name", "itemSkus["+(index+currentLength)+"]");
+					
+// 					$(value).each(function(idx, attributeValData) {
+						
+// 						$("<option>").attr("value", attributeValData.attributeValueId).text(attributeValData.attributeValue).appendTo(selAttribute);
+						
+// 					});
+// 					alert(selAttribute.name);
+// 					$('#selectTemplateDiv').append(selAttribute);
+					
+// 				});
+// 			});
+// 		});
+// 	}
 
 </script>
 </head>
@@ -129,6 +192,7 @@ $(document).ready(function($) {
 	<form:hidden path="transactionType" />
 	<form:input type="hidden" path="locationId" value="2" />
 	<form:hidden path="trainee.traineeId" />	
+	<input type="hidden" id="selectedProductId" name="selectedProductId" value=""/>
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
@@ -225,6 +289,11 @@ $(document).ready(function($) {
 	
 	</div>
 	<br>
-	</form:form>	
+	
+	</form:form>
+	
+	
+	
+	 
 </body>
 </html>

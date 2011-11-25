@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.smartworks.invtmgmt.core.dao.ItemDao;
@@ -57,6 +58,17 @@ public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 			itemsMap.put((Integer)items[0],(String)items[1]);
 		}
 		return itemsMap;
+	}
+
+	@Override
+	public List<Item> loadSelectedItems(List<Integer> itemIds) {
+		String hql = "from Item where id in (:listParam)";
+		String[] params = { "listParam" };
+		Object[] values = { itemIds };
+		
+		List<Item> items = getHibernateTemplate().findByNamedParam(hql, params, values);
+		return items;
+		
 	}
 	
 }
