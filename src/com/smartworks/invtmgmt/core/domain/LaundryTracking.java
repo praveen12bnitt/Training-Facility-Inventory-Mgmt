@@ -45,7 +45,6 @@ public class LaundryTracking {
 	
 	@NotNull(message = "Waching machine number cannot be null")
 	@Column(name="was_mc_no")
-	@Min(value=0,message="Waching machine number should be a number")
 	Integer washingMachineNo;
 	
 	@Column(name="tse_room")

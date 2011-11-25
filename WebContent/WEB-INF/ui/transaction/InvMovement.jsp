@@ -32,21 +32,6 @@ $(document).ready(function($) {
 			}
 		);
 	
-	$('.js-enabled').memu({ 
-		icon: {
-			inset: true,
-			margin: {
-				top: 4,
-				right: 10
-			}
-		},
-		width: 150,
-		rootWidth: 75,
-		height: 25
-	});
-	
-	
-	
 	});
 
 </script>

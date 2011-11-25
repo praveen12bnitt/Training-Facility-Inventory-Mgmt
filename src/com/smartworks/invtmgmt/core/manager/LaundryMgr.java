@@ -7,6 +7,7 @@ import com.smartworks.invtmgmt.core.domain.LaundryTracking;
 public interface LaundryMgr {
 
 	public LaundryTracking load(Integer loadId);
+	public List<LaundryTracking> loadAllLoads();
 	public void createLaundryLoad(LaundryTracking laundryTracking);
 	public void save(LaundryTracking laundryTracking);
 	public List<LaundryTracking> loadAllOpenLoads();

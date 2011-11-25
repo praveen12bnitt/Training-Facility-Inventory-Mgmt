@@ -21,20 +21,6 @@
 <script type="text/javascript">
 $(document).ready(function($) {
 	
-	$('.js-enabled').memu({ 
-		icon: {
-			inset: true,
-			margin: {
-				top: 4,
-				right: 10
-			}
-		},
-		width: 150,
-		rootWidth: 75,
-		height: 25
-	});
-	
-	
 	jQuery("#list3").jqGrid({
 	   	url:'${pageContext.request.contextPath}/reports/allinvt.form',
 		datatype: "json",

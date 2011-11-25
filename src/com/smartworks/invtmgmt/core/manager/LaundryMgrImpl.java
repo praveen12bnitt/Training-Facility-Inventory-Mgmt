@@ -24,6 +24,11 @@ public class LaundryMgrImpl implements LaundryMgr {
 	}
 	
 	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
+	public List<LaundryTracking> loadAllLoads() {
+		return laundryTrackingDao.loadAll();
+	}
+	
+	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
 	public LaundryTracking load(Integer loadId) {
 		return laundryTrackingDao.load(loadId);
 	}
@@ -45,6 +50,7 @@ public class LaundryMgrImpl implements LaundryMgr {
 	public void setLaundryTrackingDao(LaundryTrackingDao laundryTrackingDao) {
 		this.laundryTrackingDao = laundryTrackingDao;
 	}
-
+	
+	
 	
 }

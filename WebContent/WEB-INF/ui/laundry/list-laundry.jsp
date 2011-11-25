@@ -33,19 +33,20 @@
 	  
 	 
 	  jQuery("#open-laundry").jqGrid({
-		   	url:'${pageContext.request.contextPath}/laundry/list-open-laundry.form',
+		   	url:'${pageContext.request.contextPath}/laundry/${targetPage}',
 			datatype: "json",
-		   	colNames:['id', 'Wash Mc', 'code', 'Created Time' ,'Laundry Details','Dryer','Weight','Temp','Filter Cleaned'],
+		   	colNames:['id', 'Open', 'Wash Mc', 'Code', 'Created Time' ,'Laundry Details','Dryer','Weight','Temp','Filter Cleaned'],
 		   	colModel:[
-		   		{name:'loadId',index:'loadId', width:10, sorttype:"int"},
-		   		{name:'washingMachineNo',index:'washingMachineNo', width:20},
-		   		{name:'code',index:'code', width:11},
-		   		{name:'createDttm',index:'createDttm', width:30, align:"left"},
-		   		{name:'laundryDetails',index:'laundryDetails', width:90, align:"left"},
-		   		{name:'dryerMachineNo',index:'dryerMachineNo', width:12, align:"left"},
-		   		{name:'dryerWeightDetails',index:'dryerWeightDetails', width:40, align:"left"},
-		   		{name:'dryerTempSettings',index:'dryerTempSettings', width:13, align:"left"},
-		   		{name:'filterCleaned',index:'filterCleaned', width:25, align:"left"}
+		   		{name:'loadId',index:'loadId', width:10, sorttype:"int",align:"center"},
+		   		{name:'open',index:'open', width:10,align:"center"},
+		   		{name:'washingMachineNo',index:'washingMachineNo', width:16,align:"center"},
+		   		{name:'code',index:'code', width:10,align:"center"},
+		   		{name:'createDttm',index:'createDttm', width:28,align:"center"},
+		   		{name:'laundryDetails',index:'laundryDetails', width:75, align:"center"},
+		   		{name:'dryerMachineNo',index:'dryerMachineNo', width:10, align:"center"},
+		   		{name:'dryerWeightDetails',index:'dryerWeightDetails', width:28, align:"center"},
+		   		{name:'dryerTempSettings',index:'dryerTempSettings', width:13, align:"center"},
+		   		{name:'filterCleaned',index:'filterCleaned', width:20, align:"center"}
 		   	],
 		   	rowNum:50,
 		   	rowList:[50,100,150],
@@ -56,6 +57,7 @@
 		    loadonce: true,
 		    caption: "Laundry Details",
 		    width: 1110,
+		    height: 'auto',
 		    onSelectRow: function(rowId){	    	
 		    	var rowData = jQuery("#open-laundry").jqGrid('getGridParam','selrow');
 		    	var laundryId = jQuery("#open-laundry").jqGrid('getCell',rowId,0);
@@ -90,11 +92,11 @@
 	<div style="clear: both;"></div>
 		
 		<div id="heading" class="ui-widget-header">Washing</div>
-		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
 			<div style="padding: 10px;">
 			<a id="laundry-add-btn" href="${pageContext.request.contextPath}/laundry/create-load.form" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add Load</a>
 			</div>
-			<table id="open-laundry" class="trans-details"></table>
+			<table id="open-laundry" class="trans-details" style="font-size: 95%;"></table>
 			<div id="pager3"></div>
 		</div>
 		<br/>

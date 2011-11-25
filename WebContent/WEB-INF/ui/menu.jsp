@@ -38,8 +38,9 @@
 					<li >
 					<a href="#">Laundry</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/laundry/list-laundry.form" />'>List Loads</a></li>
+						<li><a href='<c:url value="/laundry/list-laundry.form?type=open" />'>List Loads</a></li>
 						<li><a href='<c:url value="/laundry/create-load.form" />'>Create New Load</a></li>
+						<li><a href='<c:url value="/laundry/list-laundry.form" />'>List All Loads</a></li>
 					</ul>
 				</li>
 					<li >

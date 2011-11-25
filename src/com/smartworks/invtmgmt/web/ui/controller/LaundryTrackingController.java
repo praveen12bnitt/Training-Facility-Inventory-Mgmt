@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -94,8 +92,13 @@ public class LaundryTrackingController {
 	}
 	
 	@RequestMapping(value="/list-laundry.form", method=RequestMethod.GET)
-	public ModelAndView listLaundry() {
+	public ModelAndView listLaundry(@RequestParam(value="type",required=false) String type) {
+		String targetPage = "list-all-laundry.form";
+		if(type != null && type.equals("open")){
+			targetPage = "list-open-laundry.form";
+		}
 		ModelAndView mav = new ModelAndView("laundry/list-laundry");
+		mav.addObject("targetPage", targetPage);
 		return mav;
 	}
 	
@@ -104,6 +107,25 @@ public class LaundryTrackingController {
 		ReportDetailsResponse response = new ReportDetailsResponse();
 		
 		List<LaundryTracking> laundryTrackingList = laundryMgr.loadAllOpenLoads();
+		
+		List<UILaundryLoad> uiLaundryLoads = new ArrayList<UILaundryLoad>();
+				
+		for(LaundryTracking laundryTracking : laundryTrackingList) {
+			uiLaundryLoads.add(laundryLoadConverter.getUILaundryLoad(laundryTracking));
+		}		
+		response.setRows(uiLaundryLoads);
+		response.setPage("1");
+		response.setTotal("10");
+		response.setRecords(String.valueOf(uiLaundryLoads.size()));
+		
+		return response;
+	}
+	
+	@RequestMapping(value = "/list-all-laundry.form", method = RequestMethod.GET)
+	public @ResponseBody ReportDetailsResponse allLoads() {		
+		ReportDetailsResponse response = new ReportDetailsResponse();
+		
+		List<LaundryTracking> laundryTrackingList = laundryMgr.loadAllLoads();
 		
 		List<UILaundryLoad> uiLaundryLoads = new ArrayList<UILaundryLoad>();
 				

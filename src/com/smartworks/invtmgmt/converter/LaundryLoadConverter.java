@@ -11,9 +11,12 @@ public class LaundryLoadConverter {
 		UILaundryLoad uiLaundryLoad = new UILaundryLoad();
 		
 		uiLaundryLoad.setLoadId(laundryTracking.getLaundryTrankingId());
-		uiLaundryLoad.setOpen(laundryTracking.getIsOpen());
-		uiLaundryLoad.setCode(laundryTracking.getCode());
-		uiLaundryLoad.setWashingMachineNo(laundryTracking.getWashingMachineNo());
+		if(laundryTracking.getIsOpen() != null)
+			uiLaundryLoad.setOpen(laundryTracking.getIsOpen());
+		if(laundryTracking.getCode() != null)
+			uiLaundryLoad.setCode(laundryTracking.getCode());
+		if(laundryTracking.getWashingMachineNo() != null)
+			uiLaundryLoad.setWashingMachineNo(laundryTracking.getWashingMachineNo());
 		
 		uiLaundryLoad.setCreateDttm(DateUtil.getExpandedTimeStamp(laundryTracking.getCreatedDttm()));
 		uiLaundryLoad.setLastUpdateDttm(DateUtil.getExpandedTimeStamp(laundryTracking.getLastUpdateDttm()));
