@@ -112,14 +112,24 @@ CREATE TABLE `transaction_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('ACCEPT_UNIFORM_FROM_LAUNDRY',2,'Receive uniform from Laundry');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('ISSUE_UNIFORM_STAFF',2,'Issue Uniform to Staff');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('ISSUE_UNIFORM_STUDENT',2,'Issue Uniform to Students');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('REPORT_MISSING_UNIFORM_STAFF',2,'Report missing uniform by Staff');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('REPORT_MISSING_UNIFORM_STUDENT',2,'Report missing uniform by Student');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('RETURN_UNIFORM_STUDENT',2,'Uniform returns by Students');
 INSERT INTO `transaction_type` (`transaction_type`,`location_id`,`transaction_type_desc`) VALUES ('TRANSFER_INVENTORY',-1,'Transfer inventory from one location to other');
-
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('RETURN_UNIFORM_STAFF', 2, 'Unifrom returns by Staff');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('ACCEPT_FROM_LAUNDRY_UNIFORM', 2, 'Receive items into Uniform from Laundry after cleaning');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('ACCEPT_FROM_LAUNDRY_EQUIPMENT', 1, 'Receive items into Equipment from Laundry after cleaning');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('ACCEPT_FROM_LAUNDRY_GYM', 3, 'Receive itesm into Gym from Laundry after cleaning');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('ISSUE_EQUIPMENT_STUDENT', 1, 'Issue equipment to Students');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('ISSUE_EQUIPMENT_STAFF', 1, 'Issue equipment to Staff');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('ISSUE_GYM_STUDENT', 3, 'Issue Gym items to Student');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('ISSUE_GYM_STAFF', 3, 'Issue gym items to Staff');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('RETURN_EQUIPMENT_STUDENT', 1, 'Equipment returns by Student');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('RETURN_EQUIPMENT_STAFF', 1, 'Equipment returns by Staff');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('RETURN_GYM_STUDENT', 3, 'Gym items return by Student');
+INSERT INTO `transaction_type` (`transaction_type`, `location_id`, `transaction_type_desc`) VALUES ('RETURN_GYM_STAFF', 3, 'Gym items return by Staff');
 
 
 -- Transaction item mapping

@@ -5,6 +5,7 @@ import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
+import com.smartworks.invtmgmt.core.exception.NotALaundryItemException;
 
 public class LaundryReturnsProcessor extends InventoryChangeProcessor {
 
@@ -24,12 +25,12 @@ public class LaundryReturnsProcessor extends InventoryChangeProcessor {
 			inventoryPk.setSkuCode(itemSkuCode);
 			boolean processingReq = itemSku.getItem().getRequiresProcessing();
 			if(processingReq) {
-				inventoryDao.reduceUnusableInventory(inventoryPk, itemSku.getQuantity());		
+				inventoryDao.addAvailableInventory(inventoryPk, itemSku.getQuantity());	
+				inventoryDao.reduceUnusableInventory(inventoryPk, itemSku.getQuantity());					
 			} else {
-				inventoryDao.addAvailableInventory(inventoryPk, itemSku.getQuantity());
+				throw new NotALaundryItemException(itemSkuCode, itemSku.getQuantity(), loc.getLocationName());
 			}
-		}
-		
+		}		
 		TransactionTrace transTrace = transactionTraceObjectConverter.getTransactionTrace(transDetails);
 		transactionTraceDao.save(transTrace);			
 		

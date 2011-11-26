@@ -97,9 +97,6 @@ loadOpenTrans = function(traineeId, transactionType, locationId) {
 	      }
 	});
 	
-	
-	
-	
 	$('.form-button').hover(
 			function(){ 
 				$(this).addClass("ui-state-hover"); 
@@ -107,8 +104,7 @@ loadOpenTrans = function(traineeId, transactionType, locationId) {
 			function(){ 
 				$(this).removeClass("ui-state-hover"); 
 			}
-		);
-	
+		);	
 });
 
 </script>
@@ -127,7 +123,7 @@ loadOpenTrans = function(traineeId, transactionType, locationId) {
 		<table id="transDetails" class="ui-widget item-table trans-details">				
 			<tbody class="ui-widget-content trans-details" >
 				<tr>
-					<td>Transaction Description</td><td>Return from Student</td>
+					<td>Transaction Description</td><td>${transactionDetail}</td>
 				</tr>				
 			</tbody>
 		</table>					

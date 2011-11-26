@@ -5,6 +5,7 @@
      		    <a id="plusgif" href="#" class="addR" tabindex="-1"><img src="$contextUrl/images/plus.gif" height="10px" width="10px"></a>
       			&nbsp;			
      			<input id="itemSkus0.item.id" name="itemSkus[$index].item.id" value="$item.id" type="hidden">$item.name
+     			<input type="hidden" name="itemSkus[$index].item.requiresProcessing" value="$item.requiresProcessing"/>
      		 </td>
      		 
      		 <td style="width: 300px;">

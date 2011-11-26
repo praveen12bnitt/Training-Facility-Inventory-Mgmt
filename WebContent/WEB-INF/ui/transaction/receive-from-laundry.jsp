@@ -10,7 +10,7 @@
 
 <html>
 <head>
-<title>Move Inventory from warehouse</title>
+<title>Accept inventory from Laundry</title>
 <style>
 .error {
 	color: red;
@@ -27,9 +27,11 @@
 <script src="${pageContext.request.contextPath}/js/jquery.json-2.3.js" type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/jquery.dropdown.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/invt-common.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-$(document).ready(function($) {
+$(document).ready(function() {
+	
 	$('.form-button').hover(
 			function(){ 
 				$(this).addClass("ui-state-hover"); 
@@ -39,8 +41,43 @@ $(document).ready(function($) {
 			}
 		);
 	
+	jQuery("#itemName").autocomplete({
+        source: function(request, response) {
+         jQuery.ajax({
+                   url : '${pageContext.request.contextPath}/itemlookup/name.form',
+                   dataType : 'json',
+                   data : {
+                       name : request.term
+                   },
+                   success : function(data) {
+                       response(jQuery.map(data, function(item) {
+                            return {
+                               label: item,
+                               value: item
+                            }
+                       }))
+                   }
+            })
+        },
+        minLength : 2,
+        open: function() {          	
+        	jQuery(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+        },
+        
+        close: function() {
+           jQuery(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+        }
+  });
+	
+  
+ $('#item-add-btn').click(function(){
+	var addBtn = $(this);
+	var itemName = addBtn.prev().val();	
+	var rowCount = $('#tblTransactionForm >tbody >tr').length;
+	addItem('${pageContext.request.contextPath}',itemName,rowCount);
+ }); 
+	
 });
-
 </script>
 
 </head>
@@ -48,21 +85,27 @@ $(document).ready(function($) {
 <body class="body-class" >	
 <form:form method="post" commandName="issueSkuForm">
 <form:hidden path="transactionType" />
+<form:hidden path="locationId" />
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
 	<br />
+	<div style="clear: both;"></div>
 	
 	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
-
+	
 		<div id="heading" class="ui-widget-header">Transaction Details</div>
 		<div id="header-contents" class="ui-widget-content header-contents" style="padding: 10px;">
 		<table id="transDetails" class="ui-widget item-table trans-details">				
 			<tbody class="ui-widget-content trans-details" >
 				<tr>
-					<td>Transaction Description</td><td>Move Inventory from warehouse </td>
+					<td>Transaction Description</td><td>Receive Inventory from Laundry </td>
+				</tr>
+				
+				<tr>
+					<td>Location </td><td>${issueSkuForm.locationName}</td>
 				</tr>
 			
 			</tbody>
@@ -73,7 +116,15 @@ $(document).ready(function($) {
 
 		<div id="heading" class="ui-widget-header">Inventory Details</div>
 		
-		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		<div id="content" class="ui-widget-content" style="padding: 20px;">	
+			<label class="ui-widget">
+        		<span> Item Name: </span>
+        		<input type="text" id="itemName" name="itemName" size="70" />   
+        		<a id="item-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
+			</label>
+			<br/>	
+			<br/>		
+			
 			<table id="tblTransactionForm" class="ui-widget item-table">
 				<thead class="ui-state-default item-table-header">
 					<tr id="rowx">
@@ -111,10 +162,9 @@ $(document).ready(function($) {
 			</tbody>
 			</table>
 			<div id="actions" align="center" class="actions">
-					<button type="submit" class="ui-state-default ui-corner-all form-button">Return</button>
-				</div>			
-		</div>	
-	
+				<button type="submit" class="ui-state-default ui-corner-all form-button">Receive</button>		
+			</div>			
+			</div>		
 	</div>
 	<br>	
 	</form:form>

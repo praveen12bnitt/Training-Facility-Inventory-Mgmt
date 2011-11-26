@@ -113,6 +113,7 @@
     	<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />
     	<property name="missingInventoryProcessor" ref="missingInventoryProcessor" />
     	<property name="transferInventoryProcessor" ref="transferInventoryProcessor" />
+    	<property name="laundryReturnsProcessor" ref="laundryReturnsProcessor" />
     </bean>
     
     <bean id="abstractInventoryProcessor" abstract="true">

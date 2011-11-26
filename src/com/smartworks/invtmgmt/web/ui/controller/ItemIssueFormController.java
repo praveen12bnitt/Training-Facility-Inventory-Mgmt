@@ -21,9 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.converter.UIDomainConverter;
+import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
+import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.TransactionType;
@@ -51,6 +53,9 @@ public class ItemIssueFormController {
 	
 	@Autowired
 	TraineeDao traineeDao = null;
+	
+	@Autowired
+	LocationDao locationDao = null;
 
 	
 	protected static Logger logger = Logger
@@ -58,20 +63,14 @@ public class ItemIssueFormController {
 
 	
 	@RequestMapping(value="/issue.form", method=RequestMethod.GET)
-	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeEnum) {		
+	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeEnum, 
+			@RequestParam Integer locationId) {		
 		TransactionType transactionType = transactionTypeDao.load(transactionTypeEnum);		
 		List<Item> items =   itemMgr.getItemsForTransaction(transactionType);
-		
-		Trainee trainee = new Trainee();
-		trainee.setFirstName("Palanivel");
-		trainee.setLastName("Rajan");
-		trainee.setTraineeId(1);
-		
-		
+		Location location = locationDao.load(locationId);
 		IssueSkuForm issueSkuForm = new IssueSkuForm();		
-		issueSkuForm.setTrainee(trainee);
-		issueSkuForm.setLocationId(1);
-		issueSkuForm.setLocationName("My Location");
+		issueSkuForm.setLocationId(location.getLocationId());
+		issueSkuForm.setLocationName(location.getLocationName());
 		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
 		issueSkuForm.setTransactionType(TransactionTypeEnum.ISSUE_UNIFORM_STUDENT);		
 		issueSkuForm.setItems(items);
@@ -115,6 +114,8 @@ public class ItemIssueFormController {
 		ModelAndView mav = new ModelAndView("transaction/opentransactions");
 		mav.addObject("userId",userId);
 		mav.addObject("transactionTypeEnum",transactionTypeEnum);
+		TransactionType returnTrans = transactionTypeDao.load(TransactionTypeEnum.getReturnTransaction(transactionTypeEnum));
+		mav.addObject("transactionDetail",returnTrans.getTransactionDesc());
 		mav.addObject("locationId",locationId);
 		return mav;
 	}
@@ -209,6 +210,52 @@ public class ItemIssueFormController {
 		String htmlData = getTemplateData(request, items, rowNum);
 		return htmlData;
 	}
+	
+	
+	@RequestMapping(value="/receive-laundry.form", method=RequestMethod.GET)
+	public ModelAndView displayInventory(HttpServletRequest request, HttpServletResponse response, @RequestParam Integer locationId) {	
+		Location location = locationDao.load(locationId);
+		List<Item> items = new ArrayList<Item>();
+		IssueSkuForm issueSkuForm = new IssueSkuForm();	
+		issueSkuForm.setLocationId(location.getLocationId());
+		issueSkuForm.setLocationName(location.getLocationName());		
+		issueSkuForm.setTransactionType(TransactionTypeEnum.getLaundryReturnTrans(locationId));		
+		issueSkuForm.setItems(items);
+		ModelAndView mav = new ModelAndView("transaction/receive-from-laundry");
+        mav.addObject("issueSkuForm", issueSkuForm);       
+		return mav;
+	}
+	
+	@RequestMapping(value="/receive-laundry.form", method=RequestMethod.POST)
+	public ModelAndView receiveInventoryFromLaundry(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) {
+		
+		logger.info("process Incevntory change");
+		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
+		transDetailsHolder.setSrcLocationId(5);
+		InventoryAllocationException ex = null;
+		try {
+			invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch(InventoryAllocationException iae) {
+			ex = iae;
+		}		
+		
+		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
+		List<Item> items =   itemMgr.getItemsForTransaction(transactionType);
+		issueSkuForm.setItems(items);
+		ModelAndView mav = new ModelAndView("transaction/receive-from-laundry");
+		mav.addObject("issueSkuForm", issueSkuForm);
+		if(ex != null) {
+			mav.addObject("exception", ex);
+		} else {
+			mav.addObject("success", "success");
+		}
+		mav.addObject("transactionFormMessage","Issued Successfully");
+		return mav;
+	
+	}
+	
+	
 	
 	
 	private String getTemplateData(HttpServletRequest request, List<Item> items, Integer rowNum) {

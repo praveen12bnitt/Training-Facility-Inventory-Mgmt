@@ -173,7 +173,7 @@ $(document).ready(function($) {
 <body class="body-class" >	
 	<form:form method="post" commandName="issueSkuForm" >
 	<form:hidden path="transactionType" />
-	<form:input type="hidden" path="locationId" value="2" />
+	<form:input type="hidden" path="locationId"/>
 	<form:hidden path="trainee.traineeId" />	
 	<input type="hidden" id="selectedProductId" name="selectedProductId" value=""/>
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
@@ -220,7 +220,7 @@ $(document).ready(function($) {
 		<br />
 
 		<div id="heading" class="ui-widget-header">Inventory Details</div>
-		<div>
+		<div style="padding: 10px;">
 		
 			<label class="ui-widget">
         		<span> Kit Name: </span>

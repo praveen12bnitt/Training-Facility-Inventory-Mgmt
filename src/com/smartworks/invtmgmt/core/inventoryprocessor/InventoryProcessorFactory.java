@@ -27,7 +27,7 @@ public class InventoryProcessorFactory {
 		case REPORT_MISSING_UNIFORM_STUDENT:
 			processor = missingInventoryProcessor;
 			break;
-		case ACCEPT_UNIFORM_FROM_LAUNDRY:
+		case ACCEPT_FROM_LAUNDRY_UNIFORM:
 			processor = laundryReturnsProcessor;
 			break;
 		case TRANSFER_INVENTORY:
