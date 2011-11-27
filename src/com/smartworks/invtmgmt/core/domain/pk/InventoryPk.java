@@ -12,10 +12,12 @@ import com.smartworks.invtmgmt.core.domain.Location;
 @Embeddable
 public class InventoryPk implements Serializable {
 	
-	@Column(name="sku_code")
+	private static final long serialVersionUID = 1L;
+
+	@Column(name="SKU_CODE")
 	String skuCode;
 	
-	@JoinColumn(name="location_id")
+	@JoinColumn(name="LOCATION_ID")
 	@ManyToOne
 	Location location;
 	

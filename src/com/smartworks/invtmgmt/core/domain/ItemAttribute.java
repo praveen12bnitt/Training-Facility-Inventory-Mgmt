@@ -14,18 +14,18 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name = "item_attribute")
+@Table(name = "ITEM_ATTRIBUTE")
 @Proxy(lazy=false)
 public class ItemAttribute implements Serializable,Comparable<ItemAttribute> {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="attr_id")
+	@Column(name="ATTR_ID")
 	@JsonProperty
 	Integer attibuteId;
 	
-	@Column(name="attr_name")
+	@Column(name="ATTR_NAME")
 	@JsonProperty
 	String attributeName;
 	

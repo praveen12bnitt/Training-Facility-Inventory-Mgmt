@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.smartworks.invtmgmt.core.domain.pk.TransItemMappingPk;
 
 @Entity
-@Table(name="transaction_item_mapping")
+@Table(name="TRANSACTION_ITEM_MAPPING")
 public class TransactionItemMapping implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class TransactionItemMapping implements Serializable {
 	@Id
 	private TransItemMappingPk transItemMappingPk;
 	
-	@Column(name="ui_weight")
+	@Column(name="UI_WEIGHT")
 	private Integer uiWeight;
 
 	public TransItemMappingPk getTransItemMappingPk() {

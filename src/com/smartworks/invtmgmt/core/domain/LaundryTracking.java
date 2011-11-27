@@ -8,61 +8,58 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
-@Table(name="laundry_tracking")
+@Table(name="LAUNDRY_TRACKING")
 @Proxy(lazy=false)
 public class LaundryTracking {
 
 	@Id
 	@GeneratedValue
-	@Column(name="laundry_trancking_id")	
+	@Column(name="LAUNDRY_TRACKING_ID")	
 	Integer laundryTrankingId;
 	
 	@Type(type="yes_no")
-	@Column(name="is_open")	
+	@Column(name="IS_OPEN")	
 	Boolean isOpen = true;
 	
-	@Column(name="code")
+	@Column(name="CODE")
 	String code;
 	
-	@Column(name="createdDttm")
+	@Column(name="CREATEDDTTM")
 	Timestamp createdDttm;
 	
-	@Column(name="closedDttm")
+	@Column(name="CLOSEDDTTM")
 	Timestamp closedDttm;
 	
 	@Version
-	@Column(name="lastUpdateDttm")
+	@Column(name="LASTUPDATEDTTM")
 	Timestamp lastUpdateDttm;
 	
 	@NotNull(message = "Waching machine number cannot be null")
-	@Column(name="was_mc_no")
+	@Column(name="WAS_MC_NO")
 	Integer washingMachineNo;
 	
-	@Column(name="tse_room")
+	@Column(name="TSE_ROOM")
 	Integer tseRoom;
 	
-	@Column(name="towels")
+	@Column(name="TOWELS")
 	Integer towels;
 	
-	@Column(name="gym")
+	@Column(name="GYM")
 	Integer gymClothings;
 	
-	@Column(name="jock_sock_bra")
+	@Column(name="JOCK_SOCK_BRA")
 	Integer jockSocksBras;
 	
-	@Column(name="uniform")
+	@Column(name="UNIFORM")
 	Integer uniforms;
 	
-	@Column(name="reg_laundry")
+	@Column(name="REG_LAUNDRY")
 	Integer regLaundry;
 	
 	@Column(name="DMD_0006_G")
@@ -83,19 +80,19 @@ public class LaundryTracking {
 	@Column(name="USBOPB_0006_B")
 	Integer USBOPB0006B;
 	
-	@Column(name="dryer_mc_no")	
+	@Column(name="DRYER_MC_NO")	
 	Integer dryerMachineNo;
 	
-	@Column(name="weight_with_buggy")	
+	@Column(name="WEIGHT_WITH_BUGGY")	
 	Integer weightWithBuggy;
 	
-	@Column(name="weight_buggy")	
+	@Column(name="WEIGHT_BUGGY")	
 	Integer weightBuggy;
 	
-	@Column(name="dryer_temp")
+	@Column(name="DRYER_TEMP")
 	Integer dryerTempSetting;
 	
-	@Column(name="clean_dryer_filter")
+	@Column(name="CLEANED_DRYER_FILTER")
 	Boolean cleanedFilter;
 	
 	public Integer getLaundryTrankingId() {

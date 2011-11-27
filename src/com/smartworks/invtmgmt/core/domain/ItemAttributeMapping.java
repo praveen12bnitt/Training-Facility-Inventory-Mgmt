@@ -14,14 +14,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="item_attr_mapping")
+@Table(name="ITEM_ATTR_MAPPING")
 @Proxy(lazy=false)
 public class ItemAttributeMapping implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="mapping_id")
+	@Column(name="MAPPING_ID")
 	Integer mappingId;
 	
 	@ManyToOne

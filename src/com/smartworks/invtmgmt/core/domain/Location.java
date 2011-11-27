@@ -10,17 +10,17 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="location")
+@Table(name="LOCATION")
 @Proxy(lazy=false)
 public class Location implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="location_id")
+	@Column(name="LOCATION_ID")
 	Integer locationId;
 	
-	@Column(name="location_name")
+	@Column(name="LOCATION_NAME")
 	String locationName;
 	
 	public Location() {		

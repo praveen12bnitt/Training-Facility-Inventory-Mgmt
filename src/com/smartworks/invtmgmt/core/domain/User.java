@@ -11,7 +11,7 @@ import org.hibernate.annotations.Proxy;
 
 
 @Entity
-@Table(name="users")
+@Table(name="USERS")
 @Proxy(lazy=false)
 
 public class User implements Serializable {
@@ -19,14 +19,14 @@ public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="user_id")
+	@Column(name="USER_ID")
 	Integer userid;
 	
-	@Column(name="username", length=100)
+	@Column(name="USERNAME", length=100)
 	String userName;
-	@Column(name="password", length=100)
+	@Column(name="PASSWORD", length=100)
 	String password;
-	@Column(name="enabled", length=50)
+	@Column(name="ENABLED", length=50)
 	Integer enabled;
 	
 	public Integer getUserid() {

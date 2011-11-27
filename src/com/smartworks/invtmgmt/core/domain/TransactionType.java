@@ -17,22 +17,22 @@ import org.hibernate.annotations.Proxy;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 
 @Entity
-@Table(name="transaction_type")
+@Table(name="TRANSACTION_TYPE")
 @Proxy(lazy=false)
 public class TransactionType implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="transaction_type")
+	@Column(name="TRANSACTION_TYPE")
 	@Enumerated(EnumType.STRING)
 	private TransactionTypeEnum transType;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="location_id")
+	@JoinColumn(name="LOCATION_ID")
 	private Location location;
 	
-	@Column(name="transaction_type_desc")
+	@Column(name="TRANSACTION_TYPE_DESC")
 	private String transactionDesc;
 
 	public TransactionTypeEnum getTransType() {

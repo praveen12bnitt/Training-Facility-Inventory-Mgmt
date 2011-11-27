@@ -72,7 +72,7 @@ public class ItemIssueFormController {
 		issueSkuForm.setLocationId(location.getLocationId());
 		issueSkuForm.setLocationName(location.getLocationName());
 		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
-		issueSkuForm.setTransactionType(TransactionTypeEnum.ISSUE_UNIFORM_STUDENT);		
+		issueSkuForm.setTransactionType(transactionTypeEnum);		
 		issueSkuForm.setItems(items);
 		
 		ModelAndView mav = new ModelAndView("transaction/issueSku");
@@ -156,6 +156,7 @@ public class ItemIssueFormController {
 		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
 		issueSkuForm.setTrainee(trainee);
 		issueSkuForm.setRefTransactionId(transactionId);
+		issueSkuForm.setLocationId(transDetails.getLocationId());
 		ModelAndView mav = new ModelAndView("transaction/receiveSku");
 		mav.addObject("transDetails", transDetails);
 		mav.addObject("issueSkuForm", issueSkuForm);

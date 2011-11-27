@@ -24,11 +24,11 @@ public class TransItemMappingPk implements Serializable {
 	};
 
 	@ManyToOne
-	@JoinColumn(name = "transaction_type")
+	@JoinColumn(name = "TRANSACTION_TYPE")
 	private TransactionType transactionType;
 
 	@ManyToOne
-	@JoinColumn(name = "item_id")
+	@JoinColumn(name = "ITEM_ID")
 	private Item item;
 
 	public TransactionType getTransactionType() {

@@ -36,7 +36,7 @@ $(document).ready(function($) {
 <body class="body-class" >	
 	<form:form method="post" commandName="issueSkuForm" >
 	<form:hidden path="transactionType" />
-	<form:input type="hidden" path="locationId" value="2" />
+	<form:input type="hidden" path="locationId" />
 	<form:hidden path="trainee.traineeId" />	
 	<form:hidden path="refTransactionId" value="${issueSkuForm.refTransactionId }" />
 	<div id="main-content" class="ui-widget main-content" style="background: white;">

@@ -34,11 +34,11 @@
 				<li >
 					<a href="#">Gym</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&locationId=1" />'>Student Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_GYM_STUDENT&locationId=3" />'>Student Issue</a></li>
 						<li><a href='#'>Staff Issue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&userId=100&locationId=1" />'>Student Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_GYM_STUDENT&userId=100&locationId=3" />'>Student Return</a></li>
 						<li><a href='#'>Staff Return</a></li>
-						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=1" />'>Receive From Laundry</a></li>
+						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=3" />'>Receive From Laundry</a></li>
 					</ul>
 				</li>
 					<li >

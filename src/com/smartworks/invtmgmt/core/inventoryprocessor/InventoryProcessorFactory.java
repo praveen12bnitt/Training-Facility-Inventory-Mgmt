@@ -17,10 +17,18 @@ public class InventoryProcessorFactory {
 		switch (tranType) {
 		case ISSUE_UNIFORM_STUDENT:
 		case ISSUE_UNIFORM_STAFF:
+		case ISSUE_EQUIPMENT_STUDENT:
+		case ISSUE_EQUIPMENT_STAFF:
+		case ISSUE_GYM_STUDENT:
+		case ISSUE_GYM_STAFF:
 			processor = dispatchInventoryProcessor;
 			break;
 		case RETURN_UNIFORM_STAFF:
 		case RETURN_UNIFORM_STUDENT:
+		case RETURN_EQUIPMENT_STUDENT:
+		case RETURN_EQUIPMENT_STAFF:
+		case RETURN_GYM_STUDENT:
+		case RETURN_GYM_STAFF:
 			processor = returnsInventoryProcessor;
 			break;
 		case REPORT_MISSING_UNIFORM_STAFF:
@@ -28,6 +36,8 @@ public class InventoryProcessorFactory {
 			processor = missingInventoryProcessor;
 			break;
 		case ACCEPT_FROM_LAUNDRY_UNIFORM:
+		case ACCEPT_FROM_LAUNDRY_EQUIPMENT:
+		case ACCEPT_FROM_LAUNDRY_GYM:
 			processor = laundryReturnsProcessor;
 			break;
 		case TRANSFER_INVENTORY:

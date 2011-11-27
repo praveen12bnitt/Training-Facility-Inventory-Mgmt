@@ -10,17 +10,17 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="item_attribute_values")
+@Table(name="ITEM_ATTRIBUTE_VALUES")
 @Proxy(lazy=false)
 public class ItemAttributeValue implements Serializable,Comparable<ItemAttributeValue> {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="attr_value_id")
+	@Column(name="ATTR_VALUE_ID")
 	Integer attributeValueId;
 	
-	@Column(name="attr_value")
+	@Column(name="ATTR_VALUE")
 	String attributeValue;
 
 	public ItemAttributeValue(String attributeValue) {

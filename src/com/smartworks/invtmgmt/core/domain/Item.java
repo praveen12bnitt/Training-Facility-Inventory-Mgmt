@@ -17,27 +17,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.JsonSerializer;
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name="item")
+@Table(name="ITEM")
 @Proxy(lazy=false)
 public class Item implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="item_desc",length=200)
+	@Column(name="ITEM_DESC",length=200)
 	private String desc;
 	
 	@Id
-	@Column(name="item_id")
+	@Column(name="ITEM_ID")
 	private Integer id;
 	
-	@Column(name="name", length=50)
+	@Column(name="NAME", length=50)
 	private String name;
 	
 	@Type(type="yes_no")

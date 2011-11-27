@@ -28,13 +28,13 @@ public class Inventory implements Serializable {
 	@Id
 	private InventoryPk skuLocation;
 	
-	@Column(name="available_qty")
+	@Column(name="AVAILABLE_QTY")
 	private Integer availableQty;
 	
-	@Column(name="unusable_qty")
+	@Column(name="UNUSABLE_QTY")
 	private Integer unusableQty;
 	
-	@Column(name="issued_qty")
+	@Column(name="ISSUED_QTY")
 	private Integer issueQty;
 	
 	@Transient
