@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +25,11 @@ import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.User;
 import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
+import com.smartworks.invtmgmt.core.manager.TraineeMgr;
+import com.smartworks.invtmgmt.web.ui.JqgridWhereClauseGenerator;
+import com.smartworks.invtmgmt.web.ui.controller.util.ValidationUtil;
+import com.smartworks.invtmgmt.web.ui.form.LaundryTrackingForm;
+import com.smartworks.invtmgmt.web.ui.form.TraineeForm;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
 
 @Controller
@@ -36,6 +44,12 @@ public class CommonController {
 	
 	@Autowired
 	private CommonTransactionMgr commonTransactionMgr;
+	
+	@Autowired
+	private TraineeMgr traineeMgr;
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	protected static Logger logger = Logger
 			.getLogger(CommonController.class);
@@ -55,6 +69,77 @@ public class CommonController {
 		response.setTotal("10");
 		response.setRecords(String.valueOf(trainees.size()));
 		return response;
+	}
+	
+	
+	@RequestMapping(value = "/listtrainees.form", method = RequestMethod.POST)
+	public @ResponseBody
+	ReportDetailsResponse getAllTrainess1(HttpServletRequest request,@RequestParam("_search") Boolean searchEnabled, 
+			@RequestParam("rows") Integer rowsPerPage, @RequestParam("page") Integer pageNumber, @RequestParam("sidx") String sortField, @RequestParam("sord") String sortType) {
+		logger.info("Get All Trainees<>");
+		
+		List<Trainee> trainees = new ArrayList<Trainee>();
+		String whereClause = JqgridWhereClauseGenerator.getWhereClause(request, Trainee.class);
+		
+		Integer firstResult = (pageNumber-1)*rowsPerPage;	
+		
+		trainees = traineeMgr.getTrainee(firstResult, rowsPerPage, sortField, sortType, whereClause);
+		Long totalCount = traineeMgr.getTraineeTotalCount(sortField, sortType, whereClause);
+		ReportDetailsResponse response = new ReportDetailsResponse();
+		
+		response.setRows(trainees);
+		response.setPage(pageNumber.toString());
+		Double totalPages = Math.ceil( totalCount * 1.0f / (rowsPerPage) );
+		response.setTotal(totalPages.toString());
+		response.setRecords(totalCount.toString());
+		return response;
+	}
+	
+	@RequestMapping(value = "/list-all-trainee.form", method = RequestMethod.GET)
+	public ModelAndView getAllTrainee() {
+		ModelAndView mav = new ModelAndView("common/trainee-list");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/edit-trainee.form", method = RequestMethod.GET)
+	public ModelAndView editTrainee(@RequestParam Integer traineeId) {
+		ModelAndView mav = new ModelAndView("common/add-trainee");
+		Trainee trainee = traineeMgr.load(traineeId);
+		TraineeForm traineeForm = new TraineeForm();
+		traineeForm.setTrainee(trainee);
+		traineeForm.setEdit(true);
+		mav.addObject("traineeForm", traineeForm);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/add-trainee.form", method = RequestMethod.GET)
+	public ModelAndView addTrainee() {
+		ModelAndView mav = new ModelAndView("common/add-trainee");
+		TraineeForm traineeForm = new TraineeForm();
+		mav.addObject("traineeForm", traineeForm);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/add-trainee.form", method = RequestMethod.POST)
+	public ModelAndView addEditTrainee(HttpServletRequest request, @ModelAttribute("traineeForm") @Valid TraineeForm traineeForm,BindingResult result) {
+		ModelAndView mav = new ModelAndView("redirect:list-all-trainee.form");
+		if (result.hasErrors()) {  
+			List<String> errormsgs = ValidationUtil.getErrorMsgs(messageSource, result);
+			mav.setViewName("common/add-trainee");
+			mav.addObject("validationErrors",errormsgs);
+			mav.addObject("traineeForm", traineeForm);
+			return mav;
+        } 
+		if(!traineeForm.isEdit())
+			traineeMgr.add(traineeForm.getTrainee());
+		else
+			traineeMgr.update(traineeForm.getTrainee());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/edit-trainee.form", method = RequestMethod.POST)
+	public ModelAndView editTrainee(HttpServletRequest request, @ModelAttribute("traineeForm") @Valid TraineeForm traineeForm,BindingResult result) {
+		return addEditTrainee(request,traineeForm,result);
 	}
 	
 	

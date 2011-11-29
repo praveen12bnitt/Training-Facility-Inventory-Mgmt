@@ -54,12 +54,15 @@
 		<property name="dateUtil" ref="dateUtil" /> 
 	</bean>
 	<bean id="locationDao" class="com.smartworks.invtmgmt.core.dao.impl.LocationDaoImpl" parent="abstractDao" />
-	<bean id="traineeDao" class="com.smartworks.invtmgmt.core.dao.impl.TraineeDaoImpl" parent="abstractDao" />
+	<bean id="traineeDao" class="com.smartworks.invtmgmt.core.dao.impl.TraineeDaoImpl" parent="abstractDao" >
+		<property name="dateUtil" ref="dateUtil" /> 
+	</bean>
 	<bean id="laundryTrackingDao" class="com.smartworks.invtmgmt.core.dao.impl.LaundryTrackingDaoImpl" parent="abstractDao" >
 		<property name="dateUtil" ref="dateUtil" /> 
 	</bean>
 	<bean id="userDao" class="com.smartworks.invtmgmt.core.dao.impl.UserDaoImpl" parent="abstractDao" />
 	<bean id="productDao" class="com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl" parent="abstractDao" />
+	
 	<!--  Converters  -->
 	
 	<bean id="itemSkuConverter" class="com.smartworks.invtmgmt.converter.ItemSkuConverter" >
@@ -107,6 +110,10 @@
         <property name="laundryTrackingDao"><ref local="laundryTrackingDao"/></property>
     </bean>
     <bean id="commonTransactionMgr" class="com.smartworks.invtmgmt.core.manager.CommonTransactionMgrImpl" />
+    
+     <bean id="traineeMgr" class="com.smartworks.invtmgmt.core.manager.TraineeMgrImpl">
+        <property name="traineeDao"><ref local="traineeDao"/></property>
+    </bean>
     
     <bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
     	<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />

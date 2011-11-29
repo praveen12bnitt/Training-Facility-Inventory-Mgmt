@@ -50,10 +50,11 @@
 					</ul>
 				</li>
 					<li >
-					<a href="#">&nbsp;Kit&nbsp;</a>
+					<a href="#">Administration</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/common/createproduct.form" />'>Create</a></li>
-						</ul>
+						<li><a href='<c:url value="/common/createproduct.form" />'>Kit Management</a></li>
+						<li><a href='<c:url value="/common/list-all-trainee.form" />'>Trainee Management</a></li>
+					</ul>
 				</li>
 					<li >
 					<a href="#">Report</a>
