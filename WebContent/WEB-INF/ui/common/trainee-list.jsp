@@ -86,7 +86,7 @@
 	  		mygrid[0].clearToolbar()
 	  	} 
 	  });
-	  jQuery("#trainee-list").jqGrid('filterToolbar');
+	  jQuery("#trainee-list").jqGrid('filterToolbar',{searchOnEnter : false});
 	 
 	 
 	  

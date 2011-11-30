@@ -48,6 +48,7 @@ $(document).ready(function($) {
 	    sortorder: "desc",
 	    loadonce: true,
 	    caption: "Trainee List",
+	    ignoreCase:true,
 	    height: 125,
 	    width: 750,
 	    onSelectRow: function(rowId){	    	
@@ -68,6 +69,8 @@ $(document).ready(function($) {
 	          id: "id"
 	      }
 	});
+	
+	jQuery("#list2").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
 	
 	
 	$("#kitName").autocomplete({
