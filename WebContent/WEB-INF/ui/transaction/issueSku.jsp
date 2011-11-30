@@ -30,7 +30,7 @@ $(document).ready(function($) {
 		);
 	
 	jQuery("#list2").jqGrid({
-	   	url:'${pageContext.request.contextPath}/common/listtrainees.form',
+	   	url:'${pageContext.request.contextPath}/common/list-active-trainees.form',
 		datatype: "json",
 	   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
 	   	colModel:[

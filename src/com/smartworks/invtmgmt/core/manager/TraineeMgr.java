@@ -9,6 +9,8 @@ public interface TraineeMgr {
 	public void add(Trainee t);
 	public void update(Trainee t);
 	public Trainee load(Integer traineeId);
+	public List<Trainee> loadActiveTrainee();
+	public List<Trainee> loadAll();
 	public List<Trainee> getTrainee(Integer firstResult,Integer maxResults,String orderByField,String orderByType,String whereClause) ;
 	public Long getTraineeTotalCount(String orderByField,String orderByType,String whereClause);
 }

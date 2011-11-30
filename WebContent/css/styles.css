@@ -68,6 +68,11 @@ table.trainee-add td
 	padding: 5px;
 }
 
+table.staff-add td
+{
+	padding: 5px;
+}
+
 .form-button {   
    text-decoration:none !important; 
    cursor:pointer; 

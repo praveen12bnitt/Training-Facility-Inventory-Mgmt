@@ -56,7 +56,10 @@
 	<bean id="locationDao" class="com.smartworks.invtmgmt.core.dao.impl.LocationDaoImpl" parent="abstractDao" />
 	<bean id="traineeDao" class="com.smartworks.invtmgmt.core.dao.impl.TraineeDaoImpl" parent="abstractDao" >
 		<property name="dateUtil" ref="dateUtil" /> 
-	</bean>
+	</bean>	
+	<bean id="staffDao" class="com.smartworks.invtmgmt.core.dao.impl.StaffDaoImpl" parent="abstractDao" >
+		<property name="dateUtil" ref="dateUtil" /> 
+	</bean>	
 	<bean id="laundryTrackingDao" class="com.smartworks.invtmgmt.core.dao.impl.LaundryTrackingDaoImpl" parent="abstractDao" >
 		<property name="dateUtil" ref="dateUtil" /> 
 	</bean>
@@ -113,6 +116,10 @@
     
      <bean id="traineeMgr" class="com.smartworks.invtmgmt.core.manager.TraineeMgrImpl">
         <property name="traineeDao"><ref local="traineeDao"/></property>
+    </bean>
+    
+    <bean id="staffMgr" class="com.smartworks.invtmgmt.core.manager.StaffMgrImpl">
+        <property name="staffDao"><ref local="staffDao"/></property>
     </bean>
     
     <bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">

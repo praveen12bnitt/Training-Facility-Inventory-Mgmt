@@ -23,9 +23,19 @@ public class TraineeMgrImpl implements TraineeMgr {
 		traineeDao.update(t);		
 	}
 	
-	@Override
+	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
 	public Trainee load(Integer traineeId) {
 		return traineeDao.load(traineeId);
+	}
+	
+	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
+	public List<Trainee> loadActiveTrainee() {
+		return traineeDao.loadActiveTrainee();
+	}
+	
+	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
+	public List<Trainee> loadAll() {
+		return traineeDao.loadAll();
 	}
 	
 	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Trainee List</title>
+<title>Trainee Management</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
@@ -34,7 +34,7 @@
 	  var mygrid =  jQuery("#trainee-list").jqGrid({
 		   	url:'${pageContext.request.contextPath}/common/listtrainees.form',
 			datatype: "json",
-		   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class','Active','Created Time','Last Updated Time'],
+		   	colNames:['Id','First Name', 'Last Name', 'Middle Name', 'Class','Active','Created Time','Last Updated Time'],
 		   	colModel:[
 				{name:'traineeId',index:'traineeId', align:'center',width:100},
 		   		{name:'firstName',index:'firstName', align:'center'},
