@@ -1,28 +1,15 @@
 package com.smartworks.invtmgmt.web.ui.transfer;
 
-import java.text.SimpleDateFormat;
-
-import org.hsqldb.DatabaseURL;
-
 import com.smartworks.invtmgmt.core.dao.LocationDao;
-import com.smartworks.invtmgmt.core.db.util.DateUtil;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.platform.AppContextUtil;
 
 
 public class UITransactionTrace {
-	private String transactionDetails;
+	private String transactionId;
 	private String createdDttm;
 	private String locationName;
 	
-	
-
-	public String getTransactionDetails() {
-		return transactionDetails;
-	}
-	public void setTransactionDetails(String transactionDetails) {
-		this.transactionDetails = transactionDetails;
-	}
 	public String getCreatedDttm() {
 		return createdDttm;
 	}
@@ -39,20 +26,20 @@ public class UITransactionTrace {
 	
 	public static UITransactionTrace extractFromUserTransactionTrace(TransactionTrace transactionTrace, String contextPath) {
 		UITransactionTrace uiTransactionTrace = new UITransactionTrace();
-		StringBuffer sb = new StringBuffer();
-		sb.append("<a href='"+contextPath+"/inventory/receive.form?transactionId=");
-		sb.append(transactionTrace.getTrasactionId());
-		sb.append("'>");
-		sb.append(transactionTrace.getTrasactionId());
-		sb.append("</a>");
-	
-		uiTransactionTrace.setTransactionDetails(sb.toString());
+		
+		uiTransactionTrace.setTransactionId(transactionTrace.getTrasactionId().toString());
 	
 		LocationDao locationDao = AppContextUtil.getBean("locationDao");
 		uiTransactionTrace.setLocationName(locationDao.load(transactionTrace.getLocationId()).getLocationName());
 		uiTransactionTrace.setCreatedDttm(com.smartworks.invtmgmt.core.util.DateUtil.getExpandedTimeStamp(transactionTrace.getCreatedDttm()));
 		
 		return uiTransactionTrace;
+	}
+	public String getTransactionId() {
+		return transactionId;
+	}
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 	
 	

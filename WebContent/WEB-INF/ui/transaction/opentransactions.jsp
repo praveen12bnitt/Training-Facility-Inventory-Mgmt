@@ -28,7 +28,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 		datatype: "json",
 	   	colNames:['Transaction Id', 'Location Name', 'Issued Time'],
 	   	colModel:[
-	   		{name:'transactionDetails',index:'transactionDetails', align:'center', width:200},
+	   		{name:'transactionId',index:'transactionId', align:'center', width:200},
 	   		{name:'locationName',index:'locationName', align:'center', width:200},
 	   		{name:'createdDttm',index:'createdDttm', align:'center', width:200}
 	   	],
@@ -43,11 +43,6 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	    height: 200,
 	    width: 750,
 	    onSelectRow: function(rowId){	    	
-	    	var transactionId = jQuery("#list3").jqGrid('getCell',rowId,0);
-	    	if(rowData){
-	    		$(location).attr('href','${pageContext.request.contextPath}/common/edit-staff.form?staffId='+staffId);	
-			}
-	    	
 	    	var rowData = $("#list3").jqGrid('getGridParam','selrow');
 	    	var transactionId = $("#list3").jqGrid('getCell',rowId,0);
 	    	if(rowData){
