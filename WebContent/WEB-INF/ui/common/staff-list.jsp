@@ -105,7 +105,7 @@
 	<br />
 	<div style="clear: both;"></div>
 		<div style="padding: 10px;">
-			<a id="trainee-add-btn" href="${pageContext.request.contextPath}/common/add-staff.form" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add Staff</a>
+			<a id="trainee-add-btn" href="<c:url value='/common/add-staff.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add Staff</a>
 		</div>
 		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
 			<table id="staff-list" class="trans-details" style="font-size: 90%;"></table>

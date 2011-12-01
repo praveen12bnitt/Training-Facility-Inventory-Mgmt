@@ -32,7 +32,7 @@ public class StaffDaoImpl extends HibernateDaoSupport
 
 	@Override
 	public List<Staff> loadAll() {
-		String query = "from Staff where enabled=true";		
+		String query = "from Staff";		
 		List<Staff> staff = getHibernateTemplate().find(query);
 		return staff;
 	}

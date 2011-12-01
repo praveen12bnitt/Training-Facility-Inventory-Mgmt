@@ -27,10 +27,12 @@ import com.smartworks.invtmgmt.core.domain.User;
 import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
 import com.smartworks.invtmgmt.core.manager.StaffMgr;
 import com.smartworks.invtmgmt.core.manager.TraineeMgr;
+import com.smartworks.invtmgmt.core.manager.UserMgr;
 import com.smartworks.invtmgmt.web.ui.JqgridWhereClauseGenerator;
 import com.smartworks.invtmgmt.web.ui.controller.util.ValidationUtil;
 import com.smartworks.invtmgmt.web.ui.form.StaffForm;
 import com.smartworks.invtmgmt.web.ui.form.TraineeForm;
+import com.smartworks.invtmgmt.web.ui.form.UserForm;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
 
 @Controller
@@ -48,6 +50,9 @@ public class CommonController {
 	
 	@Autowired
 	private StaffMgr staffMgr;
+	
+	@Autowired
+	private UserMgr userMgr;
 	
 	@Autowired
 	private MessageSource messageSource;
@@ -117,7 +122,7 @@ public class CommonController {
 	public @ResponseBody
 	ReportDetailsResponse getAllStaffs(HttpServletRequest request,@RequestParam("_search") Boolean searchEnabled, 
 			@RequestParam("rows") Integer rowsPerPage, @RequestParam("page") Integer pageNumber, @RequestParam("sidx") String sortField, @RequestParam("sord") String sortType) {
-		logger.info("Get All Trainees<>");
+		logger.info("Get All Staffs<>");
 		
 		List<Staff> staff = new ArrayList<Staff>();
 		String whereClause = JqgridWhereClauseGenerator.getWhereClause(request, Staff.class);
@@ -136,6 +141,30 @@ public class CommonController {
 		return response;
 	}
 	
+	
+	@RequestMapping(value = "/listusers.form", method = RequestMethod.POST)
+	public @ResponseBody
+	ReportDetailsResponse getAllUsers(HttpServletRequest request,@RequestParam("_search") Boolean searchEnabled, 
+			@RequestParam("rows") Integer rowsPerPage, @RequestParam("page") Integer pageNumber, @RequestParam("sidx") String sortField, @RequestParam("sord") String sortType) {
+		logger.info("Get All Users<>");
+		
+		List<User> user = new ArrayList<User>();
+		String whereClause = JqgridWhereClauseGenerator.getWhereClause(request, User.class);
+		
+		Integer firstResult = (pageNumber-1)*rowsPerPage;	
+		
+		user = userMgr.getUser(firstResult, rowsPerPage, sortField, sortType, whereClause);
+		Long totalCount = userMgr.getUserTotalCount(whereClause);
+		ReportDetailsResponse response = new ReportDetailsResponse();
+		
+		response.setRows(user);
+		response.setPage(pageNumber.toString());
+		Double totalPages = Math.ceil( totalCount * 1.0f / (rowsPerPage) );
+		response.setTotal(totalPages.toString());
+		response.setRecords(totalCount.toString());
+		return response;
+	}
+	
 	@RequestMapping(value = "/list-all-trainee.form", method = RequestMethod.GET)
 	public ModelAndView getAllTrainee() {
 		ModelAndView mav = new ModelAndView("common/trainee-list");
@@ -145,6 +174,12 @@ public class CommonController {
 	@RequestMapping(value = "/list-all-staff.form", method = RequestMethod.GET)
 	public ModelAndView getAllStaff() {
 		ModelAndView mav = new ModelAndView("common/staff-list");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/list-all-user.form", method = RequestMethod.GET)
+	public ModelAndView getAllUser() {
+		ModelAndView mav = new ModelAndView("common/user-list");
 		return mav;
 	}
 	
@@ -185,6 +220,46 @@ public class CommonController {
 		mav.addObject("staffForm", staffForm);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/add-user.form", method = RequestMethod.GET)
+	public ModelAndView addUser() {
+		ModelAndView mav = new ModelAndView("common/add-user");
+		UserForm userForm = new UserForm();
+		mav.addObject("userForm", userForm);
+		mav.addObject("roles", userMgr.getAllRoles());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/edit-user.form", method = RequestMethod.GET)
+	public ModelAndView editUser(@RequestParam Integer userId) {
+		ModelAndView mav = new ModelAndView("common/add-user");
+		User user = userMgr.load(userId);
+		UserForm userForm = new UserForm();
+		userForm.setUser(user);
+		userForm.setEdit(true);
+		mav.addObject("userForm", userForm);
+		mav.addObject("roles", userMgr.getAllRoles());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/add-user.form", method = RequestMethod.POST)
+	public ModelAndView addEditUser(HttpServletRequest request, @ModelAttribute("userForm") UserForm userForm) {
+		ModelAndView mav = new ModelAndView("redirect:list-all-user.form");
+		
+		if(!userForm.isEdit())
+			userMgr.add(userForm.getUser());
+		else {
+			userMgr.clearRoles(userForm.getUser());
+			userMgr.update(userForm.getUser());
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value = "/edit-user.form", method = RequestMethod.POST)
+	public ModelAndView editUser(HttpServletRequest request, @ModelAttribute("userForm") UserForm userForm) {
+		return addEditUser(request, userForm);
+	}
+	
 	
 	@RequestMapping(value = "/add-trainee.form", method = RequestMethod.POST)
 	public ModelAndView addEditTrainee(HttpServletRequest request, @ModelAttribute("traineeForm") @Valid TraineeForm traineeForm,BindingResult result) {

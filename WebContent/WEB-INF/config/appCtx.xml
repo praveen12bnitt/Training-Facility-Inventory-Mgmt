@@ -19,6 +19,7 @@
             <list>
                 <value>com.smartworks.invtmgmt.core.domain</value>
                 <value>com.smartworks.invtmgmt.core.domain.*</value>
+               
             </list>
         </property>
         <property name="hibernateProperties">
@@ -121,6 +122,8 @@
     <bean id="staffMgr" class="com.smartworks.invtmgmt.core.manager.StaffMgrImpl">
         <property name="staffDao"><ref local="staffDao"/></property>
     </bean>
+    
+     <bean id="userMgr" class="com.smartworks.invtmgmt.core.manager.UserMgrImpl" />
     
     <bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
     	<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />

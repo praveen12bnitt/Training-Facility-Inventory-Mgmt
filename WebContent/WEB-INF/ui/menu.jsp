@@ -2,6 +2,7 @@
 				<li >
 					<a href="#">Home</a>
 				</li>
+				<security:authorize access="hasRole('ROLE_WHSE')">
 				<li >
 					<a href="#">Warehouse</a>
 					<ul class="sub_menu">						
@@ -11,7 +12,9 @@
 						<li><a href='<c:url value="/inbound/transferToMW.form" />'>Transfer to WM</a></li>
 					</ul>
 				</li>
-				<li >
+				</security:authorize>
+				<security:authorize access="hasRole('ROLE_UNIFORM')">
+				<li>
 					<a href="#">Uniform</a>
 					<ul class="sub_menu">
 						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Student Issue</a></li>
@@ -21,6 +24,8 @@
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=2" />'>Receive From Laundry</a></li>
 					</ul>
 				</li>
+				</security:authorize>
+				<security:authorize access="hasRole('ROLE_TEG')">
 				<li >
 					<a href="#">TEG</a>
 					<ul class="sub_menu">
@@ -31,6 +36,8 @@
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=1" />'>Receive From Laundry</a></li>
 					</ul>
 				</li>
+				</security:authorize>
+				<security:authorize access="hasRole('ROLE_GYM')">
 				<li >
 					<a href="#">Gym</a>
 					<ul class="sub_menu">
@@ -41,7 +48,9 @@
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=3" />'>Receive From Laundry</a></li>
 					</ul>
 				</li>
-					<li >
+				</security:authorize>
+				<security:authorize access="hasRole('ROLE_LAUNDRY')">
+				<li >
 					<a href="#">Laundry</a>
 					<ul class="sub_menu">
 						<li><a href='<c:url value="/laundry/list-laundry.form?type=open" />'>List Loads</a></li>
@@ -49,14 +58,20 @@
 						<li><a href='<c:url value="/laundry/list-laundry.form" />'>List All Loads</a></li>
 					</ul>
 				</li>
+				</security:authorize>
+				<security:authorize access="hasRole('ROLE_ADMIN')">
 					<li >
 					<a href="#">Administration</a>
 					<ul class="sub_menu">
 						<li><a href='<c:url value="/common/createproduct.form" />'>Kit Management</a></li>
 						<li><a href='<c:url value="/common/list-all-trainee.form" />'>Trainee Management</a></li>
 						<li><a href='<c:url value="/common/list-all-staff.form" />'>Staff Management</a></li>
+						<li><a href='<c:url value="/common/list-all-user.form" />'>User Management</a></li>
 					</ul>
+					
 				</li>
+				</security:authorize>
+				<security:authorize access="hasRole('ROLE_REPORT')">
 					<li >
 					<a href="#">Report</a>
 					<ul class="sub_menu">
@@ -66,6 +81,7 @@
 						<li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>						
 						</ul>
 				</li>
+				</security:authorize>
 					<li >
 					<a href="<c:url value='/j_spring_security_logout' />">Logout</a>
 					</li>				

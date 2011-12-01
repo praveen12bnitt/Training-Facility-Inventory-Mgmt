@@ -5,15 +5,16 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 
-	<http auto-config="true">
+	<http auto-config="true" use-expressions="true">
 	     <intercept-url pattern="/ui/**" access="" filters="none"/>
 	    <intercept-url pattern="/images/**" access="" filters="none"/>
 	    <intercept-url pattern="/css/**" access="" filters="none"/>
-	    <intercept-url pattern="/reports/**" access="ROLE_USER"  />
-	    <intercept-url pattern="/inbound/**" access="ROLE_USER"  />
-	    <intercept-url pattern="/inventory/**" access="ROLE_USER"  />
-	    <intercept-url pattern="/auth/welcome.form" access="ROLE_USER"  />
-		<form-login login-processing-url="/auth/j_spring_security_check" login-page="/auth/auth.form" default-target-url="/createtransaction/issue.form?transactionTypeId=ISSUE_UNIFORM_STUDENT"
+	    <intercept-url pattern="/reports/**" access="isAuthenticated()"  />
+	    <intercept-url pattern="/inbound/**" access="isAuthenticated()"  />
+	    <intercept-url pattern="/inventory/**" access="isAuthenticated()"  />
+	    <intercept-url pattern="/auth/welcome.form" access="isAuthenticated()"  />
+	
+		<form-login login-processing-url="/auth/j_spring_security_check" login-page="/auth/auth.form" default-target-url="/inbound/receive.form"
 			authentication-failure-url="/auth/authfailed.form" />
 		<logout logout-success-url="/auth/logout.form" />
 	</http>

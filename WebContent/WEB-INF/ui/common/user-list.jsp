@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Trainee Management</title>
+<title>Staff Management</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
@@ -31,36 +31,32 @@
 				}
 			);
 	  
-	  var mygrid =  jQuery("#trainee-list").jqGrid({
-		   	url:'${pageContext.request.contextPath}/common/listtrainees.form',
+	  var mygrid =  jQuery("#user-list").jqGrid({
+		   	url:'${pageContext.request.contextPath}/common/listusers.form',
 			datatype: "json",
-		   	colNames:['Id','First Name', 'Last Name', 'Middle Name', 'Class','Active','Created Time','Last Updated Time'],
+		   	colNames:['User Id','User Name', 'Location Access','Enabled'],
 		   	colModel:[
-				{name:'traineeId',index:'traineeId', align:'center',width:100},
-		   		{name:'firstName',index:'firstName', align:'center'},
-		   		{name:'lastName',index:'lastName', align:'center'},
-		   		{name:'middleName',index:'middleName', align:'center'},
-		   		{name:'classNumber',index:'classNumber', align:'center'},
-		   		{name:'enabled',index:'enabled', align:'center', stype:'select', editoptions:{value:":All;true:true;false:false"},width:80},
-		   		{name:'createdDttmStr',index:'createdDttm', align:'center',search:false},
-		   		{name:'lastUpdateDttmStr',index:'lastUpdateDttm', align:'center',search:false}
+				{name:'userid',index:'userid', align:'center',width:50},
+		   		{name:'userName',index:'userName', align:'center'},
+		   		{name:'userName',index:'userName', align:'center'},
+		   		{name:'enabled',index:'enabled', align:'center'}
 		   	],
 		   	rowNum:20,
 		   	mtype: "POST",
 		   	rowList:[20,40,60],
 		   	pager: '#pager3',
-		   	sortname: 'firstName',
+		   	sortname: 'userName',
 		   	gridview : true,
 		    viewrecords: true,
 		    sortorder: "desc",
-		    caption: "Trainee List",
+		    caption: "User List",
 		    height: 'auto',
 		    width: 'auto',
 		    onSelectRow: function(rowId){	    	
-		    	var rowData = $("#trainee-list").jqGrid('getGridParam','selrow');
-		    	var traineeId = $("#trainee-list").jqGrid('getCell',rowId,0);
+		    	var rowData = $("#user-list").jqGrid('getGridParam','selrow');
+		    	var userId = $("#user-list").jqGrid('getCell',rowId,0);
 		    	if(rowData){
-		    		$(location).attr('href','${pageContext.request.contextPath}/common/edit-trainee.form?traineeId='+traineeId);	
+		    		$(location).attr('href','${pageContext.request.contextPath}/common/edit-user.form?userId='+userId);	
 				}	    	
 		    	
 		    },
@@ -75,18 +71,18 @@
 		      }
 		});
 	  
-	  jQuery("#trainee-list").jqGrid('navGrid','#pager3',{edit:false,add:false,del:false,search:false,refresh:false});
-	  jQuery("#trainee-list").jqGrid('navButtonAdd',"#pager3",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	  jQuery("#user-list").jqGrid('navGrid','#pager3',{edit:false,add:false,del:false,search:false,refresh:false});
+	  jQuery("#user-list").jqGrid('navButtonAdd',"#pager3",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 	  	onClickButton:function(){
-	  		mygrid[0].toggleToolbar()
+	  		mygrid[0].toggleToolbar();
 	  	} 
 	  });
-	  jQuery("#trainee-list").jqGrid('navButtonAdd',"#pager3",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh',
+	  jQuery("#user-list").jqGrid('navButtonAdd',"#pager3",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh',
 	  	onClickButton:function(){
-	  		mygrid[0].clearToolbar()
+	  		mygrid[0].clearToolbar();
 	  	} 
 	  });
-	  jQuery("#trainee-list").jqGrid('filterToolbar',{searchOnEnter : false});
+	  jQuery("#user-list").jqGrid('filterToolbar');
 	 
 	 
 	  
@@ -104,10 +100,10 @@
 	<br />
 	<div style="clear: both;"></div>
 		<div style="padding: 10px;">
-			<a id="trainee-add-btn" href="<c:url value='/common/add-trainee.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add Trainee</a>
+			<a id="trainee-add-btn" href="<c:url value='/common/add-user.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add User</a>
 		</div>
 		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
-			<table id="trainee-list" class="trans-details" style="font-size: 95%;"></table>
+			<table id="user-list" class="trans-details" style="font-size: 90%;"></table>
 			<div id="pager3"></div>
 		</div>
 		<br/>
