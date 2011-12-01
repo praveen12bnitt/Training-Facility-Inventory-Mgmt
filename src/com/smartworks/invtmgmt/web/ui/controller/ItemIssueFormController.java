@@ -22,10 +22,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.converter.UIDomainConverter;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
+import com.smartworks.invtmgmt.core.dao.StaffDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
+import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.TransactionType;
@@ -53,6 +55,9 @@ public class ItemIssueFormController {
 	
 	@Autowired
 	TraineeDao traineeDao = null;
+	
+	@Autowired
+	StaffDao staffDao = null;
 	
 	@Autowired
 	LocationDao locationDao = null;
@@ -109,10 +114,9 @@ public class ItemIssueFormController {
 	
 	
 	@RequestMapping(value = "/listopentrans.form", method = RequestMethod.GET)
-	public ModelAndView openReceive(@RequestParam int userId, @RequestParam TransactionTypeEnum transactionTypeEnum,@RequestParam int locationId) {
+	public ModelAndView openReceive(@RequestParam TransactionTypeEnum transactionTypeEnum,@RequestParam int locationId) {
 		logger.info("Received request to show all received transactions");
 		ModelAndView mav = new ModelAndView("transaction/opentransactions");
-		mav.addObject("userId",userId);
 		mav.addObject("transactionTypeEnum",transactionTypeEnum);
 		TransactionType returnTrans = transactionTypeDao.load(TransactionTypeEnum.getReturnTransaction(transactionTypeEnum));
 		mav.addObject("transactionDetail",returnTrans.getTransactionDesc());
@@ -123,13 +127,17 @@ public class ItemIssueFormController {
 	
 	@RequestMapping(value = "/opentransactions.form", method = RequestMethod.GET)
 	public @ResponseBody
-	ReportDetailsResponse getAllOpenTransactions(HttpServletRequest request, @RequestParam int userId,
+	ReportDetailsResponse getAllOpenTransactions(HttpServletRequest request, @RequestParam int traineeStaffId,
 			@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId) {
 		logger.info("getAllOpenTransactions for user<>");
 		String contextPath = request.getContextPath();
 		ReportDetailsResponse response = new ReportDetailsResponse();
-		
-		List<TransactionTrace> transTraceList = invtTransMgr.getOpenTransactionsForUser(locationId, userId, transactionTypeEnum);
+		List<TransactionTrace> transTraceList = null;
+		if(transactionTypeEnum.isStaffTransaction()) {
+			transTraceList = invtTransMgr.getOpenTransactionsForStaff(locationId, traineeStaffId, transactionTypeEnum);
+		} else {
+			transTraceList = invtTransMgr.getOpenTransactionsForUser(locationId, traineeStaffId, transactionTypeEnum);
+		}		
 		List<UITransactionTrace> uiTransTraceList = new ArrayList<UITransactionTrace>();
 		
 		for (TransactionTrace transTrace : transTraceList) {
@@ -147,14 +155,26 @@ public class ItemIssueFormController {
 	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {		
 		
 		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
-		Trainee trainee = traineeDao.load(transDetails.getTraineeId());
+		Trainee trainee = null;
+		Staff staff = null;
+		if(transDetails.getTransactionType().isStaffTransaction()) {
+			staff = staffDao.load(transDetails.getStaffId());
+		} else  {
+			trainee = traineeDao.load(transDetails.getTraineeId());
+		}
+		
 		logger.info(transDetails.getItemSkus());
 		IssueSkuForm issueSkuForm = new IssueSkuForm();
 		TransactionTypeEnum transactionTypeEnum = TransactionTypeEnum.getReturnTransaction(transDetails.getTransactionType());
 		issueSkuForm.setTransactionType(transactionTypeEnum);
 		TransactionType transactionType = transactionTypeDao.load(transactionTypeEnum);
 		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
-		issueSkuForm.setTrainee(trainee);
+		if(transDetails.getTransactionType().isStaffTransaction()) {
+			issueSkuForm.setStaff(staff);
+		} else {
+			issueSkuForm.setTrainee(trainee);
+		}
+		
 		issueSkuForm.setRefTransactionId(transactionId);
 		issueSkuForm.setLocationId(transDetails.getLocationId());
 		ModelAndView mav = new ModelAndView("transaction/receiveSku");

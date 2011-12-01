@@ -29,49 +29,94 @@ $(document).ready(function($) {
 			}
 		);
 	
-	jQuery("#list2").jqGrid({
-	   	url:'${pageContext.request.contextPath}/common/list-active-trainees.form',
-		datatype: "json",
-	   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
-	   	colModel:[
-			{name:'traineeId',index:'traineeId', align:'center', width:200},
-	   		{name:'firstName',index:'firstName', align:'center', width:200},
-	   		{name:'lastName',index:'lastName', align:'center', width:200},
-	   		{name:'middleName',index:'middleName', align:'center', width:200},
-	   		{name:'classNumber',index:'classNumber', align:'center', width:200}
-	   	],
-	   	rowNum:10,
-	   	rowList:[10,20,30],
-	   	pager: '#pager2',
-	   	sortname: 'firstName',
-	    viewrecords: true,
-	    sortorder: "desc",
-	    loadonce: true,
-	    caption: "Trainee List",
-	    ignoreCase:true,
-	    height: 125,
-	    width: 750,
-	    onSelectRow: function(rowId){	    	
-	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
-	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
-	    	if(rowData){
-				jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
-			}	    	
-	    	$('input[name="trainee.traineeId"]').val(traineeId);	  
-	    },
-	    jsonReader : {
-	          root: "rows",
-	          page: "page",
-	          total: "total",
-	          records: "records",
-	          repeatitems: false,
-	          cell: "cell",
-	          id: "id"
-	      }
-	});
-	
+	<c:choose>
+    	<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+	    	jQuery("#list2").jqGrid({
+	    	   	url:'${pageContext.request.contextPath}/common/list-active-staff.form',
+	    		datatype: "json",
+	    	   	colNames:['Id','First Name', 'Last Name', 'Middle Name', 'Division', 'Extension'],
+	    	   	colModel:[
+	    			{name:'staffId',index:'staffId', align:'center', width:200},
+	    	   		{name:'firstName',index:'firstName', align:'center', width:200},
+	    	   		{name:'lastName',index:'lastName', align:'center', width:200},
+	    	   		{name:'middleName',index:'middleName', align:'center', width:200},
+	    	   		{name:'division',index:'classNumber', align:'center'},
+	    	   		{name:'extension',index:'extension', align:'center',width:90},
+	    	   	],
+	    	   	rowNum:10,
+	    	   	rowList:[10,20,30],
+	    	   	pager: '#pager2',
+	    	   	sortname: 'firstName',
+	    	    viewrecords: true,
+	    	    sortorder: "desc",
+	    	    loadonce: true,
+	    	    caption: "Staff List",
+	    	    ignoreCase:true,
+	    	    height: 125,
+	    	    width: 750,
+	    	    onSelectRow: function(rowId){	    	
+	    	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
+	    	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
+	    	    	if(rowData){
+	    				jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
+	    			}	    	
+	    	    	$('input[name="staff.staffId"]').val(traineeId);	  
+	    	    },
+	    	    jsonReader : {
+	    	          root: "rows",
+	    	          page: "page",
+	    	          total: "total",
+	    	          records: "records",
+	    	          repeatitems: false,
+	    	          cell: "cell",
+	    	          id: "id"
+	    	      }
+	    	});
+    	</c:when>
+    <c:otherwise>
+	    jQuery("#list2").jqGrid({
+		   	url:'${pageContext.request.contextPath}/common/list-active-trainees.form',
+			datatype: "json",
+		   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
+		   	colModel:[
+				{name:'traineeId',index:'traineeId', align:'center', width:200},
+		   		{name:'firstName',index:'firstName', align:'center', width:200},
+		   		{name:'lastName',index:'lastName', align:'center', width:200},
+		   		{name:'middleName',index:'middleName', align:'center', width:200},
+		   		{name:'classNumber',index:'classNumber', align:'center', width:200}
+		   	],
+		   	rowNum:10,
+		   	rowList:[10,20,30],
+		   	pager: '#pager2',
+		   	sortname: 'firstName',
+		    viewrecords: true,
+		    sortorder: "desc",
+		    loadonce: true,
+		    caption: "Trainee List",
+		    ignoreCase:true,
+		    height: 125,
+		    width: 750,
+		    onSelectRow: function(rowId){	    	
+		    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
+		    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
+		    	if(rowData){
+					jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
+				}	    	
+		    	$('input[name="trainee.traineeId"]').val(traineeId);	  
+		    },
+		    jsonReader : {
+		          root: "rows",
+		          page: "page",
+		          total: "total",
+		          records: "records",
+		          repeatitems: false,
+		          cell: "cell",
+		          id: "id"
+		      }
+		});	    
+    </c:otherwise>
+	</c:choose>
 	jQuery("#list2").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
-	
 	
 	$("#kitName").autocomplete({
         source: function(request, response) {
@@ -177,7 +222,15 @@ $(document).ready(function($) {
 	<form:form method="post" commandName="issueSkuForm" >
 	<form:hidden path="transactionType" />
 	<form:input type="hidden" path="locationId"/>
-	<form:hidden path="trainee.traineeId" />	
+	<c:choose>
+    	<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+    		<form:hidden path="staff.staffId" />
+    	</c:when>
+    	 <c:otherwise>
+    	 	<form:hidden path="trainee.traineeId" />
+    	 </c:otherwise>
+    </c:choose>
+		
 	<input type="hidden" id="selectedProductId" name="selectedProductId" value=""/>
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
@@ -212,9 +265,22 @@ $(document).ready(function($) {
 				<tr>
 					<td>MiddleName Name</td><td><input type="text" name="middleName" value="" readOnly="true" /></td>
 				</tr>
-				<tr>
-					<td>Class</td><td><input type="text" name="classNumber" value="" readOnly="true" /></td>
-				</tr>
+				<c:choose>
+					<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+    				<tr>
+						<td>Division</td><td><input type="text" name="division" value="" readOnly="true" /></td>
+					</tr>
+					<tr>
+						<td>Extension</td><td><input type="text" name="extension" value="" readOnly="true" /></td>
+					</tr>
+    				</c:when>
+    				<c:otherwise>
+    				<tr>
+						<td>Class</td><td><input type="text" name="classNumber" value="" readOnly="true" /></td>
+					</tr>
+    				</c:otherwise>
+				</c:choose>
+				
 			</tbody>
 		</table>					
 		</div>

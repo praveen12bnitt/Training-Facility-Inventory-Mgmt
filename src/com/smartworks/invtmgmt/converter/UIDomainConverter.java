@@ -14,8 +14,11 @@ public class UIDomainConverter {
 		transDetails.setItemSkus(itemSkus);		
 		transDetails.setLocationId(issueSkuForm.getLocationId());
 		transDetails.setUserId(100);
-		if(issueSkuForm.getTrainee() != null) {
-			transDetails.setTraineeId(issueSkuForm.getTrainee().getTraineeId());
+		if(issueSkuForm.getTransactionType().isStaffTransaction()) {
+			transDetails.setStaffId(issueSkuForm.getStaff().getStaffId());
+		} else {
+			if(issueSkuForm.getTrainee() != null)
+				transDetails.setTraineeId(issueSkuForm.getTrainee().getTraineeId());
 		}		
 		transDetails.setTransactionType(issueSkuForm.getTransactionType());
 		transDetails.setRefTransactionId(issueSkuForm.getRefTransactionId());

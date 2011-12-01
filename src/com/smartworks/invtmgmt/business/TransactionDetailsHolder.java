@@ -15,6 +15,7 @@ public class TransactionDetailsHolder {
 	Integer locationId;
 	Integer srcLocationId;
 	Integer refTransactionId;
+	boolean staffIssue = false;
 	
 	public TransactionTypeEnum getTransactionType() {
 		return transactionType;
@@ -71,5 +72,11 @@ public class TransactionDetailsHolder {
 	}
 	public void setTraineeId(Integer traineeId) {
 		this.traineeId = traineeId;
+	}
+	public boolean isStaffIssue() {
+		return staffIssue;
+	}
+	public void setStaffIssue(boolean staffIssue) {
+		this.staffIssue = staffIssue;
 	}	
 }

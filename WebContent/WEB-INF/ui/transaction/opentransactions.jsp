@@ -20,11 +20,11 @@
 
 <script type="text/javascript">
 
-loadOpenTrans = function(traineeId, transactionType, locationId) {
+loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	jQuery("#list3").jqGrid('clearGridData','clearfooter');
 	
 	jQuery("#list3").jqGrid({
-	   	url:'${pageContext.request.contextPath}/inventory/opentransactions.form?userId='+traineeId+'&transactionTypeEnum='+transactionType+'&locationId='+locationId,
+	   	url:'${pageContext.request.contextPath}/inventory/opentransactions.form?traineeStaffId='+traineeStaffId+'&transactionTypeEnum='+transactionType+'&locationId='+locationId,
 		datatype: "json",
 	   	colNames:['Transaction Id', 'Location Name', 'Issued Time'],
 	   	colModel:[
@@ -42,6 +42,19 @@ loadOpenTrans = function(traineeId, transactionType, locationId) {
 	    caption: "Open User Transactions",
 	    height: 200,
 	    width: 750,
+	    onSelectRow: function(rowId){	    	
+	    	var transactionId = jQuery("#list3").jqGrid('getCell',rowId,0);
+	    	if(rowData){
+	    		$(location).attr('href','${pageContext.request.contextPath}/common/edit-staff.form?staffId='+staffId);	
+			}
+	    	
+	    	var rowData = $("#list3").jqGrid('getGridParam','selrow');
+	    	var transactionId = $("#list3").jqGrid('getCell',rowId,0);
+	    	if(rowData){
+	    		$(location).attr('href','${pageContext.request.contextPath}/inventory/receive.form?transactionId='+transactionId);	
+			}	    	
+	       	
+	    },
 	    jsonReader : {
 	          root: "rows",
 	          page: "page",
@@ -57,45 +70,96 @@ loadOpenTrans = function(traineeId, transactionType, locationId) {
   }
 
   $(document).ready(function() {
-	jQuery("#list2").jqGrid({
-	   	url:'${pageContext.request.contextPath}/common/list-active-trainees.form',
-		datatype: "json",
-	   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
-	   	colModel:[
-			{name:'traineeId',index:'traineeId', align:'center', width:200},
-	   		{name:'firstName',index:'firstName', align:'center', width:200},
-	   		{name:'lastName',index:'lastName', align:'center', width:200},
-	   		{name:'middleName',index:'middleName', align:'center', width:200},
-	   		{name:'classNumber',index:'classNumber', align:'center', width:200}
-	   	],
-	   	rowNum:10,
-	   	rowList:[10,20,30],
-	   	pager: '#pager2',
-	   	sortname: 'firstName',
-	    viewrecords: true,
-	    sortorder: "desc",
-	    loadonce: true,
-	    caption: "Trainee List",
-	    height: 200,
-	    width: 750,
-	    onSelectRow: function(rowId){
-	    	
-	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
-	    	var transType='${transactionTypeEnum}';
-	    	var locationId=${locationId};
-	    	loadOpenTrans(traineeId,transType,locationId);
-	       	
-	    },
-	    jsonReader : {
-	          root: "rows",
-	          page: "page",
-	          total: "total",
-	          records: "records",
-	          repeatitems: false,
-	          cell: "cell",
-	          id: "id"
-	      }
-	});
+	  
+	  
+	  <c:choose>
+	  	<c:when test='${transactionTypeEnum.staffTransaction}'>
+		  	jQuery("#list2").jqGrid({
+	    	   	url:'${pageContext.request.contextPath}/common/list-active-staff.form',
+	    		datatype: "json",
+	    	   	colNames:['Id','First Name', 'Last Name', 'Middle Name', 'Division', 'Extension'],
+	    	   	colModel:[
+	    			{name:'staffId',index:'staffId', align:'center', width:200},
+	    	   		{name:'firstName',index:'firstName', align:'center', width:200},
+	    	   		{name:'lastName',index:'lastName', align:'center', width:200},
+	    	   		{name:'middleName',index:'middleName', align:'center', width:200},
+	    	   		{name:'division',index:'classNumber', align:'center'},
+	    	   		{name:'extension',index:'extension', align:'center',width:90},
+	    	   	],
+	    	   	rowNum:10,
+	    	   	rowList:[10,20,30],
+	    	   	pager: '#pager2',
+	    	   	sortname: 'firstName',
+	    	    viewrecords: true,
+	    	    sortorder: "desc",
+	    	    loadonce: true,
+	    	    caption: "Staff List",
+	    	    ignoreCase:true,
+	    	    height: 125,
+	    	    width: 750,
+	    	    onSelectRow: function(rowId){
+			    	
+			    	var traineeStaffId = jQuery("#list2").jqGrid('getCell',rowId,0);
+			    	var transType='${transactionTypeEnum}';
+			    	var locationId=${locationId};
+			    	loadOpenTrans(traineeStaffId,transType,locationId);
+			       	
+			    },
+	    	    jsonReader : {
+	    	          root: "rows",
+	    	          page: "page",
+	    	          total: "total",
+	    	          records: "records",
+	    	          repeatitems: false,
+	    	          cell: "cell",
+	    	          id: "id"
+	    	      }
+	    	});
+	  	</c:when>
+	    <c:otherwise>
+	    jQuery("#list2").jqGrid({
+		   	url:'${pageContext.request.contextPath}/common/list-active-trainees.form',
+			datatype: "json",
+		   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
+		   	colModel:[
+				{name:'traineeId',index:'traineeId', align:'center', width:200},
+		   		{name:'firstName',index:'firstName', align:'center', width:200},
+		   		{name:'lastName',index:'lastName', align:'center', width:200},
+		   		{name:'middleName',index:'middleName', align:'center', width:200},
+		   		{name:'classNumber',index:'classNumber', align:'center', width:200}
+		   	],
+		   	rowNum:10,
+		   	rowList:[10,20,30],
+		   	pager: '#pager2',
+		   	sortname: 'firstName',
+		    viewrecords: true,
+		    sortorder: "desc",
+		    loadonce: true,
+		    caption: "Trainee List",
+		    height: 200,
+		    width: 750,
+		    onSelectRow: function(rowId){
+		    	
+		    	var traineeStaffId = jQuery("#list2").jqGrid('getCell',rowId,0);
+		    	var transType='${transactionTypeEnum}';
+		    	var locationId=${locationId};
+		    	loadOpenTrans(traineeStaffId,transType,locationId);
+		       	
+		    },
+		    jsonReader : {
+		          root: "rows",
+		          page: "page",
+		          total: "total",
+		          records: "records",
+		          repeatitems: false,
+		          cell: "cell",
+		          id: "id"
+		      }
+		});
+	    </c:otherwise>
+		</c:choose>
+	  
+	  
 	
 	$('.form-button').hover(
 			function(){ 
