@@ -1,5 +1,6 @@
 package com.smartworks.invtmgmt.web.ui.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,15 +79,14 @@ public class ItemIssueFormController {
 		issueSkuForm.setLocationName(location.getLocationName());
 		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
 		issueSkuForm.setTransactionType(transactionTypeEnum);		
-		issueSkuForm.setItems(items);
-		
+		issueSkuForm.setItems(items);		
 		ModelAndView mav = new ModelAndView("transaction/issueSku");
 		mav.addObject("issueSkuForm", issueSkuForm);
 		return mav;
 	}
 	
 	@RequestMapping(value="/issue.form", method=RequestMethod.POST)
-	public ModelAndView handle(HttpServletRequest request, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) {
+	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) throws IOException {
 		
 		logger.info("process Incevntory change");
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
@@ -96,6 +96,9 @@ public class ItemIssueFormController {
 			invtTransMgr.processInventoryChange(transDetailsHolder);
 		} catch(InventoryAllocationException iae) {
 			ex = iae;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+			return null;
+			
 		}		
 		
 		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
@@ -103,11 +106,6 @@ public class ItemIssueFormController {
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/issueSku");
 		mav.addObject("issueSkuForm", issueSkuForm);
-		if(ex != null) {
-			mav.addObject("exception", ex);
-		} else {
-			mav.addObject("success", "success");
-		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	}
@@ -186,7 +184,7 @@ public class ItemIssueFormController {
 	
 	@RequestMapping(value="/receive.form", method=RequestMethod.POST)
 	public ModelAndView receiveInventory(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) {		
+			@ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) throws IOException {		
 		
 		logger.info("process Incevntory change");
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
@@ -196,6 +194,8 @@ public class ItemIssueFormController {
 			invtTransMgr.processInventoryChange(transDetailsHolder);
 		} catch(InventoryAllocationException iae) {
 			ex = iae;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+			return null;
 		}		
 		
 		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
@@ -203,11 +203,6 @@ public class ItemIssueFormController {
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/issueSku");
 		mav.addObject("issueSkuForm", issueSkuForm);
-		if(ex != null) {
-			mav.addObject("exception", ex);
-		} else {
-			mav.addObject("success", "success");
-		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	
@@ -249,7 +244,7 @@ public class ItemIssueFormController {
 	
 	@RequestMapping(value="/receive-laundry.form", method=RequestMethod.POST)
 	public ModelAndView receiveInventoryFromLaundry(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) {
+			@ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) throws IOException {
 		
 		logger.info("process Incevntory change");
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
@@ -259,6 +254,8 @@ public class ItemIssueFormController {
 			invtTransMgr.processInventoryChange(transDetailsHolder);
 		} catch(InventoryAllocationException iae) {
 			ex = iae;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+			return null;
 		}		
 		
 		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
@@ -266,11 +263,6 @@ public class ItemIssueFormController {
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/receive-from-laundry");
 		mav.addObject("issueSkuForm", issueSkuForm);
-		if(ex != null) {
-			mav.addObject("exception", ex);
-		} else {
-			mav.addObject("success", "success");
-		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	

@@ -1,5 +1,6 @@
 package com.smartworks.invtmgmt.web.ui.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -102,7 +103,7 @@ public class InboundFormController {
 	}
 	@RequestMapping(value="/transfer.form", method=RequestMethod.POST)
 	public ModelAndView transferSKU(HttpServletRequest request,
-			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
+			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) throws IOException 
 	{
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
 		transDetailsHolder.setSrcLocationId(4);
@@ -111,6 +112,8 @@ public class InboundFormController {
 			invtTransMgr.processInventoryChange(transDetailsHolder);
 		} catch(InventoryAllocationException iae) {
 			ex = iae;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+			return null;
 		}		
 		
 		List<Item> items =   itemMgr.getAllItems();
@@ -119,11 +122,6 @@ public class InboundFormController {
 		List<Location> listLocations = locDao.loadAll();
 		mav.addObject("locationList", listLocations);
 		mav.addObject("issueSkuForm", issueSkuForm);
-		if(ex != null) {
-			mav.addObject("exception", ex);
-		} else {
-			mav.addObject("success", "success");
-		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 	}
@@ -131,7 +129,7 @@ public class InboundFormController {
 	
 	@RequestMapping(value="/transferToMW.form", method=RequestMethod.POST)
 	public ModelAndView transferToMW(HttpServletRequest request,
-			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
+			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) throws IOException 
 	{
 		
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
@@ -142,6 +140,8 @@ public class InboundFormController {
 			invtTransMgr.processInventoryChange(transDetailsHolder);
 		} catch (InventoryAllocationException iae) {
 			ex = iae;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+			return null;
 		}
 				
 		List<Item> items =   itemMgr.getAllItems();
@@ -150,11 +150,6 @@ public class InboundFormController {
 		mav.addObject("issueSkuForm", issueSkuForm);
 		List<Location> listLocations = locDao.loadAll();
 		mav.addObject("locationList", listLocations);
-		if(ex != null) {
-			mav.addObject("exception", ex);
-		} else {
-			mav.addObject("success", "success");
-		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 
@@ -163,17 +158,17 @@ public class InboundFormController {
 	
 	@RequestMapping(value="/receive.form",method=RequestMethod.POST)
 	public ModelAndView receiveInventory(HttpServletRequest request,
-			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
+			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) throws IOException 
 	{
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
 		transDetailsHolder.setSrcLocationId(-1);
 		transDetailsHolder.setLocationId(4);
-		
 		InventoryAllocationException ex = null;
 		try {
 			invtTransMgr.processInventoryChange(transDetailsHolder);
 		} catch (InventoryAllocationException iae) {
 			ex = iae;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
 		}		
 		
 		List<Item> items =   itemMgr.getAllItems();
@@ -192,7 +187,7 @@ public class InboundFormController {
 
 	@RequestMapping(value="/outbound.form",method=RequestMethod.POST)
 	public ModelAndView outboundInventory(HttpServletRequest request,
-			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) 
+			HttpServletResponse response, @ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) throws IOException 
 	{
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
 		transDetailsHolder.setSrcLocationId(4);
@@ -202,6 +197,7 @@ public class InboundFormController {
 			invtTransMgr.processInventoryChange(transDetailsHolder);
 		} catch (InventoryAllocationException iae) {
 			ex = iae;
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
 		}		
 		List<Item> items =   itemMgr.getAllItems();
 		issueSkuForm.setItems(items);

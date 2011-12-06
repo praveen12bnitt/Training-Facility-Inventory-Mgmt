@@ -18,8 +18,13 @@
 <script src='<c:url value="/js/jquery.json-2.3.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/jquery.dropdown.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/invt-common.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
+	
+	$('#tran-result-error-div').hide();
+	$('#tran-result-success-div').hide();
+	
 	$('.form-button').hover(
 			function(){ 
 				$(this).addClass("ui-state-hover"); 
@@ -116,7 +121,7 @@ $(document).ready(function($) {
 		});	    
     </c:otherwise>
 	</c:choose>
-	jQuery("#list2").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
+	$("#list2").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
 	
 	$("#kitName").autocomplete({
         source: function(request, response) {
@@ -151,21 +156,36 @@ $(document).ready(function($) {
         }
    });
 	
-// 	$('#item-add-btn').click(function(){
-// 		var prdId =$('input[name="selectedProductId"]').val();
-// 		jQuery.ajax({
-//             url : '${pageContext.request.contextPath}/inventory/loadProductItems.form',
-//             dataType : 'json',
-//             data : {
-//                 productId : prdId
-//             },
-//             success : processProductItemResponse
-//      })
-//  	}
-// 	);
-
+	$("#itemName").autocomplete({
+        source: function(request, response) {
+         jQuery.ajax({
+                   url : '${pageContext.request.contextPath}/itemlookup/name.form',
+                   dataType : 'json',
+                   data : {
+                       name : request.term
+                   },
+                   success : function(data) {
+                       response(jQuery.map(data, function(item) {
+                            return {
+                               label: item,
+                               value: item
+                            }
+                       }))
+                   }
+            })
+        },
+        minLength : 2,
+        open: function() {          	
+        	jQuery(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+        },
+        
+        close: function() {
+           jQuery(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+        }
+  });
 	
-	$('#item-add-btn').click(function(){
+	
+	$('#kit-add-btn').click(function(){
 		var prdId =$('input[name="selectedProductId"]').val();
 		jQuery.ajax({
         url : '${pageContext.request.contextPath}/inventory/loadProductItems.form',
@@ -177,9 +197,37 @@ $(document).ready(function($) {
  		})
 		}
 	);
+	
+	 $('#item-add-btn').click(function(){
+			var addBtn = $(this);
+			var itemName = addBtn.prev().val();	
+			var rowCount = $('#tblTransactionForm >tbody >tr').length;
+			addItem('${pageContext.request.contextPath}',itemName,rowCount);
+		 }); 
 
+	 
 	
-	
+	$('#submit-form').click(function(){	 
+		$('#tran-result-error-div').hide();
+		$('#tran-result-success-div').hide();
+		var formData =  $('#issueSkuForm').serialize();	 
+		 $.ajax({
+			    type: "POST",
+			    url: "${pageContext.request.contextPath}/inventory/issue.form",
+			    data: formData,
+			    success: function() {
+			    	$('#tran-success').html("Transaction Successfull");
+			    	$('#tran-result-success-div').show();
+			    	$('#issueSkuForm')[0].reset();
+			    },
+			    error: function(xhr, status, error) {
+			    	var x = xhr.responseText;
+			    	var msg = $.trim(x);
+			    	$('#tran-error').html(msg);
+			    	$('#tran-result-error-div').show();
+			    }
+			  });		
+	 }); 
 	
 	});
 	
@@ -187,34 +235,7 @@ $(document).ready(function($) {
 		$('#tblTransactionForm >tbody').append(data);
 	}
 	
-// 	function processProductItemResponse(data) {
-// 		var currentLength = $('#tblTransactionForm >tbody >tr').size();
-// 		jQuery(data).each(function(index,itemData) {
-			
-// 			var innerHtml = $("#itemRowTemplate").html();
-// 			innerHtml = innerHtml.replace("itemId", itemData.id); 
-// 			innerHtml = innerHtml.replace("itemDesc", itemData.name); 
-			
-// 			alert(innerHtml);
-// 			jQuery(itemData.attributeDetails).each(function(idx, attributeDetailData) {
-// 				$.map(attributeDetailData, function(value,key) {
-// 					var jsonAttributes = $.parseJSON(key);
-					
-// 					var selAttribute = document.createElement("select");
-// 					$(selAttribute).attr("name", "itemSkus["+(index+currentLength)+"]");
-					
-// 					$(value).each(function(idx, attributeValData) {
-						
-// 						$("<option>").attr("value", attributeValData.attributeValueId).text(attributeValData.attributeValue).appendTo(selAttribute);
-						
-// 					});
-// 					alert(selAttribute.name);
-// 					$('#selectTemplateDiv').append(selAttribute);
-					
-// 				});
-// 			});
-// 		});
-// 	}
+
 
 </script>
 </head>
@@ -294,6 +315,13 @@ $(document).ready(function($) {
 			<label class="ui-widget">
         		<span> Kit Name: </span>
         		<input type="text" id="kitName" name="kitName" size="70"  />   
+        		<a id="kit-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
+			</label>
+			<br/>
+			<br/>
+			<label class="ui-widget">
+        		<span> Item Name: </span>
+        		<input type="text" id="itemName" name="itemName" size="70" />   
         		<a id="item-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
 			</label>
 		</div>
@@ -335,7 +363,7 @@ $(document).ready(function($) {
 			</tbody>
 			</table>
 			<div id="actions" align="center" class="actions">
-					<button type="submit" class="ui-state-default ui-corner-all form-button">Issue</button>
+					<a id="submit-form" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Issue</a> 
 				</div>			
 		</div>	
 	

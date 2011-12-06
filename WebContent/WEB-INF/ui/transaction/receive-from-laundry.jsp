@@ -31,7 +31,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	$('#tran-result-error-div').hide();
+	$('#tran-result-success-div').hide();
 	$('.form-button').hover(
 			function(){ 
 				$(this).addClass("ui-state-hover"); 
@@ -76,6 +77,29 @@ $(document).ready(function() {
 	var rowCount = $('#tblTransactionForm >tbody >tr').length;
 	addItem('${pageContext.request.contextPath}',itemName,rowCount);
  }); 
+ 
+ $('#submit-form').click(function(){	 
+		$('#tran-result-error-div').hide();
+		$('#tran-result-success-div').hide();
+		var formData =  $('#issueSkuForm').serialize();	 
+		 $.ajax({
+			    type: "POST",
+			    url: "${pageContext.request.contextPath}/inventory/receive-laundry.form",
+			    data: formData,
+			    success: function() {
+			    	$('#tran-success').html("Transaction Successfull");
+			    	$('#tran-result-success-div').show();
+			    	$('#issueSkuForm')[0].reset();
+			    },
+			    error: function(xhr, status, error) {
+			    	var x = xhr.responseText;
+			    	var msg = $.trim(x);
+			    	$('#tran-error').html(msg);
+			    	$('#tran-result-error-div').show();
+			    }
+			  });		
+	 }); 
+ 
 	
 });
 </script>
@@ -162,7 +186,7 @@ $(document).ready(function() {
 			</tbody>
 			</table>
 			<div id="actions" align="center" class="actions">
-				<button type="submit" class="ui-state-default ui-corner-all form-button">Receive</button>		
+				<a id="submit-form" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Receive</a> 	
 			</div>			
 			</div>		
 	</div>
