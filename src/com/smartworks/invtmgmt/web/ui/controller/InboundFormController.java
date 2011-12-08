@@ -11,20 +11,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
+import com.smartworks.invtmgmt.converter.InventoryConverter;
 import com.smartworks.invtmgmt.converter.UIDomainConverter;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
+import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.exception.InventoryAllocationException;
+import com.smartworks.invtmgmt.core.manager.InventoryManager;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 import com.smartworks.invtmgmt.web.ui.form.IssueSkuForm;
-
+import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 
 @Controller
 @RequestMapping("/inbound")
@@ -32,6 +36,10 @@ public class InboundFormController {
 	
 	@Autowired
 	ItemMgr itemMgr = null;
+	@Autowired
+	InventoryManager invMgr = null;
+	@Autowired
+	InventoryConverter inventoryConverter;
 	@Autowired
 	TransactionTypeDao transactionTypeDao = null;
 	@Autowired
@@ -51,7 +59,7 @@ public class InboundFormController {
         ModelAndView mav = new ModelAndView("transaction/InvMovement");
         mav.addObject("issueSkuForm", issueSkuForm);
         
-		List<Location> listLocations = locDao.loadAll();
+		List<Location> listLocations = locDao.loadSecondaryLocations();
 		mav.addObject("locationList", listLocations);
 		return mav;
 	}
@@ -72,19 +80,21 @@ public class InboundFormController {
 		return mav;
 	}
 	@RequestMapping(value="/transferToMW.form", method=RequestMethod.GET)
-	public ModelAndView displayInventoryToMW(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView displayInventoryToMW(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam int locationId) {
 		List<Item> items = itemMgr.getAllItems();
-		
-		IssueSkuForm issueSkuForm = new IssueSkuForm();		
-		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
+		Location location = locDao.load(locationId);
+		IssueSkuForm issueSkuForm = new IssueSkuForm();
+		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
 		issueSkuForm.setItems(items);
-				
-        ModelAndView mav = new ModelAndView("transaction/InvTransferToMW");
-        mav.addObject("issueSkuForm", issueSkuForm);
-        List<Location> listLocations = locDao.loadAll();
-		mav.addObject("locationList", listLocations);
-        
+		issueSkuForm.setLocationId(locationId);
+		issueSkuForm.setLocationName(location.getLocationName());
+
+		ModelAndView mav = new ModelAndView("transaction/InvTransferToMW");
+		mav.addObject("issueSkuForm", issueSkuForm);
+
 		return mav;
+
 	}	
 	
 	
@@ -119,7 +129,7 @@ public class InboundFormController {
 		List<Item> items =   itemMgr.getAllItems();
 		issueSkuForm.setItems(items);
 		ModelAndView mav = new ModelAndView("transaction/InvMovement");
-		List<Location> listLocations = locDao.loadAll();
+		List<Location> listLocations = locDao.loadSecondaryLocations();
 		mav.addObject("locationList", listLocations);
 		mav.addObject("issueSkuForm", issueSkuForm);
 		mav.addObject("transactionFormMessage","Issued Successfully");
@@ -144,12 +154,18 @@ public class InboundFormController {
 			return null;
 		}
 				
+		Location location = locDao.load(issueSkuForm.getLocationId());
 		List<Item> items =   itemMgr.getAllItems();
 		issueSkuForm.setItems(items);
+		issueSkuForm.setLocationName(location.getLocationName());
 		ModelAndView mav = new ModelAndView("transaction/InvTransferToMW");
 		mav.addObject("issueSkuForm", issueSkuForm);
-		List<Location> listLocations = locDao.loadAll();
-		mav.addObject("locationList", listLocations);
+		
+		if(ex != null) {
+			mav.addObject("exception", ex);
+		} else {
+			mav.addObject("success", "success");
+		}
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 
