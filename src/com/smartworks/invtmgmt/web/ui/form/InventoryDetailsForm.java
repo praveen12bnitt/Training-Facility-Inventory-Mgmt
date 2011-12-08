@@ -10,7 +10,7 @@ import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 import com.smartworks.invtmgmt.core.util.ItemSkuElementFactory;
-import com.smartworks.invtmgmt.core.transaction.ReasonCodeEnum;
+//import com.smartworks.invtmgmt.core.transaction.ReasonCodeEnum;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 public class InventoryDetailsForm {
 
