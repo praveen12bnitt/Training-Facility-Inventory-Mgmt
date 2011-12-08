@@ -31,7 +31,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	$('#tran-result-error-div').hide();
+	$('#tran-result-success-div').hide();
 	$('.form-button').hover(
 			function(){ 
 				$(this).addClass("ui-state-hover"); 
@@ -85,11 +86,15 @@ $(document).ready(function() {
 		    url: "${pageContext.request.contextPath}/inbound/receive.form",
 		    data: formData,
 		    success: function() {
-		     alert("Success");
+		    	$('#tran-success').html("Transaction Successfull");
+		    	$('#tran-result-success-div').show();
+		    	$('#issueSkuForm')[0].reset();
 		    },
 		    error: function(xhr, status, error) {
 		    	var x = xhr.responseText;
-		    	alert($.trim(x));
+		    	var msg = $.trim(x);
+		    	$('#tran-error').html(msg);
+		    	$('#tran-result-error-div').show();
 		    }
 		  });		
  }); 

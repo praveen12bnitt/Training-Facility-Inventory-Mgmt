@@ -17,9 +17,9 @@
 				<li>
 					<a href="#">Uniform</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Student Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Trainee Issue</a></li>
 						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&locationId=2" />'>Staff Issue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Student Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Trainee Return</a></li>
 						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Staff Return</a></li>
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=2" />'>Receive From Laundry</a></li>
 					</ul>
@@ -29,9 +29,9 @@
 				<li >
 					<a href="#">TEG</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&locationId=1" />'>Student Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&locationId=1" />'>Trainee Issue</a></li>
 						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_EQUIPMENT_STAFF&locationId=1" />'>Staff Issue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&userId=100&locationId=1" />'>Student Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&userId=100&locationId=1" />'>Trainee Return</a></li>
 						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_EQUIPMENT_STAFF&userId=100&locationId=1" />'>Staff Return</a></li>
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=1" />'>Receive From Laundry</a></li>
 					</ul>
@@ -41,9 +41,9 @@
 				<li >
 					<a href="#">Gym</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_GYM_STUDENT&locationId=3" />'>Student Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_GYM_STUDENT&locationId=3" />'>Trainee Issue</a></li>
 						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_GYM_STAFF&locationId=3" />'>Staff Issue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_GYM_STUDENT&userId=100&locationId=3" />'>Student Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_GYM_STUDENT&userId=100&locationId=3" />'>Trainee Return</a></li>
 						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_GYM_STAFF&userId=100&locationId=3" />'>Staff Return</a></li>
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=3" />'>Receive From Laundry</a></li>
 					</ul>
