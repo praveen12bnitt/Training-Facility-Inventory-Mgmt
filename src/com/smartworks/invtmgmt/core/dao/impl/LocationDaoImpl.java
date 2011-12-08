@@ -24,7 +24,7 @@ public class LocationDaoImpl extends HibernateDaoSupport implements LocationDao 
 	//SELECT * FROM `invtmgmt`.`location` where location_name NOT LIKE 'Main Warehouse' ;
 	
 	public List<Location> loadSecondaryLocations() {	
-		String query = "from Location where LOCATION_NAME NOT LIKE 'Main Warehouse' order by LOCATION_NAME" ;
+		String query = "from Location where (LOCATION_NAME NOT LIKE 'Main Warehouse' AND LOCATION_NAME NOT LIKE 'Laundry' AND LOCATION_NAME NOT LIKE 'External Location') order by LOCATION_NAME" ;
 		List<Location> locations = getHibernateTemplate().find(query);
 		return locations;
 	}

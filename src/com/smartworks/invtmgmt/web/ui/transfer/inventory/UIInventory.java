@@ -8,7 +8,15 @@ public class UIInventory {
 	Integer availableQty;
 	Integer issuedQty;
 	Integer unusableQty;
+	String skuCode;	
+	Integer locationId;
 	
+	public String getSkuCode() {
+		return skuCode;
+	}
+	public void setSkuCode(String skuCode) {
+		this.skuCode = skuCode;
+	}
 	public Integer getItemId() {
 		return itemId;
 	}
@@ -52,7 +60,15 @@ public class UIInventory {
 	public void setUnusableQty(Integer unusableQty) {
 		this.unusableQty = unusableQty;
 	}
-	
+	public Integer getLocationId() {
+		return locationId;
+	}
+
+
+
+	public void setLocationId(Integer locationId) {
+		this.locationId = locationId;
+	}
 	
 	
 }

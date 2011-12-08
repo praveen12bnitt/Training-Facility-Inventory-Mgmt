@@ -73,6 +73,8 @@ $(document).ready(function($) {
 <body class="body-class" >	
 <form:form method="post" commandName="issueSkuForm">
 <form:hidden path="transactionType" />
+<form:hidden path="locationId" />
+
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
@@ -91,14 +93,9 @@ $(document).ready(function($) {
 			<tr>
 					<td>From Location</td>
 					<td>
-					<form:select path="locationId">
-								<c:forEach items="${locationList}" var="location">
-									<form:option value="${location.locationId}">
-     										${location.locationName}
-     								</form:option>
-     						</c:forEach>
-     					</form:select>
-					</td>
+				
+											${issueSkuForm.locationName}
+     				</td>
 				</tr>	
 				
 				<tr>
