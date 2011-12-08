@@ -34,7 +34,7 @@ public class Item implements Serializable {
 	@Column(name="ITEM_ID")
 	private Integer id;
 	
-	@Column(name="NAME", length=50)
+	@Column(name="NAME", length=100)
 	private String name;
 	
 	@Type(type="yes_no")
