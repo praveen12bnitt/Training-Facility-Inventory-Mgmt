@@ -217,6 +217,10 @@ $(document).ready(function($) {
 		 $(location).attr('href','${pageContext.request.contextPath}/common/add-staff.form');		 
 	}); 
 	 
+	 $('#create-kit').click(function(){
+		 $(location).attr('href','${pageContext.request.contextPath}/common/createproduct.form');		 
+	});
+	 
 	var responseReceived = true;
 	
 	$('#submit-form').click(function(){	 
@@ -352,7 +356,8 @@ $(document).ready(function($) {
 			<label class="ui-widget">
         		<span> Kit Name &nbsp;&nbsp;</span>
         		<input type="text" id="kitName" name="kitName" size="70"  />   
-        		<a id="kit-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
+        		<a id="kit-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>   
+        		<a id="create-kit" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Kit</a>                             
 			</label>
 			<br/>
 			<br/>
