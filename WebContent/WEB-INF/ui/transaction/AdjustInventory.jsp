@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Adjust Inventory</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
@@ -20,7 +20,8 @@
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
-	
+	$('#tran-result-error-div').hide();
+	$('#tran-result-success-div').hide();
 	jQuery("#list3").jqGrid({
 	   	url:'${pageContext.request.contextPath}/Inventory/getAllInventory.form',
 		datatype: "json",
@@ -42,7 +43,7 @@ $(document).ready(function($) {
 	    sortorder: "desc",
 	    loadonce: true,
 	    caption: "Available Inventory Details",
-	    height: 500,
+	    height: 'auto',
 	    width: 1050,
 	    onSelectRow: function(rowId){	    	
 	    	var rowData = jQuery("#list3").jqGrid('getGridParam','selrow');
@@ -84,7 +85,8 @@ $(document).ready(function($) {
 	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
 		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
 			<table id="list3" class="trans-details"></table>
-			
+			<br/>
+			<br/>
 			<table id="transDetails" class="ui-widget item-table trans-details">				
 			<tbody class="ui-widget-content trans-details" >
 				<tr>

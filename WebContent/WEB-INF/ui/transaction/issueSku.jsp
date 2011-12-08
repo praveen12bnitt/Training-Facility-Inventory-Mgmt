@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Issue</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
@@ -204,29 +204,47 @@ $(document).ready(function($) {
 			var rowCount = $('#tblTransactionForm >tbody >tr').length;
 			addItem('${pageContext.request.contextPath}',itemName,rowCount);
 		 }); 
-
 	 
+	 $('#create-trainee').click(function(){
+		 $(location).attr('href','${pageContext.request.contextPath}/common/add-trainee.form');		 
+	}); 
+	 
+	 $('#create-staff').click(function(){
+		 $(location).attr('href','${pageContext.request.contextPath}/common/add-staff.form');		 
+	}); 
+	 
+	var responseReceived = true;
 	
 	$('#submit-form').click(function(){	 
-		$('#tran-result-error-div').hide();
-		$('#tran-result-success-div').hide();
-		var formData =  $('#issueSkuForm').serialize();	 
-		 $.ajax({
-			    type: "POST",
-			    url: "${pageContext.request.contextPath}/inventory/issue.form",
-			    data: formData,
-			    success: function() {
-			    	$('#tran-success').html("Transaction Successfull");
-			    	$('#tran-result-success-div').show();
-			    	$('#issueSkuForm')[0].reset();
-			    },
-			    error: function(xhr, status, error) {
-			    	var x = xhr.responseText;
-			    	var msg = $.trim(x);
-			    	$('#tran-error').html(msg);
-			    	$('#tran-result-error-div').show();
-			    }
-			  });		
+		if(responseReceived) {
+			$('#tran-result-error-div').hide();
+			$('#tran-result-success-div').hide();
+			var formData =  $('#issueSkuForm').serialize();	 
+			 $.ajax({
+				    type: "POST",
+				    url: "${pageContext.request.contextPath}/inventory/issue.form",
+				    data: formData,
+				    beforeSend: function() {
+				    	responseReceived = false;		            
+			        },
+			        complete: function() {
+			        	responseReceived = true;
+			        },
+				    success: function() {
+				    	$('#tran-success').html("Transaction Successfull");
+				    	$('#tran-result-success-div').show();
+				    	$('#issueSkuForm')[0].reset();
+				    },
+				    error: function(xhr, status, error) {
+				    	var x = xhr.responseText;
+				    	var msg = $.trim(x);
+				    	$('#tran-error').html(msg);
+				    	$('#tran-result-error-div').show();
+				    }
+				  });
+		} else {
+			alert("Processing previous request. Please wait");
+		}				
 	 }); 
 	
 	});
@@ -266,9 +284,24 @@ $(document).ready(function($) {
 		<div id="heading12" class="ui-widget-header">Transaction Details</div>
 		
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		
+		<div id="create-trainee-div">
+			<c:choose>
+    			<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+    			<a id="create-staff" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Staff</a>
+    			</c:when>
+		    	 <c:otherwise>
+		    	 	<a id="create-trainee" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Trainee</a>
+		    	 </c:otherwise>
+   			 </c:choose>
+		</div>
+		
+		<br/>    
 		<table id="list2" class="trans-details"></table>
 			<div id="pager2"></div>
 		</div>
+		
+		  
 		
 		<div id="header-contents" class="ui-widget-content" align="left" style="padding: 10px;">
 		

@@ -20,6 +20,10 @@ public class InventoryAllocationException extends RuntimeException {
 		this.location = location;
 	}
 	
+	public InventoryAllocationException(String msg) {
+		super(msg);
+	}
+	
 	protected String getItemSkuAsStr() {
 		return itemSkuConverter.getItemSkuAsStr(skuCode);
 	}

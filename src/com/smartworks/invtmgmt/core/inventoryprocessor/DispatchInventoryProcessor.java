@@ -6,17 +6,20 @@ import com.smartworks.invtmgmt.core.dao.InventoryDao;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
+import com.smartworks.invtmgmt.core.exception.NoItemsForTransactionException;
 
 public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 	
 	public void process(TransactionDetailsHolder transDetails) {
 		// First reduce the inventory 				
+		boolean hasInventory = false;
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
 			
 			if(itemSku.getQuantity() == null || itemSku.getQuantity() < 0) {
 				continue;
 			}
-			
+						
+			hasInventory = true;			
 			InventoryPk inventoryPk = new InventoryPk();
 			Location loc = new Location(transDetails.getLocationId());
 			inventoryPk.setLocation(loc);
@@ -25,6 +28,10 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 			inventoryDao.reduceAvailableInventory(inventoryPk, itemSku.getQuantity());
 			inventoryDao.addIssuedInventory(inventoryPk, itemSku.getQuantity());
 			
+		}
+		
+		if(!hasInventory) {
+			throw new NoItemsForTransactionException("No items to issue");
 		}
 		
 		TransactionTrace transTrace = transactionTraceObjectConverter.getTransactionTrace(transDetails);

@@ -41,15 +41,23 @@ $(document).ready(function($) {
 				$(this).removeClass("ui-state-hover"); 
 			}
 		);
+	var responseReceived = true;
 	
 	$('#submit-form').click(function(){	 
 		$('#tran-result-error-div').hide();
 		$('#tran-result-success-div').hide();
 		var formData =  $('#issueSkuForm').serialize();	 
-		 $.ajax({
+		if(responseReceived) {
+			$.ajax({
 			    type: "POST",
 			    url: "${pageContext.request.contextPath}/inbound/transferToMW.form",
 			    data: formData,
+			    beforeSend: function() {
+			    	responseReceived = false;		            
+		        },
+		        complete: function() {
+		        	responseReceived = true;
+		        },
 			    success: function() {
 			    	$('#tran-success').html("Transaction Successfull");
 			    	$('#tran-result-success-div').show();
@@ -61,7 +69,11 @@ $(document).ready(function($) {
 			    	$('#tran-error').html(msg);
 			    	$('#tran-result-error-div').show();
 			    }
-			  });		
+			  });	
+		} else {
+			alert("Processing previous request. Please wait");
+		}
+		 	
 	 }); 
 	
 	});

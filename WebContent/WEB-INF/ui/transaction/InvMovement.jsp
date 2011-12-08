@@ -38,14 +38,24 @@ $(document).ready(function($) {
 			}
 		);
 	
+	var responseReceived = true;
+	
+	
 	$('#submit-form').click(function(){	 
 		$('#tran-result-error-div').hide();
 		$('#tran-result-success-div').hide();
-		var formData =  $('#issueSkuForm').serialize();	 
-		 $.ajax({
+		var formData =  $('#issueSkuForm').serialize();
+		if(responseReceived) {
+			$.ajax({
 			    type: "POST",
 			    url: "${pageContext.request.contextPath}/inbound/transfer.form",
 			    data: formData,
+			    beforeSend: function() {
+			    	responseReceived = false;		            
+		        },
+		        complete: function() {
+		        	responseReceived = true;
+		        },
 			    success: function() {
 			    	$('#tran-success').html("Transaction Successfull");
 			    	$('#tran-result-success-div').show();
@@ -57,7 +67,11 @@ $(document).ready(function($) {
 			    	$('#tran-error').html(msg+"<br/>");
 			    	$('#tran-result-error-div').show();
 			    }
-			  });		
+			  });
+		} else {
+			alert("Processing previous request. Please wait");
+		}
+		 		
 	 }); 
 	
 	});
