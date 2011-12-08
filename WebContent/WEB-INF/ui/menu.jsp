@@ -1,14 +1,13 @@
 			<ul class="dropdown">
 				<li >
-					<a href="#">Home</a>
-				</li>
-				<li >
 					<a href="#">Warehouse</a>
 					<ul class="sub_menu">						
-						<li><a href='<c:url value="/inbound/receive.form"/>'>Receive</a></li>						
-						<li><a href='<c:url value="/inbound/outbound.form"/>'>Outbound</a></li>
+						<li><a href='<c:url value="/inbound/receive.form"/>'>Receive Inventory from Vendor</a></li>						
+						<li><a href='<c:url value="/inbound/outbound.form"/>'>Move Inventory to Vendor</a></li>
 						<li><a href='<c:url value="/inbound/transfer.form"/>'>Transfer Inventory</a></li>
-						<li><a href='<c:url value="/inbound/transferToMW.form" />'>Transfer to WM</a></li>
+			
+						<li><a href='<c:url value="/Inventory/AdjustInventory.form" />'>Adjust Inventory</a></li>
+						
 					</ul>
 				</li>
 				<li >
@@ -19,6 +18,8 @@
 						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Student Return</a></li>
 						<li><a href='#'>Staff Return</a></li>
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=2" />'>Receive From Laundry</a></li>
+						<li><a href='<c:url value="/inbound/transferToMW.form?locationId=2" />'>Transfer to Main Warehouse</a></li>
+						
 					</ul>
 				</li>
 				<li >
