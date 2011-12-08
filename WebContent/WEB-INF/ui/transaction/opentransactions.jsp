@@ -45,6 +45,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	    onSelectRow: function(rowId){	    	
 	    	var rowData = $("#list3").jqGrid('getGridParam','selrow');
 	    	var transactionId = $("#list3").jqGrid('getCell',rowId,0);
+	    	transactionId = transactionId.substring(transactionId.indexOf('>')+1, transactionId.lastIndexOf('<'));
 	    	if(rowData){
 	    		$(location).attr('href','${pageContext.request.contextPath}/inventory/receive.form?transactionId='+transactionId);	
 			}	    	
@@ -60,9 +61,12 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	          id: "id"
 	      }
 	});
-	$("#list3").setGridParam({url:'${pageContext.request.contextPath}/inventory/opentransactions.form?userId='+traineeId+'&transactionTypeEnum='+transactionType+'&locationId='+locationId}).trigger('reloadGrid');
-	
+
+	$("#list3").setGridParam({url:'${pageContext.request.contextPath}/inventory/opentransactions.form?traineeStaffId='+traineeStaffId+'&transactionTypeEnum='+transactionType+'&locationId='+locationId}).trigger('reloadGrid');
+    
   };
+  
+
 
   $(document).ready(function() {
 	  

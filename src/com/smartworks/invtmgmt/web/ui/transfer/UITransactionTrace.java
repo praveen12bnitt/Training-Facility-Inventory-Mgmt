@@ -27,7 +27,7 @@ public class UITransactionTrace {
 	public static UITransactionTrace extractFromUserTransactionTrace(TransactionTrace transactionTrace, String contextPath) {
 		UITransactionTrace uiTransactionTrace = new UITransactionTrace();
 		
-		uiTransactionTrace.setTransactionId(transactionTrace.getTrasactionId().toString());
+		uiTransactionTrace.setTransactionId("<u>"+transactionTrace.getTrasactionId().toString()+"</u>");
 	
 		LocationDao locationDao = AppContextUtil.getBean("locationDao");
 		uiTransactionTrace.setLocationName(locationDao.load(transactionTrace.getLocationId()).getLocationName());
