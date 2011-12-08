@@ -124,6 +124,12 @@ public class InvtTransMgrImpl implements InvtTransManager {
 		return transTraceList;
 	}
 	
+	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
+	public List<TransactionTrace> getOpenTransactionsForStaff(Integer locationId,Integer staffId,TransactionTypeEnum transType) {		
+		List<TransactionTrace> transTraceList =  transactionTraceDao.loadAllOpenTransStaff(locationId, staffId, transType);
+		return transTraceList;
+	}
+	
 	public TransactionDetailsHolder getTransDetails(Integer transId) {
 		TransactionTrace tranTrace = transactionTraceDao.load(transId);
 		return transactionTraceObjectConverter.getTransactionDetailsHolder(tranTrace);

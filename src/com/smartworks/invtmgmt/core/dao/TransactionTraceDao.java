@@ -11,6 +11,7 @@ public interface TransactionTraceDao {
 	public TransactionTrace load(Integer transactionTraceId);
 	public void update(TransactionTrace transTrace);
 	public List<TransactionTrace> loadAllOpenTrans(Integer locationId,Integer traineeId,TransactionTypeEnum transType);
+	public List<TransactionTrace> loadAllOpenTransStaff(Integer locationId,Integer staffId,TransactionTypeEnum transType);
 	public void markTransactionClosed(Integer transactionId);
 	
 }

@@ -39,6 +39,8 @@ public interface InvtTransManager {
 	
 	public List<TransactionTrace> getOpenTransactionsForUser(Integer locationId,Integer traineeId,TransactionTypeEnum transType);
 	
+	public List<TransactionTrace> getOpenTransactionsForStaff(Integer locationId,Integer staffId,TransactionTypeEnum transType);
+	
 	public TransactionDetailsHolder getTransDetails(Integer transId);
 	
 }

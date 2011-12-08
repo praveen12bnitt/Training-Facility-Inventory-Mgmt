@@ -18,8 +18,13 @@
 <script src='<c:url value="/js/jquery.json-2.3.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/jquery.dropdown.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/invt-common.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
+	
+	$('#tran-result-error-div').hide();
+	$('#tran-result-success-div').hide();
+	
 	$('.form-button').hover(
 			function(){ 
 				$(this).addClass("ui-state-hover"); 
@@ -29,46 +34,94 @@ $(document).ready(function($) {
 			}
 		);
 	
-	jQuery("#list2").jqGrid({
-	   	url:'${pageContext.request.contextPath}/common/listtrainees.form',
-		datatype: "json",
-	   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
-	   	colModel:[
-			{name:'traineeId',index:'traineeId', align:'center', width:200},
-	   		{name:'firstName',index:'firstName', align:'center', width:200},
-	   		{name:'lastName',index:'lastName', align:'center', width:200},
-	   		{name:'middleName',index:'middleName', align:'center', width:200},
-	   		{name:'classNumber',index:'classNumber', align:'center', width:200}
-	   	],
-	   	rowNum:10,
-	   	rowList:[10,20,30],
-	   	pager: '#pager2',
-	   	sortname: 'firstName',
-	    viewrecords: true,
-	    sortorder: "desc",
-	    loadonce: true,
-	    caption: "Trainee List",
-	    height: 125,
-	    width: 750,
-	    onSelectRow: function(rowId){	    	
-	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
-	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
-	    	if(rowData){
-				jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
-			}	    	
-	    	$('input[name="trainee.traineeId"]').val(traineeId);	  
-	    },
-	    jsonReader : {
-	          root: "rows",
-	          page: "page",
-	          total: "total",
-	          records: "records",
-	          repeatitems: false,
-	          cell: "cell",
-	          id: "id"
-	      }
-	});
-	
+	<c:choose>
+    	<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+	    	jQuery("#list2").jqGrid({
+	    	   	url:'${pageContext.request.contextPath}/common/list-active-staff.form',
+	    		datatype: "json",
+	    	   	colNames:['Id','First Name', 'Last Name', 'Middle Name', 'Division', 'Extension'],
+	    	   	colModel:[
+	    			{name:'staffId',index:'staffId', align:'center', width:200},
+	    	   		{name:'firstName',index:'firstName', align:'center', width:200},
+	    	   		{name:'lastName',index:'lastName', align:'center', width:200},
+	    	   		{name:'middleName',index:'middleName', align:'center', width:200},
+	    	   		{name:'division',index:'classNumber', align:'center'},
+	    	   		{name:'extension',index:'extension', align:'center',width:90},
+	    	   	],
+	    	   	rowNum:10,
+	    	   	rowList:[10,20,30],
+	    	   	pager: '#pager2',
+	    	   	sortname: 'firstName',
+	    	    viewrecords: true,
+	    	    sortorder: "desc",
+	    	    loadonce: true,
+	    	    caption: "Staff List",
+	    	    ignoreCase:true,
+	    	    height: 125,
+	    	    width: 750,
+	    	    onSelectRow: function(rowId){	    	
+	    	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
+	    	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
+	    	    	if(rowData){
+	    				jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
+	    			}	    	
+	    	    	$('input[name="staff.staffId"]').val(traineeId);	  
+	    	    },
+	    	    jsonReader : {
+	    	          root: "rows",
+	    	          page: "page",
+	    	          total: "total",
+	    	          records: "records",
+	    	          repeatitems: false,
+	    	          cell: "cell",
+	    	          id: "id"
+	    	      }
+	    	});
+    	</c:when>
+    <c:otherwise>
+	    jQuery("#list2").jqGrid({
+		   	url:'${pageContext.request.contextPath}/common/list-active-trainees.form',
+			datatype: "json",
+		   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name', 'Class'],
+		   	colModel:[
+				{name:'traineeId',index:'traineeId', align:'center', width:200},
+		   		{name:'firstName',index:'firstName', align:'center', width:200},
+		   		{name:'lastName',index:'lastName', align:'center', width:200},
+		   		{name:'middleName',index:'middleName', align:'center', width:200},
+		   		{name:'classNumber',index:'classNumber', align:'center', width:200}
+		   	],
+		   	rowNum:10,
+		   	rowList:[10,20,30],
+		   	pager: '#pager2',
+		   	sortname: 'firstName',
+		    viewrecords: true,
+		    sortorder: "desc",
+		    loadonce: true,
+		    caption: "Trainee List",
+		    ignoreCase:true,
+		    height: 125,
+		    width: 750,
+		    onSelectRow: function(rowId){	    	
+		    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
+		    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
+		    	if(rowData){
+					jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
+				}	    	
+		    	$('input[name="trainee.traineeId"]').val(traineeId);	  
+		    },
+		    jsonReader : {
+		          root: "rows",
+		          page: "page",
+		          total: "total",
+		          records: "records",
+		          repeatitems: false,
+		          cell: "cell",
+		          id: "id"
+		      }
+		});	    
+    </c:otherwise>
+	</c:choose>
+	$("#list2").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
 	
 	$("#kitName").autocomplete({
         source: function(request, response) {
@@ -103,21 +156,36 @@ $(document).ready(function($) {
         }
    });
 	
-// 	$('#item-add-btn').click(function(){
-// 		var prdId =$('input[name="selectedProductId"]').val();
-// 		jQuery.ajax({
-//             url : '${pageContext.request.contextPath}/inventory/loadProductItems.form',
-//             dataType : 'json',
-//             data : {
-//                 productId : prdId
-//             },
-//             success : processProductItemResponse
-//      })
-//  	}
-// 	);
-
+	$("#itemName").autocomplete({
+        source: function(request, response) {
+         jQuery.ajax({
+                   url : '${pageContext.request.contextPath}/itemlookup/name.form',
+                   dataType : 'json',
+                   data : {
+                       name : request.term
+                   },
+                   success : function(data) {
+                       response(jQuery.map(data, function(item) {
+                            return {
+                               label: item,
+                               value: item
+                            }
+                       }))
+                   }
+            })
+        },
+        minLength : 2,
+        open: function() {          	
+        	jQuery(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+        },
+        
+        close: function() {
+           jQuery(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+        }
+  });
 	
-	$('#item-add-btn').click(function(){
+	
+	$('#kit-add-btn').click(function(){
 		var prdId =$('input[name="selectedProductId"]').val();
 		jQuery.ajax({
         url : '${pageContext.request.contextPath}/inventory/loadProductItems.form',
@@ -129,9 +197,37 @@ $(document).ready(function($) {
  		})
 		}
 	);
+	
+	 $('#item-add-btn').click(function(){
+			var addBtn = $(this);
+			var itemName = addBtn.prev().val();	
+			var rowCount = $('#tblTransactionForm >tbody >tr').length;
+			addItem('${pageContext.request.contextPath}',itemName,rowCount);
+		 }); 
 
+	 
 	
-	
+	$('#submit-form').click(function(){	 
+		$('#tran-result-error-div').hide();
+		$('#tran-result-success-div').hide();
+		var formData =  $('#issueSkuForm').serialize();	 
+		 $.ajax({
+			    type: "POST",
+			    url: "${pageContext.request.contextPath}/inventory/issue.form",
+			    data: formData,
+			    success: function() {
+			    	$('#tran-success').html("Transaction Successfull");
+			    	$('#tran-result-success-div').show();
+			    	$('#issueSkuForm')[0].reset();
+			    },
+			    error: function(xhr, status, error) {
+			    	var x = xhr.responseText;
+			    	var msg = $.trim(x);
+			    	$('#tran-error').html(msg);
+			    	$('#tran-result-error-div').show();
+			    }
+			  });		
+	 }); 
 	
 	});
 	
@@ -139,34 +235,7 @@ $(document).ready(function($) {
 		$('#tblTransactionForm >tbody').append(data);
 	}
 	
-// 	function processProductItemResponse(data) {
-// 		var currentLength = $('#tblTransactionForm >tbody >tr').size();
-// 		jQuery(data).each(function(index,itemData) {
-			
-// 			var innerHtml = $("#itemRowTemplate").html();
-// 			innerHtml = innerHtml.replace("itemId", itemData.id); 
-// 			innerHtml = innerHtml.replace("itemDesc", itemData.name); 
-			
-// 			alert(innerHtml);
-// 			jQuery(itemData.attributeDetails).each(function(idx, attributeDetailData) {
-// 				$.map(attributeDetailData, function(value,key) {
-// 					var jsonAttributes = $.parseJSON(key);
-					
-// 					var selAttribute = document.createElement("select");
-// 					$(selAttribute).attr("name", "itemSkus["+(index+currentLength)+"]");
-					
-// 					$(value).each(function(idx, attributeValData) {
-						
-// 						$("<option>").attr("value", attributeValData.attributeValueId).text(attributeValData.attributeValue).appendTo(selAttribute);
-						
-// 					});
-// 					alert(selAttribute.name);
-// 					$('#selectTemplateDiv').append(selAttribute);
-					
-// 				});
-// 			});
-// 		});
-// 	}
+
 
 </script>
 </head>
@@ -174,7 +243,15 @@ $(document).ready(function($) {
 	<form:form method="post" commandName="issueSkuForm" >
 	<form:hidden path="transactionType" />
 	<form:input type="hidden" path="locationId"/>
-	<form:hidden path="trainee.traineeId" />	
+	<c:choose>
+    	<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+    		<form:hidden path="staff.staffId" />
+    	</c:when>
+    	 <c:otherwise>
+    	 	<form:hidden path="trainee.traineeId" />
+    	 </c:otherwise>
+    </c:choose>
+		
 	<input type="hidden" id="selectedProductId" name="selectedProductId" value=""/>
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
@@ -209,9 +286,22 @@ $(document).ready(function($) {
 				<tr>
 					<td>MiddleName Name</td><td><input type="text" name="middleName" value="" readOnly="true" /></td>
 				</tr>
-				<tr>
-					<td>Class</td><td><input type="text" name="classNumber" value="" readOnly="true" /></td>
-				</tr>
+				<c:choose>
+					<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+    				<tr>
+						<td>Division</td><td><input type="text" name="division" value="" readOnly="true" /></td>
+					</tr>
+					<tr>
+						<td>Extension</td><td><input type="text" name="extension" value="" readOnly="true" /></td>
+					</tr>
+    				</c:when>
+    				<c:otherwise>
+    				<tr>
+						<td>Class</td><td><input type="text" name="classNumber" value="" readOnly="true" /></td>
+					</tr>
+    				</c:otherwise>
+				</c:choose>
+				
 			</tbody>
 		</table>					
 		</div>
@@ -225,6 +315,13 @@ $(document).ready(function($) {
 			<label class="ui-widget">
         		<span> Kit Name: </span>
         		<input type="text" id="kitName" name="kitName" size="70"  />   
+        		<a id="kit-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
+			</label>
+			<br/>
+			<br/>
+			<label class="ui-widget">
+        		<span> Item Name: </span>
+        		<input type="text" id="itemName" name="itemName" size="70" />   
         		<a id="item-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
 			</label>
 		</div>
@@ -266,7 +363,7 @@ $(document).ready(function($) {
 			</tbody>
 			</table>
 			<div id="actions" align="center" class="actions">
-					<button type="submit" class="ui-state-default ui-corner-all form-button">Issue</button>
+					<a id="submit-form" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Issue</a> 
 				</div>			
 		</div>	
 	

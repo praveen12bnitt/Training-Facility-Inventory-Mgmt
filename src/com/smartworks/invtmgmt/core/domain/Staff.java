@@ -18,19 +18,16 @@ import com.smartworks.invtmgmt.core.util.DateUtil;
 
 
 @Entity
-@Table(name="TRAINEE")
+@Table(name="STAFF")
 @Proxy(lazy=false)
 
-public class Trainee implements Serializable {
+public class Staff implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="TRAINEE_ID")
+	@Column(name="STAFF_ID")
 	@GeneratedValue
-	Integer traineeId;
+	Integer staffId;
 	
 	@Column(name="LAST_NAME", length=100)
 	String lastName;
@@ -38,8 +35,10 @@ public class Trainee implements Serializable {
 	String firstName;
 	@Column(name="MIDDLE_NAME", length=50)
 	String middleName;
-	@Column(name="CLASS_NUMBER", length=50)
-	String classNumber;
+	@Column(name="DIVISION", length=50)
+	String division;	
+	@Column(name="OFFICE_EXTENSION", length=50)
+	String extension;
 	
 	@Type(type="yes_no")
 	@Column(name="ENABLED")
@@ -57,61 +56,93 @@ public class Trainee implements Serializable {
 	
 	@Transient
 	String lastUpdateDttmStr;
-	
-	public Integer getTraineeId() {
-		return traineeId;
+
+	public Integer getStaffId() {
+		return staffId;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public String getMiddleName() {
 		return middleName;
 	}
-	public String getClassNumber() {
-		return classNumber;
+
+	public String getDivision() {
+		return division;
 	}
-	public void setTraineeId(Integer traineeId) {
-		this.traineeId = traineeId;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-	public void setClassNumber(String classNumber) {
-		this.classNumber = classNumber;
-	}
+
 	public Boolean getEnabled() {
 		return enabled;
 	}
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
+
 	public Timestamp getCreatedDttm() {
 		return createdDttm;
 	}
+
 	public Timestamp getLastUpdateDttm() {
 		return lastUpdateDttm;
 	}
-	public void setCreatedDttm(Timestamp createdDttm) {
-		this.createdDttm = createdDttm;		
-	}
-	public void setLastUpdateDttm(Timestamp lastUpdateDttm) {
-		this.lastUpdateDttm = lastUpdateDttm;
-	}
+
 	public String getCreatedDttmStr() {
-		return DateUtil.getExpandedTimeStamp(createdDttm); 
+		return DateUtil.getExpandedTimeStamp(createdDttm);
 	}
+
 	public String getLastUpdateDttmStr() {
 		return DateUtil.getExpandedTimeStamp(lastUpdateDttm);
 	}
-	
+
+	public void setStaffId(Integer staffId) {
+		this.staffId = staffId;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public void setDivision(String division) {
+		this.division = division;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setCreatedDttm(Timestamp createdDttm) {
+		this.createdDttm = createdDttm;
+	}
+
+	public void setLastUpdateDttm(Timestamp lastUpdateDttm) {
+		this.lastUpdateDttm = lastUpdateDttm;
+	}
+
+	public void setCreatedDttmStr(String createdDttmStr) {
+		this.createdDttmStr = createdDttmStr;
+	}
+
+	public void setLastUpdateDttmStr(String lastUpdateDttmStr) {
+		this.lastUpdateDttmStr = lastUpdateDttmStr;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
 	
 }

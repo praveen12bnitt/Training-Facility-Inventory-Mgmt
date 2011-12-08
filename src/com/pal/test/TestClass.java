@@ -29,6 +29,13 @@ import com.smartworks.platform.AppContextUtil;
 
 public class TestClass {
 
+	public static void main(String[] args) {
+		Integer totalEntired = 10;
+		Integer entriedPerRow = 3;
+		
+		System.out.println(Math.ceil(totalEntired*1.0f/entriedPerRow));
+	}
+	
 	public void testTransLoading() {
 		InvtTransManager inventoryMgr = AppContextUtil.getBean("invtTransMgr");
 		List<TransactionType> transTypes = inventoryMgr.getAllTrans();

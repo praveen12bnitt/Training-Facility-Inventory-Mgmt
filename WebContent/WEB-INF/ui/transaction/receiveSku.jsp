@@ -20,6 +20,9 @@
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
+	$('#tran-result-error-div').hide();
+	$('#tran-result-success-div').hide();
+	
 	$('.form-button').hover(
 			function(){ 
 				$(this).addClass("ui-state-hover"); 
@@ -29,6 +32,28 @@ $(document).ready(function($) {
 			}
 		);
 	
+	$('#submit-form').click(function(){	 
+		$('#tran-result-error-div').hide();
+		$('#tran-result-success-div').hide();
+		var formData =  $('#issueSkuForm').serialize();	 
+		 $.ajax({
+			    type: "POST",
+			    url: "${pageContext.request.contextPath}/inventory/receive.form",
+			    data: formData,
+			    success: function() {
+			    	$('#tran-success').html("Transaction Successfull");
+			    	$('#tran-result-success-div').show();
+			    	$('#issueSkuForm')[0].reset();
+			    },
+			    error: function(xhr, status, error) {
+			    	var x = xhr.responseText;
+			    	var msg = $.trim(x);
+			    	$('#tran-error').html(msg);
+			    	$('#tran-result-error-div').show();
+			    }
+			  });		
+	 }); 
+	
 });
 
 </script>
@@ -37,7 +62,15 @@ $(document).ready(function($) {
 	<form:form method="post" commandName="issueSkuForm" >
 	<form:hidden path="transactionType" />
 	<form:input type="hidden" path="locationId" />
-	<form:hidden path="trainee.traineeId" />	
+	 <c:choose>
+	  	<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+	  		<form:hidden path="staff.staffId" />
+	  	</c:when>
+	  	<c:otherwise>
+	  		<form:hidden path="trainee.traineeId" />
+	  	</c:otherwise>
+	  </c:choose>
+		
 	<form:hidden path="refTransactionId" value="${issueSkuForm.refTransactionId }" />
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
@@ -57,18 +90,43 @@ $(document).ready(function($) {
 				<tr>
 					<td>Transaction Description</td><td>${issueSkuForm.transactionDescription}</td>
 				</tr>
-				<tr>
-					<td>Last Name</td><td>${issueSkuForm.trainee.lastName}</td>
-				</tr>
-				<tr>
-					<td>First Name</td><td>${issueSkuForm.trainee.firstName}</td>
-				</tr>
-				<tr>
-					<td>MiddleName Name</td><td>${issueSkuForm.trainee.middleName}</td>
-				</tr>
-				<tr>
-					<td>Class</td><td>${issueSkuForm.trainee.classNumber}</td>
-				</tr>
+				
+				<c:choose>
+				  	<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+				  		<tr>
+							<td>Last Name</td><td>${issueSkuForm.staff.lastName}</td>
+						</tr>
+						<tr>
+							<td>First Name</td><td>${issueSkuForm.staff.firstName}</td>
+						</tr>
+						<tr>
+							<td>MiddleName Name</td><td>${issueSkuForm.staff.middleName}</td>
+						</tr>
+						<tr>
+							<td>Division</td><td>${issueSkuForm.staff.division}</td>
+						</tr>
+						<tr>
+							<td>Extension</td><td>${issueSkuForm.staff.extension}</td>
+						</tr>
+				  	</c:when>
+				  	<c:otherwise>
+				  		<tr>
+							<td>Last Name</td><td>${issueSkuForm.trainee.lastName}</td>
+						</tr>
+						<tr>
+							<td>First Name</td><td>${issueSkuForm.trainee.firstName}</td>
+						</tr>
+						<tr>
+							<td>MiddleName Name</td><td>${issueSkuForm.trainee.middleName}</td>
+						</tr>
+						<tr>
+							<td>Class</td><td>${issueSkuForm.trainee.classNumber}</td>
+						</tr>
+				  	</c:otherwise>
+			  	</c:choose>
+				
+				
+				
 			</tbody>
 		</table>					
 		</div>
@@ -111,7 +169,7 @@ $(document).ready(function($) {
 			</tbody>
 			</table>
 			<div id="actions" align="center" class="actions">
-					<button type="submit" class="ui-state-default ui-corner-all form-button">Return</button>
+					<a id="submit-form" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Return</a> 
 				</div>			
 		</div>	
 	

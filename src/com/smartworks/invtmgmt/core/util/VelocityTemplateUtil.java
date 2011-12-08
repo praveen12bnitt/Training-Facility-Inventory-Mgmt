@@ -15,6 +15,7 @@ public class VelocityTemplateUtil {
 		ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 		ve.setProperty("classpath.resource.loader.class",
 				ClasspathResourceLoader.class.getName());
+		ve.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
 		ve.init();		
 	}
 

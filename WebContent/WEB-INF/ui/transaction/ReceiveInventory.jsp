@@ -76,6 +76,23 @@ $(document).ready(function() {
 	var rowCount = $('#tblTransactionForm >tbody >tr').length;
 	addItem('${pageContext.request.contextPath}',itemName,rowCount);
  }); 
+ 
+ 
+ $('#submit-form').click(function(){	 
+	var formData =  $('#issueSkuForm').serialize();	 
+	 $.ajax({
+		    type: "POST",
+		    url: "${pageContext.request.contextPath}/inbound/receive.form",
+		    data: formData,
+		    success: function() {
+		     alert("Success");
+		    },
+		    error: function(xhr, status, error) {
+		    	var x = xhr.responseText;
+		    	alert($.trim(x));
+		    }
+		  });		
+ }); 
 	
 });
 </script>
@@ -157,7 +174,8 @@ $(document).ready(function() {
 			</tbody>
 			</table>
 			<div id="actions" align="center" class="actions">
-				<button type="submit" class="ui-state-default ui-corner-all form-button">Receive</button>		
+				<!-- <button type="submit" class="ui-state-default ui-corner-all form-button">Receive</button> -->
+				<a id="submit-form" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Receive</a>   		
 			</div>			
 			</div>		
 	</div>

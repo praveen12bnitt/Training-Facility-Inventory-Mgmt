@@ -69,4 +69,10 @@ public enum TransactionTypeEnum {
 		}
 	}
 	
+	public boolean isStaffTransaction() {
+		if(this.equals(ISSUE_EQUIPMENT_STAFF) || this.equals(ISSUE_GYM_STAFF) || this.equals(ISSUE_UNIFORM_STAFF) || 
+				this.equals(RETURN_UNIFORM_STAFF) || this.equals(RETURN_GYM_STAFF) || this.equals(RETURN_EQUIPMENT_STAFF) ) return true;
+		else return false;
+	}
+	
 }

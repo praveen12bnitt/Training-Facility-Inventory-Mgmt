@@ -5,7 +5,7 @@
 
 <html>
 <head>
-  <title>Federal Law Enforcement Training Center</title>
+  <title>Login</title>
   <style>
     .error { color: red; }
   </style> 
@@ -17,16 +17,6 @@
 
 <body>
 
-<div id="portal-header">
-
-<a id="portal-logo" accesskey="1" href="http://www.fletc.gov">
-
-    <img src="<c:url value='/images/logo.jpg' />" alt="" title="logo.gif" height="78" width="345"></a>
-
-
-
-</div>
- 
  
 <div class="panel panel-b login">
 <div class="panel-head">

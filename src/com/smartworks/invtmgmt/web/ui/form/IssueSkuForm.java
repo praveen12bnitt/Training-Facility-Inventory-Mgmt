@@ -6,6 +6,7 @@ import org.springframework.util.AutoPopulatingList;
 
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.core.domain.Item;
+import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 import com.smartworks.invtmgmt.core.util.ItemSkuElementFactory;
@@ -20,6 +21,8 @@ public class IssueSkuForm {
 	Integer refTransactionId;
 	
 	Trainee trainee;
+	
+	Staff staff;
 	
 	private List<Item> items;	
 	
@@ -89,6 +92,14 @@ public class IssueSkuForm {
 
 	public void setItemSkus(List<ItemSku> itemSkus) {
 		this.itemSkus = itemSkus;
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
 	}
 	
 	
