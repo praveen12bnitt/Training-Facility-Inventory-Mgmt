@@ -6,7 +6,6 @@
 						<li><a href='<c:url value="/inbound/receive.form"/>'>Receive Inventory from Vendor</a></li>						
 						<li><a href='<c:url value="/inbound/outbound.form"/>'>Move Inventory to Vendor</a></li>
 						<li><a href='<c:url value="/inbound/transfer.form"/>'>Transfer Inventory</a></li>
-						<li><a href='<c:url value="/Inventory/AdjustInventory.form" />'>Adjust Inventory</a></li>
 					</ul>
 				</li>
 				</security:authorize>
@@ -67,6 +66,7 @@
 						<li><a href='<c:url value="/common/list-all-trainee.form" />'>Trainee Management</a></li>
 						<li><a href='<c:url value="/common/list-all-staff.form" />'>Staff Management</a></li>
 						<li><a href='<c:url value="/common/list-all-user.form" />'>User Management</a></li>
+						<li><a href='<c:url value="/Inventory/AdjustInventory.form" />'>Adjust Inventory</a></li>
 					</ul>
 					
 				</li>

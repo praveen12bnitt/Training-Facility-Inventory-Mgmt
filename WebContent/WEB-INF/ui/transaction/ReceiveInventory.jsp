@@ -10,7 +10,7 @@
 
 <html>
 <head>
-<title>Receive Inventory into Warehouse</title>
+<title>Receive Inventory from Vendor</title>
 <style>
 .error {
 	color: red;
@@ -78,13 +78,21 @@ $(document).ready(function() {
 	addItem('${pageContext.request.contextPath}',itemName,rowCount);
  }); 
  
+ var responseReceived = true;
  
  $('#submit-form').click(function(){	 
 	var formData =  $('#issueSkuForm').serialize();	 
-	 $.ajax({
+	if(responseReceived) {
+		$.ajax({
 		    type: "POST",
 		    url: "${pageContext.request.contextPath}/inbound/receive.form",
 		    data: formData,
+		    beforeSend: function() {
+		    	responseReceived = false;		            
+	        },
+	        complete: function() {
+	        	responseReceived = true;
+	        },
 		    success: function() {
 		    	$('#tran-success').html("Transaction Successfull");
 		    	$('#tran-result-success-div').show();
@@ -96,7 +104,11 @@ $(document).ready(function() {
 		    	$('#tran-error').html(msg);
 		    	$('#tran-result-error-div').show();
 		    }
-		  });		
+		  });
+	} else {
+		alert("Processing previous request. Please wait");
+	}
+	 		
  }); 
 	
 });
