@@ -18,12 +18,14 @@
 <script src='<c:url value="/js/jquery.json-2.3.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/jquery.dropdown.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/js/invt-common.js" type="text/javascript"></script>
+<script src='<c:url value="/js/invt-common.js" />' type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
 	
 	$('#tran-result-error-div').hide();
 	$('#tran-result-success-div').hide();
+	$('#transactionDiv').hide();
+	
 	
 	$('.form-button').hover(
 			function(){ 
@@ -65,7 +67,8 @@ $(document).ready(function($) {
 	    	    	if(rowData){
 	    				jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
 	    			}	    	
-	    	    	$('input[name="staff.staffId"]').val(traineeId);	  
+	    	    	$('input[name="staff.staffId"]').val(traineeId);	
+	    	    	$('#transactionDiv').fadeIn('slow');
 	    	    },
 	    	    jsonReader : {
 	    	          root: "rows",
@@ -107,7 +110,8 @@ $(document).ready(function($) {
 		    	if(rowData){
 					jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
 				}	    	
-		    	$('input[name="trainee.traineeId"]').val(traineeId);	  
+		    	$('input[name="trainee.traineeId"]').val(traineeId);	
+		    	$('#transactionDiv').fadeIn('slow');
 		    },
 		    jsonReader : {
 		          root: "rows",
@@ -308,24 +312,24 @@ $(document).ready(function($) {
 				
 
 		<br />
-
+		<div id="transactionDiv">
 		<div id="heading" class="ui-widget-header">Inventory Details</div>
 		<div style="padding: 10px;">
 		
 			<label class="ui-widget">
-        		<span> Kit Name: </span>
+        		<span> Kit Name &nbsp;&nbsp;</span>
         		<input type="text" id="kitName" name="kitName" size="70"  />   
         		<a id="kit-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
 			</label>
 			<br/>
 			<br/>
 			<label class="ui-widget">
-        		<span> Item Name: </span>
+        		<span> Item Name </span>
         		<input type="text" id="itemName" name="itemName" size="70" />   
         		<a id="item-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
 			</label>
 		</div>
-		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		<div id="content" class="ui-widget-content" style="padding: 10px; ">	
 			<table id="tblTransactionForm" class="ui-widget item-table">
 				<thead class="ui-state-default item-table-header">
 					<tr id="rowx">
@@ -367,6 +371,7 @@ $(document).ready(function($) {
 				</div>			
 		</div>	
 	
+	</div>
 	</div>
 	<br>
 	
