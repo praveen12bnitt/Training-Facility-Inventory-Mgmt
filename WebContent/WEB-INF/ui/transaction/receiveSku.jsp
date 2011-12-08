@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Returns</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
@@ -31,15 +31,22 @@ $(document).ready(function($) {
 				$(this).removeClass("ui-state-hover"); 
 			}
 		);
-	
+	var responseReceived = true;
 	$('#submit-form').click(function(){	 
 		$('#tran-result-error-div').hide();
 		$('#tran-result-success-div').hide();
 		var formData =  $('#issueSkuForm').serialize();	 
-		 $.ajax({
+		if(responseReceived) {
+			$.ajax({
 			    type: "POST",
 			    url: "${pageContext.request.contextPath}/inventory/receive.form",
 			    data: formData,
+			    beforeSend: function() {
+			    	responseReceived = false;		            
+		        },
+		        complete: function() {
+		        	responseReceived = true;
+		        },
 			    success: function() {
 			    	$('#tran-success').html("Transaction Successfull");
 			    	$('#tran-result-success-div').show();
@@ -51,7 +58,11 @@ $(document).ready(function($) {
 			    	$('#tran-error').html(msg);
 			    	$('#tran-result-error-div').show();
 			    }
-			  });		
+			  });	
+		} else {
+			alert("Processing previous request. Please wait");
+		}
+				
 	 }); 
 	
 });

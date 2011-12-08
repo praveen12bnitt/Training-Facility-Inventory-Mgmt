@@ -15,10 +15,11 @@ public class InventoryConverter {
 		ItemSku itemSku = inventory.getItemSku();
 		uiInventory.setItemId(itemSku.getItem().getId());
 		uiInventory.setItemDesc(itemSku.getItem().getName());
-		
+		uiInventory.setSkuCode(itemSku.getSkuCode());
 		uiInventory.setAvailableQty(inventory.getAvailableQty());
 		uiInventory.setIssuedQty(inventory.getIssueQty());
 		uiInventory.setUnusableQty(inventory.getUnusableQty());
+		uiInventory.setLocationId(inventory.getLocation().getLocationId());
 		
 		
 		StringBuilder sb = new StringBuilder();	

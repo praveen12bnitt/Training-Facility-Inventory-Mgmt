@@ -38,7 +38,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	   	sortname: 'itemId',
 	    viewrecords: true,
 	    sortorder: "desc",
-	    loadonce: false,
+	    loadonce: false,	    
 	    caption: "Open User Transactions",
 	    height: 200,
 	    width: 750,
@@ -61,14 +61,12 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	          id: "id"
 	      }
 	});
+
 	$("#list3").setGridParam({url:'${pageContext.request.contextPath}/inventory/opentransactions.form?traineeStaffId='+traineeStaffId+'&transactionTypeEnum='+transactionType+'&locationId='+locationId}).trigger('reloadGrid');
     
-  }
+  };
   
-	linkformatter = function(el, cellval, opts){
-	   alert($(el).value);
-		 $(el).html(cellval);
-	}
+
 
   $(document).ready(function() {
 	  
@@ -95,6 +93,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	    	    sortorder: "desc",
 	    	    loadonce: true,
 	    	    caption: "Staff List",
+	    	    ignoreCase:true,
 	    	    ignoreCase:true,
 	    	    height: 125,
 	    	    width: 750,
@@ -136,6 +135,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 		    viewrecords: true,
 		    sortorder: "desc",
 		    loadonce: true,
+		    ignoreCase:true,
 		    caption: "Trainee List",
 		    height: 200,
 		    width: 750,
@@ -160,6 +160,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	    </c:otherwise>
 		</c:choose>
 	  
+	$("#list2").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
 	  
 	
 	$('.form-button').hover(
