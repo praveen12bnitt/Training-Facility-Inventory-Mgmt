@@ -23,11 +23,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.converter.UIDomainConverter;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
+import com.smartworks.invtmgmt.core.dao.ReasonCodeDao;
 import com.smartworks.invtmgmt.core.dao.StaffDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
+import com.smartworks.invtmgmt.core.domain.ReasonCode;
 import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
@@ -56,7 +58,12 @@ public class ItemIssueFormController {
 	
 	@Autowired
 	TraineeDao traineeDao = null;
-	
+
+    @Autowired
+    ReasonCodeDao reasonCodeDao = null;
+    
+    
+    
 	@Autowired
 	StaffDao staffDao = null;
 	
@@ -175,9 +182,14 @@ public class ItemIssueFormController {
 		
 		issueSkuForm.setRefTransactionId(transactionId);
 		issueSkuForm.setLocationId(transDetails.getLocationId());
+		
+		//Reason Code
+		List<ReasonCode> reasonCodeList = reasonCodeDao.loadAll();
+		
 		ModelAndView mav = new ModelAndView("transaction/receiveSku");
 		mav.addObject("transDetails", transDetails);
 		mav.addObject("issueSkuForm", issueSkuForm);
+		mav.addObject("reasonCodeList",reasonCodeList);
 		return mav;
 	}
 	
@@ -188,10 +200,14 @@ public class ItemIssueFormController {
 		
 		logger.info("process Incevntory change");
 		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
+		TransactionDetailsHolder missingTransDetailsHolder = UIDomainConverter.getMissingTransactionDetailsHolder(issueSkuForm);
 		
 		InventoryAllocationException ex = null;
 		try {
 			invtTransMgr.processInventoryChange(transDetailsHolder);
+			if(missingTransDetailsHolder != null) {
+				invtTransMgr.processInventoryChange(missingTransDetailsHolder);
+			}
 		} catch(InventoryAllocationException iae) {
 			ex = iae;
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());

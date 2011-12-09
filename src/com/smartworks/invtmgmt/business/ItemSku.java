@@ -16,7 +16,28 @@ public class ItemSku {
 	
 	String skuCode;		
 	Integer quantity;
+	Integer orginalQty;
+	private	String reasonCode;
+
 	
+	public String getReasonCode() {
+		return reasonCode;
+	}
+
+	public void setReasonCode(String reasonCode) {
+		this.reasonCode = reasonCode;
+	}
+
+	public Integer getOrginalQty() {
+		return orginalQty;
+	}
+
+	public void setOrginalQty(Integer orginalQty) {
+		this.orginalQty = orginalQty;
+	}
+
+
+
 	ItemSkuConverter itemSkuConverter = AppContextUtil.getBean("itemSkuConverter");
 	
 	public ItemSku(Item item, List<ItemAttributeDetails> itemAttributeDtls) {

@@ -135,9 +135,6 @@ $(document).ready(function($) {
 						</tr>
 				  	</c:otherwise>
 			  	</c:choose>
-				
-				
-				
 			</tbody>
 		</table>					
 		</div>
@@ -153,7 +150,9 @@ $(document).ready(function($) {
 					<tr id="rowx">
 						<th>Item</th>
 						<th>Item Specification</th>
-						<th>Quantity</th>
+						<th>Issued Quantity</th>
+						<th>Return Quantity</th>
+						<th>Reason Code </th>
 					</tr>				
 				</thead>
 				<tbody class="ui-widget-content" >
@@ -174,7 +173,22 @@ $(document).ready(function($) {
      		 	</c:forEach>   		     		 	
      		
      		</td>     		
-     		<td><form:input type="text" path="itemSkus[${itemSkuRow.index}].quantity" value="${ itemSku.quantity }"/>
+     		<td>
+     		<form:input type="hidden" path="itemSkus[${itemSkuRow.index}].orginalQty" value="${ itemSku.quantity }" />
+     		<form:input type="text"  path="itemSkus[${itemSkuRow.index}].orginalQty" disabled="true" value="${ itemSku.quantity }" />
+     		</td>
+     		<td>
+     		<form:input type="text" path="itemSkus[${itemSkuRow.index}].quantity" value="${ itemSku.quantity }" onfocus="this.oldvalue = this.value;"
+     		onChange="validateInput('itemSkus${itemSkuRow.index}.quantity',this.oldvalue, 'itemSkus${itemSkuRow.index}.reasonCode')"/></td>
+     		<td>
+					<form:select path="itemSkus[${itemSkuRow.index}].reasonCode" disabled="true">
+								<c:forEach items="${reasonCodeList}" var="reasonCode">
+									<form:option value="${reasonCode.reasonId}">
+     										${reasonCode.reasonCode}
+     								</form:option>
+     						</c:forEach>
+     					</form:select>
+					</td>
      		</tr>
      		</c:forEach>
 			</tbody>
@@ -188,4 +202,27 @@ $(document).ready(function($) {
 	<br>
 	</form:form>	
 </body>
+<script type="text/javascript" language="JavaScript">
+
+
+function validateInput(val,oldVal, reasoncodeid) {
+	
+var newVal = document.getElementById(val).value;
+
+var set = document.getElementById(reasoncodeid);
+ if (newVal < oldVal && newVal != 0){
+
+    var r=window.confirm("Is Item Missing or Damaged ?");
+    if (r==true)
+      {
+    	document.getElementById(reasoncodeid).disabled=false;
+      } 
+ }
+ if(newVal > oldVal){
+	alert ("Invalid Entry.");
+    set.enabled = false;
+    }
+}
+
+</script>
 </html>
