@@ -40,6 +40,13 @@ public class InventoryDetailsController {
 		ModelAndView mav = new ModelAndView("reports/inventory-all");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/inventory-locn.form", method = RequestMethod.GET)
+	public ModelAndView getInventoryByLocn() {
+		logger.error("Received request to show all inventory");
+		ModelAndView mav = new ModelAndView("reports/inventory-locn");
+		return mav;
+	}
 
 	@RequestMapping(value = "/allinvt.form", method = RequestMethod.GET)
 	public @ResponseBody

@@ -76,7 +76,7 @@
 					<a href="#">Report</a>
 					<ul class="sub_menu">
 						
-						<li><a href="#">Location</a></li>
+						<li><a href='<c:url value="/reports/inventory-locn.form" />'>Location</a></li>
 						<li><a href="#">Item Inventory</a></li>
 						<li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>						
 						</ul>
