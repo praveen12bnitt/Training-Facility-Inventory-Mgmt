@@ -133,7 +133,8 @@ $(document).ready(function($) {
                    url : '${pageContext.request.contextPath}/common/findByProductNameLike.form',
                    dataType : 'json',
                    data : {
-                       name : request.term
+                       name : request.term,
+                       locationId	: '2'
                    },
                    success : function(data) {
                 	    response(jQuery.map(data, function(key,val) {

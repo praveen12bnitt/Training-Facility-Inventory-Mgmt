@@ -13,6 +13,6 @@ public interface ProductDao {
 	public Product load(Integer productId);
 	public List<Product> loadAllOnlyProducts();
 	public void delete(Integer productId);
-	public Map<Integer,String> findByProductNameLike(String name);
+	public Map<Integer,String> findByProductNameLike(String name, Integer locationId);
 	
 }

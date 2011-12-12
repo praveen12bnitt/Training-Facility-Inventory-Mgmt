@@ -50,10 +50,10 @@ public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
 		getHibernateTemplate().delete(product);
 	}
 	
-	public Map<Integer,String> findByProductNameLike(String name){
+	public Map<Integer,String> findByProductNameLike(String name, Integer locationId){
 		
-		String query = "select productId,productName from Product " +
-				"         where productName like :name";
+		String query = "select productId,productName from Product prd " +
+				"         where  prd.location.locationId = "+locationId +" and productName like :name";
 		List<Object[]> productNames = getHibernateTemplate().findByNamedParam(query, "name", "%"+name+"%");
 		Map<Integer,String> productsMap = new HashMap<Integer, String>();
 		for(Object[] items: productNames) {

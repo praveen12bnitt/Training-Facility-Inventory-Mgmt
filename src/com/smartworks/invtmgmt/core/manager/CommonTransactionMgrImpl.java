@@ -57,8 +57,8 @@ public class CommonTransactionMgrImpl implements CommonTransactionMgr {
 	
 	@Override
 	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
-	public Map<Integer,String> findByProductNameLike(String name){
-		return productDao.findByProductNameLike(name);
+	public Map<Integer,String> findByProductNameLike(String name, Integer locationId){
+		return productDao.findByProductNameLike(name, locationId);
 	}
 
 }

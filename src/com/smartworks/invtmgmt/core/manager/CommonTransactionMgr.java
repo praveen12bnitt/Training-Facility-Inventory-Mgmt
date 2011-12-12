@@ -10,5 +10,5 @@ public interface CommonTransactionMgr {
 	public void save(Product product);
 	public void delete(Integer productId);
 	public Map<Integer,String> getItemsByProductId(Integer productId);
-	public Map<Integer,String> findByProductNameLike(String name);
+	public Map<Integer,String> findByProductNameLike(String name, Integer locationId);
 }

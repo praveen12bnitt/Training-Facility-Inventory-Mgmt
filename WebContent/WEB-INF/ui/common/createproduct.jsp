@@ -36,12 +36,14 @@ $(document).ready(function($) {
 	jQuery("#list2").jqGrid({
 		url:'${pageContext.request.contextPath}/common/listproducts.form',
 		datatype: "json",
-	   	colNames:['Kit Id','Kit Name', 'Kit Desc'],
+	   	colNames:['Kit Id','Kit Name', 'Kit Desc', 'Location', 'Location Id'],
 	   	colModel:[
 			
 			{name:'productId',index:'productId', align:'center', width:200},
 	   		{name:'productName',index:'productName', align:'center', width:200},
 	   		{name:'productDesc',index:'productDesc', align:'center', width:200},
+	   		{name:'location.locationName',index:'location.locationName', align:'center', width:200},
+	   		{name:'location.locationId',index:'location.locationId', align:'center', width:200, hidden:true},
 	   		 		
 	   	],
 	   	rowNum:10,
@@ -237,6 +239,17 @@ function showTransactionStatus() {
 					<td>Kit Desc</td><td><input type="text" name="productDesc" value=""  /></td>
 				</tr>
 				
+				<tr>
+					<td>Location</td>
+									<td>
+										<select name="location.locationId">
+											<c:forEach var="location" items="${locations}">
+												<option value="${location.locationId}">${location.locationName} </option>
+											</c:forEach>
+										</select>
+									</td>
+				</tr>
+				
 			</tbody>
 		  </table>	
 		  <BR>
@@ -254,6 +267,7 @@ function showTransactionStatus() {
 		  </table>
 		  
 		  <div id="actions" align="left" class="actions" >
+		  			<input type="reset" class="ui-state-default ui-corner-all form-button" alt="Create new" value="new" onclick="productForm.productId.value=''">
 					<input type="submit" class="ui-state-default ui-corner-all form-button" alt="save or update the kit" value="save">
 					<input type="button" id="deletekit" class="ui-state-default ui-corner-all form-button" alt="save or update the kit" value="delete">
 				</div>	

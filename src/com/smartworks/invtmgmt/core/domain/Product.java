@@ -10,10 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Proxy;
 
 @Entity
@@ -36,6 +39,12 @@ public class Product implements Serializable {
 	
 	@Column(name="PRODUCT_DESC", length=250)
 	private String productDesc;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="LOCATION_ID")
+	
+	private Location location;
+
 	
 	public String getProductDesc() {
 		return productDesc;
@@ -82,5 +91,15 @@ public class Product implements Serializable {
 		}
 		return itemIds;
 	}
+	
+	
+	public Location getLocation() {
+		return location;
+	}
+	
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	
 	
 }
