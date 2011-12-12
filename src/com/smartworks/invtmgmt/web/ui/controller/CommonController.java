@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.UserDao;
+import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
@@ -56,6 +58,9 @@ public class CommonController {
 	
 	@Autowired
 	private MessageSource messageSource;
+	
+	@Autowired
+	private LocationDao locationDao;
 	
 	protected static Logger logger = Logger
 			.getLogger(CommonController.class);
@@ -333,6 +338,8 @@ public class CommonController {
 	@RequestMapping(value = "/createproduct.form", method = RequestMethod.GET)
 	public ModelAndView createProduct() {
 		ModelAndView mav = new ModelAndView("common/createproduct");
+		List<Location> locations = locationDao.loadAll();
+		mav.addObject("locations", locations);
 		return mav;
 	}
 	
@@ -377,9 +384,9 @@ public class CommonController {
 	
 	@RequestMapping(value = "/findByProductNameLike.form", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<Integer,String> findByProductNameLike(@RequestParam String name){
+	public Map<Integer,String> findByProductNameLike(@RequestParam String name, @RequestParam Integer locationId){
 		
-		return commonTransactionMgr.findByProductNameLike(name);
+		return commonTransactionMgr.findByProductNameLike(name, locationId);
 	}
 	
 	
