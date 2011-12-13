@@ -338,7 +338,7 @@ public class CommonController {
 	@RequestMapping(value = "/createproduct.form", method = RequestMethod.GET)
 	public ModelAndView createProduct() {
 		ModelAndView mav = new ModelAndView("common/createproduct");
-		List<Location> locations = locationDao.loadAll();
+		List<Location> locations = locationDao.loadSecondaryLocations();
 		mav.addObject("locations", locations);
 		return mav;
 	}

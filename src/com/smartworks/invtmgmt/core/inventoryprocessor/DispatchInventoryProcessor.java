@@ -15,7 +15,7 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 		boolean hasInventory = false;
 		for (ItemSku itemSku : transDetails.getItemSkus()) {
 			
-			if(itemSku.getQuantity() == null || itemSku.getQuantity() < 0) {
+			if(itemSku.getQuantity() == null || itemSku.getQuantity() < 1) {
 				continue;
 			}
 						
