@@ -179,12 +179,12 @@ $(document).ready(function($) {
      		</td>
      		<td>
      		<form:input type="text" path="itemSkus[${itemSkuRow.index}].quantity" value="${ itemSku.quantity }" onfocus="this.oldvalue = this.value;"
-     		onChange="validateInput('itemSkus${itemSkuRow.index}.quantity',this.oldvalue, 'itemSkus${itemSkuRow.index}.reasonCode')"/></td>
+     		onBlur="validateInput('itemSkus${itemSkuRow.index}.quantity','${ itemSku.quantity }', 'itemSkus${itemSkuRow.index}.reasonCode')"/></td>
      		<td>
 					<form:select path="itemSkus[${itemSkuRow.index}].reasonCode" disabled="true">
 								<c:forEach items="${reasonCodeList}" var="reasonCode">
 									<form:option value="${reasonCode.reasonId}">
-     										${reasonCode.reasonCode}
+     										${reasonCode.reasonCodeDesc}
      								</form:option>
      						</c:forEach>
      					</form:select>
@@ -209,15 +209,20 @@ function validateInput(val,oldVal, reasoncodeid) {
 	
 var newVal = document.getElementById(val).value;
 
+//var oldVal = document.getElementById(ov).value;
+//alert("oldVal"+oldVal);
 var set = document.getElementById(reasoncodeid);
- if (newVal < oldVal && newVal != 0){
+ if (newVal < oldVal ){
 
     var r=window.confirm("Is Item Missing or Damaged ?");
     if (r==true)
       {
     	document.getElementById(reasoncodeid).disabled=false;
       } 
+ }  else if (newVal == oldVal) {
+	 document.getElementById(reasoncodeid).disabled=true;
  }
+ 
  if(newVal > oldVal){
 	alert ("Invalid Entry.");
     set.enabled = false;

@@ -1729,7 +1729,14 @@ INSERT INTO `ROLES` (`ROLE_ID`,`ROLE_NAME`,`ROLE_DESC`) VALUES (5,'ROLE_LAUNDRY'
 INSERT INTO `ROLES` (`ROLE_ID`,`ROLE_NAME`,`ROLE_DESC`) VALUES (6,'ROLE_ADMIN','Role to adminster');
 INSERT INTO `ROLES` (`ROLE_ID`,`ROLE_NAME`,`ROLE_DESC`) VALUES (7,'ROLE_REPORT','Role for Reports');
 
+CREATE TABLE `reason_code` (
+  `reason_id` int(11) NOT NULL,
+  `reason_code` varchar(60) NOT NULL,
+  `reason_code_desc` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`reason_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+INSERT INTO `reason_code` (`reason_id`,`reason_code`,`reason_code_desc`) VALUES (1,'ITEM_MISSING','Item Missing');
+INSERT INTO `reason_code` (`reason_id`,`reason_code`,`reason_code_desc`) VALUES (2,'ITEM_LOST','Item Lost');
 
 
