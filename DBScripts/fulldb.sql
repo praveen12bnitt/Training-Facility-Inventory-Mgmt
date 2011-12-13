@@ -1729,14 +1729,14 @@ INSERT INTO `ROLES` (`ROLE_ID`,`ROLE_NAME`,`ROLE_DESC`) VALUES (5,'ROLE_LAUNDRY'
 INSERT INTO `ROLES` (`ROLE_ID`,`ROLE_NAME`,`ROLE_DESC`) VALUES (6,'ROLE_ADMIN','Role to adminster');
 INSERT INTO `ROLES` (`ROLE_ID`,`ROLE_NAME`,`ROLE_DESC`) VALUES (7,'ROLE_REPORT','Role for Reports');
 
-CREATE TABLE `reason_code` (
-  `reason_id` int(11) NOT NULL,
-  `reason_code` varchar(60) NOT NULL,
-  `reason_code_desc` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`reason_id`)
+CREATE TABLE `REASON_CODE` (
+  `REASON_ID` int(11) NOT NULL,
+  `REASON_CODE` varchar(60) NOT NULL,
+  `REASON_CODE_DESC` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`REASON_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `reason_code` (`reason_id`,`reason_code`,`reason_code_desc`) VALUES (1,'ITEM_MISSING','Item Missing');
-INSERT INTO `reason_code` (`reason_id`,`reason_code`,`reason_code_desc`) VALUES (2,'ITEM_LOST','Item Lost');
+INSERT INTO `REASON_CODE` (`REASON_ID`,`REASON_CODE`,`REASON_CODE_DESC`) VALUES (1,'ITEM_MISSING','Item Missing');
+INSERT INTO `REASON_CODE` (`REASON_ID`,`REASON_CODE`,`REASON_CODE_DESC`) VALUES (2,'ITEM_LOST','Item Lost');
 
 

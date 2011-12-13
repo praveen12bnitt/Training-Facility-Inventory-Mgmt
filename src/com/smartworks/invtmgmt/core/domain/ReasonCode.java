@@ -22,15 +22,15 @@ public class ReasonCode implements Serializable {
 	
 	
 	@Id
-	@Column(name="reason_id")
+	@Column(name="REASON_ID")
 	Integer reasonId;
 	
-	@Column(name="reason_code")
+	@Column(name="REASON_CODE")
 	@Enumerated(EnumType.STRING)
 	private ReasonCodeEnum reasonCode;
 	
 	
-	@Column(name="reason_code_desc")
+	@Column(name="REASON_CODE_DESC")
 	private String reasonDesc;
 
 	public ReasonCodeEnum getReasonCode() {
