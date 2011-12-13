@@ -100,7 +100,7 @@ function exportExcel()
 
         }
     html=html+"\n";  // end of line at the end
-   alert(html);
+   //alert(html);
 }
 </script>
 </head>
