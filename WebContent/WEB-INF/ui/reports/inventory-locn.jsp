@@ -66,42 +66,14 @@ $(document).ready(function($) {
                     caption:"Export to Excel", 
                     buttonicon:"ui-icon-save", 
                     onClickButton: function(){ 
-                      exportExcel();
-                    	// window.open('exportdata.aspx');
-                      
+                    	
+                   		 $(location).attr('href','${pageContext.request.contextPath}/reports/exportInv.form');		 
+
                     }, 
                     position:"last"
-                });
-	
+                });	
 	});
 
-function exportExcel()
-{
-    var mya=new Array();
-    mya=$("#list3").getDataIDs();  // Get All IDs
-    var data=$("#list3").getRowData(mya[0]);     // Get First row to get the labels
-    var colNames=new Array(); 
-    var ii=0;
-    for (var i in data){colNames[ii++]=i;}    // capture col names
-    var html="";
-        for(k=0;k<colNames.length;k++)
-        {
-        html=html+colNames[k]+"\t";     // output each Column as tab delimited
-        }
-        html=html+"\n";                    // Output header with end of line
-    for(i=0;i<mya.length;i++)
-        {
-        data=$("#list3").getRowData(mya[i]); // get each row
-        for(j=0;j<colNames.length;j++)
-            {
-         html=html+data[colNames[j]]+"\t"; // output each Row as tab delimited
-            }
-        html=html+"\n";  // output each row with end of line
-
-        }
-    html=html+"\n";  // end of line at the end
-   alert(html);
-}
 </script>
 </head>
 <body class="body-class" >	
