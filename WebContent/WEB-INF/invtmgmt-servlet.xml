@@ -18,12 +18,18 @@
     
     <mvc:annotation-driven />
     
-   
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+	   <property name="location">
+	       <value>/WEB-INF/spring-excel-views.xml</value>
+	   </property>
+	   <property name="order" value="0" />
+	</bean>
     <bean id="inventory" class="com.smartworks.invtmgmt.core.domain.Inventory" />
    
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/ui/"></property>
-        <property name="suffix" value=".jsp"></property>     
+        <property name="suffix" value=".jsp"></property>  
+         <property name="order" value="1" />   
     </bean>
     
    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">

@@ -1,7 +1,13 @@
 package com.smartworks.invtmgmt.web.ui.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +40,7 @@ public class InventoryDetailsController {
 	protected static Logger logger = Logger
 			.getLogger(InventoryDetailsController.class);
 
+
 	@RequestMapping(value = "/inventory-all.form", method = RequestMethod.GET)
 	public ModelAndView getAllInventory() {
 		logger.error("Received request to show all inventory");
@@ -57,10 +64,26 @@ public class InventoryDetailsController {
 		for (Inventory inventory : invtList) {
 			uiInvtList.add(inventoryConverter.getUIInventory(inventory));			
 		}
+		
 		response.setRows(uiInvtList);
 		response.setPage("1");
 		response.setTotal("10");
 		response.setRecords(String.valueOf(uiInvtList.size()));
 		return response;
-	}	
+	}
+	@RequestMapping(value="/exportInv.form", method=RequestMethod.GET)
+	public ModelAndView receiveInventoryFromLaundry(HttpServletRequest request, HttpServletResponse response
+			) throws IOException {
+		Map model = new HashMap();
+		List<Inventory> invtList = inventoryManager.getAllInventory();
+		List<UIInventory> uiInvtList = new ArrayList<UIInventory>();	
+		for (Inventory inventory : invtList) {
+			uiInvtList.add(inventoryConverter.getUIInventory(inventory));			
+		}
+		model.put("widgetList", uiInvtList);
+		ModelAndView mav = new ModelAndView("reports/exportInv");
+		return new ModelAndView("InventoryListExcelView", model);
+	}
+	
+	
 }
