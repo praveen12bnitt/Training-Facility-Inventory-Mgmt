@@ -7,6 +7,7 @@ import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
 import com.smartworks.invtmgmt.core.exception.NoItemsForTransactionException;
+import com.smartworks.invtmgmt.core.transaction.ReasonCodeEnum;
 
 public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 	
@@ -20,6 +21,8 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 				continue;
 			}
 			hasInventory = true;
+			// Reason code not required for return
+			itemSku.setReasonCode((ReasonCodeEnum)null);
 			
 			InventoryPk inventoryPk = new InventoryPk();
 			Location loc = new Location(transDetails.getLocationId());

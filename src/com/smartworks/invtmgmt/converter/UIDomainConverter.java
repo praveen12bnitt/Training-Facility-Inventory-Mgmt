@@ -40,8 +40,9 @@ public class UIDomainConverter {
 				itemSkuClone.setItemAttributeDtls(itemSku.getItemAttributeDtls());
 				itemSkuClone.setItemSkuConverter(itemSku.getItemSkuConverter());
 				itemSkuClone.setQuantity(new Integer(itemSku.getOrginalQty() - itemSku.getQuantity()));
+				itemSkuClone.setReasonCode(itemSku.getReasonCode());
 				itemSkusClone.add(itemSkuClone);
-//				itemSkuClone.setReasonCode(reasonCode)
+				
 				
 			}
 		}

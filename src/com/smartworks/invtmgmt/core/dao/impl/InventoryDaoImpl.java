@@ -14,6 +14,7 @@ import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
 import com.smartworks.invtmgmt.core.exception.NoInventoryException;
 import com.smartworks.invtmgmt.core.exception.NoUnusableInventoryException;
 import com.smartworks.invtmgmt.core.exception.NotEnoughInventoryException;
+import com.smartworks.invtmgmt.core.transaction.ReasonCodeEnum;
 
 public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDao {
 
@@ -68,6 +69,20 @@ public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDa
 		avaQty = avaQty-qty;
 		inventory.setAvailableQty(avaQty);
 		saveOrUpdate(inventory);	
+	}
+	
+	public void addMissingDamagedInventory(InventoryPk skuLocation, Integer qty, ReasonCodeEnum reasonCode) {		
+		Inventory inventory = load(skuLocation);
+		if(reasonCode == ReasonCodeEnum.ITEM_MISSING) {
+			Integer missingQty = inventory.getMissingQty();
+			missingQty += qty;
+			inventory.setMissingQty(missingQty);
+		} else if(reasonCode == ReasonCodeEnum.ITEM_DAMAGED) {
+			Integer damagedQty = inventory.getDamagedQty();
+			damagedQty += qty;
+			inventory.setMissingQty(damagedQty);
+		}
+		saveOrUpdate(inventory);
 	}
 	
 	public void addAvailableInventory(InventoryPk skuLocation, Integer qty) {

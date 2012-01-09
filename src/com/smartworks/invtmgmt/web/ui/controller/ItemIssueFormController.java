@@ -23,13 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.converter.UIDomainConverter;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
-import com.smartworks.invtmgmt.core.dao.ReasonCodeDao;
 import com.smartworks.invtmgmt.core.dao.StaffDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
-import com.smartworks.invtmgmt.core.domain.ReasonCode;
 import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
@@ -37,6 +35,7 @@ import com.smartworks.invtmgmt.core.domain.TransactionType;
 import com.smartworks.invtmgmt.core.exception.InventoryAllocationException;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
+import com.smartworks.invtmgmt.core.transaction.ReasonCodeEnum;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 import com.smartworks.invtmgmt.core.util.VelocityTemplateUtil;
 import com.smartworks.invtmgmt.web.ui.form.IssueSkuForm;
@@ -58,9 +57,6 @@ public class ItemIssueFormController {
 	
 	@Autowired
 	TraineeDao traineeDao = null;
-
-    @Autowired
-    ReasonCodeDao reasonCodeDao = null;
     
 	@Autowired
 	StaffDao staffDao = null;
@@ -182,7 +178,7 @@ public class ItemIssueFormController {
 		issueSkuForm.setLocationId(transDetails.getLocationId());
 		
 		//Reason Code
-		List<ReasonCode> reasonCodeList = reasonCodeDao.loadAll();
+		List<String> reasonCodeList = ReasonCodeEnum.getReasonCodeList();
 		
 		ModelAndView mav = new ModelAndView("transaction/receiveSku");
 		mav.addObject("transDetails", transDetails);

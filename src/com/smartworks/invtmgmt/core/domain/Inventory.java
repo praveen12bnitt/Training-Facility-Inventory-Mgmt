@@ -37,6 +37,12 @@ public class Inventory implements Serializable {
 	@Column(name="ISSUED_QTY")
 	private Integer issueQty;
 	
+	@Column(name="MISSING_QTY")
+	private Integer missingQty;
+	
+	@Column(name="DAMAGED_QTY")
+	private Integer damagedQty;
+	
 	@Transient
 	public ItemSku itemSku;
 
@@ -94,6 +100,22 @@ public class Inventory implements Serializable {
 
 	public void setIssueQty(Integer issueQty) {
 		this.issueQty = issueQty;
+	}
+
+	public Integer getMissingQty() {
+		return missingQty;
+	}
+
+	public Integer getDamagedQty() {
+		return damagedQty;
+	}
+
+	public void setMissingQty(Integer missingQty) {
+		this.missingQty = missingQty;
+	}
+
+	public void setDamagedQty(Integer damagedQty) {
+		this.damagedQty = damagedQty;
 	}
 	
 }

@@ -6,6 +6,7 @@ import org.springframework.util.AutoPopulatingList;
 
 import com.smartworks.invtmgmt.converter.ItemSkuConverter;
 import com.smartworks.invtmgmt.core.domain.Item;
+import com.smartworks.invtmgmt.core.transaction.ReasonCodeEnum;
 import com.smartworks.platform.AppContextUtil;
 
 public class ItemSku {
@@ -17,16 +18,7 @@ public class ItemSku {
 	String skuCode;		
 	Integer quantity;
 	Integer orginalQty;
-	private	String reasonCode;
-
-	
-	public String getReasonCode() {
-		return reasonCode;
-	}
-
-	public void setReasonCode(String reasonCode) {
-		this.reasonCode = reasonCode;
-	}
+	private	ReasonCodeEnum reasonCode;
 
 	public Integer getOrginalQty() {
 		return orginalQty;
@@ -35,8 +27,6 @@ public class ItemSku {
 	public void setOrginalQty(Integer orginalQty) {
 		this.orginalQty = orginalQty;
 	}
-
-
 
 	ItemSkuConverter itemSkuConverter = AppContextUtil.getBean("itemSkuConverter");
 	
@@ -115,5 +105,17 @@ public class ItemSku {
 
 	public void setItemSkuConverter(ItemSkuConverter itemSkuConverter) {
 		this.itemSkuConverter = itemSkuConverter;
+	}
+
+	public ReasonCodeEnum getReasonCode() {
+		return reasonCode;
+	}
+
+	public void setReasonCode(ReasonCodeEnum reasonCode) {
+		this.reasonCode = reasonCode;
+	}
+	
+	public void setReasonCode(String reasonCode) {
+		this.reasonCode = ReasonCodeEnum.valueOf(reasonCode);;
 	}
 }

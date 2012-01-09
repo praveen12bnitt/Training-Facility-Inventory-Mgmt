@@ -5,6 +5,7 @@ import java.util.List;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
+import com.smartworks.invtmgmt.core.transaction.ReasonCodeEnum;
 
 public interface InventoryDao {
 	public Inventory load(InventoryPk skuLoc);
@@ -18,4 +19,5 @@ public interface InventoryDao {
 	public void reduceUnusableInventory(InventoryPk skuLocation, Integer qty);
 	public void addIssuedInventory(InventoryPk skuLocation, Integer qty);
 	public void reduceIssuedInventory(InventoryPk skuLocation, Integer qty);
+	public void addMissingDamagedInventory(InventoryPk skuLocation, Integer qty, ReasonCodeEnum reasonCode);
 }

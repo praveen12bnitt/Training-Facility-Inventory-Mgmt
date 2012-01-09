@@ -183,8 +183,8 @@ $(document).ready(function($) {
      		<td>
 					<form:select path="itemSkus[${itemSkuRow.index}].reasonCode" disabled="true">
 								<c:forEach items="${reasonCodeList}" var="reasonCode">
-									<form:option value="${reasonCode.reasonId}">
-     										${reasonCode.reasonCodeDesc}
+									<form:option value="${reasonCode}">
+     										${reasonCode}
      								</form:option>
      						</c:forEach>
      					</form:select>

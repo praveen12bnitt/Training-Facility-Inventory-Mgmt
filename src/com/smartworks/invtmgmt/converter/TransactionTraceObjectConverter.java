@@ -34,6 +34,7 @@ public class TransactionTraceObjectConverter {
 			TransactionDetails detail = new TransactionDetails();
 			detail.setQuantity(itemSku.getQuantity());
 			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
+			detail.setReasonCode(itemSku.getReasonCode());
 			detail.setSkuCode(itemSkuCode);
 			detail.setTrasactionTrace(transTrace);
 			details.add(detail);

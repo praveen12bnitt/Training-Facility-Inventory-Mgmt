@@ -3,7 +3,6 @@ package com.smartworks.invtmgmt.converter;
 import com.smartworks.invtmgmt.business.ItemAttributeDetails;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.core.domain.Inventory;
-import com.smartworks.invtmgmt.core.domain.ItemAttribute;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 
 public class InventoryConverter {

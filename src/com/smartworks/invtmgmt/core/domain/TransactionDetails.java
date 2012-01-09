@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
+
+import com.smartworks.invtmgmt.core.transaction.ReasonCodeEnum;
 
 @Entity
 @Table(name="TRANSACTION_DETAILS")
@@ -35,6 +39,11 @@ public class TransactionDetails implements Serializable {
 	@JoinColumn(name = "TRANSACTION_ID")
 	private TransactionTrace trasactionTrace;
 
+	@Column(name="REASON_CODE")
+	@Enumerated(EnumType.STRING)
+	private ReasonCodeEnum reasonCode;
+	
+	
 	public Integer getTransactionDetailsId() {
 		return transactionDetailsId;
 	}
@@ -65,6 +74,14 @@ public class TransactionDetails implements Serializable {
 
 	public void setTrasactionTrace(TransactionTrace trasactionTrace) {
 		this.trasactionTrace = trasactionTrace;
+	}
+
+	public ReasonCodeEnum getReasonCode() {
+		return reasonCode;
+	}
+
+	public void setReasonCode(ReasonCodeEnum reasonCode) {
+		this.reasonCode = reasonCode;
 	}
 
 }
