@@ -1,7 +1,7 @@
 package com.smartworks.invtmgmt.converter;
 
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
-import com.smartworks.invtmgmt.core.util.DateUtil;
+import com.smartworks.invtmgmt.core.service.DateUtil;
 import com.smartworks.invtmgmt.web.ui.transfer.UILaundryLoad;
 
 public class LaundryLoadConverter {

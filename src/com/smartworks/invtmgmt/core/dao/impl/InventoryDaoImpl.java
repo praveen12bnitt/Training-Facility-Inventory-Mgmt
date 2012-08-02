@@ -52,8 +52,8 @@ public class InventoryDaoImpl extends HibernateDaoSupport implements InventoryDa
 	}
 	
 	public List<Inventory> loadAllInventory(Location location) {
-		String query = "from Inventory where location = :location";
-		List<Inventory> inventoryList = getHibernateTemplate().find(query,location);
+		String query = "from Inventory where location_id = :location";
+		List<Inventory> inventoryList = getHibernateTemplate().findByNamedParam(query,"location", location.getLocationId());
 		return inventoryList;
 	}
 	

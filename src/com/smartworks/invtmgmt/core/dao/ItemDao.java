@@ -13,5 +13,7 @@ public interface ItemDao {
 	public Map<Integer, String> getItemNamesByIds(List itemIds);
 	public List<Item> getItemsByName(String name) ;
 	public List<Item> loadSelectedItems(List<Integer> itemIds);
-	
+	public void save(Item item);
+	public Integer getNextMappingId();
+	public Integer getNextItemId();
 }

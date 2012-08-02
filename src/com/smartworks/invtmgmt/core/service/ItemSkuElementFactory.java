@@ -1,4 +1,4 @@
-package com.smartworks.invtmgmt.core.util;
+package com.smartworks.invtmgmt.core.service;
 
 import org.springframework.util.AutoPopulatingList.ElementFactory;
 import org.springframework.util.AutoPopulatingList.ElementInstantiationException;

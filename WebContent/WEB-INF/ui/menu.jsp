@@ -79,6 +79,7 @@
 						<li><a href='<c:url value="/reports/inventory-locn.form" />'>Location</a></li>
 						<li><a href="#">Item Inventory</a></li>
 						<li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>						
+						<li><a href='<c:url value="/reports/filetransfer.form" />'>Export/Import</a></li>
 						</ul>
 				</li>
 				</security:authorize>

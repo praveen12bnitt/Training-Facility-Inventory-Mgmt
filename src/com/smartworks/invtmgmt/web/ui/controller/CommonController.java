@@ -1,6 +1,7 @@
 package com.smartworks.invtmgmt.web.ui.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -387,6 +388,17 @@ public class CommonController {
 	public Map<Integer,String> findByProductNameLike(@RequestParam String name, @RequestParam Integer locationId){
 		
 		return commonTransactionMgr.findByProductNameLike(name, locationId);
+	}
+	
+	@RequestMapping(value = "/getlocations.form", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<Integer, String> getlocations() {
+		List<Location> locations = locationDao.loadAll();
+		Map<Integer, String> locationMap = new HashMap<Integer, String>();
+		for(Location location: locations) {
+			locationMap.put(location.getLocationId(), location.getLocationName());
+		}
+		return locationMap;
 	}
 	
 	

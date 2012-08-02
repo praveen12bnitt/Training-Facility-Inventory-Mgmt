@@ -40,7 +40,12 @@ public class InventoryManagerImpl implements InventoryManager {
 			inv.setAvailableQty(updatedQty);
 			inventoryDao.saveOrUpdate(inv);
 		}
-	
+	}
+		
+	public void updateInventory(Inventory inventory) {
+		if (inventory != null) {
+			inventoryDao.saveOrUpdate(inventory);
+		}
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public class UITransactionTrace {
 	
 		LocationDao locationDao = AppContextUtil.getBean("locationDao");
 		uiTransactionTrace.setLocationName(locationDao.load(transactionTrace.getLocationId()).getLocationName());
-		uiTransactionTrace.setCreatedDttm(com.smartworks.invtmgmt.core.util.DateUtil.getExpandedTimeStamp(transactionTrace.getCreatedDttm()));
+		uiTransactionTrace.setCreatedDttm(com.smartworks.invtmgmt.core.service.DateUtil.getExpandedTimeStamp(transactionTrace.getCreatedDttm()));
 		
 		return uiTransactionTrace;
 	}

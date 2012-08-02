@@ -1,5 +1,6 @@
 package com.smartworks.invtmgmt.web.ui.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import com.smartworks.invtmgmt.converter.InventoryConverter;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.manager.InventoryManager;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
+import com.smartworks.invtmgmt.core.service.DataTransferService;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 
@@ -36,6 +38,9 @@ public class InventoryDetailsController {
 
 	@Autowired
 	InventoryConverter inventoryConverter;
+	
+	@Autowired
+	DataTransferService dataTransferService;
 
 	protected static Logger logger = Logger
 			.getLogger(InventoryDetailsController.class);
@@ -85,5 +90,45 @@ public class InventoryDetailsController {
 		return new ModelAndView("InventoryListExcelView", model);
 	}
 	
+	@RequestMapping(value="/inventoryReport.form", method=RequestMethod.GET)
+	public ModelAndView inventoryReportByLocation(HttpServletRequest request, HttpServletResponse response, Integer locationId
+			) throws IOException {
+		Map model = new HashMap();
+		List<Inventory> invtList = inventoryManager.getInventoryByLocn(locationId);
+		
+		model.put("inventoryList", invtList);
+		ModelAndView mav = new ModelAndView("reports/inventoryReport");
+		return new ModelAndView("inventoryReport", model);
+	}
+	
+	
+	@RequestMapping(value = "/filetransfer.form", method = RequestMethod.GET)
+	public ModelAndView showExportImport() {
+		logger.error("Received request to show all export import");
+		ModelAndView mav = new ModelAndView("reports/filetransfer");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/processfile.form", method = RequestMethod.GET)
+	public ModelAndView processfile() throws Exception {
+		logger.error("Received request to show all export import");
+		String path = System.getProperty("uploaddirectory", "d:/Hari/temp");
+		 File folder = new File(path);
+		  File[] listOfFiles = folder.listFiles(); 
+		 
+		  for (int i = 0; i < listOfFiles.length; i++) 
+		  {
+		 
+		   if (listOfFiles[i].isFile()) 
+		   {
+			  String files = listOfFiles[i].getName();
+			  dataTransferService.syncInventory(path+"/"+files);
+		      }
+		  }
+
+		
+		ModelAndView mav = new ModelAndView("reports/inventory-all");
+		return mav;
+	}
 	
 }

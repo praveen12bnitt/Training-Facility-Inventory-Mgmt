@@ -8,8 +8,8 @@ import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
+import com.smartworks.invtmgmt.core.service.ItemSkuElementFactory;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
-import com.smartworks.invtmgmt.core.util.ItemSkuElementFactory;
 
 public class IssueSkuForm {
 

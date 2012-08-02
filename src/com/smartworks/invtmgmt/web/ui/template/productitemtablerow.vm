@@ -1,0 +1,30 @@
+#set( $index = $rowNum + 0)
+#foreach( $item in $items )
+<tr>
+     			<td style="width: 400px;">     
+     		    <a id="plusgif" href="#" class="addR" tabindex="-1"><img src="$contextUrl/images/plus.gif" height="10px" width="10px"></a>
+      			&nbsp;			
+     			<input id="itemSkus0.item.id" name="itemList[$index].itemId" value="$item.id" type="hidden">$item.name
+     			<input id="itemSkus0.item.id" name="itemList[$index].productItemId" value="1" type="hidden">
+     			
+     		 </td>
+     		 
+     		 <td style="width: 300px;">
+     		 #set( $j = 0)
+     		 #foreach ($mapEntry in $item.attributeDetails.entrySet())
+     		 	$mapEntry.key.attributeName <input id="itemSkus$index.itemAttributeDtls$j.itemAttribute.attibuteId" name="itemList[$index].productItemAttrList[$j].productItemAttrNameId" value="$mapEntry.key.attibuteId" type="hidden">
+     		 	 <select id="itemSkus$index.itemAttributeDtls$j.itemAttributeValue.attributeValueId" name="itemList[$index].productItemAttrList[$j].productItemAttrValueId">
+     		 	 #foreach ($itemAttributeValue in $mapEntry.value)    					
+     						<option value="$itemAttributeValue.attributeValueId">
+     							$itemAttributeValue.attributeValue   
+     						</option>     		 	 	
+     		 	 #end
+     		 	 </select>
+     		 	 #set(  $j =  $j + 1 )    		 	
+     		   #end   
+     		   <input id="itemList[$index].attrLength" name="itemList[$index].attrLength" type="hidden" value="$j"> 		
+     		</td>     		
+     		<td><input id="itemSkus0.quantity" name="itemList[$index].quantity" type="text" value="" size="10">
+     		</td></tr>
+ #set( $index = $index + 1 )
+ #end

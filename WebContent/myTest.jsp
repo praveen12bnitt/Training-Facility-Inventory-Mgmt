@@ -1,3 +1,5 @@
+<%@page import="com.smartworks.platform.AppContextUtil"%>
+<%@page import="com.smartworks.invtmgmt.core.service.DataTransferService"%>
 <%@page import="com.pal.test.TestClass"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -10,7 +12,7 @@
 <body>
 <%
 
-TestClass test = new TestClass();
+//TestClass test = new TestClass();
 //test.testTransLoading();
 
 //test.testTransLocation();
@@ -40,8 +42,11 @@ TestClass test = new TestClass();
 
 //out.println(test.getUITransactionDetails());
 
-test.itemLikeQuerySearch();
+//test.itemLikeQuerySearch();
 
+
+DataTransferService dataTransferService = AppContextUtil.getBean("dataTransferService");
+dataTransferService.downloadIntentory(4);
 
 
 

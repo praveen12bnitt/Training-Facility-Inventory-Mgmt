@@ -10,4 +10,5 @@ public interface InventoryManager {
 	public List<Inventory> getAllInventory();
 	public List<Inventory> getInventoryByLocn(Integer locationId);
 	public void updateInventory(Integer updatedQty,Location location, String skuCode);
+	public void updateInventory(Inventory inventory);
 }

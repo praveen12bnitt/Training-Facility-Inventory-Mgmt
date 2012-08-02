@@ -40,3 +40,4 @@ Thumbs.db
 
 # Java Rebel file
 rebel.xml
+build/*

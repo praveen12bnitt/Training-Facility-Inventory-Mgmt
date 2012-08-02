@@ -1,4 +1,4 @@
-package com.smartworks.invtmgmt.core.util;
+package com.smartworks.invtmgmt.core.service;
 
 import java.io.StringWriter;
 

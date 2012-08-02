@@ -28,4 +28,16 @@ public class LocationDaoImpl extends HibernateDaoSupport implements LocationDao 
 		List<Location> locations = getHibernateTemplate().find(query);
 		return locations;
 	}
+
+	@Override
+	public Location findByLocationName(String locationName) {
+		String query = "from Location where location_name=:locationName";
+		List<Location> locations = getHibernateTemplate().findByNamedParam(query, "locationName", locationName);
+		if(locations.size()==0) {
+			return null;
+		} else {
+			return locations.get(0);
+		}
+		
+	}
 }

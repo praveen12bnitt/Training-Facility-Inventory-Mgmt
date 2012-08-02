@@ -70,5 +70,32 @@ public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 		return items;
 		
 	}
+
+	@Override
+	public void save(Item item) {
+		getHibernateTemplate().save(item);		
+	}
 	
+	@Override
+	public Integer getNextItemId() {
+		String query = "select max(ia.id) from Item ia";
+		List<Integer> itemId = getHibernateTemplate().find(query);
+		if(itemId !=null && itemId.size()>0) {
+			return itemId.get(0)+1;
+		} else {
+			return 1;
+		}
+	}
+	
+	
+	@Override
+	public Integer getNextMappingId() {
+		String query = "select max(ia.mappingId) from ItemAttributeMapping ia";
+		List<Integer> mappingId = getHibernateTemplate().find(query);
+		if(mappingId !=null && mappingId.size()>0) {
+			return mappingId.get(0)+1;
+		} else {
+			return 1;
+		}
+	}
 }

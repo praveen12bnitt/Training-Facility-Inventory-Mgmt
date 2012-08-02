@@ -13,6 +13,13 @@
 
 	<bean id="appCtxHolder" class="com.smartworks.platform.AppContextHolder"  />
 	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+       <property name="maxUploadSize">
+           <value>1000000000</value>
+       </property>
+	</bean>
+	
+	
 	 <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan">
@@ -82,7 +89,7 @@
 	
 	<bean id="laundryLoadConverter" class="com.smartworks.invtmgmt.converter.LaundryLoadConverter" />
 			
-	
+	<bean id="dataTransferService" class="com.smartworks.invtmgmt.core.service.DataTransferService" />
 	
 	
 	
@@ -150,6 +157,10 @@
     <bean id="dateUtil" class="com.smartworks.invtmgmt.core.db.util.DateUtil" >
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+    <bean id="inventoryReport"
+	   	class="com.smartworks.invtmgmt.web.ui.datatransfer.InventoryReport">
+	</bean>
     
     
     <tx:annotation-driven transaction-manager="transactionManager"/>

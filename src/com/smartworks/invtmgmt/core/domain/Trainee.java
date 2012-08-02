@@ -14,7 +14,7 @@ import javax.persistence.Version;
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
-import com.smartworks.invtmgmt.core.util.DateUtil;
+import com.smartworks.invtmgmt.core.service.DateUtil;
 
 
 @Entity
