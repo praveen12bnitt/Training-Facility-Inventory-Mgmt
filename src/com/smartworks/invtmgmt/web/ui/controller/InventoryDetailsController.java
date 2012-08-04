@@ -112,7 +112,7 @@ public class InventoryDetailsController {
 	@RequestMapping(value = "/processfile.form", method = RequestMethod.GET)
 	public ModelAndView processfile() throws Exception {
 		logger.error("Received request to show all export import");
-		String path = System.getProperty("uploaddirectory", "d:/Hari/temp");
+		String	path = System.getProperty("uploaddirectory", "d:/Hari/temp");
 		 File folder = new File(path);
 		  File[] listOfFiles = folder.listFiles(); 
 		 
@@ -122,7 +122,9 @@ public class InventoryDetailsController {
 		   if (listOfFiles[i].isFile()) 
 		   {
 			  String files = listOfFiles[i].getName();
-			  dataTransferService.syncInventory(path+"/"+files);
+			  File fileObj = new File(path+"/"+files);
+			  dataTransferService.syncInventory(fileObj);
+			  fileObj.delete();
 		      }
 		  }
 

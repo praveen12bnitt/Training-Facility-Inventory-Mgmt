@@ -32,11 +32,15 @@ public class FileUploadController {
 
     @RequestMapping(method = RequestMethod.POST, value="/upload.form")
      public ModelAndView handleRequest(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		String	path = System.getProperty("uploaddirectory", "d:/Hari/temp");
+    	File pathFile = new File(path);
+    	System.out.println(pathFile.getAbsolutePath());
+    	pathFile.mkdir();
     	final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
     	final Map<String, MultipartFile> files = multiRequest.getFileMap();
     	for (MultipartFile file : files.values()) {
     		System.out.println("file name uploaded::"+file.getName());
-    		file.transferTo(new File(new File("d:/Hari/temp"), file.getOriginalFilename()));
+    		file.transferTo(new File(pathFile, file.getOriginalFilename()));
     	}
     			
     	return new ModelAndView("/reports/filetransfer");
