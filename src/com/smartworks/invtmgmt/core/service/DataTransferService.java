@@ -1,12 +1,12 @@
 package com.smartworks.invtmgmt.core.service;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.apache.poi.hssf.eventusermodel.HSSFEventFactory;
 import org.apache.poi.hssf.eventusermodel.HSSFRequest;
@@ -92,13 +92,17 @@ public class DataTransferService  {
 		System.out.println("done.");
 	}
 	
-	public void syncInventory(String file) throws Exception {
+	public void syncInventory(File file) throws Exception {
 		FileInputStream fin = new FileInputStream(file);
-		
-		HSSFWorkbook workBook = new HSSFWorkbook(fin);
-		HSSFSheet sheet = workBook.getSheetAt(0);
-		
-		processSheet(sheet);
+		try {
+			HSSFWorkbook workBook = new HSSFWorkbook(fin);
+			HSSFSheet sheet = workBook.getSheetAt(0);
+			processSheet(sheet);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			fin.close();
+		}		
 	}
 
 	private void processSheet(HSSFSheet sheet) {
