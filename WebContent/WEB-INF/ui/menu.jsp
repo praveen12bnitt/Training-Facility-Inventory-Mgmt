@@ -80,6 +80,8 @@
 						<li><a href="#">Item Inventory</a></li>
 						<li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>						
 						<li><a href='<c:url value="/reports/filetransfer.form" />'>Export/Import</a></li>
+						<li><a href='<c:url value="/reports/laundryreport-in.form" />'>Laundry Report</a></li>
+						<li><a href='<c:url value="/reports/laundryTransactionalData.form" />'>Laundry Summary Report</a></li>
 						</ul>
 				</li>
 				</security:authorize>

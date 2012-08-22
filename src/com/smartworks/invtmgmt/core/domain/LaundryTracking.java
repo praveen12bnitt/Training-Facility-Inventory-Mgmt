@@ -80,6 +80,9 @@ public class LaundryTracking {
 	@Column(name="USBOPB_0006_B")
 	Integer USBOPB0006B;
 	
+	@Column(name="FPS_0006_C")
+	Integer FPS0006C;
+	
 	@Column(name="DRYER_MC_NO")	
 	Integer dryerMachineNo;
 	
@@ -149,6 +152,9 @@ public class LaundryTracking {
 	public Integer getUSBOPB0006B() {
 		return USBOPB0006B;
 	}
+	public Integer getFPS0006C() {
+		return FPS0006C;
+	}
 	public Integer getDryerMachineNo() {
 		return dryerMachineNo;
 	}
@@ -214,6 +220,9 @@ public class LaundryTracking {
 	}
 	public void setPTD0006F(Integer pTD0006F) {
 		PTD0006F = pTD0006F;
+	}
+	public void setFPS0006C(Integer fps0006C) {
+		FPS0006C = fps0006C;
 	}
 	public void setUSBOPB0006B(Integer uSBOPB0006B) {
 		USBOPB0006B = uSBOPB0006B;

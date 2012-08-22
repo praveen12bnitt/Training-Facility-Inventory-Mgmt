@@ -95,6 +95,12 @@
 				<td><form:input type="text" path="laundryTracking.USBOPB0006B" size="2" /></td>
 			</tr>
 			
+			<tr>
+				<td>FPS 0006-C</td>
+				<td><form:input type="text" path="laundryTracking.FPS0006C" size="2" /></td>
+				
+			</tr>
+			
 		</table>
 		</div>
 		<br/>

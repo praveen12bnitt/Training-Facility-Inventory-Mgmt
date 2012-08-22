@@ -1,5 +1,6 @@
 package com.smartworks.invtmgmt.core.manager;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Propagation;
@@ -49,6 +50,16 @@ public class LaundryMgrImpl implements LaundryMgr {
 
 	public void setLaundryTrackingDao(LaundryTrackingDao laundryTrackingDao) {
 		this.laundryTrackingDao = laundryTrackingDao;
+	}
+	
+	@Transactional(readOnly=false,propagation=Propagation.SUPPORTS)
+	public List<LaundryTracking> loadAllLoads(Date fromDate, Date toDate) {
+		return this.laundryTrackingDao.loadAllLoads(fromDate, toDate);
+	}
+	
+	@Transactional(readOnly=false,propagation=Propagation.SUPPORTS)
+	public List loadAllLoadsTotal(Date fromDate, Date toDate) {
+		return this.laundryTrackingDao.loadAllLoadsTotal(fromDate, toDate);
 	}
 	
 	

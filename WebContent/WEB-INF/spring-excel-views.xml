@@ -6,5 +6,16 @@
 	<bean id="InventoryListExcelView"
 	   	class="com.smartworks.invtmgmt.web.ui.view.InventoryListExcelView">
 	</bean>
+    
+    <bean id="LaundryListExcelView"
+	   	class="com.smartworks.invtmgmt.web.ui.view.LaundryListExcelView">
+	</bean>
+	
+	 <bean id="LaundryReportExcelView"
+	   	class="com.smartworks.invtmgmt.web.ui.view.LaundryReportExcelView">
+	</bean>
+	<bean id="LaundrySummaryReportView"
+	   	class="com.smartworks.invtmgmt.web.ui.view.LaundrySummaryReportView">
+	</bean>
  
 </beans>

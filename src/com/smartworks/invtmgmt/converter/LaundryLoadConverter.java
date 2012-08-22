@@ -156,11 +156,18 @@ public class LaundryLoadConverter {
 			laundryDetails.append("USBOPB 0006-B:");
 			laundryDetails.append(laundryTracking.getUSBOPB0006B());
 			laundryDetails.append("</td>");
-		}
-		
+		}		
 		
 		laundryDetails.append("</tr>");
+		laundryDetails.append("<tr>");
 		
+		if(laundryTracking.getFPS0006C() != null) {
+			laundryDetails.append("<td>");
+			laundryDetails.append("FPS 0006-C:");
+			laundryDetails.append(laundryTracking.getFPS0006C());
+			laundryDetails.append("</td>");
+		}
+		laundryDetails.append("</tr>");
 		laundryDetails.append("</table>");
 		
 		return laundryDetails.toString();

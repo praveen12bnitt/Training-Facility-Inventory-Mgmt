@@ -1,12 +1,15 @@
 package com.smartworks.invtmgmt.core.dao.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.smartworks.invtmgmt.core.dao.LaundryTrackingDao;
 import com.smartworks.invtmgmt.core.db.util.DateUtil;
+import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
 
 public class LaundryTrackingDaoImpl extends HibernateDaoSupport implements LaundryTrackingDao  {
@@ -44,6 +47,25 @@ public class LaundryTrackingDaoImpl extends HibernateDaoSupport implements Laund
 		laundryTracking.setIsOpen(false);
 		getHibernateTemplate().update(laundryTracking);
 	}
+	
+	public List<LaundryTracking> loadAllLoads(Date fromDate, Date toDate) {
+		String query = "from LaundryTracking where createdDttm between :fromDate and :toDate";
+		String[] params = {"fromDate", "toDate"};
+		Object[] values = {new Timestamp(fromDate.getTime()), new Timestamp(toDate.getTime()),};
+		List<LaundryTracking> laundryList = getHibernateTemplate().findByNamedParam(query,params, values);
+		return laundryList;
+	}
+	
+	public List loadAllLoadsTotal(Date fromDate, Date toDate) {
+		String query = "select (sum(tseRoom)+sum(towels)+sum(gymClothings)+sum(jockSocksBras)+sum(uniforms)+sum(regLaundry)), " +
+				" sum(DMD0006G),sum(FAD0006E),sum(CTD0006D),sum(ATFSABT0006H),sum(PTD0006F),sum(USBOPB0006B), sum(FPS0006C)" +
+				"  from LaundryTracking where createdDttm between :fromDate and :toDate";
+		String[] params = {"fromDate", "toDate"};
+		Object[] values = {new Timestamp(fromDate.getTime()), new Timestamp(toDate.getTime()),};
+		List laundryList = getHibernateTemplate().findByNamedParam(query,params, values);
+		return laundryList;
+	}
+
 
 	public DateUtil getDateUtil() {
 		return dateUtil;
