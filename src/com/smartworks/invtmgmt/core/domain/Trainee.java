@@ -113,5 +113,10 @@ public class Trainee implements Serializable {
 		return DateUtil.getExpandedTimeStamp(lastUpdateDttm);
 	}
 	
+	public String displayName() {
+		return this.lastName +" , " 
+				+ this.firstName;
+	}
+	
 	
 }

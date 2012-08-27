@@ -59,7 +59,7 @@
 			&nbsp;
 			Washer Buggy Weight : <form:input type="text" path="laundryTracking.washerWeightBuggy" size="4" />
 			<table class="laundry">			
-			<tr>
+			<!-- tr>
 				<td>TSE Room</td>
 				<td><form:input type="text" path="laundryTracking.tseRoom" size="2" /> </td>
 				<td>Towels Set</td>
@@ -101,44 +101,17 @@
 				<td>FPS 0006-C</td>
 				<td><form:input type="text" path="laundryTracking.FPS0006C" size="2" /></td>
 				
-			</tr>
+			</tr-->
+			<tr> 
+			<select>
 			
+			
+			</select>
+			</tr>
 		</table>
 		</div>
 		<br/>
-		<div id="heading" class="ui-widget-header">Dryer Tracking</div>
-		<div id="content" class="ui-widget-content" style="padding: 10px;">	
-		Dryer No: <form:input type="text" path="laundryTracking.dryerMachineNo" size="2" />
-		<table class="laundry">
-			
-			<tr>
-				<td>Weight with Buggy</td>
-				<td><form:input type="text" path="laundryTracking.weightWithBuggy" size="2" /></td>					
-			</tr>
-			
-			<tr>
-			<td>Weight of Buggy</td>
-				<td><form:input type="text" path="laundryTracking.weightBuggy" size="2" /></td>		
-			</tr>
-			
-			<tr>
-				<td>Dryer Temp Setting</td>
-				<td><form:input type="text" path="laundryTracking.dryerTempSetting" size="2" /></td>
-				
-			</tr>
-			
-			<tr>
-				<td>Filter Cleaned</td>
-				<td><form:checkbox path="laundryTracking.cleanedFilter" /></td>
-			</tr>
-		</table>		
-		</div>
 		
-		<div id="actions" align="center" class="actions">
-			<button type="submit" class="ui-state-default ui-corner-all form-button">Create</button>
-		</div>	
-			
-</div>
 </form:form>
 </body>
 </html>

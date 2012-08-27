@@ -21,6 +21,7 @@ public class LaundryLoadConverter {
 		uiLaundryLoad.setCreateDttm(DateUtil.getExpandedTimeStamp(laundryTracking.getCreatedDttm()));
 		uiLaundryLoad.setLastUpdateDttm(DateUtil.getExpandedTimeStamp(laundryTracking.getLastUpdateDttm()));
 		uiLaundryLoad.setClosedDttm(DateUtil.getExpandedTimeStamp(laundryTracking.getClosedDttm()));
+		uiLaundryLoad.setWasherBuggyWeight(laundryTracking.getWeightWithBuggy());
 		
 		uiLaundryLoad.setLaundryDetails(getLaundryDetailsStr(laundryTracking));
 		if(laundryTracking.getDryerMachineNo() != null) {
@@ -37,6 +38,11 @@ public class LaundryLoadConverter {
 		
 		if(laundryTracking.getWeightBuggy() != null) {
 			dryerWtDetails.append("Weight of Buggy : "+laundryTracking.getWeightBuggy());
+			dryerWtDetails.append("</br>");
+		}
+		
+		if(laundryTracking.getWasherWeightBuggy() != null) {
+			dryerWtDetails.append("Washer Buggy Weight : "+laundryTracking.getWasherWeightBuggy());
 		}
 			
 		uiLaundryLoad.setDryerWeightDetails(dryerWtDetails.toString());

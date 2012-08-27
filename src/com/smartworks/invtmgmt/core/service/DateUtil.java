@@ -9,6 +9,8 @@ public class DateUtil {
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 	
+	static SimpleDateFormat sdfampm = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+	
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	public static String getExpandedTimeStamp(Timestamp timeStamp) {		
@@ -24,6 +26,23 @@ public class DateUtil {
 		} catch(ParseException parseEx) {
 			return new Date(System.currentTimeMillis());
 		}
+		
+	}
+	
+	public static Date convertToTimeStamp(String date) {
+		try {
+			return sdfampm.parse(date);
+		} catch(ParseException parseEx) {
+			return new Date(System.currentTimeMillis());
+		}
+		
+	}
+	
+	public static String convertFromTimeStamp(Timestamp timeStamp) {
+		if(timeStamp != null)
+			return sdfampm.format(timeStamp);
+		else
+			return "";
 		
 	}
 	

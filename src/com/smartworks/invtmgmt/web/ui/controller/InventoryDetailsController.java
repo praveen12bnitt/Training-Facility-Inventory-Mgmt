@@ -24,6 +24,7 @@ import com.smartworks.invtmgmt.converter.InventoryConverter;
 import com.smartworks.invtmgmt.converter.LaundryLoadConverter;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
+import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.manager.InventoryManager;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.LaundryMgr;
@@ -204,6 +205,25 @@ public class InventoryDetailsController {
 		
 		ModelAndView mav = new ModelAndView("reports/inventory-all");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/issue-in.form", method = RequestMethod.GET)
+	public ModelAndView showIssueReturnInputForm() {
+		logger.error("Received request to show all Issue Report Input");
+		ModelAndView mav = new ModelAndView("reports/issuereturn-in");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/issue-export.form", method = RequestMethod.POST)
+	public ModelAndView exportIssueReturns() {
+		logger.error("Received request to export issue returns");
+		List<TransactionTrace> list = invtTransMgr.loadAllClosedTransactions();
+		
+		logger.error("closed");
+		Map model=new HashMap();
+		model.put("transactionTraceList", list);
+		return new ModelAndView("IssueReturnExcelView",model);
+		
 	}
 	
 }

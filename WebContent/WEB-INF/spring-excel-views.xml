@@ -2,7 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
- 
+	
+
 	<bean id="InventoryListExcelView"
 	   	class="com.smartworks.invtmgmt.web.ui.view.InventoryListExcelView">
 	</bean>
@@ -17,5 +18,11 @@
 	<bean id="LaundrySummaryReportView"
 	   	class="com.smartworks.invtmgmt.web.ui.view.LaundrySummaryReportView">
 	</bean>
- 
+	
+	
+	<!-- IssueReturnExcelView , com.smartworks.invtmgmt.converter-->
+ 	<bean id="IssueReturnExcelView"
+	   	class="com.smartworks.invtmgmt.web.ui.view.IssueReturnExcelView">
+	   	
+	</bean>
 </beans>

@@ -71,6 +71,8 @@
 	<bean id="laundryTrackingDao" class="com.smartworks.invtmgmt.core.dao.impl.LaundryTrackingDaoImpl" parent="abstractDao" >
 		<property name="dateUtil" ref="dateUtil" /> 
 	</bean>
+	<bean id="laundryDao" class="com.smartworks.invtmgmt.core.dao.impl.LaundryDaoImpl" parent="abstractDao" />
+	
 	<bean id="userDao" class="com.smartworks.invtmgmt.core.dao.impl.UserDaoImpl" parent="abstractDao" />
 	<bean id="productDao" class="com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl" parent="abstractDao" />
 	<!--  Converters  -->
@@ -118,6 +120,10 @@
     
     <bean id="laundryMgr" class="com.smartworks.invtmgmt.core.manager.LaundryMgrImpl">
         <property name="laundryTrackingDao"><ref local="laundryTrackingDao"/></property>
+    </bean>
+    
+    <bean id="laundryTransMgr" class="com.smartworks.invtmgmt.core.manager.LaundryTransMgrImpl">
+        <property name="laundryDao"><ref local="laundryDao"/></property>
     </bean>
     <bean id="commonTransactionMgr" class="com.smartworks.invtmgmt.core.manager.CommonTransactionMgrImpl" />
     

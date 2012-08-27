@@ -43,4 +43,6 @@ public interface InvtTransManager {
 	
 	public TransactionDetailsHolder getTransDetails(Integer transId);
 	
+	public List<TransactionTrace> loadAllClosedTransactions();
+	
 }

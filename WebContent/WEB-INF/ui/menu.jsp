@@ -53,8 +53,10 @@
 					<a href="#">Laundry</a>
 					<ul class="sub_menu">
 						<li><a href='<c:url value="/laundry/list-laundry.form?type=open" />'>List Loads</a></li>
-						<li><a href='<c:url value="/laundry/create-load.form" />'>Create New Load</a></li>
+						<li><a href='<c:url value="/newlaundry/create-load.form?laundryType=W" />'>Create New Washer Load</a></li>
+						<li><a href='<c:url value="/newlaundry/create-load.form?laundryType=D" />'>Create New Dryer Load</a></li>
 						<li><a href='<c:url value="/laundry/list-laundry.form" />'>List All Loads</a></li>
+						<li><a href='<c:url value="/newlaundry/laundrylist.form?laundryType=W" />'>Washer List</a></li>
 					</ul>
 				</li>
 				</security:authorize>
@@ -81,7 +83,7 @@
 						<li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>						
 						<li><a href='<c:url value="/reports/filetransfer.form" />'>Export/Import</a></li>
 						<li><a href='<c:url value="/reports/laundryreport-in.form" />'>Laundry Report</a></li>
-						<li><a href='<c:url value="/reports/laundryTransactionalData.form" />'>Laundry Summary Report</a></li>
+						<li><a href='<c:url value="/reports/issue-in.form" />'>Issue/Return Report</a></li>
 						</ul>
 				</li>
 				</security:authorize>

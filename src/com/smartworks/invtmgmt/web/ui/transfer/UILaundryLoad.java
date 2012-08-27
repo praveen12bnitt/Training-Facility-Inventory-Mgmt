@@ -12,6 +12,7 @@ public class UILaundryLoad {
 	String lastUpdateDttm;
 	
 	Integer washingMachineNo;
+	Integer washerBuggyWeight;
 	String laundryDetails;
 	
 	@NotNull
@@ -46,8 +47,7 @@ public class UILaundryLoad {
 	}
 	public Integer getDryerMachineNo() {
 		return dryerMachineNo;
-	}
-	
+	}	
 	public void setLoadId(Integer loadId) {
 		this.loadId = loadId;
 	}
@@ -92,6 +92,12 @@ public class UILaundryLoad {
 	}
 	public void setFilterCleaned(boolean filterCleaned) {
 		this.filterCleaned = filterCleaned;
+	}
+	public Integer getWasherBuggyWeight() {
+		return washerBuggyWeight;
+	}
+	public void setWasherBuggyWeight(Integer washerBuggyWeight) {
+		this.washerBuggyWeight = washerBuggyWeight;
 	}
 	
 	

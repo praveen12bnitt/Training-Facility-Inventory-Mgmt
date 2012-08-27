@@ -36,7 +36,7 @@ $(document).ready(
 
 </head>
 <body class="body-class" >	
-<form method="post" action='<c:url value="/reports/laundryreport-page.form"/>'>
+<form method="post" action='<c:url value="/reports/issue-export.form"/>'>
 	
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
@@ -44,15 +44,17 @@ $(document).ready(
 	<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
 	<br />
-	<div id="heading12" class="ui-widget-header">Laundry Report Input</div>
+	<div id="heading12" class="ui-widget-header">Issue Return Input</div>
 	<div style="clear: both;"></div>	
 	
 		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
 			
+			<br/>
+			<br/>
 			<table id="transDetails" class="ui-widget item-table trans-details">				
 			<tbody class="ui-widget-content trans-details" >
 				<tr>
-					<td class="ui-widget-header">Report Inputs</td><td class="ui-widget-header"></td>
+					<td class="ui-widget-header">Report Inputs</td><td class = "ui-widget-header"></td>
 				</tr>
 				<tr>
 					<td>From Date</td><td><input type="text" name="fromDate" id="fromDate" value="" /></td>
@@ -64,7 +66,7 @@ $(document).ready(
 			</tbody>
 		</table>		
 			<div id="actions" align="center" class="actions">
-				<button id="showReport" type="submit" class="ui-state-default ui-corner-all form-button">Show Report</button>
+				<button id="showReport" type="submit" class="ui-state-default ui-corner-all form-button">Export to Excel</button>
 			</div>
 			<div id="pager3"></div>
 		</div>

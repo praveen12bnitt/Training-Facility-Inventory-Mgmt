@@ -92,6 +92,9 @@ public class LaundryTracking {
 	@Column(name="WEIGHT_BUGGY")	
 	Integer weightBuggy;
 	
+	@Column(name="WASHER_BUGGY_WEIGHT")	
+	Integer washerWeightBuggy;
+	
 	@Column(name="DRYER_TEMP")
 	Integer dryerTempSetting;
 	
@@ -247,6 +250,12 @@ public class LaundryTracking {
 	}
 	public void setIsOpen(Boolean isOpen) {
 		this.isOpen = isOpen;
+	}
+	public Integer getWasherWeightBuggy() {
+		return washerWeightBuggy;
+	}
+	public void setWasherWeightBuggy(Integer washerWeightBuggy) {
+		this.washerWeightBuggy = washerWeightBuggy;
 	}
 	
 }

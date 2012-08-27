@@ -40,6 +40,18 @@ public class TransactionTraceDaoImpl extends HibernateDaoSupport implements Tran
 		transList = getHibernateTemplate().find(sql, locationId,staffId,transType);
 		return transList;
 	}
+	
+	public List<TransactionTrace> loadAllClosedTransactions() {
+		String sql = "from TransactionTrace where transType in (select transType from TransactionType where" +
+				" (transType like 'ISSUE%' or transType like 'RETURN%')) ";
+		List<TransactionTrace> transList = new ArrayList<TransactionTrace>();
+		transList = getHibernateTemplate().find(sql);
+		for(TransactionTrace transactionTrace: transList) {
+			List transDetails = transactionTrace.getTransDetails();
+			transDetails.size();
+		}
+		return transList;
+	}
 
 	@Override
 	public void markTransactionClosed(Integer transactionId) {

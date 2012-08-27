@@ -145,4 +145,10 @@ public class Staff implements Serializable {
 		this.extension = extension;
 	}
 	
+	public String displayName() {
+		return this.lastName +" , " 
+				+ this.firstName;
+	}
+	
+	
 }
