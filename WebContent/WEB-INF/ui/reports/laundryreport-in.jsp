@@ -36,7 +36,7 @@ $(document).ready(
 
 </head>
 <body class="body-class" >	
-<form method="post" action='<c:url value="/reports/laundryreport-page.form"/>'>
+<form method="get" action='<c:url value="/reports/exportLaundry.form"/>'>
 	
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
@@ -53,6 +53,24 @@ $(document).ready(
 			<tbody class="ui-widget-content trans-details" >
 				<tr>
 					<td class="ui-widget-header">Report Inputs</td><td class="ui-widget-header"></td>
+				</tr>
+				<tr>
+					<td>Laundry Type</td>
+						<td>
+							<select name="laundryType" id="laundryType">
+								<option value="W">Washer</option>
+								<option value="D">Dryer</option>
+							</select>
+						</td>
+				</tr>
+				<tr>
+					<td>Report Type</td>
+						<td>
+							<select name="reportType" id="reportType">
+								<option value="T">Transactional</option>
+								<option value="S">Summary</option>
+							</select>
+						</td>
 				</tr>
 				<tr>
 					<td>From Date</td><td><input type="text" name="fromDate" id="fromDate" value="" /></td>

@@ -23,11 +23,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smartworks.invtmgmt.converter.InventoryConverter;
 import com.smartworks.invtmgmt.converter.LaundryLoadConverter;
 import com.smartworks.invtmgmt.core.domain.Inventory;
+import com.smartworks.invtmgmt.core.domain.Laundry;
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.manager.InventoryManager;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.LaundryMgr;
+import com.smartworks.invtmgmt.core.manager.LaundryTransMgr;
 import com.smartworks.invtmgmt.core.service.DataTransferService;
 import com.smartworks.invtmgmt.core.service.DateUtil;
 import com.smartworks.invtmgmt.web.ui.transfer.UILaundryLoad;
@@ -45,6 +47,9 @@ public class InventoryDetailsController {
 	
 	@Autowired
 	LaundryMgr laundryMgr;
+	
+	@Autowired
+	LaundryTransMgr laundryTransMgr;
 	
 	@Autowired
 	LaundryLoadConverter laundryLoadConverter;
@@ -117,18 +122,22 @@ public class InventoryDetailsController {
 
 	@RequestMapping(value="/exportLaundry.form", method=RequestMethod.GET)
 	public ModelAndView exportLaundry(@RequestParam(value="fromDate") String fromDate,
-			@RequestParam(value="toDate") String toDate, @RequestParam(value="reportName") String reportName) throws IOException {
+			@RequestParam(value="toDate") String toDate, @RequestParam(value="reportType") String reportType,
+			@RequestParam(value="laundryType") String laundryType
+			) throws IOException {
 		Map model = new HashMap();
-		Date dtFromDate  = DateUtil.getDate(fromDate);
-		Date dtToDate  = DateUtil.getDate(toDate);
-		List<LaundryTracking> laundryTrackingList = laundryMgr.loadAllLoads(dtFromDate, dtToDate);
-		List<Long> laundryTrackingListTotal = laundryMgr.loadAllLoadsTotal(dtFromDate, dtToDate);
-		model.put("laundryList", laundryTrackingList);
-		model.put("laundryListTotal", laundryTrackingListTotal);
-		if("transactional".equals(reportName))
+		
+		model.put("laundryType", laundryType);
+		
+		if("T".equals(reportType)) {
+			List<Laundry> laundryList = laundryTransMgr.loadAll(laundryType, fromDate, toDate);
+			model.put("laundryList", laundryList);
 			return new ModelAndView("LaundryReportExcelView", model);
-		else
+		} else {
+			List<Object[]> laundrySummaryList = laundryTransMgr.summaryAll(laundryType, fromDate, toDate);
+			model.put("laundrySummaryList", laundrySummaryList);
 			return new ModelAndView("LaundrySummaryReportView", model);
+		}
 	}
 
 

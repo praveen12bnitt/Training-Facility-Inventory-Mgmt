@@ -28,6 +28,11 @@ public class LaundryTransMgrImpl implements LaundryTransMgr {
 		return laundryDao.loadAll(laundryType, fromDate, toDate);
 	}
 	
+	@Transactional(readOnly=false,propagation=Propagation.SUPPORTS)
+	public List<Object[]> summaryAll(String laundryType, String fromDate, String toDate) {
+		return laundryDao.summaryAll(laundryType, fromDate, toDate);
+	}
+	
 	public void save(Laundry laundry) {
 		laundryDao.save(laundry);
 	}

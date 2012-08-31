@@ -48,6 +48,45 @@ public class LaundryController {
 		return mav;
 	}
 	
+	/*******************************************************************
+	@RequestMapping(value = "/createAppl.form",method = RequestMethod.GET)
+	public ModelAndView mytran(@RequestParam(value="laundryType") String laundryType){
+	
+		Map<String,String> itemMap = new HashMap<String,String>();
+		
+		if("W".equals(laundryType)){
+			itemMap.put("header", "Machine Details");
+			itemMap.put("Unit","Machine No" );
+			itemMap.put("weight","firstWeight" );
+			itemMap.put("Time","washing time");
+		}else{
+			itemMap.put("header", "dry details");
+			itemMap.put("Unit", "machineno");
+			itemMap.put("weight", "weight of the cloth");
+			itemMap.put("time", "dryer Time");
+		}
+		itemMap.put("LaundryType","laundryType");
+		ModelAndView mav =  new ModelAndView("mylaundry/washload");
+		mav.addObject("itemMap", itemMap);
+		return mav;
+	}
+	
+	item.put("LaundyrType","laundryType");
+	ModelandView = mcc =  new ModelAndView("mylaundy/wload");
+	mcc.addObject("itemMap",itemMap);
+	mcc.addObject("itemMap",itemMap);
+	mcc.addObject("itemMap",itemMap);
+	mcc.addObject("itemMap",itenMap);
+	mcc.addObject("itemMap",itemmap);
+	
+	
+	*******************************************************************/
+	
+	/***********************************************************************/
+	
+	
+	/***********************************************************************/
+	
 	@ResponseBody
 	@RequestMapping(value="/save-load.form", method=RequestMethod.POST)
 	public String saveLaundry(@RequestBody UILaundry uiLaundry) {
@@ -95,3 +134,9 @@ public class LaundryController {
 		return response;
 	}
 }
+
+
+
+	
+	
+

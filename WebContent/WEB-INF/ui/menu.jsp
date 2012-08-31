@@ -57,6 +57,7 @@
 						<li><a href='<c:url value="/newlaundry/create-load.form?laundryType=D" />'>Create New Dryer Load</a></li>
 						<li><a href='<c:url value="/laundry/list-laundry.form" />'>List All Loads</a></li>
 						<li><a href='<c:url value="/newlaundry/laundrylist.form?laundryType=W" />'>Washer List</a></li>
+						<li><a href='<c:url value="/newlaundry/laundrylist.form?laundryType=D" />'>Dryer List</a></li>
 					</ul>
 				</li>
 				</security:authorize>

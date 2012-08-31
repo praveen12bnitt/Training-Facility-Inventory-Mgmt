@@ -1,7 +1,7 @@
 package com.smartworks.invtmgmt.web.ui.view;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,14 +18,12 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
-import com.smartworks.invtmgmt.core.domain.LaundryTracking;
+import com.smartworks.invtmgmt.core.domain.Laundry;
 import com.smartworks.invtmgmt.core.service.DateUtil;
 
 public class LaundryReportExcelView extends AbstractExcelView {
 	
-	private static List<String> custList = new ArrayList<String>();
-	private static String customerCodeFormat="1006a {0}";
-	private static final Double buggyWeight=48d; // Constant per suresh
+		
 	
 	protected void buildExcelDocument(Map model,
             HSSFWorkbook workbook,
@@ -35,8 +33,17 @@ public class LaundryReportExcelView extends AbstractExcelView {
 		  response.setContentType("application/vnd.ms-excel");
 		  response.setHeader("Content-disposition", "attachment; filename=LaundryReport.xls");
 		  
-		  List<LaundryTracking> laundryList = (List<LaundryTracking>) model.get("laundryList");
-		  List laundryListTotal = (List) model.get("laundryListTotal");
+		  List<Laundry> laundryList = (List<Laundry>) model.get("laundryList");
+		  String laundryType = (String)model.get("laundryType");
+		  
+		  Map<String, String> laundryLabels = new HashMap<String, String>();
+		  laundryLabels.put("W.Time", "Time of Washing");
+		  laundryLabels.put("W.UnitNo", "Washer No");
+		  laundryLabels.put("W.Weight", "Dirty Weight");
+		  
+		  laundryLabels.put("D.Time", "Time of Drying");
+		  laundryLabels.put("D.UnitNo", "Dryer No");
+		  laundryLabels.put("D.Weight", "Clean Weight");
 		  
 		  HSSFSheet sheet = workbook.createSheet("Laundry Report");
 		  
@@ -63,40 +70,49 @@ public class LaundryReportExcelView extends AbstractExcelView {
 			HSSFRow header = sheet.createRow(1);
 			
 			cell = header.createCell(0);
-			cell.setCellValue("Customer");
+			cell.setCellValue(laundryLabels.get(laundryType+".UnitNo"));
 			cell.setCellStyle(cellStyle);
 			
 			cell = header.createCell(1);
-			cell.setCellValue("Created Time");
+			cell.setCellValue(laundryLabels.get(laundryType+".Time"));
 			cell.setCellStyle(cellStyle);
 			
 			cell = header.createCell(2);
-			cell.setCellValue("Location");
+			cell.setCellValue("Client Info");
 			cell.setCellStyle(cellStyle);
 			
 			cell = header.createCell(3);
-			cell.setCellValue("Laundered Item");
+			cell.setCellValue(laundryLabels.get(laundryType+".Weight"));
 			cell.setCellStyle(cellStyle);
 			
 			cell = header.createCell(4);
-			cell.setCellValue("Total Weight");
-			cell.setCellStyle(cellStyle);
-			
-			cell = header.createCell(5);
 			cell.setCellValue("Buggy Weight");
 			cell.setCellStyle(cellStyle);
 			
-			cell = header.createCell(6);
-			cell.setCellValue("Item Weight");
+			cell = header.createCell(5);
+			cell.setCellValue("Total Weight");
 			cell.setCellStyle(cellStyle);
 			
-			cell = header.createCell(7);
+			cell = header.createCell(6);
 			cell.setCellValue("UOM");
 			cell.setCellStyle(cellStyle);
 			
+			
+			
 			int rowNum = 2;
 			
-			for(LaundryTracking laundryTracking : laundryList) {
+			for(Laundry laundry: laundryList) {
+				HSSFRow row = sheet.createRow(rowNum++);
+				row.createCell(0).setCellValue(laundry.getUnitNo());
+				row.createCell(1).setCellValue(DateUtil.getExpandedTimeStamp(laundry.getCreatedDttm()));
+				row.createCell(2).setCellValue(laundry.getClientGroup()+"-"+laundry.getClientSubGroup());
+				row.createCell(3).setCellValue(laundry.getTotalWeight());
+				row.createCell(4).setCellValue(laundry.getBuggyWeight());
+				row.createCell(5).setCellValue(laundry.getWeight());
+				row.createCell(6).setCellValue("LB");
+			}
+			
+			/**for(LaundryTracking laundryTracking : laundryList) {
 				if(laundryTracking.getGymClothings()!=null) {
 				HSSFRow row = sheet.createRow(rowNum++);
 				
@@ -289,8 +305,8 @@ public class LaundryReportExcelView extends AbstractExcelView {
 				
 				row.createCell(7).setCellValue("LB");
 				}
-			}
-			for(int k=0; k<8; k++) {
+			}**/
+			for(int k=0; k<7; k++) {
 				sheet.autoSizeColumn(k);
 			}
 			

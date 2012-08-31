@@ -11,5 +11,6 @@ public interface LaundryTransMgr {
 	public void save(Laundry laundry);
 	public void update(Laundry laundry);
 	public List<Laundry> loadAll(String laundryType, String fromDate, String toDate);
+	public List<Object[]> summaryAll(String laundryType, String fromDate, String toDate);
 }
 

@@ -38,7 +38,19 @@ public class LaundryDaoImpl  extends HibernateDaoSupport implements LaundryDao {
 		
 		List<Laundry> laundryList = new ArrayList<Laundry>();
 		laundryList = getHibernateTemplate().findByNamedParam(query,params, values);
+		
 		return laundryList;
+	}
+	
+	public List<Object[]> summaryAll(String laundryType, String fromDate, String toDate) {
+		String query = "select clientGroup, sum(totalWeight), sum(buggyWeight), sum(weight) from Laundry where laundryType=:laundryType and " +
+				"createdDttm between :fromDate and :toDate group by clientGroup";
+		String[] params = {"laundryType","fromDate", "toDate"};
+		Date fromTimeDtamp = DateUtil.getDate(fromDate);
+		Date toTimeDtamp = DateUtil.getDate(toDate);
+		Object[] values = {laundryType, new Timestamp(fromTimeDtamp.getTime()), new Timestamp(toTimeDtamp.getTime())};
+		List<Object[]> l = getHibernateTemplate().findByNamedParam(query,params, values);
+		return l;
 	}
 
 	

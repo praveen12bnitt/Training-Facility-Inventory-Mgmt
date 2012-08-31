@@ -20,6 +20,14 @@
 
 <script type="text/javascript">
 
+var laundryLabels = new Object();
+laundryLabels['W.unitNo']='Washing Machine No';
+laundryLabels['D.unitNo']='Dryer No';
+laundryLabels['W.time']='Time of Washing';
+laundryLabels['D.time']='Time of Drying';
+laundryLabels['W.weight']='Dirty Weight';
+laundryLabels['D.weight']='Clean Weight';
+
   $(document).ready(function() {
 	
 	  $('.form-button').hover(
@@ -29,9 +37,8 @@
 				function(){ 
 					$(this).removeClass("ui-state-hover"); 
 				}
-			);
-	  
-	 
+			);	  
+ 
 	  jQuery("#open-laundry").jqGrid({
 		   	url:'${pageContext.request.contextPath}/newlaundry/laundrylist-page.form',
 		   	postData: {
@@ -40,7 +47,8 @@
 		   		laundryType: function() {return $('#laundryType').val()}
 		   	}, 
 		   	datatype: "json",
-		   	colNames:['Washing Machine No', 'Created Time' ,'Client Info','Dirty Weight','Buggy Weight', 'Weight'],
+		   	colNames:[laundryLabels[$('#laundryType').val()+ '.unitNo'],laundryLabels[$('#laundryType').val()+ '.time'] ,
+		   	          'Client Info',laundryLabels[$('#laundryType').val()+ '.weight'],'Buggy Weight', 'Weight'],
 		   	colModel:[
 		   		{name:'unitNo',index:'unitNo', width:12,align:"center"},
 		   		{name:'time',index:'createDttm', width:12,align:"center"},
@@ -71,14 +79,10 @@
 		          cell: "cell",
 		          id: "id"
 		      }
-		});
-	  
-	    
+		});   
 	  
 
 });
-  
-  
 	
 
 </script>

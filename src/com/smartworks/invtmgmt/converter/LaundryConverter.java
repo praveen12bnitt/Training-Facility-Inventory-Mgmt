@@ -30,6 +30,10 @@ public class LaundryConverter {
 		laundry.setLastUpdateDttm(new Timestamp(timestamp.getTime()));
 		return laundry;
 	}
+	/***********************************************************************/
+
+	
+	/***********************************************************************/
 	
 	public static UILaundry convertToUILaundry(Laundry laundry) {
 		UILaundry uiLaundry = new UILaundry();
