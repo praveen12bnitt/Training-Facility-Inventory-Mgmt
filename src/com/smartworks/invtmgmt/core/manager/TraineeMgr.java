@@ -13,4 +13,6 @@ public interface TraineeMgr {
 	public List<Trainee> loadAll();
 	public List<Trainee> getTrainee(Integer firstResult,Integer maxResults,String orderByField,String orderByType,String whereClause) ;
 	public Long getTraineeTotalCount(String orderByField,String orderByType,String whereClause);
+	public List<Trainee> getByClassName(String name);
+	public List<Trainee> getByName(String name);
 }

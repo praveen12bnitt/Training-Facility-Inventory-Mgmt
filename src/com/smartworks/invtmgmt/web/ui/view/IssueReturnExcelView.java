@@ -106,7 +106,7 @@ public class IssueReturnExcelView extends AbstractExcelView {
 					row.createCell(0).setCellValue(DateUtil.getExpandedTimeStamp(transactionTrace.getCreatedDttm()));
 					if(transactionTrace.getTraineeId() != null) {
 						Trainee trainee = traineeDao.load(transactionTrace.getTraineeId());
-						row.createCell(1).setCellValue(trainee.getClassNumber());
+						row.createCell(1).setCellValue(trainee.getCls().getClassName());
 						row.createCell(2).setCellValue(trainee.displayName());
 					}
 					if(transactionTrace.getStaffId() != null) {

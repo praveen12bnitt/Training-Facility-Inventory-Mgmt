@@ -62,4 +62,15 @@ public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
 		return productsMap;
 	}
 
+	@Override
+	public Product findByName(String productName) {
+		String query = "from Product where productName=:productName";
+		List<Product> products = getHibernateTemplate().findByNamedParam(query, "productName", productName);
+		if(products.size()==0) {
+			return null;
+		} else {
+			return products.get(0);
+		}
+	}
+	
 }

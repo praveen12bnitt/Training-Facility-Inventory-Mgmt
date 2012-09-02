@@ -16,7 +16,6 @@ import com.smartworks.invtmgmt.business.ItemAttributeDetails;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.converter.ItemSkuConverter;
 import com.smartworks.invtmgmt.core.domain.Inventory;
-import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 
 public class InventoryReport extends AbstractExcelView {
 	

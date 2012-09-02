@@ -56,10 +56,15 @@ public class TraineeMgrImpl implements TraineeMgr {
 		this.traineeDao = traineeDao;
 	}
 
-	
+	@Override
+	public List<Trainee> getByClassName(String name) {
+		return traineeDao.findByClass(name);
+	}
 
+	@Override
+	public List<Trainee> getByName(String name) {
+		return traineeDao.getByName(name);
+	}
 
-	
-	
 	
 }

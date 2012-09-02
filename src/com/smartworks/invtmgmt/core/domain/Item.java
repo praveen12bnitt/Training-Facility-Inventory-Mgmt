@@ -72,11 +72,15 @@ public class Item implements Serializable {
 	}
 	
 	
+	public Item(String name) {
+
+		this.name = name;
+	}
 	/** Return the type of this class. Useful for when dealing with proxies.
 	* @return Defining class.
 	*/
 	@Transient
-	public Class<?> getClassType() {
+	public java.lang.Class<Item> getClassType() {
 		return Item.class;
 	}
 

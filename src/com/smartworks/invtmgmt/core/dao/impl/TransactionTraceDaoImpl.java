@@ -52,7 +52,7 @@ public class TransactionTraceDaoImpl extends HibernateDaoSupport implements Tran
 		}
 		return transList;
 	}
-
+	
 	@Override
 	public void markTransactionClosed(Integer transactionId) {
 		String updateSql = "update TransactionTrace set closed = true where trasactionId="+transactionId;	

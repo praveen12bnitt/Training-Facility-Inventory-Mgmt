@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.db.util.DateUtil;
+import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 
 public class TraineeDaoImpl extends HibernateDaoSupport
@@ -69,6 +70,31 @@ public class TraineeDaoImpl extends HibernateDaoSupport
 
 	public void setDateUtil(DateUtil dateUtil) {
 		this.dateUtil = dateUtil;
+	}
+
+	@Override
+	public Trainee findByName(String firstName) {
+		String query = "from Trainee where firstName=:firstName";
+		List<Trainee> trainees = getHibernateTemplate().findByNamedParam(query, "firstName", firstName);
+		if(trainees.size()==0) {
+			return null;
+		} else {
+			return trainees.get(0);
+		}
+	}
+
+	@Override
+	public List<Trainee> findByClass(String clsName) {
+		String query = "from Trainee where firstName=:firstName";
+		List<Trainee> traineeList = getHibernateTemplate().findByNamedParam(query, "firstName", clsName);
+		return traineeList;
+	}
+
+	@Override
+	public List<Trainee> getByName(String name) {
+		String query = "from Trainee where firstName like :firstName";
+		List<Trainee> trainees = getHibernateTemplate().findByNamedParam(query, "firstName", "%"+name+"%");
+		return trainees;
 	}
 	
 }

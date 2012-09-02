@@ -20,23 +20,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.smartworks.invtmgmt.core.dao.ClassDao;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.UserDao;
+import com.smartworks.invtmgmt.core.domain.Class;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.User;
+import com.smartworks.invtmgmt.core.manager.ClassMgr;
 import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
 import com.smartworks.invtmgmt.core.manager.StaffMgr;
 import com.smartworks.invtmgmt.core.manager.TraineeMgr;
 import com.smartworks.invtmgmt.core.manager.UserMgr;
 import com.smartworks.invtmgmt.web.ui.JqgridWhereClauseGenerator;
 import com.smartworks.invtmgmt.web.ui.controller.util.ValidationUtil;
+import com.smartworks.invtmgmt.web.ui.form.ClassForm;
 import com.smartworks.invtmgmt.web.ui.form.StaffForm;
 import com.smartworks.invtmgmt.web.ui.form.TraineeForm;
 import com.smartworks.invtmgmt.web.ui.form.UserForm;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
+import com.sun.tools.example.debug.gui.ClassManager;
 
 @Controller
 @RequestMapping("/common")
@@ -63,6 +68,12 @@ public class CommonController {
 	@Autowired
 	private LocationDao locationDao;
 	
+	@Autowired
+	private ClassDao classDao;
+	
+	@Autowired
+	private ClassMgr classMgr;
+	
 	protected static Logger logger = Logger
 			.getLogger(CommonController.class);
 	
@@ -81,6 +92,22 @@ public class CommonController {
 		response.setTotal("10");
 		response.setRecords(String.valueOf(trainees.size()));
 		return response;
+	}
+	
+	@RequestMapping(value="/list-all-classes.form", method = RequestMethod.GET)
+	public @ResponseBody
+	ReportDetailsResponse getAllClass(HttpServletRequest request){
+		logger.info("Entered into class log ::: Commoncontroller");
+		List<Class> classes = new ArrayList<Class>();
+		classes = classDao.loadAll();
+		ReportDetailsResponse response = new ReportDetailsResponse();
+		
+		response.setRows(classes);
+		response.setPage("1");
+		response.setTotal("10");
+		response.setRecords(String.valueOf(classes.size()));
+		return response;
+		
 	}
 	
 	@RequestMapping(value = "/list-active-staff.form", method = RequestMethod.GET)
@@ -186,6 +213,44 @@ public class CommonController {
 	@RequestMapping(value = "/list-all-user.form", method = RequestMethod.GET)
 	public ModelAndView getAllUser() {
 		ModelAndView mav = new ModelAndView("common/user-list");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/add-class.form", method = RequestMethod.GET)
+	public ModelAndView addClass() {
+		ModelAndView mav = new ModelAndView("class/add-class");
+		ClassForm clsForm = new ClassForm();
+		mav.addObject("clsForm", clsForm);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/add-class.form", method = RequestMethod.POST)
+	public ModelAndView addEditClass(HttpServletRequest request, @ModelAttribute("classForm") @Valid ClassForm classForm,BindingResult result) {
+		ModelAndView mav = new ModelAndView("redirect:/class/class.form");
+		if (result.hasErrors()) {  
+			List<String> errormsgs = ValidationUtil.getErrorMsgs(messageSource, result);
+			mav.setViewName("class/add-class");
+			mav.addObject("validationErrors",errormsgs);
+			mav.addObject("classForm", classForm);
+			return mav;
+        } 
+		if(!classForm.isEdit())
+			classMgr.add(classForm.getCls());
+		else
+			classMgr.update(classForm.getCls());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/edit-class.form", method = RequestMethod.GET)
+	public ModelAndView editClass(@RequestParam String className) {
+		ModelAndView mav = new ModelAndView("class/add-class");
+		Class cls = classMgr.load(className);
+		List<Trainee> traineeLsit = traineeMgr.getByClassName(cls.getClassName());
+		ClassForm classForm = new ClassForm();
+		classForm.setCls(cls);
+		classForm.setTrainee(traineeLsit);
+		classForm.setEdit(true);
+		mav.addObject("clsForm", classForm);
 		return mav;
 	}
 	
@@ -301,6 +366,11 @@ public class CommonController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/edit-class.form", method = RequestMethod.POST)
+	public ModelAndView editClass(HttpServletRequest request, @ModelAttribute("clsForm") @Valid ClassForm clsForm,BindingResult result) {
+		return addEditClass(request,clsForm,result);
+	}
+	
 	@RequestMapping(value = "/edit-trainee.form", method = RequestMethod.POST)
 	public ModelAndView editTrainee(HttpServletRequest request, @ModelAttribute("traineeForm") @Valid TraineeForm traineeForm,BindingResult result) {
 		return addEditTrainee(request,traineeForm,result);
@@ -400,7 +470,5 @@ public class CommonController {
 		}
 		return locationMap;
 	}
-	
-	
 	
 }

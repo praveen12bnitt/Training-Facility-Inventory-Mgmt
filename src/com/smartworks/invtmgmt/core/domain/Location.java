@@ -30,7 +30,10 @@ public class Location implements Serializable {
 		super();
 		this.locationId = locationId;
 	}
-
+	public Location(String name) {
+		super();
+		this.locationName = name;
+	}
 	public Integer getLocationId() {
 		return locationId;
 	}

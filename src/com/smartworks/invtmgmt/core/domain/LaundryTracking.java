@@ -257,5 +257,4 @@ public class LaundryTracking {
 	public void setWasherWeightBuggy(Integer washerWeightBuggy) {
 		this.washerWeightBuggy = washerWeightBuggy;
 	}
-	
 }

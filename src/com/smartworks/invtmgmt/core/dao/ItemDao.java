@@ -12,6 +12,7 @@ public interface ItemDao {
 	public Map<Integer, String> getItemsByNameLike(String likeStr);
 	public Map<Integer, String> getItemNamesByIds(List itemIds);
 	public List<Item> getItemsByName(String name) ;
+	public Item getItemByName(String name) ;
 	public List<Item> loadSelectedItems(List<Integer> itemIds);
 	public void save(Item item);
 	public Integer getNextMappingId();

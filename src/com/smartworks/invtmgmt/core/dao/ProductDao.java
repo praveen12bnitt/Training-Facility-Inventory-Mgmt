@@ -14,5 +14,6 @@ public interface ProductDao {
 	public List<Product> loadAllOnlyProducts();
 	public void delete(Integer productId);
 	public Map<Integer,String> findByProductNameLike(String name, Integer locationId);
+	public Product findByName(String productName);
 	
 }

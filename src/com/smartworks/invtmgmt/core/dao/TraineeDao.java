@@ -13,4 +13,8 @@ public interface TraineeDao {
 	public List<Trainee> loadActiveTrainee();
 	public List<Trainee> getTrainee(Integer firstResult,Integer maxResults,String orderByField,String orderByType,String whereClause);
 	public Long getTraineeTotalCount(String orderByField,String orderByType,String whereClause);
+	public Trainee findByName(String name);
+	public List<Trainee> findByClass(String clsName);
+	public List<Trainee> getByName(String name);
+
 }

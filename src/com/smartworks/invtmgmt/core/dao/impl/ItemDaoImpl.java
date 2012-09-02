@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.smartworks.invtmgmt.core.dao.ItemDao;
 import com.smartworks.invtmgmt.core.domain.Item;
+import com.smartworks.invtmgmt.core.domain.Location;
 
 public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 
@@ -96,6 +97,17 @@ public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 			return mappingId.get(0)+1;
 		} else {
 			return 1;
+		}
+	}
+
+	@Override
+	public Item getItemByName(String itemName) {
+		String query = "from Item where name=:itemName";
+		List<Item> items = getHibernateTemplate().findByNamedParam(query, "itemName", itemName);
+		if(items.size()==0) {
+			return null;
+		} else {
+			return items.get(0);
 		}
 	}
 }

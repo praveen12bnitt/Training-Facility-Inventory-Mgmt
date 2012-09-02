@@ -70,6 +70,7 @@
 						<li><a href='<c:url value="/common/list-all-trainee.form" />'>Trainee Management</a></li>
 						<li><a href='<c:url value="/common/list-all-staff.form" />'>Staff Management</a></li>
 						<li><a href='<c:url value="/common/list-all-user.form" />'>User Management</a></li>
+						<li><a href='<c:url value="/class/class.form" />'>Class Management</a></li>
 						<li><a href='<c:url value="/Inventory/AdjustInventory.form" />'>Adjust Inventory</a></li>
 					</ul>
 					
