@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.util.AutoPopulatingList;
 
+import com.smartworks.invtmgmt.business.ExchangeInvt;
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
+import com.smartworks.invtmgmt.core.service.ExchangeInvElementFactory;
 import com.smartworks.invtmgmt.core.service.ItemSkuElementFactory;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 
@@ -28,6 +30,8 @@ public class IssueSkuForm {
 	
 			
 	private List<ItemSku> itemSkus = new AutoPopulatingList<ItemSku>(new ItemSkuElementFactory());
+	
+	private List<ExchangeInvt> exchangeInvt = new AutoPopulatingList<ExchangeInvt>(new ExchangeInvElementFactory());
 	
 
 	public TransactionTypeEnum getTransactionType() {
@@ -100,6 +104,14 @@ public class IssueSkuForm {
 
 	public void setStaff(Staff staff) {
 		this.staff = staff;
+	}
+
+	public List<ExchangeInvt> getExchangeInvt() {
+		return exchangeInvt;
+	}
+
+	public void setExchangeInvt(List<ExchangeInvt> exchangeInvt) {
+		this.exchangeInvt = exchangeInvt;
 	}
 	
 	

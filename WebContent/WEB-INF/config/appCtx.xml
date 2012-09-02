@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -8,169 +7,191 @@
            http://www.springframework.org/schema/context/spring-context-3.0.xsd
             http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
-        
-    <context:component-scan base-package="com.smartworks.invtmgmt.*" />
 
-	<bean id="appCtxHolder" class="com.smartworks.platform.AppContextHolder"  />
-	
+	<context:component-scan base-package="com.smartworks.invtmgmt.*" />
+
+	<bean id="appCtxHolder" class="com.smartworks.platform.AppContextHolder" />
+
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-       <property name="maxUploadSize">
-           <value>1000000000</value>
-       </property>
+		<property name="maxUploadSize">
+			<value>1000000000</value>
+		</property>
 	</bean>
-	
-	
-	 <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan">
-            <list>
-                <value>com.smartworks.invtmgmt.core.domain</value>
-                <value>com.smartworks.invtmgmt.core.domain.*</value>
-               
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-            </props>
-        </property>
-    </bean>
-	
+
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.smartworks.invtmgmt.core.domain</value>
+				<value>com.smartworks.invtmgmt.core.domain.*</value>
+
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			</props>
+		</property>
+	</bean>
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/invtmgmt" />
 		<property name="username" value="root" />
 		<property name="password" value="password" />
 	</bean>
-	
-	<bean id="testBean" class="com.smartworks.test.TestBean" />	
-	
+
+	<bean id="testBean" class="com.smartworks.test.TestBean" />
+
 	<bean id="abstractDao" abstract="true">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
+
 	<bean id="itemDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemDaoImpl" parent="abstractDao" />
 	<bean id="itemAttributeDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemAttributeDaoImpl" parent="abstractDao" />
 	<bean id="itemAttributeValueDao" class="com.smartworks.invtmgmt.core.dao.impl.ItemAttributeValueDaoImpl" parent="abstractDao" />
 	<bean id="transactionTypeDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTypeDaoImpl" parent="abstractDao" />
 	<bean id="transactionItemMappingDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionItemMappingDaoImpl" parent="abstractDao" />
 	<bean id="inventoryDao" class="com.smartworks.invtmgmt.core.dao.impl.InventoryDaoImpl" parent="abstractDao">
-		<property name="itemSkuConverter" ref="itemSkuConverter" />		
+		<property name="itemSkuConverter" ref="itemSkuConverter" />
 	</bean>
-	<bean id="transactionTraceDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTraceDaoImpl" parent="abstractDao" >
-		<property name="dateUtil" ref="dateUtil" /> 
+	<bean id="transactionTraceDao" class="com.smartworks.invtmgmt.core.dao.impl.TransactionTraceDaoImpl" parent="abstractDao">
+		<property name="dateUtil" ref="dateUtil" />
 	</bean>
 	<bean id="locationDao" class="com.smartworks.invtmgmt.core.dao.impl.LocationDaoImpl" parent="abstractDao" />
-	<bean id="traineeDao" class="com.smartworks.invtmgmt.core.dao.impl.TraineeDaoImpl" parent="abstractDao" >
-		<property name="dateUtil" ref="dateUtil" /> 
-	</bean>	
-	<bean id="staffDao" class="com.smartworks.invtmgmt.core.dao.impl.StaffDaoImpl" parent="abstractDao" >
-		<property name="dateUtil" ref="dateUtil" /> 
-	</bean>	
-	<bean id="laundryTrackingDao" class="com.smartworks.invtmgmt.core.dao.impl.LaundryTrackingDaoImpl" parent="abstractDao" >
-		<property name="dateUtil" ref="dateUtil" /> 
+	<bean id="traineeDao" class="com.smartworks.invtmgmt.core.dao.impl.TraineeDaoImpl" parent="abstractDao">
+		<property name="dateUtil" ref="dateUtil" />
+	</bean>
+	<bean id="staffDao" class="com.smartworks.invtmgmt.core.dao.impl.StaffDaoImpl" parent="abstractDao">
+		<property name="dateUtil" ref="dateUtil" />
+	</bean>
+	<bean id="laundryTrackingDao" class="com.smartworks.invtmgmt.core.dao.impl.LaundryTrackingDaoImpl" parent="abstractDao">
+		<property name="dateUtil" ref="dateUtil" />
 	</bean>
 	<bean id="laundryDao" class="com.smartworks.invtmgmt.core.dao.impl.LaundryDaoImpl" parent="abstractDao" />
-	
+
 	<bean id="userDao" class="com.smartworks.invtmgmt.core.dao.impl.UserDaoImpl" parent="abstractDao" />
 	<bean id="productDao" class="com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl" parent="abstractDao" />
-	<!--  Converters  -->
-	
-	<bean id="itemSkuConverter" class="com.smartworks.invtmgmt.converter.ItemSkuConverter" >
-		<property name="itemDao" ref="itemDao" /> 
-		<property name="itemAttributeDao" ref="itemAttributeDao" /> 
-		<property name="itemAttributeValueDao" ref="itemAttributeValueDao" /> 
-	</bean>	
-	
-	<bean id="transactionTraceObjectConverter" class="com.smartworks.invtmgmt.converter.TransactionTraceObjectConverter" >
-		<property name="itemSkuConverter" ref="itemSkuConverter" />		
-	</bean>	
-	
-	<bean id="inventoryConverter" class="com.smartworks.invtmgmt.converter.InventoryConverter" />
-	
-	<bean id="laundryLoadConverter" class="com.smartworks.invtmgmt.converter.LaundryLoadConverter" />
-			
-	<bean id="dataTransferService" class="com.smartworks.invtmgmt.core.service.DataTransferService" />
-	
-	
-	
-	
-	<bean id="itemMgr" class="com.smartworks.invtmgmt.core.manager.ItemMgrImpl">
-		<property name="itemDao" ref="itemDao" /> 
-		<property name="transactionItemMappingDao" ref="transactionItemMappingDao" /> 
+
+	<bean id="transctionDetailsDao" class="com.smartworks.invtmgmt.core.dao.impl.TransctionDetailsDaoImpl" parent="abstractDao" />
+	<bean id="exchangeSkuDao" class="com.smartworks.invtmgmt.core.dao.impl.ExchangeSkuDaoImpl" parent="abstractDao" />
+
+
+	<!-- Converters -->
+
+	<bean id="itemSkuConverter" class="com.smartworks.invtmgmt.converter.ItemSkuConverter">
+		<property name="itemDao" ref="itemDao" />
+		<property name="itemAttributeDao" ref="itemAttributeDao" />
+		<property name="itemAttributeValueDao" ref="itemAttributeValueDao" />
 	</bean>
-	
+
+	<bean id="transactionTraceObjectConverter" class="com.smartworks.invtmgmt.converter.TransactionTraceObjectConverter">
+		<property name="itemSkuConverter" ref="itemSkuConverter" />
+	</bean>
+
+	<bean id="inventoryConverter" class="com.smartworks.invtmgmt.converter.InventoryConverter" />
+
+	<bean id="laundryLoadConverter" class="com.smartworks.invtmgmt.converter.LaundryLoadConverter" />
+
+	<bean id="dataTransferService" class="com.smartworks.invtmgmt.core.service.DataTransferService" />
+
+
+
+
+	<bean id="itemMgr" class="com.smartworks.invtmgmt.core.manager.ItemMgrImpl">
+		<property name="itemDao" ref="itemDao" />
+		<property name="transactionItemMappingDao" ref="transactionItemMappingDao" />
+	</bean>
+
 	<bean id="invtTransMgr" class="com.smartworks.invtmgmt.core.manager.InvtTransMgrImpl">
-		<property name="tranTypeDao" ref="transactionTypeDao" /> 
-		<property name="inventoryDao" ref="inventoryDao" /> 
+		<property name="tranTypeDao" ref="transactionTypeDao" />
+		<property name="inventoryDao" ref="inventoryDao" />
 		<property name="invProcessorFactory" ref="inventoryProcessorFactory" />
 		<property name="transactionTraceDao" ref="transactionTraceDao" />
-		<property name="itemSkuConverter" ref="itemSkuConverter" />    	
-    	<property name="transactionTraceObjectConverter" ref="transactionTraceObjectConverter" />    
+		<property name="itemSkuConverter" ref="itemSkuConverter" />
+		<property name="transactionTraceObjectConverter" ref="transactionTraceObjectConverter" />
 	</bean>
-	
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory"><ref local="sessionFactory"/></property>
-    </bean>
-    
-    <bean id="inventoryManager" class="com.smartworks.invtmgmt.core.manager.InventoryManagerImpl">
-        <property name="inventoryDao"><ref local="inventoryDao"/></property>
-    </bean>
-    
-    <bean id="laundryMgr" class="com.smartworks.invtmgmt.core.manager.LaundryMgrImpl">
-        <property name="laundryTrackingDao"><ref local="laundryTrackingDao"/></property>
-    </bean>
-    
-    <bean id="laundryTransMgr" class="com.smartworks.invtmgmt.core.manager.LaundryTransMgrImpl">
-        <property name="laundryDao"><ref local="laundryDao"/></property>
-    </bean>
-    <bean id="commonTransactionMgr" class="com.smartworks.invtmgmt.core.manager.CommonTransactionMgrImpl" />
-    
-     <bean id="traineeMgr" class="com.smartworks.invtmgmt.core.manager.TraineeMgrImpl">
-        <property name="traineeDao"><ref local="traineeDao"/></property>
-    </bean>
-    
-    <bean id="staffMgr" class="com.smartworks.invtmgmt.core.manager.StaffMgrImpl">
-        <property name="staffDao"><ref local="staffDao"/></property>
-    </bean>
-    
-     <bean id="userMgr" class="com.smartworks.invtmgmt.core.manager.UserMgrImpl" />
-    
-    <bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
-    	<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />
-    	<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />
-    	<property name="missingInventoryProcessor" ref="missingInventoryProcessor" />
-    	<property name="transferInventoryProcessor" ref="transferInventoryProcessor" />
-    	<property name="laundryReturnsProcessor" ref="laundryReturnsProcessor" />
-    </bean>
-    
-    <bean id="abstractInventoryProcessor" abstract="true">
-    	<property name="inventoryDao" ref="inventoryDao" />
-    	<property name="transactionTraceDao" ref="transactionTraceDao" />    	
-    	<property name="itemSkuConverter" ref="itemSkuConverter" />    	
-    	<property name="transactionTraceObjectConverter" ref="transactionTraceObjectConverter" />    	
-    </bean>
-    
-    
-    <bean id="returnsInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.ReturnsInventoryProcessor" parent="abstractInventoryProcessor" />
-    <bean id="missingInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.MissingInventoryProcessor" parent="abstractInventoryProcessor" />
-    <bean id="dispatchInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.DispatchInventoryProcessor" parent="abstractInventoryProcessor" />
-    <bean id="laundryReturnsProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.LaundryReturnsProcessor" parent="abstractInventoryProcessor" />
-    <bean id="transferInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.TransferInventoryProcessor" parent="abstractInventoryProcessor" />
-    
-    
-    <bean id="dateUtil" class="com.smartworks.invtmgmt.core.db.util.DateUtil" >
-    	<property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-    
-    <bean id="inventoryReport"
-	   	class="com.smartworks.invtmgmt.web.ui.datatransfer.InventoryReport">
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
 	</bean>
-    
-    
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-    
-    
+
+	<bean id="inventoryManager" class="com.smartworks.invtmgmt.core.manager.InventoryManagerImpl">
+		<property name="inventoryDao">
+			<ref local="inventoryDao" />
+		</property>
+	</bean>
+
+	<bean id="laundryMgr" class="com.smartworks.invtmgmt.core.manager.LaundryMgrImpl">
+		<property name="laundryTrackingDao">
+			<ref local="laundryTrackingDao" />
+		</property>
+	</bean>
+
+	<bean id="laundryTransMgr" class="com.smartworks.invtmgmt.core.manager.LaundryTransMgrImpl">
+		<property name="laundryDao">
+			<ref local="laundryDao" />
+		</property>
+	</bean>
+	<bean id="commonTransactionMgr" class="com.smartworks.invtmgmt.core.manager.CommonTransactionMgrImpl" />
+
+	<bean id="traineeMgr" class="com.smartworks.invtmgmt.core.manager.TraineeMgrImpl">
+		<property name="traineeDao">
+			<ref local="traineeDao" />
+		</property>
+	</bean>
+
+	<bean id="staffMgr" class="com.smartworks.invtmgmt.core.manager.StaffMgrImpl">
+		<property name="staffDao">
+			<ref local="staffDao" />
+		</property>
+	</bean>
+
+	<bean id="userMgr" class="com.smartworks.invtmgmt.core.manager.UserMgrImpl" />
+
+	<bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
+		<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />
+		<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />
+		<property name="missingInventoryProcessor" ref="missingInventoryProcessor" />
+		<property name="transferInventoryProcessor" ref="transferInventoryProcessor" />
+		<property name="laundryReturnsProcessor" ref="laundryReturnsProcessor" />
+		<property name="exchangeInventoryProcessor" ref="exchangeInventoryProcessor" />		
+	</bean>
+
+	<bean id="abstractInventoryProcessor" abstract="true">
+		<property name="inventoryDao" ref="inventoryDao" />
+		<property name="locationDao" ref="locationDao" />
+		<property name="transactionTraceDao" ref="transactionTraceDao" />
+		<property name="itemSkuConverter" ref="itemSkuConverter" />
+		<property name="transactionTraceObjectConverter" ref="transactionTraceObjectConverter" />
+	</bean>
+
+
+	<bean id="returnsInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.ReturnsInventoryProcessor" parent="abstractInventoryProcessor" />
+	<bean id="missingInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.MissingInventoryProcessor" parent="abstractInventoryProcessor" />
+	<bean id="dispatchInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.DispatchInventoryProcessor" parent="abstractInventoryProcessor" />
+	<bean id="laundryReturnsProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.LaundryReturnsProcessor" parent="abstractInventoryProcessor" />
+	<bean id="transferInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.TransferInventoryProcessor" parent="abstractInventoryProcessor" />
+	<bean id="exchangeInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.ExchangeInventoryProcessor" parent="abstractInventoryProcessor">
+		<property name="transctionDetailsDao" ref="transctionDetailsDao" />
+		<property name="exchangeSkuDao" ref="exchangeSkuDao" />
+	</bean>
+
+
+	<bean id="dateUtil" class="com.smartworks.invtmgmt.core.db.util.DateUtil">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="inventoryReport" class="com.smartworks.invtmgmt.web.ui.datatransfer.InventoryReport">
+	</bean>
+
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
 
 </beans>

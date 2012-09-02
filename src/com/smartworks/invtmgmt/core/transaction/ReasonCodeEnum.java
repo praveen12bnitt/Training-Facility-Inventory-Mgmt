@@ -5,7 +5,8 @@ import java.util.List;
 
 public enum ReasonCodeEnum {
 	ITEM_MISSING,
-	ITEM_DAMAGED;
+	ITEM_DAMAGED,
+	EXCHANGED;
 	
 	private static List<String> reasonCodeList;
 

@@ -46,8 +46,9 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	    	var rowData = $("#list3").jqGrid('getGridParam','selrow');
 	    	var transactionId = $("#list3").jqGrid('getCell',rowId,0);
 	    	transactionId = transactionId.substring(transactionId.indexOf('>')+1, transactionId.lastIndexOf('<'));
+	    	var targetForm = '${targetForm}';
 	    	if(rowData){
-	    		$(location).attr('href','${pageContext.request.contextPath}/inventory/receive.form?transactionId='+transactionId);	
+	    		$(location).attr('href','${pageContext.request.contextPath}/inventory/'+targetForm+'?transactionId='+transactionId);	
 			}	    	
 	       	
 	    },
@@ -212,6 +213,8 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 		
 			
 		</div>
+		
+
 
 </body>
 </html>

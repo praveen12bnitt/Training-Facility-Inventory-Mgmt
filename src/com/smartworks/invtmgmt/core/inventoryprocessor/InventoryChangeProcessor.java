@@ -4,6 +4,7 @@ import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.converter.ItemSkuConverter;
 import com.smartworks.invtmgmt.converter.TransactionTraceObjectConverter;
 import com.smartworks.invtmgmt.core.dao.InventoryDao;
+import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTraceDao;
 
 public abstract class InventoryChangeProcessor {
@@ -13,6 +14,8 @@ public abstract class InventoryChangeProcessor {
 	
 	ItemSkuConverter itemSkuConverter;
 	TransactionTraceObjectConverter transactionTraceObjectConverter;
+	
+	protected LocationDao locationDao;
 
 	public abstract void process(TransactionDetailsHolder transDetails) ;
 
@@ -47,6 +50,14 @@ public abstract class InventoryChangeProcessor {
 	public void setTransactionTraceObjectConverter(
 			TransactionTraceObjectConverter transactionTraceObjectConverter) {
 		this.transactionTraceObjectConverter = transactionTraceObjectConverter;
+	}
+
+	public LocationDao getLocationDao() {
+		return locationDao;
+	}
+
+	public void setLocationDao(LocationDao locationDao) {
+		this.locationDao = locationDao;
 	}
 
 	

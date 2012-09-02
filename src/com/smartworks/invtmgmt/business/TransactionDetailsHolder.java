@@ -17,6 +17,8 @@ public class TransactionDetailsHolder {
 	Integer refTransactionId;
 	boolean staffIssue = false;
 	
+	List<ExchangeInvt> exchangeInvt;
+	
 	public TransactionTypeEnum getTransactionType() {
 		return transactionType;
 	}
@@ -78,5 +80,12 @@ public class TransactionDetailsHolder {
 	}
 	public void setStaffIssue(boolean staffIssue) {
 		this.staffIssue = staffIssue;
-	}	
+	}
+	public List<ExchangeInvt> getExchangeInvt() {
+		return exchangeInvt;
+	}
+	public void setExchangeInvt(List<ExchangeInvt> exchangeInvt) {
+		this.exchangeInvt = exchangeInvt;
+	}
+	
 }

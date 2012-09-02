@@ -9,8 +9,6 @@ public enum TransactionTypeEnum {
 	ISSUE_GYM_STUDENT,
 	ISSUE_GYM_STAFF,
 	
-	
-	
 	REPORT_MISSING_UNIFORM_STAFF,
 	REPORT_MISSING_UNIFORM_STUDENT,
 	
@@ -21,11 +19,33 @@ public enum TransactionTypeEnum {
 	RETURN_GYM_STUDENT,
 	RETURN_GYM_STAFF,
 	
+	
+	EXCHANGE_UNIFORM_STUDENT,
+	EXCHANGE_UNIFORM_STAFF,
+		
 	ACCEPT_FROM_LAUNDRY_UNIFORM,
 	ACCEPT_FROM_LAUNDRY_EQUIPMENT,
 	ACCEPT_FROM_LAUNDRY_GYM,	
 	
 	TRANSFER_INVENTORY;
+	
+	public static TransactionTypeEnum getExchangeTransaction(TransactionTypeEnum transTypeEnum) {
+		TransactionTypeEnum returnEnum = null;
+		switch(transTypeEnum) {
+			case ISSUE_UNIFORM_STUDENT:
+				returnEnum = EXCHANGE_UNIFORM_STUDENT;
+				break;
+				
+			case ISSUE_UNIFORM_STAFF:
+				returnEnum = EXCHANGE_UNIFORM_STAFF;
+				break;
+				
+			default:
+				break;
+			
+		}		
+		return returnEnum;
+	}
 	
 	public static TransactionTypeEnum getReturnTransaction(TransactionTypeEnum transTypeEnum)
 	{

@@ -44,6 +44,7 @@ public class TransactionDetails implements Serializable {
 	private ReasonCodeEnum reasonCode;
 	
 	
+	
 	public Integer getTransactionDetailsId() {
 		return transactionDetailsId;
 	}

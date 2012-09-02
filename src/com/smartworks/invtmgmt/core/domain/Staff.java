@@ -56,6 +56,17 @@ public class Staff implements Serializable {
 	
 	@Transient
 	String lastUpdateDttmStr;
+	
+	
+	
+	public Staff() {
+		super();
+	}
+
+	public Staff(Integer staffId) {
+		super();
+		this.staffId = staffId;
+	}
 
 	public Integer getStaffId() {
 		return staffId;

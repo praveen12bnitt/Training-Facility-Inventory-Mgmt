@@ -1,0 +1,21 @@
+<tr>
+     <td style="width: 400px;">     
+         <input id="exchangeInvt.$index.exchangedSku.item.id" name="exchangeInvt[$index].exchangedSku.item.id" value="$item.id" type="hidden">$item.name
+         <input id="exchangeInvt.$index.exchangedSku.item.requiresProcessing" name="exchangeInvt[$index].exchangedSku.item.requiresProcessing" value="false" type="hidden">
+     </td>
+     		 
+     <td style="width: 300px;">      
+     #set( $j = 0)
+     #foreach ($mapEntry in $item.attributeDetails.entrySet())
+     	$mapEntry.key.attributeName <input id="exchangeInvt$index.exchangedSku.itemAttributeDtls$j.itemAttribute.attibuteId" name="exchangeInvt[$index].exchangedSku.itemAttributeDtls[$j].itemAttribute.attibuteId" value="$mapEntry.key.attibuteId" type="hidden">
+     	<select id="itemSkus.$index.itemAttributeDtls$j.itemAttributeValue.attributeValueId" name="exchangeInvt[$index].exchangedSku.itemAttributeDtls[$j].itemAttributeValue.attributeValueId">
+     		#foreach ($itemAttributeValue in $mapEntry.value)    					
+     			<option value="$itemAttributeValue.attributeValueId">
+     				$itemAttributeValue.attributeValue   
+     			</option>     		 	 	
+     		 #end
+     	</select>
+     	#set(  $j =  $j + 1 )    		 	
+     #end       	
+     </td>     		
+</tr>

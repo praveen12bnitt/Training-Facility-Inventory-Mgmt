@@ -13,7 +13,8 @@ public class UIDomainConverter {
 	public static TransactionDetailsHolder transferToTransactionDetailsHolder(IssueSkuForm issueSkuForm) {
 		TransactionDetailsHolder transDetails = new TransactionDetailsHolder();		
 		List<ItemSku> itemSkus = issueSkuForm.getItemSkus();		
-		transDetails.setItemSkus(itemSkus);		
+		transDetails.setItemSkus(itemSkus);	
+		transDetails.setExchangeInvt(issueSkuForm.getExchangeInvt());
 		transDetails.setLocationId(issueSkuForm.getLocationId());
 		transDetails.setUserId(100);
 		if(issueSkuForm.getTransactionType().isStaffTransaction()) {
@@ -26,6 +27,8 @@ public class UIDomainConverter {
 		transDetails.setRefTransactionId(issueSkuForm.getRefTransactionId());
 		return transDetails;
 	}
+	
+	
 	public static TransactionDetailsHolder getMissingTransactionDetailsHolder(IssueSkuForm issueSkuForm) {
 		List<ItemSku> itemSkus = issueSkuForm.getItemSkus();
 		List<ItemSku> itemSkusClone =new ArrayList<ItemSku>();

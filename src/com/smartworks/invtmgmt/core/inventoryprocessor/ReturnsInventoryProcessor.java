@@ -25,7 +25,7 @@ public class ReturnsInventoryProcessor extends InventoryChangeProcessor {
 			itemSku.setReasonCode((ReasonCodeEnum)null);
 			
 			InventoryPk inventoryPk = new InventoryPk();
-			Location loc = new Location(transDetails.getLocationId());
+			Location loc = locationDao.load(transDetails.getLocationId());
 			inventoryPk.setLocation(loc);
 			
 			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);

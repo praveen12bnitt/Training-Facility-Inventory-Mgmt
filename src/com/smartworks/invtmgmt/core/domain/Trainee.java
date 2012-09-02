@@ -58,6 +58,19 @@ public class Trainee implements Serializable {
 	@Transient
 	String lastUpdateDttmStr;
 	
+	
+	
+	public Trainee() {
+		super();
+	}
+
+
+	public Trainee(Integer traineeId) {
+		super();
+		this.traineeId = traineeId;
+	}
+	
+	
 	public Integer getTraineeId() {
 		return traineeId;
 	}

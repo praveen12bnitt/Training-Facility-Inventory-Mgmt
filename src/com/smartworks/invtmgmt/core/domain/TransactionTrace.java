@@ -63,6 +63,17 @@ public class TransactionTrace implements Serializable {
 	
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "trasactionTrace" )
 	List<TransactionDetails> transDetails;
+	
+	
+
+	public TransactionTrace() {
+		super();
+	}
+
+	public TransactionTrace(Integer trasactionId) {
+		super();
+		this.trasactionId = trasactionId;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

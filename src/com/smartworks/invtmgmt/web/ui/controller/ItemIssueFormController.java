@@ -114,14 +114,26 @@ public class ItemIssueFormController {
 	
 	@RequestMapping(value = "/listopentrans.form", method = RequestMethod.GET)
 	public ModelAndView openReceive(@RequestParam TransactionTypeEnum transactionTypeEnum,@RequestParam int locationId) {
+		return listOpenTrans(transactionTypeEnum, locationId, false);
+	}
+	
+	@RequestMapping(value = "/listopentrans-exchange.form", method = RequestMethod.GET)
+	public ModelAndView listOpenTrans(@RequestParam TransactionTypeEnum transactionTypeEnum,@RequestParam int locationId, @RequestParam boolean exchange) {
 		logger.info("Received request to show all received transactions");
 		ModelAndView mav = new ModelAndView("transaction/opentransactions");
 		mav.addObject("transactionTypeEnum",transactionTypeEnum);
 		TransactionType returnTrans = transactionTypeDao.load(TransactionTypeEnum.getReturnTransaction(transactionTypeEnum));
 		mav.addObject("transactionDetail",returnTrans.getTransactionDesc());
 		mav.addObject("locationId",locationId);
+		if(exchange) {
+			mav.addObject("targetForm","exchange.form");
+		} else {
+			mav.addObject("targetForm","receive.form");
+		}
+		
 		return mav;
 	}
+
 
 	
 	@RequestMapping(value = "/opentransactions.form", method = RequestMethod.GET)
@@ -218,6 +230,65 @@ public class ItemIssueFormController {
 	
 	}
 	
+	@RequestMapping(value="/exchange.form", method=RequestMethod.GET)
+	public ModelAndView displayExchangeTrans(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {		
+		
+		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
+		Trainee trainee = null;
+		Staff staff = null;
+		if(transDetails.getTransactionType().isStaffTransaction()) {
+			staff = staffDao.load(transDetails.getStaffId());
+		} else  {
+			trainee = traineeDao.load(transDetails.getTraineeId());
+		}
+		
+		logger.info(transDetails.getItemSkus());
+		IssueSkuForm issueSkuForm = new IssueSkuForm();
+		TransactionTypeEnum transactionTypeEnum = TransactionTypeEnum.getExchangeTransaction(transDetails.getTransactionType());
+		issueSkuForm.setTransactionType(transactionTypeEnum);
+		TransactionType transactionType = transactionTypeDao.load(transactionTypeEnum);
+		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
+		if(transDetails.getTransactionType().isStaffTransaction()) {
+			issueSkuForm.setStaff(staff);
+		} else {
+			issueSkuForm.setTrainee(trainee);
+		}
+		
+		issueSkuForm.setRefTransactionId(transactionId);
+		issueSkuForm.setLocationId(transDetails.getLocationId());
+		
+		ModelAndView mav = new ModelAndView("transaction/exchangeSku");
+		mav.addObject("transDetails", transDetails);
+		mav.addObject("issueSkuForm", issueSkuForm);
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="/exchange.form", method=RequestMethod.POST)
+	public ModelAndView displayExchangeTrans(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("issueSkuForm") IssueSkuForm issueSkuForm) throws IOException {		
+		
+		logger.info("Process inventory exchange");
+		
+		TransactionDetailsHolder transDetailsHolder = UIDomainConverter.transferToTransactionDetailsHolder(issueSkuForm);
+		
+		try {
+			invtTransMgr.processInventoryChange(transDetailsHolder);
+		} catch(Exception e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+			return null;
+		}	
+		
+		TransactionType transactionType = transactionTypeDao.load(issueSkuForm.getTransactionType());
+		List<Item> items =   itemMgr.getItemsForTransaction(transactionType);
+		issueSkuForm.setItems(items);
+		ModelAndView mav = new ModelAndView("transaction/issueSku");
+		mav.addObject("issueSkuForm", issueSkuForm);
+		mav.addObject("transactionFormMessage","Issued Successfully");
+		return mav;
+	
+	}
+	
 	@RequestMapping(value = "/itemHtmlEl.form", method = RequestMethod.GET)
 	public @ResponseBody String getItemHtmlData(HttpServletRequest request, @RequestParam String itemName,@RequestParam Integer rowNum) {
 			
@@ -229,12 +300,20 @@ public class ItemIssueFormController {
 	
 	
 	@RequestMapping(value="/loadProductItems.form", method=RequestMethod.GET)	
-	public @ResponseBody String loadProductItems(HttpServletRequest request,@RequestParam Integer productId, @RequestParam Integer rowNum) {
-		
-		List<Item> items = itemMgr.getItemsByProductId(productId);
-		
+	public @ResponseBody String loadProductItems(HttpServletRequest request,@RequestParam Integer productId, @RequestParam Integer rowNum) { 		
+		List<Item> items = itemMgr.getItemsByProductId(productId);		
 		String htmlData = getTemplateData(request, items, rowNum);
 		return htmlData;
+	}
+	
+	@RequestMapping(value="/exchange-html-data.form", method=RequestMethod.GET)	
+	public @ResponseBody String getExchangeItemHtmlData(@RequestParam Integer itemId, Integer exchagneItemIndex) { 		
+		Item item = itemMgr.getItem(itemId);
+		if(item == null) {
+			logger.error("No item with id "+itemId+ "in the db");
+			return "";
+		}		
+		return getItemExchangeRowData(item, exchagneItemIndex);
 	}
 	
 	
@@ -293,5 +372,16 @@ public class ItemIssueFormController {
 		return htmlData;
 	}
 	
+	private String getItemExchangeRowData(Item item, Integer index) {
+		String htmlData = null;	
+		VelocityEngine ve = VelocityTemplateUtil.getVelocityEngine();
+		Template t = ve.getTemplate( "com/smartworks/invtmgmt/web/ui/template/exchangeitemtablerow.vm" );
+		VelocityContext context = new VelocityContext();
+        context.put("item", item);
+        context.put("index", index);      
+        htmlData = VelocityTemplateUtil.getData(context, t);
+		return htmlData;
+	}
+		
 	
 }

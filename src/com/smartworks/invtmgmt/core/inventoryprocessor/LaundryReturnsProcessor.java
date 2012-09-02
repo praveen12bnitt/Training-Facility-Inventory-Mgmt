@@ -20,7 +20,7 @@ public class LaundryReturnsProcessor extends InventoryChangeProcessor {
 			}	
 			hasInventory = true;			
 			InventoryPk inventoryPk = new InventoryPk();
-			Location loc = new Location(transDetails.getLocationId());
+			Location loc = locationDao.load(transDetails.getLocationId());
 			inventoryPk.setLocation(loc);			
 			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
 			inventoryPk.setSkuCode(itemSkuCode);
