@@ -41,7 +41,6 @@ import com.smartworks.invtmgmt.web.ui.form.StaffForm;
 import com.smartworks.invtmgmt.web.ui.form.TraineeForm;
 import com.smartworks.invtmgmt.web.ui.form.UserForm;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
-import com.sun.tools.example.debug.gui.ClassManager;
 
 @Controller
 @RequestMapping("/common")
