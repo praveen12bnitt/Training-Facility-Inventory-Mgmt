@@ -1,10 +1,6 @@
 package com.smartworks.invtmgmt.core.manager;
 
 import java.util.List;
-import java.util.Map;
-
-import com.smartworks.invtmgmt.core.domain.Class;
-import com.smartworks.invtmgmt.core.domain.Trainee;
 
 public interface ClassMgr {
 	

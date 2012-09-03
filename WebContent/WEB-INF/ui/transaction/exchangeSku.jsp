@@ -151,12 +151,8 @@ $(document).ready(function($) {
 						<tr>
 							<td>First Name</td><td>${issueSkuForm.trainee.firstName}</td>
 						</tr>
-						<tr>
-							<td>MiddleName Name</td><td>${issueSkuForm.trainee.middleName}</td>
-						</tr>
-						<tr>
-							<td>Class</td><td>${issueSkuForm.trainee.classNumber}</td>
-						</tr>
+						
+						
 				  	</c:otherwise>
 			  	</c:choose>
 			</tbody>

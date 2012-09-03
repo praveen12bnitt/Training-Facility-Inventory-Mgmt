@@ -70,10 +70,6 @@
 				</tr>
 				
 				<tr>
-					<td>Class Number</td> <td><form:input type="text" path="trainee.classNumber" /></td>
-				</tr>
-				
-				<tr>
 					<td>Active</td> <td><form:checkbox path="trainee.enabled" /></td>
 				</tr>
 				

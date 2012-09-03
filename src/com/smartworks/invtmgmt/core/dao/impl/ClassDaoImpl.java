@@ -5,14 +5,11 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.smartworks.invtmgmt.converter.UtilityClass;
 import com.smartworks.invtmgmt.core.dao.ClassDao;
 import com.smartworks.invtmgmt.core.domain.Class;
 import com.smartworks.invtmgmt.core.domain.Product;
 
 public class ClassDaoImpl extends HibernateDaoSupport implements ClassDao{
-
-	UtilityClass utilityClass;
 	
 	@Override
 	public void saveOrUpdate(Class cls) {

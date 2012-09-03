@@ -77,6 +77,8 @@
 
 	<bean id="transctionDetailsDao" class="com.smartworks.invtmgmt.core.dao.impl.TransctionDetailsDaoImpl" parent="abstractDao" />
 	<bean id="exchangeSkuDao" class="com.smartworks.invtmgmt.core.dao.impl.ExchangeSkuDaoImpl" parent="abstractDao" />
+	
+	<bean id="classDao" class="com.smartworks.invtmgmt.core.dao.impl.ClassDaoImpl" parent="abstractDao" />
 
 
 	<!-- Converters -->
@@ -152,6 +154,12 @@
 	</bean>
 
 	<bean id="userMgr" class="com.smartworks.invtmgmt.core.manager.UserMgrImpl" />
+	
+	<bean id="classMgr" class="com.smartworks.invtmgmt.core.manager.ClassMgrImpl" >
+		<property name="classDao" ref="classDao" />
+	</bean>
+	
+	
 
 	<bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
 		<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />

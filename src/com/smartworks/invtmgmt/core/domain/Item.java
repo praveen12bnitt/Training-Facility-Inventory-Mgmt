@@ -76,6 +76,8 @@ public class Item implements Serializable {
 
 		this.name = name;
 	}
+	
+	
 	/** Return the type of this class. Useful for when dealing with proxies.
 	* @return Defining class.
 	*/
