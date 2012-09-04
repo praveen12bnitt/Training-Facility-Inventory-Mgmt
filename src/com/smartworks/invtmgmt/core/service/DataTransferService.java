@@ -45,7 +45,6 @@ import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
 import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
 import com.smartworks.invtmgmt.core.manager.InventoryManager;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
-import com.smartworks.invtmgmt.core.manager.ItemMgrImpl;
 import com.smartworks.invtmgmt.core.manager.TraineeMgr;
 import com.smartworks.invtmgmt.web.ui.datatransfer.DataTransferListener;
 
@@ -377,20 +376,22 @@ public class DataTransferService  {
 			e.printStackTrace();
 		} 		
 	}
-	public void syncTrainee(MultipartFile file) throws Exception {
+	public List<Integer> syncTrainee(MultipartFile file) throws Exception {
 		try {
 			HSSFWorkbook workBook = new HSSFWorkbook(file.getInputStream());
 			HSSFSheet sheet = workBook.getSheetAt(0);
-			processTraineeSheet(sheet);
+			List<Integer> processTraineeSheet = processTraineeSheet(sheet);
+			return processTraineeSheet;
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			file.getInputStream().close();
-		}		
+		}
+		return null;
 	}
-	private void processTraineeSheet(HSSFSheet sheet) {
+	private List<Integer> processTraineeSheet(HSSFSheet sheet) {
 		Iterator<Row> rows = sheet.rowIterator();
-		
+		List<Integer> traineeId = new ArrayList<Integer>(); 
 		if(rows.hasNext()) {
 			rows.next(); // skip the first row, as it is heading
 		}
@@ -405,6 +406,7 @@ public class DataTransferService  {
 				switch( k ){
 				case 0:
 					trainee.setTraineeId((int)cell.getNumericCellValue());
+					traineeId.add((int)cell.getNumericCellValue());
 					break;
 				case 1:
 					trainee.setFirstName(cell.getStringCellValue());
@@ -415,15 +417,15 @@ public class DataTransferService  {
 				case 3:
 					trainee.setMiddleName(cell.getStringCellValue());
 					break;
-				case 4:
-					trainee.setCls(new com.smartworks.invtmgmt.core.domain.Class());
-					break;
+//				case 4:
+//					trainee.setCls(new com.smartworks.invtmgmt.core.domain.Class());
+//					break;
 				
 				}
 			}
 			traineeManager.add(trainee);
 		}
-		
+		return traineeId;
 	}
 
 	private void processKitsSheet(HSSFSheet sheet) {

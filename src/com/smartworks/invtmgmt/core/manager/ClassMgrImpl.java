@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.smartworks.invtmgmt.core.dao.ClassDao;
 import com.smartworks.invtmgmt.core.dao.ProductDao;
+import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.domain.Class;
 import com.smartworks.invtmgmt.core.domain.Product;
+import com.smartworks.invtmgmt.core.domain.Trainee;
 
 @Transactional
 @Service
@@ -23,6 +25,9 @@ public class ClassMgrImpl implements ClassMgr{
 	
 	@Autowired
 	private ProductDao productDao;
+	
+	@Autowired
+	private TraineeDao traineeDao;
 	
 	public ClassDao getClassDao() {
 		return classDao;
@@ -73,6 +78,26 @@ public class ClassMgrImpl implements ClassMgr{
 		} 		
 		clazz.setProducts(pds);		
 		classDao.saveOrUpdate(clazz) ;	
+	}
+	
+	@Transactional(readOnly=false,propagation=Propagation.REQUIRED)
+	@Override
+	public void saveClass(Class clazz, Integer[] selectedProducts,
+			Integer[] trainees) {
+		Set<Product> pds = new HashSet<Product>();
+		for(Integer productId : selectedProducts) {
+			Product product = productDao.load(productId);
+			pds.add(product);
+		} 		
+		clazz.setProducts(pds);	
+		Set<Trainee> traineeSet = new HashSet<Trainee>();
+		for(Integer traineeId : trainees) {
+			Trainee trainee = traineeDao.load(traineeId);
+			traineeSet.add(trainee);
+		}
+		clazz.setTrainees(traineeSet);
+		classDao.saveOrUpdate(clazz) ;	
+		
 	}
 
 }

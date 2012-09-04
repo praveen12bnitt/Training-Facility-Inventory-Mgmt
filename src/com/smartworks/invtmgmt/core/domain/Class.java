@@ -36,6 +36,17 @@ public class Class implements Serializable{
 	@JoinTable(name = "CLASS_PRODUCT", joinColumns = { @JoinColumn(name = "CLASS_NAME") }, inverseJoinColumns = { @JoinColumn(name = "PRODUCT_ID") })
 	private Set<Product> products =  new HashSet<Product>(0);
 	
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name = "CLASS_TRAINEE", joinColumns = { @JoinColumn(name = "CLASS_NAME") }, inverseJoinColumns = { @JoinColumn(name = "TRAINEE_ID") })
+	private Set<Trainee> trainees =  new HashSet<Trainee>(0);
+	
+	
+	public Set<Trainee> getTrainees() {
+		return trainees;
+	}
+	public void setTrainees(Set<Trainee> trainees) {
+		this.trainees = trainees;
+	}
 	public String getClassName() {
 		return className;
 	}

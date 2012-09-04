@@ -43,7 +43,7 @@
 </script>
 </head>
 <body class="body-class" >	
-<form:form method="post" commandName="clsForm" id="classForm">
+<form:form method="post" commandName="clsForm" id="classForm" enctype="multipart/form-data">
 <div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
@@ -79,6 +79,16 @@
 			</select>	
 		</div>
 		
+		<div id="heading" class="ui-widget-header">Trainee List</div>
+		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">
+		
+			Upload Trainee List : <input type="file" name="file" class="fileUpload" >
+		
+			<c:forEach var="p" items="${traineeList}">
+				<br/><input type ="text" value="${p.firstName }" readonly="readonly">
+			</c:forEach>
+		</div>
+				
 		<div id="actions" align="center" class="actions">
 			<button id="save" type="submit" class="ui-state-default ui-corner-all form-button" style="width: 50px;height: 25px; ">Save</button>
 		</div>	

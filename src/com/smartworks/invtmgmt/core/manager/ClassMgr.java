@@ -13,5 +13,6 @@ public interface ClassMgr {
 	public List<String> getItemMaps(String name);
 	
 	public void saveClass(Class clazz, Integer[] selectedProducts);
+	public void saveClass(Class clazz, Integer[] selectedProducts, Integer[] trainees);
 
 }
