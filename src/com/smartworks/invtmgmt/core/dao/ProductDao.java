@@ -3,7 +3,6 @@ package com.smartworks.invtmgmt.core.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Product;
 
 public interface ProductDao {

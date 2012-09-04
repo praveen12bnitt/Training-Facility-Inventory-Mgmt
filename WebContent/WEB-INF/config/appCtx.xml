@@ -155,12 +155,6 @@
 
 	<bean id="userMgr" class="com.smartworks.invtmgmt.core.manager.UserMgrImpl" />
 	
-	<bean id="classMgr" class="com.smartworks.invtmgmt.core.manager.ClassMgrImpl" >
-		<property name="classDao" ref="classDao" />
-	</bean>
-	
-	
-
 	<bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
 		<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />
 		<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />

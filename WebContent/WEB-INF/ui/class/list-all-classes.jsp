@@ -32,18 +32,17 @@ $(document).ready(function($) {
 	$('#transactionDiv').hide();
 
 	jQuery("#list2").jqGrid({
-	   	url:'${pageContext.request.contextPath}/common/list-all-classes.form',
+	   	url:'${pageContext.request.contextPath}/class/list-all-classes.form',
 		datatype: "json",
-	   	colNames:['Class Name', 'Class Description', 'Trainer'],
+	   	colNames:['Class Name', 'Class Description'],
 	   	colModel:[
 	   		{name:'className',index:'className', align:'center', width:200},
-	   		{name:'classDesc',index:'classDesc', align:'center', width:200},
-	   		{name:'traineeId',index:'traineeId', align:'center', width:200}
+	   		{name:'classDesc',index:'classDesc', align:'center', width:200}
 	   	],
 	   	rowNum:10,
 	   	rowList:[10,20,30],
 	   	pager: '#pager2',
-	   	sortname: 'firstName',
+	   	sortname: 'className',
 	    viewrecords: true,
 	    sortorder: "desc",
 	    loadonce: true,
@@ -55,9 +54,8 @@ $(document).ready(function($) {
 	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
 	    	var className = jQuery("#list2").jqGrid('getCell',rowId,0);
 	    	if(rowData){
-	    		//alert("test");
 				jQuery("#list2").jqGrid('GridToForm',rowData,"#command");
-				$(location).attr('href','${pageContext.request.contextPath}/common/edit-class.form?className='+className);
+				$(location).attr('href','${pageContext.request.contextPath}/class/edit-class.form?className='+className);
 			}
 	    },
 	    jsonReader : {
@@ -107,91 +105,6 @@ function showTransactionStatus() {
 	$('#transactionResponse').fadeOut(4000);
 }
 
-/*
-function processResponse(data) {
-	alert("Data :: " + data);
-	$.each(data, function(key, val) {
-		var innerHtml = $("#rowtemplate").html();
-		
-		innerHtml = innerHtml.replace("hdnVal",key);
-		innerHtml = innerHtml.replace("hdnName",val);
-		
-		$("#itemDetails > tbody").append("<tr><td>"+innerHtml+"</td></tr>");
-		
-		$('#itemDetails >tbody >tr >td img.delete').click(function(){
-			  $(this).parent().parent().remove();
-		});
-	});
-}
-
-
- $(document).ready(function() {
-	
-	  $('.form-button').hover(
-				function(){ 
-					$(this).addClass("ui-state-hover"); 
-				},
-				function(){ 
-					$(this).removeClass("ui-state-hover"); 
-				}
-			);
-	  
-	  var mygrid =  jQuery("#trainee-list").jqGrid({
-		  	url:'${pageContext.request.contextPath}/common/list-all-classes.form',
-			datatype: "json",
-		   	colNames:['Class Name', 'Class Description', 'Trainer'],
-		   	colModel:[
-		   		{name:'className',index:'className', align:'center', width:200},
-		   		{name:'classDesc',index:'classDesc', align:'center', width:200},
-		   		{name:'traineeId',index:'traineeId', align:'center', width:200}
-		   	],
-		   	rowNum:20,
-		   	rowList:[20,40,60],
-		   	pager: '#pager3',
-		   	sortname: 'className',
-		   	gridview : true,
-		    viewrecords: true,
-		    sortorder: "desc",
-		    caption: "Class List",
-		    height: 'auto',
-		    width: 'auto',
-		    loadonce: true,
-		    onSelectRow: function(rowId){	    	
-		    	var rowData = $("#trainee-list").jqGrid('getGridParam','selrow');
-		    	var traineeId = $("#trainee-list").jqGrid('getCell',rowId,0);
-		    	if(rowData){
-		    		$(location).attr('href','${pageContext.request.contextPath}/common/edit-class.form?classId='+classId);	
-				}	    	
-		    	
-		    },
-		    jsonReader : {
-		          root: "rows",
-		          page: "page",
-		          total: "total",
-		          records: "records",
-		          repeatitems: false,
-		          cell: "cell",
-		          id: "id"
-		      }
-		});
-	  
-	  jQuery("#trainee-list").jqGrid('navGrid','#pager3',{edit:false,add:false,del:false,search:false,refresh:false});
-	  jQuery("#trainee-list").jqGrid('navButtonAdd',"#pager3",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
-	  	onClickButton:function(){
-	  		mygrid[0].toggleToolbar()
-	  	} 
-	  });
-	  jQuery("#trainee-list").jqGrid('navButtonAdd',"#pager3",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh',
-	  	onClickButton:function(){
-	  		mygrid[0].clearToolbar()
-	  	} 
-	  });
-	  jQuery("#trainee-list").jqGrid('filterToolbar',{searchOnEnter : false});
-	 
-	 
-	  
-	
-});*/
 </script>
 </head>
 	<body class="body-class" >
@@ -206,20 +119,12 @@ function processResponse(data) {
 			
 				<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
 			
-				<div id="heading12" class="ui-widget-header">Transaction Details</div>
+				<div id="heading12" class="ui-widget-header">Class List</div>
 				
 				<div id="content" class="ui-widget-content" style="padding: 10px;">	
 				
 				<div id="create-trainee-div">
-					<a id="create-trainee" href="<c:url value='/common/add-class.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Class</a>
-					<!--<c:choose>
-		    			<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
-		    				<a id="create-staff" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Staff</a>
-		    			</c:when>
-				    	 <c:otherwise>
-				    	 	<a id="create-trainee" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Trainee</a>
-				    	 </c:otherwise>
-		   			 </c:choose>-->
+					<a id="create-trainee" href="<c:url value='/class/add-class.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Class</a>
 				</div>
 				
 				<br/>    
@@ -227,51 +132,7 @@ function processResponse(data) {
 					<div id="pager3"></div>
 				</div>
 				
-					<div id="header-contents" class="ui-widget-content" align="left" style="padding: 10px;">
-				
-				
-					<!--<input type="file" name="file" class="fileUpload" >
-					<input id="px-submit" type="submit" value="Upload"/>-->
-					
-				
-					<br />
-					<table id="transDetails" class="ui-widget item-table trans-details">				
-						<tbody class="ui-widget-content trans-details" >
-							<tr>
-								<td>Class Name</td><td><input type="text" name="className" value="" /></td>
-							</tr>
-							<tr>
-								<td>Class Description</td><td><input type="text" name="classDesc" value="" /></td>
-							</tr>
-							<tr>
-								<td>Trainer Name</td><td><input type="text" name="traineeId" value="" /></td>
-							</tr>
-							<!--<c:choose>
-								<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
-			    				<tr>
-									<td>Division</td><td><input type="text" name="division" value="" readOnly="true" /></td>
-								</tr>
-								<tr>
-									<td>Extension</td><td><input type="text" name="extension" value="" readOnly="true" /></td>
-								</tr>
-			    				</c:when>
-			    				<c:otherwise>
-			    				<tr>
-									<td>Class</td><td><input type="text" name="classNumber" value="" readOnly="true" /></td>
-								</tr>
-			    				</c:otherwise>
-							</c:choose>
-							-->
-						</tbody>
-					</table>					
-				</div>
 			</div>
 		</form>
-		<div id="rowtemplate" align="left" class="actions" style="visibility:hidden" >
-		
-			<img class="delete" src="<c:url value='/images/delete.jpg' />" />&nbsp;&nbsp;
-		   	<input type="hidden" id="itemId"  value="hdnVal">hdnName
-				
-		</div>
 	</body>
 </html>

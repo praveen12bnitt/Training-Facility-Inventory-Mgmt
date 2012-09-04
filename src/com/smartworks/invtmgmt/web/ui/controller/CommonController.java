@@ -93,21 +93,7 @@ public class CommonController {
 		return response;
 	}
 	
-	@RequestMapping(value="/list-all-classes.form", method = RequestMethod.GET)
-	public @ResponseBody
-	ReportDetailsResponse getAllClass(HttpServletRequest request){
-		logger.info("Entered into class log ::: Commoncontroller");
-		List<Class> classes = new ArrayList<Class>();
-		classes = classDao.loadAll();
-		ReportDetailsResponse response = new ReportDetailsResponse();
-		
-		response.setRows(classes);
-		response.setPage("1");
-		response.setTotal("10");
-		response.setRecords(String.valueOf(classes.size()));
-		return response;
-		
-	}
+	
 	
 	@RequestMapping(value = "/list-active-staff.form", method = RequestMethod.GET)
 	public @ResponseBody
@@ -212,44 +198,6 @@ public class CommonController {
 	@RequestMapping(value = "/list-all-user.form", method = RequestMethod.GET)
 	public ModelAndView getAllUser() {
 		ModelAndView mav = new ModelAndView("common/user-list");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/add-class.form", method = RequestMethod.GET)
-	public ModelAndView addClass() {
-		ModelAndView mav = new ModelAndView("class/add-class");
-		ClassForm clsForm = new ClassForm();
-		mav.addObject("clsForm", clsForm);
-		return mav;
-	}
-	
-	@RequestMapping(value = "/add-class.form", method = RequestMethod.POST)
-	public ModelAndView addEditClass(HttpServletRequest request, @ModelAttribute("classForm") @Valid ClassForm classForm,BindingResult result) {
-		ModelAndView mav = new ModelAndView("redirect:/class/class.form");
-		if (result.hasErrors()) {  
-			List<String> errormsgs = ValidationUtil.getErrorMsgs(messageSource, result);
-			mav.setViewName("class/add-class");
-			mav.addObject("validationErrors",errormsgs);
-			mav.addObject("classForm", classForm);
-			return mav;
-        } 
-		if(!classForm.isEdit())
-			classMgr.add(classForm.getCls());
-		else
-			classMgr.update(classForm.getCls());
-		return mav;
-	}
-	
-	@RequestMapping(value = "/edit-class.form", method = RequestMethod.GET)
-	public ModelAndView editClass(@RequestParam String className) {
-		ModelAndView mav = new ModelAndView("class/add-class");
-		Class cls = classMgr.load(className);
-		List<Trainee> traineeLsit = traineeMgr.getByClassName(cls.getClassName());
-		ClassForm classForm = new ClassForm();
-		classForm.setCls(cls);
-		classForm.setTrainee(traineeLsit);
-		classForm.setEdit(true);
-		mav.addObject("clsForm", classForm);
 		return mav;
 	}
 	
@@ -363,11 +311,6 @@ public class CommonController {
 		else
 			staffMgr.update(staffForm.getStaff());
 		return mav;
-	}
-	
-	@RequestMapping(value = "/edit-class.form", method = RequestMethod.POST)
-	public ModelAndView editClass(HttpServletRequest request, @ModelAttribute("clsForm") @Valid ClassForm clsForm,BindingResult result) {
-		return addEditClass(request,clsForm,result);
 	}
 	
 	@RequestMapping(value = "/edit-trainee.form", method = RequestMethod.POST)
