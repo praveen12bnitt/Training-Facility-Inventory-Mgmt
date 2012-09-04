@@ -137,8 +137,122 @@ public class DataTransferService  {
 
 	private void processSheet(HSSFSheet sheet) {
 		Iterator<Row> rows = sheet.rowIterator();
-		ItemAttribute itemAttributeColor = itemAttributeDao.findByAttributeName("COLOR");
-		ItemAttribute itemAttributeSize = itemAttributeDao.findByAttributeName("SIZE");
+		
+		if(rows.hasNext()) {
+			rows.next(); // skip the first row, as it is heading
+		}
+		while(rows.hasNext()) {
+			Row row = rows.next();
+			Iterator<Cell> cells = row.cellIterator();
+			int k=-1;
+			Item item = new Item();
+			Inventory inventory = new Inventory();
+			
+			
+			ItemAttributeDetails itemAttributeDetail = null;
+			InventoryPk inventoryPK = new InventoryPk();
+			inventory.setSkuLocation(inventoryPK);
+			
+			
+			
+			List<ItemAttributeDetails> itemAttributeDetails = new ArrayList<ItemAttributeDetails>();
+			while(cells.hasNext()) {
+				k++;
+				Cell cell = cells.next();
+				switch(k) {
+					case 0:
+						List<Item> itemList = itemDao.getItemsByName(cell.getStringCellValue());
+						if(itemList !=null && itemList.size()>0) {
+							item = itemList.get(0);
+						} else {
+							item = new Item();
+							item.setName(cell.getStringCellValue());
+						}
+						break;
+					case 1:
+						item.setDesc(cell.getStringCellValue());
+						break;
+					case 2:
+						String attributes = cell.getStringCellValue();
+						String[] itemAttrs = attributes.split("\\r?\\n");
+						for(String itemAttr: itemAttrs) {
+							String[] attrs = itemAttr.split(":");
+							String attributeName= attrs[0].trim();
+							String attributeValue= attrs[1].trim();
+							ItemAttribute itemAttribute = itemAttributeDao.findByAttributeName(attributeName);
+							ItemAttributeValue itemAttributeValue = itemAttributeValueDao.findByAttributeValue(attributeValue);
+							itemAttributeDetail = new ItemAttributeDetails();
+							
+							if(itemAttributeValue==null){
+								itemAttribute = new ItemAttribute();
+								Integer itemAttrId = itemAttributeDao.getNextAttributeId();
+								itemAttribute.setAttibuteId(itemAttrId);
+								itemAttribute.setAttributeName(attributeName);
+								itemAttributeDao.save(itemAttribute);
+							}
+							if(itemAttributeValue==null){
+								itemAttributeValue = new ItemAttributeValue();
+								Integer itemAttrValueId = itemAttributeValueDao.getNextItemAttributeValueId();
+								itemAttributeValue.setAttributeValueId(itemAttrValueId);
+								itemAttributeValue.setAttributeValue(attributeValue);
+								itemAttributeValueDao.save(itemAttributeValue);
+							}
+							itemAttributeDetail.setItemAttribute(itemAttribute);
+							itemAttributeDetail.setItemAttributeValue(itemAttributeValue);
+							itemAttributeDetails.add(itemAttributeDetail);
+							
+						}
+						//itemAttributeValueColor = itemAttributeValueDao.findByAttributeValue(attributeColor);
+						break;
+					case 3:
+						item.setItemNumber(cell.getStringCellValue());
+						break;
+					case 4:
+						item.setPrice(cell.getStringCellValue());
+						break;
+					case 5:
+						inventory.setAvailableQty((int)cell.getNumericCellValue());
+						break;
+					case 6:
+						inventory.setIssueQty((int)cell.getNumericCellValue());
+						break;
+					case 7:
+						inventory.setUnusableQty((int)cell.getNumericCellValue());
+						break;
+					case 8:
+						inventory.setLocation(locationDao.findByLocationName(cell.getStringCellValue()));
+						break;
+				}
+			}
+				
+		
+			ItemSku itemSku = new ItemSku(item, itemAttributeDetails);
+			if(item.getId() == null) {
+				HashSet<ItemAttributeMapping> attributeMappings = new HashSet<ItemAttributeMapping>();
+				for(ItemAttributeDetails itemAttrDetail: itemAttributeDetails) {
+					int mappingId = itemDao.getNextMappingId();
+					ItemAttributeMapping itemAttributeMapping = new ItemAttributeMapping();
+					itemAttributeMapping.setAttribute(itemAttrDetail.getItemAttribute());
+					itemAttributeMapping.setAttributeValue(itemAttrDetail.getItemAttributeValue());
+					itemAttributeMapping.setMappingId(mappingId);
+					attributeMappings.add(itemAttributeMapping);
+				}
+				item.setAttributeMappings(attributeMappings);
+				item.setId(itemDao.getNextItemId());
+				itemDao.save(item);
+			}
+			System.out.println("Next Id=="+itemAttributeDao.getNextAttributeId());
+			inventory.setItemSku(itemSku);
+			inventoryManager.updateInventory(inventory);
+		}
+		
+	}
+	
+	@Deprecated
+	private void processSheetModified(HSSFSheet sheet) {
+		Iterator<Row> rows = sheet.rowIterator();
+		ItemAttribute itemAttributeColor = null; //itemAttributeDao.findByAttributeName("COLOR");
+		ItemAttribute itemAttributeSize = null;//itemAttributeDao.findByAttributeName("SIZE");
 		if(rows.hasNext()) {
 			rows.next(); // skip the first row, as it is heading
 		}

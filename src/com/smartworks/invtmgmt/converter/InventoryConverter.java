@@ -1,12 +1,18 @@
 package com.smartworks.invtmgmt.converter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.smartworks.invtmgmt.business.ItemAttributeDetails;
 import com.smartworks.invtmgmt.business.ItemSku;
+import com.smartworks.invtmgmt.core.dao.ItemDao;
 import com.smartworks.invtmgmt.core.domain.Inventory;
+import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
 
 public class InventoryConverter {
 
+	@Autowired
+	private ItemDao itemDao;
 	
 	public UIInventory getUIInventory(Inventory inventory) {
 		UIInventory uiInventory = new UIInventory();		
@@ -20,6 +26,9 @@ public class InventoryConverter {
 		uiInventory.setUnusableQty(inventory.getUnusableQty());
 		uiInventory.setLocationId(inventory.getLocation().getLocationId());
 		
+		Item item = itemDao.load(itemSku.getItem().getId());
+		uiInventory.setItemNumber(item.getItemNumber());
+		uiInventory.setPrice(item.getPrice());
 		
 		StringBuilder sb = new StringBuilder();	
 		
