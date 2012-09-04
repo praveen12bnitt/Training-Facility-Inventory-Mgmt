@@ -31,9 +31,7 @@ public class Class implements Serializable{
 	@Column(name="CLASS_DESC",length=100)
 	String classDesc;
 	
-	@Column(name="TRAINEE_ID")
-	Integer traineeId;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name = "CLASS_PRODUCT", joinColumns = { @JoinColumn(name = "CLASS_NAME") }, inverseJoinColumns = { @JoinColumn(name = "PRODUCT_ID") })
 	private Set<Product> products =  new HashSet<Product>(0);
@@ -50,12 +48,7 @@ public class Class implements Serializable{
 	public void setClassDesc(String classDesc) {
 		this.classDesc = classDesc;
 	}
-	public Integer getTraineeId() {
-		return traineeId;
-	}
-	public void setTraineeId(Integer trianeeId) {
-		this.traineeId = trianeeId;
-	}
+
 	public Set<Product> getProducts() {
 		return products;
 	}

@@ -398,7 +398,7 @@ public class DataTransferService  {
 					case 4:
 						String traineeName = cell.getStringCellValue();
 						Trainee trainee = traineeDao.findByName(traineeName);
-						cls.setTraineeId(trainee.getTraineeId());
+//						cls.setTraineeId(trainee.getTraineeId());
 						break;
 				}
 			}
