@@ -70,7 +70,6 @@ $(document).ready(function($) {
 			var btn = $(this);
 			var itemId = btn.attr("itemId");
 			var index = btn.attr("index");
-			alert(itemId+index);
 			$.ajax({
 				  url: '${pageContext.request.contextPath}'+'/inventory/exchange-html-data.form',
 				  data: {

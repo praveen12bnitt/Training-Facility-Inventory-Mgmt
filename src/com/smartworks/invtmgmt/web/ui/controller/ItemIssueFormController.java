@@ -233,7 +233,7 @@ public class ItemIssueFormController {
 	@RequestMapping(value="/exchange.form", method=RequestMethod.GET)
 	public ModelAndView displayExchangeTrans(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {		
 		
-		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
+		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetailsForExhange(transactionId);
 		Trainee trainee = null;
 		Staff staff = null;
 		if(transDetails.getTransactionType().isStaffTransaction()) {
