@@ -10,6 +10,8 @@ public class UIInventory {
 	Integer unusableQty;
 	String skuCode;	
 	Integer locationId;
+	String itemNumber;
+	String price;
 	
 	public String getSkuCode() {
 		return skuCode;
@@ -68,6 +70,18 @@ public class UIInventory {
 
 	public void setLocationId(Integer locationId) {
 		this.locationId = locationId;
+	}
+	public String getItemNumber() {
+		return itemNumber;
+	}
+	public void setItemNumber(String itemNumber) {
+		this.itemNumber = itemNumber;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
 	}
 	
 	

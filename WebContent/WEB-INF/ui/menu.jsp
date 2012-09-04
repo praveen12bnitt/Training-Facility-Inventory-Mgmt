@@ -87,6 +87,7 @@
 						<li><a href='<c:url value="/reports/filetransfer.form" />'>Export/Import</a></li>
 						<li><a href='<c:url value="/reports/laundryreport-in.form" />'>Laundry Report</a></li>
 						<li><a href='<c:url value="/reports/issue-in.form" />'>Issue/Return Report</a></li>
+						<li><a href='<c:url value="/reports/exchange-in.form" />'>Exchange Report</a></li>
 						</ul>
 				</li>
 				</security:authorize>

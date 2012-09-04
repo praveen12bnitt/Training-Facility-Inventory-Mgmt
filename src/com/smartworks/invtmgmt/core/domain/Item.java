@@ -41,6 +41,12 @@ public class Item implements Serializable {
 	@Column(name="REQUIRES_PROCESSING")
 	private Boolean requiresProcessing;
 	
+	@Column(name="ITEM_NUMBER", length=100)
+	private String itemNumber;
+	
+	@Column(name="PRICE", length=100)
+	private String price;
+	
 	@OneToMany (mappedBy="item", fetch=FetchType.EAGER)
 	Set<ItemAttributeMapping> attributeMappings = new HashSet<ItemAttributeMapping>();
 	
@@ -184,6 +190,22 @@ public class Item implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getItemNumber() {
+		return itemNumber;
+	}
+
+	public void setItemNumber(String itemNumber) {
+		this.itemNumber = itemNumber;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
 	}
 
 	

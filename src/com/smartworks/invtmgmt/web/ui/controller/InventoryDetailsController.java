@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.converter.InventoryConverter;
 import com.smartworks.invtmgmt.converter.LaundryLoadConverter;
+import com.smartworks.invtmgmt.core.dao.impl.ExchangeSkuDaoImpl;
+import com.smartworks.invtmgmt.core.domain.ExchangeSkuRecord;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.Laundry;
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
@@ -59,6 +61,9 @@ public class InventoryDetailsController {
 	
 	@Autowired
 	DataTransferService dataTransferService;
+	
+	@Autowired
+	ExchangeSkuDaoImpl exchangeSkuDao;
 
 	protected static Logger logger = Logger
 			.getLogger(InventoryDetailsController.class);
@@ -221,6 +226,26 @@ public class InventoryDetailsController {
 		logger.error("Received request to show all Issue Report Input");
 		ModelAndView mav = new ModelAndView("reports/issuereturn-in");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/exchange-in.form", method = RequestMethod.GET)
+	public ModelAndView showExchangeReportInputForm() {
+		logger.error("Received request to show all Issue Report Input");
+		ModelAndView mav = new ModelAndView("reports/exchangereport-in");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/exchange-export.form", method = RequestMethod.POST)
+	public ModelAndView exportExchangeReports(@RequestParam(value="fromDate") String fromDate,
+			@RequestParam(value="toDate") String toDate) {
+		logger.error("Received request to export exchange returns");
+		List<ExchangeSkuRecord> exchangeSkuList = exchangeSkuDao.loadAll(fromDate, toDate);
+		
+		logger.error("closed");
+		Map model=new HashMap();
+		model.put("exchangeSkuList", exchangeSkuList);
+		return new ModelAndView("ExchangeReportExcelView",model);
+		
 	}
 	
 	@RequestMapping(value = "/issue-export.form", method = RequestMethod.POST)

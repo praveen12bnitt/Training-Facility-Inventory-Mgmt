@@ -23,6 +23,10 @@
 	<!-- IssueReturnExcelView , com.smartworks.invtmgmt.converter-->
  	<bean id="IssueReturnExcelView"
 	   	class="com.smartworks.invtmgmt.web.ui.view.IssueReturnExcelView">
+	 </bean>
 	   	
-	</bean>
+	<bean id="ExchangeReportExcelView"
+   		class="com.smartworks.invtmgmt.web.ui.view.ExchangeReportExcelView" />
+	   	
+	
 </beans>

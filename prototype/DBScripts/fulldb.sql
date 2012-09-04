@@ -11,6 +11,8 @@ CREATE TABLE `ITEM` (
   PRIMARY KEY (`ITEM_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE ITEM add(ITEM_NUMBER VARCHAR(100), PRICE VARCHAR(100));
+
 INSERT INTO `ITEM` (`ITEM_ID`,`NAME`,`ITEM_DESC`,`REQUIRES_PROCESSING`) VALUES (1,'ATF Student  Investigator Jacket','ATF Student  Investigator Jacket','Y');
 INSERT INTO `ITEM` (`ITEM_ID`,`NAME`,`ITEM_DESC`,`REQUIRES_PROCESSING`) VALUES (2,'ATF Student Investigator Polo Shirt','ATF Student Investigator Polo Shirt','Y');
 INSERT INTO `ITEM` (`ITEM_ID`,`NAME`,`ITEM_DESC`,`REQUIRES_PROCESSING`) VALUES (3,'ATF Student Investigator Sweatshirt','ATF Student Investigator Sweatshirt','Y');
