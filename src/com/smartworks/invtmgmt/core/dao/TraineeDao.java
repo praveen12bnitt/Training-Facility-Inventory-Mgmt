@@ -6,7 +6,7 @@ import com.smartworks.invtmgmt.core.domain.Trainee;
 
 public interface TraineeDao {
 	
-	public void save(Trainee t);
+	public Integer save(Trainee t);
 	public Trainee load(Integer id);	
 	public void update(Trainee t);
 	public List<Trainee> loadAll();

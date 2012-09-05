@@ -18,12 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.core.dao.ClassDao;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.UserDao;
-import com.smartworks.invtmgmt.core.domain.Class;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Staff;
@@ -34,9 +35,9 @@ import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
 import com.smartworks.invtmgmt.core.manager.StaffMgr;
 import com.smartworks.invtmgmt.core.manager.TraineeMgr;
 import com.smartworks.invtmgmt.core.manager.UserMgr;
+import com.smartworks.invtmgmt.core.service.DataTransferService;
 import com.smartworks.invtmgmt.web.ui.JqgridWhereClauseGenerator;
 import com.smartworks.invtmgmt.web.ui.controller.util.ValidationUtil;
-import com.smartworks.invtmgmt.web.ui.form.ClassForm;
 import com.smartworks.invtmgmt.web.ui.form.StaffForm;
 import com.smartworks.invtmgmt.web.ui.form.TraineeForm;
 import com.smartworks.invtmgmt.web.ui.form.UserForm;
@@ -72,6 +73,9 @@ public class CommonController {
 	
 	@Autowired
 	private ClassMgr classMgr;
+	
+	@Autowired
+	DataTransferService dataTransferService;
 	
 	protected static Logger logger = Logger
 			.getLogger(CommonController.class);
@@ -412,5 +416,37 @@ public class CommonController {
 		}
 		return locationMap;
 	}
+	
+	
+	@RequestMapping(value = "/kit-upload.form", method = RequestMethod.GET)
+	public ModelAndView kitUpload() {
+		ModelAndView mav = new ModelAndView("common/kit-upload"); 		
+		KitUploadForm kitUploadForm = new KitUploadForm();
+		mav.addObject("kitUploadForm", kitUploadForm);
+		return mav;
+	}
+	
+	
+	@RequestMapping(value = "/kit-upload.form", method = RequestMethod.POST)
+	public ModelAndView kitUpload(HttpServletRequest request) {
+		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+	   	final Map<String, MultipartFile> files = multiRequest.getFileMap();
+		for (MultipartFile file : files.values()) {
+	   		System.out.println("file name uploaded::"+file.getName());
+	   		try {
+	   			processExcelFile(file);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	   	} 		
+		return createProduct();		
+	}
+	
+	private void processExcelFile(MultipartFile file) throws Exception {     	
+		dataTransferService.syncKits(file);
+	}
+	
+	
 	
 }

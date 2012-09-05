@@ -391,7 +391,8 @@ public class DataTransferService  {
 	}
 	private List<Integer> processTraineeSheet(HSSFSheet sheet) {
 		Iterator<Row> rows = sheet.rowIterator();
-		List<Integer> traineeId = new ArrayList<Integer>(); 
+		boolean update = false;
+		List<Integer> processedTraineeId = new ArrayList<Integer>(); 
 		if(rows.hasNext()) {
 			rows.next(); // skip the first row, as it is heading
 		}
@@ -405,8 +406,19 @@ public class DataTransferService  {
 				Cell cell = cellIterator.next();
 				switch( k ){
 				case 0:
-					trainee.setTraineeId((int)cell.getNumericCellValue());
-					traineeId.add((int)cell.getNumericCellValue());
+					// get the trainee id
+					int traineeId = (int)cell.getNumericCellValue() ; 
+					Trainee dBTrainee = null;
+					try {
+						dBTrainee = traineeManager.load(traineeId);
+					} catch(Exception e) {
+						//
+					}					
+					if(dBTrainee !=  null) {
+						trainee = dBTrainee;
+						update = true;
+						processedTraineeId.add(traineeId);
+					} 					
 					break;
 				case 1:
 					trainee.setFirstName(cell.getStringCellValue());
@@ -423,9 +435,16 @@ public class DataTransferService  {
 				
 				}
 			}
-			traineeManager.add(trainee);
+			
+			if(update) {
+				traineeManager.update(trainee);
+			} else {
+				Integer createTraineeId = traineeManager.add(trainee);
+				processedTraineeId.add(createTraineeId);
+			}
+			
 		}
-		return traineeId;
+		return processedTraineeId;
 	}
 
 	private void processKitsSheet(HSSFSheet sheet) {

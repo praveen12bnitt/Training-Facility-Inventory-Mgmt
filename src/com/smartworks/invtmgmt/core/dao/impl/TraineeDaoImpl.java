@@ -20,10 +20,11 @@ public class TraineeDaoImpl extends HibernateDaoSupport
 		return getHibernateTemplate().load(Trainee.class, id);
 	}
 	
-	public void save(Trainee t) {
+	public Integer save(Trainee t) {
 		t.setCreatedDttm(dateUtil.getCurrentDBTimeStamp());
-		getHibernateTemplate().save(t);
+		return (Integer) getHibernateTemplate().save(t);
 	}
+	
 	
 	@Override
 	public void update(Trainee t) {

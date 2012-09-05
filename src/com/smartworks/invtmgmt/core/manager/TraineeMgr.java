@@ -6,7 +6,7 @@ import com.smartworks.invtmgmt.core.domain.Trainee;
 
 public interface TraineeMgr {
 
-	public void add(Trainee t);
+	public Integer add(Trainee t);
 	public void update(Trainee t);
 	public Trainee load(Integer traineeId);
 	public List<Trainee> loadActiveTrainee();

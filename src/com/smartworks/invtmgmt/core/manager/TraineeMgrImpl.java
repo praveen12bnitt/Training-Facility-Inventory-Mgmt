@@ -14,8 +14,8 @@ public class TraineeMgrImpl implements TraineeMgr {
 	TraineeDao traineeDao;
 	
 	@Override
-	public void add(Trainee t) {
-		traineeDao.save(t);		
+	public Integer add(Trainee t) {
+		return (Integer) traineeDao.save(t);		
 	}
 	
 	@Override
