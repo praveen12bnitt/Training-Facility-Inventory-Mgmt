@@ -27,6 +27,8 @@ laundryLabels['W.time']='Time of Washing';
 laundryLabels['D.time']='Time of Drying';
 laundryLabels['W.weight']='Dirty Weight';
 laundryLabels['D.weight']='Clean Weight';
+laundryLabels['W.caption']='Washer Details';
+laundryLabels['D.caption']='Dryer Details';
 
   $(document).ready(function() {
 	
@@ -65,7 +67,7 @@ laundryLabels['D.weight']='Clean Weight';
 		    viewrecords: true,
 		    sortorder: "desc",
 		    loadonce: true,
-		    caption: "Washer Details",
+		    caption: laundryLabels[$('#laundryType').val()+ '.caption'],
 		    width: 1000,
 		    height: 'auto',
 		    mtype: 'POST', 
@@ -99,7 +101,7 @@ laundryLabels['D.weight']='Clean Weight';
 		<input type="hidden" id="fromDate" value="<%= request.getParameter("fromDate") %>" />
 		<input type="hidden" id="toDate" value="<%= request.getParameter("toDate") %>" />
 		<input type="hidden" id="laundryType" value="<%= request.getParameter("laundryType") %>" />
-		<div id="heading" class="ui-widget-header">Washing</div>
+		<div id="heading" class="ui-widget-header"><%= "W".equals(request.getParameter("laundryType"))?"Washing":"Drying" %></div>
 		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
 			
 			<table id="open-laundry" class="trans-details" style="font-size: 95%;"></table>
