@@ -70,6 +70,13 @@
 				</tr>
 				
 				<tr>
+					<td>Class</td> <td>
+					<form:select path="selectedClassName">
+   						 <form:options items="${traineeForm.availableClasses}" />
+					</form:select></td>
+				</tr>
+				
+				<tr>
 					<td>Active</td> <td><form:checkbox path="trainee.enabled" /></td>
 				</tr>
 				

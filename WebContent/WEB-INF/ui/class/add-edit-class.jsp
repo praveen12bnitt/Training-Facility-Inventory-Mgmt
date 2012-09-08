@@ -37,6 +37,47 @@
 			); 
 	  
 	  $("#kits").multiselect();
+	  $("#staffs").multiselect();
+	  
+	  <c:if test="${editMode == true}">
+	  	
+	  jQuery("#traineeList").jqGrid({
+		   	url:'${pageContext.request.contextPath}/common/list-class-trainees.form?className=${clsForm.cls.className}',
+			datatype: "json",
+		   	colNames:['Trainee Id','First Name', 'Last Name', 'Middle Name'],
+		   	colModel:[
+				{name:'traineeId',index:'traineeId', align:'center', width:200},
+		   		{name:'firstName',index:'firstName', align:'center', width:200},
+		   		{name:'lastName',index:'lastName', align:'center', width:200},
+		   		{name:'middleName',index:'middleName', align:'center', width:200},
+		   	],
+		   	rowNum:10,
+		   	rowList:[10,20,30],
+		   	pager: '#traineePage',
+		   	sortname: 'firstName',
+		    viewrecords: true,
+		    sortorder: "desc",
+		    loadonce: true,
+		    caption: "Trainee List",
+		    ignoreCase:true,
+		    height: 125,
+		    width: 750,
+		    jsonReader : {
+		          root: "rows",
+		          page: "page",
+		          total: "total",
+		          records: "records",
+		          repeatitems: false,
+		          cell: "cell",
+		          id: "id"
+		      }
+		});	    
+	  
+	  $("#traineeList").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
+	  
+	  </c:if>
+	  
+	  
 	  	
 });
 
@@ -65,8 +106,8 @@
 		</div>
 		<br/>
 		
-		<div id="heading" class="ui-widget-header">Linked Kits</div>
-		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
+		<div id="heading" class="ui-widget-header">Kits</div>
+		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px">	
 		  <select id="kits"  multiple="multiple" name="selectedKits" style="width: 450px; height: 180px; display: none; " >
 			 <c:forEach var="p" items="${productData}">
 			 	 <c:if test="${p.selected == true}">
@@ -76,15 +117,32 @@
 			 	 	<option value="${p.productId}">${p.productName}</option>
 			 	 </c:if>
 			  </c:forEach>
-			</select>	
+			</select> 			
 		</div>
+		<div id="heading" class="ui-widget-header">Staffs</div>
+		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px">	
+		<select id="staffs"  multiple="multiple" name="selectedStaffs" style="width: 450px; height: 180px; display: none; " >
+			 <c:forEach var="s" items="${staffData}">
+			 	 <c:if test="${s.selected == true}">
+			 	 	<option value="${s.staffId}" selected="selected">${s.staffName}</option>
+			 	 </c:if>
+			 	 <c:if test="${s.selected == false}">
+			 	 	<option value="${s.staffId}">${s.staffName}</option>
+			 	 </c:if>
+			  </c:forEach>
+			</select>	
 		
+		</div>
 		<div id="heading" class="ui-widget-header">Trainee List</div>
 		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;"> 		
-			Upload Trainee List : <input type="file" name="file" class="fileUpload" >
+			Upload Trainee's : <form:input path="traineeFile" type="file"/>
 		</div>
-				
-		<div id="actions" align="center" class="actions">
+		
+		<table id="traineeList" class="trans-details"></table>
+		<div id="traineePage"></div>
+		
+		
+		<div id="actions" align="left" class="actions">
 			<button id="save" type="submit" class="ui-state-default ui-corner-all form-button" style="width: 50px;height: 25px; ">Save</button>
 		</div>	
 			

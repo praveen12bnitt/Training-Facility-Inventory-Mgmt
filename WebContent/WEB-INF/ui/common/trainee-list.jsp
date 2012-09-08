@@ -40,7 +40,7 @@
 		   		{name:'firstName',index:'firstName', align:'center'},
 		   		{name:'lastName',index:'lastName', align:'center'},
 		   		{name:'middleName',index:'middleName', align:'center'},
-		   		{name:'classNumber',index:'classNumber', align:'center'},
+		   		{name:'cls.className',index:'cls.className', align:'center'},
 		   		{name:'enabled',index:'enabled', align:'center', stype:'select', editoptions:{value:":All;true:true;false:false"},width:80},
 		   		{name:'createdDttmStr',index:'createdDttm', align:'center',search:false},
 		   		{name:'lastUpdateDttmStr',index:'lastUpdateDttm', align:'center',search:false}

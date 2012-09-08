@@ -27,7 +27,7 @@
 		<dependency org="org.springframework.webflow" name="org.springframework.webflow-library" rev="2.3.0.RELEASE" conf="runtime" />
 		<dependency org="org.springframework.security" name="org.springframework.security.acls" rev="3.0.4.RELEASE" conf="runtime" />
 		<dependency org="org.springframework.security" name="org.springframework.security.config" rev="3.0.4.RELEASE" conf="runtime" />
-		<dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.4.2" />
+		<dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.9" />
 		<dependency org="org.json" name="json" rev="20090211" />
 		<dependency org="org.apache.velocity" name="velocity" rev="1.7"/>
 		<dependency org="org.apache.poi" name="poi-scratchpad" rev="3.8-beta2"/>

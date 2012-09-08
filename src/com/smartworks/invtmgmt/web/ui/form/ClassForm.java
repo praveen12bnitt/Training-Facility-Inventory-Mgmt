@@ -1,31 +1,26 @@
 package com.smartworks.invtmgmt.web.ui.form;
 
-import java.util.List;
-
-import javax.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.smartworks.invtmgmt.core.domain.Class;
-import com.smartworks.invtmgmt.core.domain.Trainee;
 
 public class ClassForm {
 	
-	@Valid Class cls;
-	@Valid List<Trainee> trainee;
-	
-	
-	public List<Trainee> getTrainee() {
-		return trainee;
-	}
-	public void setTrainee(List<Trainee> traineeLsit) {
-		this.trainee = traineeLsit;
-	}
-	
-	
+	private Class cls;
+
+	private MultipartFile traineeFile;
+		
 	public Class getCls() {
 		return cls;
 	}
 	public void setCls(Class cls) {
 		this.cls = cls;
+	}
+	public MultipartFile getTraineeFile() {
+		return traineeFile;
+	}
+	public void setTraineeFile(MultipartFile traineeFile) {
+		this.traineeFile = traineeFile;
 	}
 	
 

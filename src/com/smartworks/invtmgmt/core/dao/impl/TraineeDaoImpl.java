@@ -86,8 +86,8 @@ public class TraineeDaoImpl extends HibernateDaoSupport
 
 	@Override
 	public List<Trainee> findByClass(String clsName) {
-		String query = "from Trainee where firstName=:firstName";
-		List<Trainee> traineeList = getHibernateTemplate().findByNamedParam(query, "firstName", clsName);
+		String query = "from Trainee where cls.className = :className and enabled=true";
+		List<Trainee> traineeList = getHibernateTemplate().findByNamedParam(query, "className", clsName);
 		return traineeList;
 	}
 

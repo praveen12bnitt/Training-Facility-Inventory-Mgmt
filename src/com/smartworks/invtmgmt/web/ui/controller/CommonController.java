@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.smartworks.invtmgmt.core.dao.ClassDao;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.UserDao;
+import com.smartworks.invtmgmt.core.domain.Class;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Staff;
@@ -98,6 +99,24 @@ public class CommonController {
 	}
 	
 	
+	@RequestMapping(value = "/list-class-trainees.form", method = RequestMethod.GET)
+	public @ResponseBody
+	ReportDetailsResponse getActiveTrainessByClass(HttpServletRequest request, @RequestParam String className) {
+		logger.info("Get All Trainees<>");
+		
+		List<Trainee> trainees = new ArrayList<Trainee>();
+
+		trainees = traineeMgr.getByClassName(className);
+		ReportDetailsResponse response = new ReportDetailsResponse();
+		
+		response.setRows(trainees);
+		response.setPage("1");
+		response.setTotal("10");
+		response.setRecords(String.valueOf(trainees.size()));
+		return response;
+	}
+	
+	
 	
 	@RequestMapping(value = "/list-active-staff.form", method = RequestMethod.GET)
 	public @ResponseBody
@@ -110,7 +129,7 @@ public class CommonController {
 		ReportDetailsResponse response = new ReportDetailsResponse();
 		
 		response.setRows(staff);
-		response.setPage("1");
+		response.setPage("1");	
 		response.setTotal("10");
 		response.setRecords(String.valueOf(staff.size()));
 		return response;
@@ -212,6 +231,12 @@ public class CommonController {
 		TraineeForm traineeForm = new TraineeForm();
 		traineeForm.setTrainee(trainee);
 		traineeForm.setEdit(true);
+		if(trainee.getCls() != null)
+			traineeForm.setSelectedClassName(trainee.getCls().getClassName());
+		List<Class> clazzList = classMgr.loadAll();
+		for(Class cl : clazzList) {
+			traineeForm.getAvailableClasses().put(cl.getClassName(), cl.getClassName());
+		} 		
 		mav.addObject("traineeForm", traineeForm);
 		return mav;
 	}
@@ -223,6 +248,7 @@ public class CommonController {
 		StaffForm staffForm = new StaffForm();
 		staffForm.setStaff(staff);
 		staffForm.setEdit(true);
+		
 		mav.addObject("staffForm", staffForm);
 		return mav;
 	}
@@ -231,6 +257,11 @@ public class CommonController {
 	public ModelAndView addTrainee() {
 		ModelAndView mav = new ModelAndView("common/add-trainee");
 		TraineeForm traineeForm = new TraineeForm();
+		
+		List<Class> clazzList = classMgr.loadAll();
+		for(Class cl : clazzList) {
+			traineeForm.getAvailableClasses().put(cl.getClassName(), cl.getClassName());
+		} 		
 		mav.addObject("traineeForm", traineeForm);
 		return mav;
 	}
@@ -293,6 +324,9 @@ public class CommonController {
 			mav.addObject("traineeForm", traineeForm);
 			return mav;
         } 
+		
+		Class clazz = classMgr.load(traineeForm.getSelectedClassName());
+		traineeForm.getTrainee().setCls(clazz); 		
 		if(!traineeForm.isEdit())
 			traineeMgr.add(traineeForm.getTrainee());
 		else

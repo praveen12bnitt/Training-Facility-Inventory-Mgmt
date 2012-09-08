@@ -14,15 +14,17 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name="CLASS")
 @Proxy(lazy=false)
+@JsonAutoDetect(fieldVisibility=Visibility.ANY,getterVisibility=Visibility.NONE, isGetterVisibility=Visibility.NONE)
 public class Class implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 3454681505877948346L;
 	@Id
 	@Column(name="CLASS_NAME", length=50)
@@ -34,10 +36,17 @@ public class Class implements Serializable{
 
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name = "CLASS_PRODUCT", joinColumns = { @JoinColumn(name = "CLASS_NAME") }, inverseJoinColumns = { @JoinColumn(name = "PRODUCT_ID") })
+	@JsonIgnore
 	private Set<Product> products =  new HashSet<Product>(0);
 	
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable(name = "CLASS_TRAINEE", joinColumns = { @JoinColumn(name = "CLASS_NAME") }, inverseJoinColumns = { @JoinColumn(name = "TRAINEE_ID") })
+	@JoinTable(name = "CLASS_STAFF", joinColumns = { @JoinColumn(name = "CLASS_NAME") }, inverseJoinColumns = { @JoinColumn(name = "STAFF_ID") })
+	@JsonIgnore
+	private Set<Staff> staffs =  new HashSet<Staff>(0);
+	
+	@OneToMany(mappedBy="cls", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonIgnore
 	private Set<Trainee> trainees =  new HashSet<Trainee>(0);
 	
 	
@@ -66,6 +75,17 @@ public class Class implements Serializable{
 	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
+	public Set<Staff> getStaffs() {
+		return staffs;
+	}
+	public void setStaffs(Set<Staff> staffs) {
+		this.staffs = staffs;
+	}
 	
+	@JsonIgnore
+	public void addTrainee(Trainee trainee) {
+		getTrainees().add(trainee);
+		trainee.setCls(this);
+	} 	
 	
 }
