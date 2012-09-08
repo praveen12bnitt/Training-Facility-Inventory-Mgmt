@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.domain.Product;
+import com.smartworks.invtmgmt.core.domain.ProductItem;
 
 public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
 
@@ -71,6 +72,20 @@ public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
 		} else {
 			return products.get(0);
 		}
+	}
+
+	@Override
+	public List<ProductItem> getProductItemByProductId(Integer Id) {
+		String query = "from ProductItem where product=:id";
+		List<ProductItem> productItems = getHibernateTemplate().findByNamedParam(query, "id", Id);
+		return productItems;
+	}
+	
+	@Override
+	public List<ProductItem> getProductItemsByProduct(Product product) {
+		String query = "from ProductItem where product=:id";
+		List<ProductItem> productItems = getHibernateTemplate().findByNamedParam(query, "id", product);
+		return productItems;
 	}
 	
 }

@@ -56,7 +56,7 @@ public class Product implements Serializable {
 
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy="product")
 	private List<ProductItem> itemList;
-
+	
 	public Integer getProductId() {
 		return productId;
 	}

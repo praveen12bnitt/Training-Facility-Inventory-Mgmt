@@ -1,7 +1,10 @@
 package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -20,6 +24,14 @@ import org.hibernate.annotations.Proxy;
 public class ProductItem implements Serializable {
 
 
+	public ProductItem(Integer productItemId, Integer itemId, Product product) {
+		this.productItemId = productItemId;
+		this.itemId = itemId;
+		this.product = product;
+	}
+	
+	public ProductItem() {
+	}
 	/**
 	 * default serial version id
 	 */
@@ -47,8 +59,18 @@ public class ProductItem implements Serializable {
 	@JoinColumn(name="PRODUCT_ID")
 	@JsonIgnore
 	private Product product;
+	
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy="productItem")
+	private Set<ProductItemMapping> productItemMapping;
 
 	
+	public Set<ProductItemMapping> getProductItemMapping() {
+		return productItemMapping;
+	}
+
+	public void setProductItemMapping(Set<ProductItemMapping> productItemMapping) {
+		this.productItemMapping = productItemMapping;
+	}
 
 	public Integer getItemId() {
 		return itemId;

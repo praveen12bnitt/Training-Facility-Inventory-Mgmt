@@ -2,8 +2,11 @@ package com.smartworks.invtmgmt.web.ui.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -24,21 +27,34 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.core.dao.ClassDao;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
+import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.dao.UserDao;
+<<<<<<< HEAD
 import com.smartworks.invtmgmt.core.domain.Class;
+=======
+import com.smartworks.invtmgmt.core.domain.Item;
+import com.smartworks.invtmgmt.core.domain.ItemAttribute;
+import com.smartworks.invtmgmt.core.domain.ItemAttributeMapping;
+import com.smartworks.invtmgmt.core.domain.ItemAttributeValue;
+>>>>>>> Implemented product and product attributes mapping
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Product;
+import com.smartworks.invtmgmt.core.domain.ProductItem;
 import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.User;
 import com.smartworks.invtmgmt.core.manager.ClassMgr;
 import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
+import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.manager.StaffMgr;
 import com.smartworks.invtmgmt.core.manager.TraineeMgr;
 import com.smartworks.invtmgmt.core.manager.UserMgr;
 import com.smartworks.invtmgmt.core.service.DataTransferService;
+import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 import com.smartworks.invtmgmt.web.ui.JqgridWhereClauseGenerator;
 import com.smartworks.invtmgmt.web.ui.controller.util.ValidationUtil;
+import com.smartworks.invtmgmt.web.ui.form.IssueSkuForm;
+import com.smartworks.invtmgmt.web.ui.form.ProductForm;
 import com.smartworks.invtmgmt.web.ui.form.StaffForm;
 import com.smartworks.invtmgmt.web.ui.form.TraineeForm;
 import com.smartworks.invtmgmt.web.ui.form.UserForm;
@@ -76,7 +92,13 @@ public class CommonController {
 	private ClassMgr classMgr;
 	
 	@Autowired
+	private ProductDao productDao;
+	
+	@Autowired
 	DataTransferService dataTransferService;
+	
+	@Autowired
+	ItemMgr itemMgr;
 	
 	protected static Logger logger = Logger
 			.getLogger(CommonController.class);
@@ -428,8 +450,19 @@ public class CommonController {
 	
 	@RequestMapping(value = "/getItemsByProductId.form", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<Integer,String> getItemsByProductId(@RequestParam Integer productId) {
+	public Map<Integer,ProductForm> getItemsByProductId(@RequestParam Integer productId) {
 		Map itemMap = commonTransactionMgr.getItemsByProductId(productId);
+		
+		Item item = itemMgr.getItem(productId);
+		ProductForm productForm = null;
+		
+		Map<Integer, ProductForm> productMap = new HashMap<Integer, ProductForm>();
+		for (Iterator i = itemMap.keySet().iterator(); i.hasNext();) {
+			Integer key = (Integer) i.next();
+			productForm = new ProductForm();
+			productForm.setItems(item);
+			productMap.put(key, productForm);
+		}
 		return itemMap;
 	}
 	

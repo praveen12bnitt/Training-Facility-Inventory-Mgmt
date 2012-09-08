@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.smartworks.invtmgmt.core.domain.Product;
+import com.smartworks.invtmgmt.core.domain.ProductItem;
 
 public interface ProductDao {
 	public void saveOrUpdate(Product product);
@@ -14,5 +15,7 @@ public interface ProductDao {
 	public void delete(Integer productId);
 	public Map<Integer,String> findByProductNameLike(String name, Integer locationId);
 	public Product findByName(String productName);
+	public List<ProductItem> getProductItemByProductId(Integer Id);
+	public List<ProductItem> getProductItemsByProduct(Product product);
 	
 }
