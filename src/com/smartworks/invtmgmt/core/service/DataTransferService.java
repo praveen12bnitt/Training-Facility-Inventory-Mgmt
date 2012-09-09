@@ -2,7 +2,6 @@ package com.smartworks.invtmgmt.core.service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,9 +28,8 @@ import com.smartworks.invtmgmt.core.dao.ItemAttributeDao;
 import com.smartworks.invtmgmt.core.dao.ItemAttributeValueDao;
 import com.smartworks.invtmgmt.core.dao.ItemDao;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
-import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
-import com.smartworks.invtmgmt.core.dao.impl.LocationDaoImpl;
+import com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.ItemAttribute;
@@ -39,12 +37,9 @@ import com.smartworks.invtmgmt.core.domain.ItemAttributeMapping;
 import com.smartworks.invtmgmt.core.domain.ItemAttributeValue;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Product;
-import com.smartworks.invtmgmt.core.domain.ProductItem;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
-import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
 import com.smartworks.invtmgmt.core.manager.InventoryManager;
-import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.manager.TraineeMgr;
 import com.smartworks.invtmgmt.web.ui.datatransfer.DataTransferListener;
 
@@ -75,11 +70,9 @@ public class DataTransferService  {
 	@Autowired
 	private InventoryManager inventoryManager;
 	
-	@Autowired
-	private CommonTransactionMgr cmnTransMgr;
 	
 	@Autowired
-	private ProductDao productDao;
+	private ProductDaoImpl productDao;
 	
 	@Autowired
 	private ClassDao classDao;
@@ -367,15 +360,6 @@ public class DataTransferService  {
 		
 	}
 
-	public void syncKits(MultipartFile file) throws Exception {
-		try {
-			HSSFWorkbook workBook = new HSSFWorkbook(file.getInputStream());
-			HSSFSheet sheet = workBook.getSheetAt(0);
-			processKitsSheet(sheet);
-		} catch(Exception e) {
-			e.printStackTrace();
-		} 		
-	}
 	public List<Integer> syncTrainee(MultipartFile file) throws Exception {
 		try {
 			HSSFWorkbook workBook = new HSSFWorkbook(file.getInputStream());
@@ -447,51 +431,7 @@ public class DataTransferService  {
 		return processedTraineeId;
 	}
 
-	private void processKitsSheet(HSSFSheet sheet) {
-		Iterator<Row> rows = sheet.rowIterator();
-		if(rows.hasNext()) {
-			rows.next(); // skip the first row, as it is heading
-		}
-		while(rows.hasNext()){
-			Row row = rows.next();
-			Product product = new Product();
-			Iterator<Cell> cellIterator = row.cellIterator();
-			String[] items;
-			int k = -1;
-			while(cellIterator.hasNext()){
-				k++;
-				Cell cell = cellIterator.next();
-				switch( k ){
-					case 0 :
-						product.setProductName(cell.getStringCellValue());
-						break;
-					case 1 :
-						product.setProductDesc(cell.getStringCellValue()!=null?cell.getStringCellValue():"");
-						break;
-					case 2 :
-						Location location = locationDao.findByLocationName("Equipment");
-						product.setLocation(location);
-						break;
-					case 3:
-						items = cell.getStringCellValue().split("\n");
-						List<ProductItem> productItem = new ArrayList<ProductItem>();
-						for(String item : items){
-							Item prItem = itemDao.getItemByName(item);
-							ProductItem prdItem = new ProductItem();
-							prdItem.setItemId(prItem.getId());
-							prdItem.setProduct(product);
-							productItem.add(prdItem);
-						}
-						product.setItemList(productItem);
-						break;
-				}
-			}
-			cmnTransMgr.save(product);
-			
-			
-		}
-		
-	}
+
 
 	public void syncClass(MultipartFile file) throws Exception {
 		try {

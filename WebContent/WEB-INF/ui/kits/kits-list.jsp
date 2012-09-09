@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Class</title>
+<title>Kits</title>
 <style>
 .error {
 	color: red;
@@ -31,30 +31,31 @@ $(document).ready(function($) {
 	$('#tran-result-success-div').hide();
 	$('#transactionDiv').hide();
 
-	jQuery("#list2").jqGrid({
-	   	url:'${pageContext.request.contextPath}/class/list-all-classes.form',
+	jQuery("#kit-list").jqGrid({
+		url:'${pageContext.request.contextPath}/kits/list-all-kits.form',
 		datatype: "json",
-	   	colNames:['Class Name', 'Class Description'],
-	   	colModel:[
-	   		{name:'className',index:'className', align:'center', width:200},
-	   		{name:'classDesc',index:'classDesc', align:'center', width:200}
+	   	colNames:['Kit Id','Kit Name', 'Kit Desc', 'Location'],
+	   	colModel:[ 			
+			{name:'productId',index:'productId', align:'center', width:200},
+	   		{name:'productName',index:'productName', align:'center', width:200},
+	   		{name:'productDesc',index:'productDesc', align:'center', width:200},
+	   		{name:'location.locationName',index:'location.locationName', align:'center', width:200}	   		 		
 	   	],
 	   	rowNum:10,
 	   	rowList:[10,20,30],
-	   	pager: '#pager2',
-	   	sortname: 'className',
+	   	pager: '#kit-list-pager',
+	   	sortname: 'productName',
 	    viewrecords: true,
 	    sortorder: "desc",
-	    loadonce: true,
-	    caption: "Class List",
-	    ignoreCase:true,
-	    height: 125,
+	    loadonce: false,
+	    caption: "Kit List",
+	    height: 400,
 	    width: 750,
 	    onSelectRow: function(rowId){	    	
-	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
-	    	var className = jQuery("#list2").jqGrid('getCell',rowId,0);
+	    	var rowData = jQuery("#kit-list").jqGrid('getGridParam','selrow');
+	    	var kitId = jQuery("#kit-list").jqGrid('getCell',rowId,0);
 	    	if(rowData){
-				$(location).attr('href','${pageContext.request.contextPath}/class/edit-class.form?className='+className);
+				$(location).attr('href','${pageContext.request.contextPath}/kits/edit-kit.form?kitId='+kitId);
 			}
 	    },
 	    jsonReader : {
@@ -65,44 +66,10 @@ $(document).ready(function($) {
 	          repeatitems: false,
 	          cell: "cell",
 	          id: "id"
-	      }
-	});
-
+	      }   
+	}); 
 });
 
-
-function print() {
-	jQuery('#itemDetails >tbody >tr').each(
-			function(index, tr) {
-				$(this).find('td').each(function(){
-					var itemName = "itemList["+index+"].itemId";
-			        $(this).find('#itemId').attr('name',itemName);
-			    })
-			}
-	);
-}
-
-function processResponse(data) {
-	$.each(data, function(key, val) {
-		alert("key::" + key +" value ::" + value);
-		var innerHtml = $("#rowtemplate").html();
-		
-		innerHtml = innerHtml.replace("hdnVal",key);
-		innerHtml = innerHtml.replace("hdnName",val);
-		
-		$("#itemDetails > tbody").append("<tr><td>"+innerHtml+"</td></tr>");
-		
-		$('#itemDetails >tbody >tr >td img.delete').click(function(){
-			  $(this).parent().parent().remove();
-		});
-	});
-}
-
-function showTransactionStatus() {
-	$('#transactionResponse').show();
-	$("#list2").trigger("reloadGrid");
-	$('#transactionResponse').fadeOut(4000);
-}
 
 </script>
 </head>
@@ -123,14 +90,14 @@ function showTransactionStatus() {
 				<div id="content" class="ui-widget-content" style="padding: 10px;">	
 				
 				<div id="create-trainee-div">
-					<a id="create-trainee" href="<c:url value='/class/add-class.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Class</a>
+					<a id="add-kits" href="<c:url value='/kits/add-kit.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Kit</a>
 				</div>
 				
 				<br/>    
-				<table id="list2" class="trans-details"></table>
-					<div id="pager3"></div>
+				<table id="kit-list" class="trans-details"></table>
+					<div id="kit-list-pager"></div>
 				</div>
 				
-		</div>
+			</div>
 	</body>
 </html>

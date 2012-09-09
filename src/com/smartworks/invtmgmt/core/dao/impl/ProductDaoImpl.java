@@ -6,18 +6,14 @@ import java.util.Map;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.domain.Product;
-import com.smartworks.invtmgmt.core.domain.ProductItem;
 
-public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
+public class ProductDaoImpl  extends HibernateDaoSupport {
 
-	@Override
 	public void saveOrUpdate(Product product) {
 		getHibernateTemplate().saveOrUpdate(product);
 	}
 	
-	@Override
 	public void save(Product product) {
 		if(product.getProductId() == null) {
 			getHibernateTemplate().save(product);
@@ -25,27 +21,27 @@ public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
 			getHibernateTemplate().update(product);
 		}
 	}
+	
+	public void removeAllProductDetails(Integer productId) {  		
+		getHibernateTemplate().bulkUpdate("delete ProductDetails pd where pd.product.productId = ?", productId) ;
+	}
 
-	@Override
 	public List<Product> loadAll() {
 		List<Product> products = getHibernateTemplate().loadAll(Product.class);
 		return products;
 	}
 	
 	
-	@Override
 	public List<Product> loadAllOnlyProducts() {
 		List<Product> products = getHibernateTemplate().find("from Product");
 		return products;
 	}
 
-	@Override
 	public Product load(Integer productId) {
 		Product product = (Product)getHibernateTemplate().load(Product.class, productId);
 		return product;
 	}
 	
-	@Override
 	public void delete(Integer productId) {
 		Product product = load(productId);
 		getHibernateTemplate().delete(product);
@@ -63,7 +59,6 @@ public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
 		return productsMap;
 	}
 
-	@Override
 	public Product findByName(String productName) {
 		String query = "from Product where productName=:productName";
 		List<Product> products = getHibernateTemplate().findByNamedParam(query, "productName", productName);
@@ -74,18 +69,6 @@ public class ProductDaoImpl  extends HibernateDaoSupport implements ProductDao{
 		}
 	}
 
-	@Override
-	public List<ProductItem> getProductItemByProductId(Integer Id) {
-		String query = "from ProductItem where product=:id";
-		List<ProductItem> productItems = getHibernateTemplate().findByNamedParam(query, "id", Id);
-		return productItems;
-	}
-	
-	@Override
-	public List<ProductItem> getProductItemsByProduct(Product product) {
-		String query = "from ProductItem where product=:id";
-		List<ProductItem> productItems = getHibernateTemplate().findByNamedParam(query, "id", product);
-		return productItems;
-	}
+
 	
 }

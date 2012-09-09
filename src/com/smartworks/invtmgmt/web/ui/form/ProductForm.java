@@ -1,70 +1,71 @@
 package com.smartworks.invtmgmt.web.ui.form;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.smartworks.invtmgmt.core.domain.Item;
-import com.smartworks.invtmgmt.core.domain.ItemAttribute;
+import org.springframework.util.AutoPopulatingList;
+
+import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.core.domain.Product;
-import com.smartworks.invtmgmt.core.domain.ProductItem;
-import com.smartworks.invtmgmt.core.domain.ProductItemAttribute;
+import com.smartworks.invtmgmt.core.service.ItemSkuElementFactory;
+
 
 public class ProductForm {
 	
+	private Product product;
 	
-	private List<Product> products;
+	private Integer selectedLocationId;
 	
-	private List<ProductItem> productItems;
+	private Map<Integer, String> locationOptions = new HashMap<Integer, String>();
 	
-	private List<ItemAttribute> itemAttribute;
+	private List<ItemSku> itemSkus = new AutoPopulatingList<ItemSku>(new ItemSkuElementFactory());
 	
-	private Item items;
-	
-	public Item getItems() {
-		return items;
+	private List<String> itemNames = new ArrayList<String>();
+
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setItems(Item items) {
-		this.items = items;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
-	public List<ItemAttribute> getItemAttribute() {
-		return itemAttribute;
+	public Integer getSelectedLocationId() {
+		return selectedLocationId;
 	}
 
-	public void setItemAttribute(List<ItemAttribute> itemAttribute) {
-		this.itemAttribute = itemAttribute;
+	public void setSelectedLocationId(Integer selectedLocationId) {
+		this.selectedLocationId = selectedLocationId;
 	}
 
-	public List<ProductItem> getProductItems() {
-		return productItems;
+	public Map<Integer, String> getLocationOptions() {
+		return locationOptions;
 	}
 
-	public void setProductItems(List<ProductItem> productItems) {
-		this.productItems = productItems;
+	public void setLocationOptions(Map<Integer, String> locationOptions) {
+		this.locationOptions = locationOptions;
 	}
 
-	public List<ProductItemAttribute> getProductItemAttributes() {
-		return productItemAttributes;
+	public List<ItemSku> getItemSkus() {
+		return itemSkus;
 	}
 
-	public void setProductItemAttributes(
-			List<ProductItemAttribute> productItemAttributes) {
-		this.productItemAttributes = productItemAttributes;
+	public void setItemSkus(List<ItemSku> itemSkus) {
+		this.itemSkus = itemSkus;
 	}
 
-	private List<ProductItemAttribute> productItemAttributes;
-
-	public List<Product> getProducts() {
-		return products;
+	public List<String> getItemNames() {
+		return itemNames;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setItemNames(List<String> itemNames) {
+		this.itemNames = itemNames;
 	}
 	
-	public void loadItemAttributes(){
-		
-		
-	}
-
+	
+	
+	
+	
 }

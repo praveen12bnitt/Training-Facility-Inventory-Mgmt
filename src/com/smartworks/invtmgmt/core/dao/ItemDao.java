@@ -9,6 +9,7 @@ public interface ItemDao {
 	public Item load(Integer id);	
 	public List<Item> loadAll();
 	public List<String> getItemNamesLike(String likeStr) ;
+	public List<String> getItemNames();
 	public Map<Integer, String> getItemsByNameLike(String likeStr);
 	public Map<Integer, String> getItemNamesByIds(List itemIds);
 	public List<Item> getItemsByName(String name) ;

@@ -18,9 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.smartworks.invtmgmt.core.dao.ClassDao;
-import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.dao.StaffDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
+import com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl;
 import com.smartworks.invtmgmt.core.domain.Class;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Staff;
@@ -34,7 +34,7 @@ public class ClassMgrImpl implements ClassMgr{
 	ClassDao classDao;
 	
 	@Autowired
-	private ProductDao productDao;
+	private ProductDaoImpl productDao;
 	
 	@Autowired
 	private TraineeDao traineeDao;
@@ -104,7 +104,7 @@ public class ClassMgrImpl implements ClassMgr{
 				clazz.setStaffs(staffs); 	
 			} 		
 			
-			if(traineeFile != null) {
+			if(traineeFile != null && traineeFile.getSize() > 0) {
 				for(Trainee trainee : getTraineeObjFromFile(traineeFile)) {
 					clazz.addTrainee(trainee);
 				} 			

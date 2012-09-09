@@ -66,7 +66,7 @@
 					<li >
 					<a href="#">Administration</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/common/createproduct.form" />'>Kit Management</a></li>
+						<li><a href='<c:url value="/kits/add-kit.form" />'>Add Kit Management</a></li>
 						<li><a href='<c:url value="/common/kit-upload.form" />'>Upload Kits</a></li>
 						<li><a href='<c:url value="/common/list-all-trainee.form" />'>Trainee Management</a></li>
 						<li><a href='<c:url value="/common/list-all-staff.form" />'>Staff Management</a></li>

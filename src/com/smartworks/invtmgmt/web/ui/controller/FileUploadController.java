@@ -50,30 +50,6 @@ public class FileUploadController{
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value="/uploadTrainee.form")
-    public ModelAndView handleTraineeRequest(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-   	final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-   	final Map<String, MultipartFile> files = multiRequest.getFileMap();
-   	for (MultipartFile file : files.values()) {
-   		System.out.println("file name uploaded::"+file.getName());
-   		processExcelFile(file,"trainee");
-   	}
-   			
-   	return new ModelAndView("/reports/filetransfer");
-   }
-    
-    @RequestMapping(method = RequestMethod.POST, value="/uploadClass.form")
-    public ModelAndView handleClassRequest(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-   	final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-   	final Map<String, MultipartFile> files = multiRequest.getFileMap();
-   	for (MultipartFile file : files.values()) {
-   		System.out.println("file name uploaded::"+file.getName());
-   		processExcelFile(file,"class");
-   	}
-   			
-   	return new ModelAndView("/reports/filetransfer");
-   }
-    
     @RequestMapping(method = RequestMethod.POST, value="/uploadUser.form")
     public ModelAndView processExcel(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		String	path = System.getProperty("uploaddirectory", "/Users/kathirveluumapathy/Downloads/Book4.xlsx");
@@ -90,27 +66,8 @@ public class FileUploadController{
    	return new ModelAndView("/reports/filetransfer");
    }
     
-    @RequestMapping(method = RequestMethod.POST, value="uploadkit.form")
-    public ModelAndView processKit(final HttpServletRequest request, final HttpServletResponse resp) throws Exception{
-    	final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-       	final Map<String, MultipartFile> files = multiRequest.getFileMap();
-       	for (MultipartFile file : files.values()) {
-       		System.out.println("file name uploaded::"+file.getName());
-       		processExcelFile(file, "kits");
-       	}
-    	return null;
-    }
+   
     
-    
-    private void processExcelFile(MultipartFile file, String type) throws Exception {
-    	if(type.equalsIgnoreCase("kits"))
-    		dataTransferService.syncKits(file);
-    	else if(type.equalsIgnoreCase("trainee"))
-    		dataTransferService.syncTrainee(file);
-    	else if(type.equalsIgnoreCase("class"))
-    		dataTransferService.syncClass(file);
-	}
-
 	@InitBinder
     public void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
     	binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());

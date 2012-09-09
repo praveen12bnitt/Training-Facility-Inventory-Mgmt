@@ -139,8 +139,7 @@
 			<ref local="laundryDao" />
 		</property>
 	</bean>
-	<bean id="commonTransactionMgr" class="com.smartworks.invtmgmt.core.manager.CommonTransactionMgrImpl" />
-
+	
 	<bean id="traineeMgr" class="com.smartworks.invtmgmt.core.manager.TraineeMgrImpl">
 		<property name="traineeDao">
 			<ref local="traineeDao" />

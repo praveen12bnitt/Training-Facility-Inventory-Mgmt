@@ -26,6 +26,7 @@ import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.StaffDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
+import com.smartworks.invtmgmt.core.dao.impl.ItemDaoImpl;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Staff;
@@ -63,6 +64,9 @@ public class ItemIssueFormController {
 	
 	@Autowired
 	LocationDao locationDao = null;
+	
+	@Autowired
+	private ItemDaoImpl itemDao;
 
 	
 	protected static Logger logger = Logger
@@ -73,14 +77,19 @@ public class ItemIssueFormController {
 	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeEnum, 
 			@RequestParam Integer locationId) {		
 		TransactionType transactionType = transactionTypeDao.load(transactionTypeEnum);		
-		List<Item> items =   itemMgr.getItemsForTransaction(transactionType);
+		
+		
 		Location location = locationDao.load(locationId);
 		IssueSkuForm issueSkuForm = new IssueSkuForm();		
 		issueSkuForm.setLocationId(location.getLocationId());
 		issueSkuForm.setLocationName(location.getLocationName());
 		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
 		issueSkuForm.setTransactionType(transactionTypeEnum);		
-		issueSkuForm.setItems(items);		
+
+		
+		List<String> itemNames = itemDao.getItemNames();		
+		issueSkuForm.setItemNames(itemNames);
+		
 		ModelAndView mav = new ModelAndView("transaction/issueSku");
 		mav.addObject("issueSkuForm", issueSkuForm);
 		return mav;
@@ -319,13 +328,15 @@ public class ItemIssueFormController {
 	
 	@RequestMapping(value="/receive-laundry.form", method=RequestMethod.GET)
 	public ModelAndView displayInventory(HttpServletRequest request, HttpServletResponse response, @RequestParam Integer locationId) {	
-		Location location = locationDao.load(locationId);
-		List<Item> items = new ArrayList<Item>();
+		Location location = locationDao.load(locationId); 		
 		IssueSkuForm issueSkuForm = new IssueSkuForm();	
 		issueSkuForm.setLocationId(location.getLocationId());
 		issueSkuForm.setLocationName(location.getLocationName());		
 		issueSkuForm.setTransactionType(TransactionTypeEnum.getLaundryReturnTrans(locationId));		
-		issueSkuForm.setItems(items);
+
+		List<String> itemNames = itemDao.getItemNames();		
+		issueSkuForm.setItemNames(itemNames);
+		
 		ModelAndView mav = new ModelAndView("transaction/receive-from-laundry");
         mav.addObject("issueSkuForm", issueSkuForm);       
 		return mav;

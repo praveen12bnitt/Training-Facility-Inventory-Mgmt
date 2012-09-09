@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.smartworks.invtmgmt.core.dao.ItemDao;
 import com.smartworks.invtmgmt.core.domain.Item;
-import com.smartworks.invtmgmt.core.domain.Location;
 
 public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 
@@ -27,6 +25,13 @@ public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 	public List<String> getItemNamesLike(String likeStr) {		
 		String query = "select name from Item where name like :name" ;				
 		List<String> itemNames = getHibernateTemplate().findByNamedParam(query, "name", "%"+likeStr+"%");
+		return itemNames;
+	}
+
+	
+	public List<String> getItemNames() {		
+		String query = "select name from Item" ;				
+		List<String> itemNames = getHibernateTemplate().find(query);
 		return itemNames;
 	}
 	

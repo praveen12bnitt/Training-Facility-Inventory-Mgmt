@@ -1,8 +1,8 @@
 package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Proxy;
@@ -41,22 +40,13 @@ public class Product implements Serializable {
 	private String productDesc;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="LOCATION_ID")
-	
+	@JoinColumn(name="LOCATION_ID") 	
 	private Location location;
 
-	
-	public String getProductDesc() {
-		return productDesc;
-	}
+	@OneToMany(mappedBy="product", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JsonIgnore
+	private Set<ProductDetails> productDetails = new HashSet<ProductDetails>();
 
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
-	}
-
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy="product")
-	private List<ProductItem> itemList;
-	
 	public Integer getProductId() {
 		return productId;
 	}
@@ -72,63 +62,37 @@ public class Product implements Serializable {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	
-	public List<ProductItem> getItemList() {
-		return itemList;
+
+	public String getProductDesc() {
+		return productDesc;
 	}
 
-	public void setItemList(List<ProductItem> itemList) {
-		this.itemList = itemList;
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
 	}
-	
-	@Transient
-	public List<Integer> getItemsIds() {
-		List<Integer> itemIds=new ArrayList<Integer>();
-		if(itemList !=null && itemList.size()>0) {
-			for(ProductItem productItem: itemList) {
-				itemIds.add(productItem.getItemId());
-			}
-		}
-		return itemIds;
-	}
-	
-	
+
 	public Location getLocation() {
 		return location;
 	}
-	
+
 	public void setLocation(Location location) {
 		this.location = location;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
-		return result;
+	public Set<ProductDetails> getProductDetails() {
+		return productDetails;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		if (productId == null) {
-			if (other.productId != null)
-				return false;
-		} else if (!productId.equals(other.productId))
-			return false;
-		return true;
+	@JsonIgnore
+	public void setProductDetails(Set<ProductDetails> productDetails) {
+		this.productDetails = productDetails;
 	}
-
 	
-	
-	
+	@JsonIgnore
+	public void addProductDetails(ProductDetails pd) {
+		pd.setProduct(this);
+		this.getProductDetails().add(pd);
+	}
 	
 	
 }

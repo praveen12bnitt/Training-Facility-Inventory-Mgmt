@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.core.dao.ClassDao;
-import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.dao.StaffDao;
 import com.smartworks.invtmgmt.core.dao.TraineeDao;
+import com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl;
 import com.smartworks.invtmgmt.core.domain.Class;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Staff;
@@ -41,7 +41,7 @@ public class ClassController {
 	ClassDao classIntObj;
 	
 	@Autowired
-	private ProductDao productDao;
+	private ProductDaoImpl productDao;
 	
 	@Autowired
 	private ClassDao classDao;

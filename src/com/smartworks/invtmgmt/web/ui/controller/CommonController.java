@@ -2,7 +2,6 @@ package com.smartworks.invtmgmt.web.ui.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,23 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.core.dao.ClassDao;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
-import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.dao.UserDao;
 import com.smartworks.invtmgmt.core.domain.Class;
-import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
-import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Staff;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.User;
 import com.smartworks.invtmgmt.core.manager.ClassMgr;
-import com.smartworks.invtmgmt.core.manager.CommonTransactionMgr;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
 import com.smartworks.invtmgmt.core.manager.StaffMgr;
 import com.smartworks.invtmgmt.core.manager.TraineeMgr;
@@ -43,7 +36,6 @@ import com.smartworks.invtmgmt.core.manager.UserMgr;
 import com.smartworks.invtmgmt.core.service.DataTransferService;
 import com.smartworks.invtmgmt.web.ui.JqgridWhereClauseGenerator;
 import com.smartworks.invtmgmt.web.ui.controller.util.ValidationUtil;
-import com.smartworks.invtmgmt.web.ui.form.ProductForm;
 import com.smartworks.invtmgmt.web.ui.form.StaffForm;
 import com.smartworks.invtmgmt.web.ui.form.TraineeForm;
 import com.smartworks.invtmgmt.web.ui.form.UserForm;
@@ -55,9 +47,6 @@ public class CommonController {
 	
 	@Autowired
 	private UserDao userDao; 
-	
-	@Autowired
-	private CommonTransactionMgr commonTransactionMgr;
 	
 	@Autowired
 	private TraineeMgr traineeMgr;
@@ -79,9 +68,6 @@ public class CommonController {
 	
 	@Autowired
 	private ClassMgr classMgr;
-	
-	@Autowired
-	private ProductDao productDao;
 	
 	@Autowired
 	DataTransferService dataTransferService;
@@ -405,63 +391,6 @@ public class CommonController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/saveproduct.form", method = RequestMethod.POST)
-	public ModelAndView saveProduct(@ModelAttribute Product product) {
-		logger.info("uiProduct:::"+product);
-		commonTransactionMgr.save(product);
-		ModelAndView mav = new ModelAndView("common/createproduct");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/deleteproduct.form", method = RequestMethod.GET)
-	public @ResponseBody String deleteProduct(@RequestParam Integer productId) {
-		logger.info("deleting productId:::"+productId);
-		commonTransactionMgr.delete(productId);
-		return "deleted";
-	}
-	
-	@RequestMapping(value = "/listproducts.form", method = RequestMethod.GET)
-	public @ResponseBody
-	ReportDetailsResponse getAllProducts(HttpServletRequest request) {
-		logger.info("Get All Products<>");
-		
-		List<Product> products = new ArrayList<Product>();
-			
-		products = commonTransactionMgr.getAllProducts();
-		ReportDetailsResponse response = new ReportDetailsResponse();
-		
-		response.setRows(products);
-		response.setPage("1");
-		response.setTotal("10");
-		response.setRecords(String.valueOf(products.size()));
-		return response;
-	}
-	
-	@RequestMapping(value = "/getItemsByProductId.form", method = RequestMethod.GET)
-	@ResponseBody
-	public Map<Integer,ProductForm> getItemsByProductId(@RequestParam Integer productId) {
-		Map itemMap = commonTransactionMgr.getItemsByProductId(productId);
-		
-		Item item = itemMgr.getItem(productId);
-		ProductForm productForm = null;
-		
-		Map<Integer, ProductForm> productMap = new HashMap<Integer, ProductForm>();
-		for (Iterator i = itemMap.keySet().iterator(); i.hasNext();) {
-			Integer key = (Integer) i.next();
-			productForm = new ProductForm();
-			productForm.setItems(item);
-			productMap.put(key, productForm);
-		}
-		return itemMap;
-	}
-	
-	@RequestMapping(value = "/findByProductNameLike.form", method = RequestMethod.GET)
-	@ResponseBody
-	public Map<Integer,String> findByProductNameLike(@RequestParam String name, @RequestParam Integer locationId){
-		
-		return commonTransactionMgr.findByProductNameLike(name, locationId);
-	}
-	
 	@RequestMapping(value = "/getlocations.form", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<Integer, String> getlocations() {
@@ -480,27 +409,6 @@ public class CommonController {
 		KitUploadForm kitUploadForm = new KitUploadForm();
 		mav.addObject("kitUploadForm", kitUploadForm);
 		return mav;
-	}
-	
-	
-	@RequestMapping(value = "/kit-upload.form", method = RequestMethod.POST)
-	public ModelAndView kitUpload(HttpServletRequest request) {
-		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-	   	final Map<String, MultipartFile> files = multiRequest.getFileMap();
-		for (MultipartFile file : files.values()) {
-	   		System.out.println("file name uploaded::"+file.getName());
-	   		try {
-	   			processExcelFile(file);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	   	} 		
-		return createProduct();		
-	}
-	
-	private void processExcelFile(MultipartFile file) throws Exception {     	
-		dataTransferService.syncKits(file);
 	}
 	
 	

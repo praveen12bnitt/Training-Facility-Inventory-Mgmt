@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smartworks.invtmgmt.core.dao.ItemAttributeDao;
 import com.smartworks.invtmgmt.core.dao.ItemAttributeValueDao;
 import com.smartworks.invtmgmt.core.dao.ItemDao;
-import com.smartworks.invtmgmt.core.dao.ProductDao;
 import com.smartworks.invtmgmt.core.dao.TransactionItemMappingDao;
+import com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.TransactionItemMapping;
@@ -26,8 +25,7 @@ public class ItemMgrImpl implements ItemMgr {
 	ItemAttributeValueDao itemAttributeValueDao;
 	TransactionItemMappingDao transactionItemMappingDao;
 	
-	@Autowired
-	ProductDao productDao;
+	ProductDaoImpl productDao;
 	
 	
 	@Override
@@ -55,7 +53,7 @@ public class ItemMgrImpl implements ItemMgr {
 	@Transactional(readOnly=true,propagation=Propagation.SUPPORTS)
 	public List<Item> getItemsByProductId(Integer productId) {
 		Product product = productDao.load(productId);
-		List<Integer> itemds = product.getItemsIds();
+		List<Integer> itemds = null;
 		
 		List<Item> items = itemDao.loadSelectedItems(itemds);
 		return items;

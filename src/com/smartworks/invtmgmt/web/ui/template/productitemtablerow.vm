@@ -1,9 +1,7 @@
 #set( $index = $rowNum + 0)
 #foreach( $item in $items )
 <tr>
-     			<td style="width: 400px;">     
-     		    <a id="plusgif" href="#" class="addR" tabindex="-1"><img src="$contextUrl/images/plus.gif" height="10px" width="10px"></a>
-      			&nbsp;			
+     			<td style="width: 400px;">     	
      			<input id="itemSkus0.item.id" name="itemList[$index].itemId" value="$item.id" type="hidden">$item.name
      			<input id="itemSkus0.item.id" name="itemList[$index].productItemId" value="1" type="hidden">
      			

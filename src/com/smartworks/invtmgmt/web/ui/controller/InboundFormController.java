@@ -19,6 +19,7 @@ import com.smartworks.invtmgmt.converter.InventoryConverter;
 import com.smartworks.invtmgmt.converter.UIDomainConverter;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.TransactionTypeDao;
+import com.smartworks.invtmgmt.core.dao.impl.ItemDaoImpl;
 import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.exception.InventoryAllocationException;
@@ -44,15 +45,20 @@ public class InboundFormController {
 	InvtTransManager invtTransMgr = null;
 	@Autowired
 	LocationDao locDao = null;
+	
+	@Autowired
+	private ItemDaoImpl itemDao;
   
 	@RequestMapping(value="/transfer.form", method=RequestMethod.GET)
 	public ModelAndView displayTransaction() {
-		List<Item> items = itemMgr.getAllItems();
+		
 		
 		IssueSkuForm issueSkuForm = new IssueSkuForm();		
 		issueSkuForm.setLocationId(1);
 		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
-		issueSkuForm.setItems(items);
+		
+		List<String> itemNames = itemDao.getItemNames();		
+		issueSkuForm.setItemNames(itemNames);
 				
         ModelAndView mav = new ModelAndView("transaction/InvMovement");
         mav.addObject("issueSkuForm", issueSkuForm);
@@ -66,11 +72,13 @@ public class InboundFormController {
 	@RequestMapping(value="/receive.form", method=RequestMethod.GET)
 	public ModelAndView displayInventory(HttpServletRequest request, HttpServletResponse response) {
 		
-		List<Item> items = itemMgr.getAllItems();
-		
 		IssueSkuForm issueSkuForm = new IssueSkuForm();		
 		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
-		issueSkuForm.setItems(items);
+		
+		
+		List<String> itemNames = itemDao.getItemNames();
+		
+		issueSkuForm.setItemNames(itemNames);
 				
         ModelAndView mav = new ModelAndView("transaction/ReceiveInventory");
         mav.addObject("issueSkuForm", issueSkuForm);
@@ -80,14 +88,17 @@ public class InboundFormController {
 	@RequestMapping(value="/transferToMW.form", method=RequestMethod.GET)
 	public ModelAndView displayInventoryToMW(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam int locationId) {
-		List<Item> items = itemMgr.getAllItems();
+
 		Location location = locDao.load(locationId);
 		IssueSkuForm issueSkuForm = new IssueSkuForm();
 		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);
-		issueSkuForm.setItems(items);
+
 		issueSkuForm.setLocationId(locationId);
 		issueSkuForm.setLocationName(location.getLocationName());
 
+		List<String> itemNames = itemDao.getItemNames();		
+		issueSkuForm.setItemNames(itemNames);
+		
 		ModelAndView mav = new ModelAndView("transaction/InvTransferToMW");
 		mav.addObject("issueSkuForm", issueSkuForm);
 
@@ -98,12 +109,14 @@ public class InboundFormController {
 	
 	@RequestMapping(value="/outbound.form", method=RequestMethod.GET)
 	public ModelAndView displayInventoryToOutbound(HttpServletRequest request, HttpServletResponse response) {
-		List<Item> items = itemMgr.getAllItems();
+		
 		
 		IssueSkuForm issueSkuForm = new IssueSkuForm();		
 		issueSkuForm.setTransactionType(TransactionTypeEnum.TRANSFER_INVENTORY);		
-		issueSkuForm.setItems(items);
-				
+		
+		List<String> itemNames = itemDao.getItemNames();
+		issueSkuForm.setItemNames(itemNames);
+		
         ModelAndView mav = new ModelAndView("transaction/OutboundInventory");
         mav.addObject("issueSkuForm", issueSkuForm);
         
@@ -158,12 +171,7 @@ public class InboundFormController {
 		issueSkuForm.setLocationName(location.getLocationName());
 		ModelAndView mav = new ModelAndView("transaction/InvTransferToMW");
 		mav.addObject("issueSkuForm", issueSkuForm);
-		
-		if(ex != null) {
-			mav.addObject("exception", ex);
-		} else {
-			mav.addObject("success", "success");
-		}
+		mav.addObject("success", "success");
 		mav.addObject("transactionFormMessage","Issued Successfully");
 		return mav;
 

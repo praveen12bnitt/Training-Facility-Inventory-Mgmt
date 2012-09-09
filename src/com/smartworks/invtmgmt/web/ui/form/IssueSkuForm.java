@@ -26,7 +26,10 @@ public class IssueSkuForm {
 	
 	Staff staff;
 	
+	@Deprecated
 	private List<Item> items;	
+	
+	private List<String> itemNames;
 	
 			
 	private List<ItemSku> itemSkus = new AutoPopulatingList<ItemSku>(new ItemSkuElementFactory());
@@ -112,6 +115,14 @@ public class IssueSkuForm {
 
 	public void setExchangeInvt(List<ExchangeInvt> exchangeInvt) {
 		this.exchangeInvt = exchangeInvt;
+	}
+
+	public List<String> getItemNames() {
+		return itemNames;
+	}
+
+	public void setItemNames(List<String> itemNames) {
+		this.itemNames = itemNames;
 	}
 	
 	

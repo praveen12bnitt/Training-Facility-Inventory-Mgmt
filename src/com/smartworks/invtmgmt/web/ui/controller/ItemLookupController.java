@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartworks.invtmgmt.core.dao.ProductDao;
-import com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.manager.ClassMgr;
 import com.smartworks.invtmgmt.core.manager.ItemMgr;
