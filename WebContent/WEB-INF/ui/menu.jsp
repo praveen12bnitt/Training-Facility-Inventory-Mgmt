@@ -53,10 +53,8 @@
 				<li >
 					<a href="#">Laundry</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/laundry/list-laundry.form?type=open" />'>List Loads</a></li>
 						<li><a href='<c:url value="/newlaundry/create-load.form?laundryType=W" />'>Create New Washer Load</a></li>
 						<li><a href='<c:url value="/newlaundry/create-load.form?laundryType=D" />'>Create New Dryer Load</a></li>
-						<li><a href='<c:url value="/laundry/list-laundry.form" />'>List All Loads</a></li>
 						<li><a href='<c:url value="/newlaundry/laundrylist.form?laundryType=W" />'>Washer List</a></li>
 						<li><a href='<c:url value="/newlaundry/laundrylist.form?laundryType=D" />'>Dryer List</a></li>
 					</ul>
@@ -66,8 +64,7 @@
 					<li >
 					<a href="#">Administration</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/kits/add-kit.form" />'>Add Kit Management</a></li>
-						<li><a href='<c:url value="/common/kit-upload.form" />'>Upload Kits</a></li>
+						<li><a href='<c:url value="/kits/list-kit.form" />'>Kit Management</a></li>
 						<li><a href='<c:url value="/common/list-all-trainee.form" />'>Trainee Management</a></li>
 						<li><a href='<c:url value="/common/list-all-staff.form" />'>Staff Management</a></li>
 						<li><a href='<c:url value="/common/list-all-user.form" />'>User Management</a></li>

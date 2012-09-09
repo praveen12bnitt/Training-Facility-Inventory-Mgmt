@@ -47,27 +47,28 @@ public class ProductDaoImpl  extends HibernateDaoSupport {
 		getHibernateTemplate().delete(product);
 	}
 	
-	public Map<Integer,String> findByProductNameLike(String name, Integer locationId){
-		
-		String query = "select productId,productName from Product prd " +
-				"         where  prd.location.locationId = "+locationId +" and productName like :name";
-		List<Object[]> productNames = getHibernateTemplate().findByNamedParam(query, "name", "%"+name+"%");
-		Map<Integer,String> productsMap = new HashMap<Integer, String>();
-		for(Object[] items: productNames) {
-			productsMap.put((Integer)items[0],(String)items[1]);
+	public Map<Integer, String> productNames(String className, Integer locationId) {
+		String query = "select p.productId , p.productName from Class as c left join c.products as p where p.location.locationId = :locationId and c.className = :className" ; 		
+		String[] params = {"locationId", "className"};
+		Object[] value = {locationId, className} ;		
+		Map<Integer, String> returnMap = new HashMap<Integer, String>();
+		List list = getHibernateTemplate().findByNamedParam(query, params, value);
+		for(Object obj : list) {
+			Object[] castObj = (Object[]) obj;
+			Integer kitId = (Integer) castObj[0];
+			String kitName = (String) castObj[1];
+			returnMap.put(kitId,kitName);
 		}
-		return productsMap;
+		return returnMap;
 	}
-
-	public Product findByName(String productName) {
-		String query = "from Product where productName=:productName";
-		List<Product> products = getHibernateTemplate().findByNamedParam(query, "productName", productName);
-		if(products.size()==0) {
-			return null;
-		} else {
-			return products.get(0);
-		}
+	
+	public List<Product> getProductsByLocation(Integer locationId) {
+		String query = "from Product where location.locationId = :locationId";
+		List<Product> pds = getHibernateTemplate().findByNamedParam(query, "locationId", locationId);
+		return pds;
 	}
+	
+	
 
 
 	

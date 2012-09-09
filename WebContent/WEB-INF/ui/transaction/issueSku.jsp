@@ -68,10 +68,12 @@ $(document).ready(function($) {
 	    	    onSelectRow: function(rowId){	    	
 	    	    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
 	    	    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
+	    	    	var location = ${issueSkuForm.locationId};
 	    	    	if(rowData){
 	    				jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
 	    			}	    	
 	    	    	$('input[name="staff.staffId"]').val(traineeId);	
+	    	    	iniKitLocOptions('${pageContext.request.contextPath}',location);
 	    	    	$('#transactionDiv').fadeIn('slow');
 	    	    },
 	    	    jsonReader : {
@@ -95,7 +97,7 @@ $(document).ready(function($) {
 		   		{name:'firstName',index:'firstName', align:'center', width:200},
 		   		{name:'lastName',index:'lastName', align:'center', width:200},
 		   		{name:'middleName',index:'middleName', align:'center', width:200},
-		   		{name:'classNumber',index:'classNumber', align:'center', width:200}
+		   		{name:'cls.className',index:'cls.className', align:'center', width:200}
 		   	],
 		   	rowNum:10,
 		   	rowList:[10,20,30],
@@ -111,10 +113,13 @@ $(document).ready(function($) {
 		    onSelectRow: function(rowId){	    	
 		    	var rowData = jQuery("#list2").jqGrid('getGridParam','selrow');
 		    	var traineeId = jQuery("#list2").jqGrid('getCell',rowId,0);
+		    	var className = jQuery("#list2").jqGrid('getCell',rowId,4);
+		    	var location = ${issueSkuForm.locationId};
 		    	if(rowData){
 					jQuery("#list2").jqGrid('GridToForm',rowData,"#issueSkuForm");
 				}	    	
-		    	$('input[name="trainee.traineeId"]').val(traineeId);	
+		    	$('input[name="trainee.traineeId"]').val(traineeId);
+		    	initializeKitOptions('${pageContext.request.contextPath}',className, location);
 		    	$('#transactionDiv').fadeIn('slow');
 		    },
 		    jsonReader : {
@@ -174,22 +179,15 @@ $(document).ready(function($) {
 		addItem('${pageContext.request.contextPath}',itemName,rowCount);
 	 });
 	 
+	 
+	 
+	 $('#kit-add-btn').click(function(){
+			var kitId = $("#kitCombo").val();
+			var rowCount = $('#tblTransactionForm >tbody >tr').length;
+			addKitItems('${pageContext.request.contextPath}',kitId,rowCount);
+	  });
 	
-	$('#kit-add-btn').click(function(){
-		var prdId =$('input[name="selectedProductId"]').val();
-		jQuery.ajax({
-        url : '${pageContext.request.contextPath}/inventory/loadProductItems.form',
-        data : {
-            productId : prdId,
-            rowNum : $('#tblTransactionForm >tbody >tr').size()
-        },
-        success : processProductItemsResponse
- 		})
-		}
-	);
-		 
-		 
-	 $('#create-kit').click(function(){
+	$('#create-kit').click(function(){
 		 $(location).attr('href','${pageContext.request.contextPath}/common/createproduct.form');		 
 	});
 	 
@@ -299,7 +297,7 @@ $(document).ready(function($) {
     				</c:when>
     				<c:otherwise>
     				<tr>
-						<td>Class</td><td><input type="text" name="classNumber" value="" readOnly="true" /></td>
+						<td>Class</td><td><input type="text" name="cls.className" value="" readOnly="true" /></td>
 					</tr>
     				</c:otherwise>
 				</c:choose>
@@ -316,9 +314,9 @@ $(document).ready(function($) {
 		
 			<label class="ui-widget">
         		<span> Kit Name &nbsp;&nbsp;</span>
-        		<input type="text" id="kitName" name="kitName" size="70"  />   
-        		<a id="kit-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>   
-        		<a id="create-kit" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Create New Kit</a>                                
+        		<select id="kitCombo" style="width:350px;"> 					
+				</select>  
+        		<a id="kit-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                 
 			</label>
 			<br/>
 			<br/>

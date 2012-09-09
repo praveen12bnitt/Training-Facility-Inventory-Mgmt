@@ -2,11 +2,15 @@ package com.smartworks.invtmgmt.web.ui.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,10 +25,12 @@ import com.smartworks.invtmgmt.converter.ItemSkuConverter;
 import com.smartworks.invtmgmt.core.dao.ItemDao;
 import com.smartworks.invtmgmt.core.dao.LocationDao;
 import com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl;
+import com.smartworks.invtmgmt.core.domain.Item;
 import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.ProductDetails;
 import com.smartworks.invtmgmt.core.manager.ProductMgr;
+import com.smartworks.invtmgmt.core.service.VelocityTemplateUtil;
 import com.smartworks.invtmgmt.web.ui.form.ProductForm;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
 
@@ -135,6 +141,52 @@ public class ProductController {
 		mav.addObject("kitForm", pForm);
 		mav.addObject("editMode", edit);
 		return mav;
+	}
+	
+	
+	@RequestMapping(value="/kits-class-loc-options.form", method=RequestMethod.GET)	
+	public @ResponseBody String kitsForClassLoc(HttpServletRequest request,@RequestParam String className, @RequestParam Integer locationId) { 		
+		Map<Integer, String> kits = productDao.productNames(className, locationId);
+		StringBuilder sb = new StringBuilder();
+		for(Integer kitId : kits.keySet()) {
+			sb.append("<option value=\"").append(kitId).append("\">").append(kits.get(kitId)).append("</option>"); 			
+		}
+		return sb.toString();
+	}
+	
+	@RequestMapping(value="/kits-loc-options.form", method=RequestMethod.GET)	
+	public @ResponseBody String kitsForClassLoc(HttpServletRequest request,@RequestParam Integer locationId) { 		
+		List<Product> pds = productDao.getProductsByLocation(locationId);
+		StringBuilder sb = new StringBuilder();
+		for(Product p : pds) {
+			sb.append("<option value=\"").append(p.getProductId()).append("\">").append(p.getProductName()).append("</option>"); 		
+		}
+		return sb.toString();
+	}
+	
+	@RequestMapping(value="/items-html.form", method=RequestMethod.GET)	
+	public @ResponseBody String getItemsHtml(HttpServletRequest request,@RequestParam Integer productId, @RequestParam Integer rowNum) { 			
+		Product product = productDao.load(productId); 		
+		List<ItemSku> itemSkus = new ArrayList<ItemSku>(); 		
+		for(ProductDetails pd : product.getProductDetails()) {
+			ItemSku itemSku = itemSkuConverter.getItemSku(pd.getSkuCode());
+			itemSku.setQuantity(pd.getQuantity());
+			itemSkus.add(itemSku);
+		} 		
+		String htmlData = getItemsRowsForKit(itemSkus, rowNum);
+		return htmlData;
+	}
+	
+	
+	private String getItemsRowsForKit(List<ItemSku> itemSkus, Integer index) {
+		String htmlData = null;	
+		VelocityEngine ve = VelocityTemplateUtil.getVelocityEngine();
+		Template t = ve.getTemplate( "com/smartworks/invtmgmt/web/ui/template/kitrows.vm" );
+		VelocityContext context = new VelocityContext();
+        context.put("itemSkus", itemSkus);
+        context.put("index", index);      
+        htmlData = VelocityTemplateUtil.getData(context, t);
+		return htmlData;
 	}
 	
 }

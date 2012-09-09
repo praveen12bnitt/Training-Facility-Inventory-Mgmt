@@ -1,3 +1,4 @@
+<%@page import="com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Set"%>
 <%@page import="com.smartworks.invtmgmt.core.domain.ItemAttributeValue"%>
@@ -20,72 +21,9 @@
 <body>
 <%
 
-ItemMgr mgr = AppContextUtil.getBean("itemMgr");
+ProductDaoImpl pdao = AppContextUtil.getBean("productDao");
 
-out.println("Loading a single item<br/>");
-
-Item i = mgr.getItem(new Integer(1));
-
-String desc = i.getDesc();
-int id = i.getId();
-String name = i.getName();
-
-out.println("id:"+id);
-out.println(" name:"+name);
-out.println(" desc:"+desc);
-
-out.println("<br/>*****************************************************<br/>");
-
-// Get the attribute details
-
-Map<ItemAttribute, List<ItemAttributeValue>> itemAttrDetails = i.getAttributeDetails();
-
-Set<ItemAttribute> attrs = itemAttrDetails.keySet();
-
-for(ItemAttribute itemAttribute : attrs) {
-	out.println("Attribute Name:"+itemAttribute.getAttributeName());
-	List<ItemAttributeValue> values = itemAttrDetails.get(itemAttribute);	
-	Collections.sort(values);
-	out.println("<br/>Attribute Values:");
-	for(ItemAttributeValue itemAttributeValue : values) {
-		out.println(itemAttributeValue.getAttributeValue()+",");
-	}	
-	out.println("<br/>");
-}
-
-out.println("<br/><br/><br/>Loading all items based on transactions......<br/>");
-
-/* List<Item> items = mgr.getItemsForTransaction(1);
-
-for(Item item : items) {
-	String desc1 = item.getDesc();
-	int id1 = item.getId();
-	String name1 = item.getName();
-
-	out.println("id:"+id1);
-	out.println(" name:"+name1);
-	out.println(" desc:"+desc1);
-
-	out.println("<br/>*****************************************************<br/>");
-
-	// Get the attribute details
-
-	itemAttrDetails = item.getAttributeDetails();
-
-	attrs = itemAttrDetails.keySet();
-
-	for(ItemAttribute itemAttribute : attrs) {
-		out.println("Attribute Name:"+itemAttribute.getAttributeName());
-		List<ItemAttributeValue> values = itemAttrDetails.get(itemAttribute);	
-		Collections.sort(values);
-		out.println("<br/>Attribute Values:");
-		for(ItemAttributeValue itemAttributeValue : values) {
-			out.println(itemAttributeValue.getAttributeValue()+",");
-		}	
-		out.println("<br/><br/>");
-	}
-} */
-
+pdao.productNames("Class 1", 2);
 
 %>
 </body>

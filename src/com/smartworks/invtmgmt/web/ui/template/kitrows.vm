@@ -1,0 +1,21 @@
+#set( $index = $rowNum + 0)
+#foreach( $itemSku in $itemSkus )
+<tr>
+<td style="width: 400px;">    		     					
+		<input name="itemSkus[$index].item.id" value="$itemSku.item.id" type="hidden">$itemSku.item.desc
+	</td> 
+	 <td style="width: 300px;"> 	 
+	 		#set( $j = 0)
+	 		#foreach ($itemAttributeDetails in $itemSku.itemAttributeDtls)
+	 		<input name="itemSkus[$index].itemAttributeDtls[$j].itemAttribute.attibuteId" value="$itemAttributeDetails.itemAttribute.attibuteId" type="hidden"> $itemAttributeDetails.itemAttribute.attributeName
+	 		:
+	 		<input name="itemSkus[$index].itemAttributeDtls[$j].itemAttributeValue.attributeValueId" value="$itemAttributeDetails.itemAttributeValue.attributeValueId" type="hidden"> $itemAttributeDetails.itemAttributeValue.attributeValue
+	 		#set(  $j =  $j + 1 ) 
+	 		#end
+	 </td>     		
+	<td>
+	<input name="itemSkus[$index].quantity" value="$itemSku.quantity" type="text">
+	</td> 			     		
+</tr>
+ #set( $index = $index + 1 )
+ #end
