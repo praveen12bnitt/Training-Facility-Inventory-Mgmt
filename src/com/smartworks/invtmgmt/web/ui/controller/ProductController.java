@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smartworks.invtmgmt.business.ItemSku;
@@ -104,7 +105,7 @@ public class ProductController {
 		Product product = productForm.getProduct();
 		Location loc = locationDao.load(productForm.getSelectedLocationId());
 		product.setLocation(loc); 		
-		productMgr.saveOrUpdate(product, productForm.getItemSkus()); 		
+		productMgr.saveOrUpdate(product, productForm.getItemSkus(),productForm.getkitFile()); 		
 		return viewKits(); 		
 	}
 	
@@ -187,6 +188,13 @@ public class ProductController {
         context.put("index", index);      
         htmlData = VelocityTemplateUtil.getData(context, t);
 		return htmlData;
+	}
+	
+	@RequestMapping(value="/kits-loc-options.form", method=RequestMethod.GET)
+	public ModelAndView uploadProducts(HttpServletRequest request, HttpServletResponse response){
+		
+		return null;
+		
 	}
 	
 }

@@ -48,13 +48,14 @@ $('#start-trigger').click(function(){
 </head>
 <body class="body-class" >	
 	
-	
-	
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
 	<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	
+	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
+	
 	<br />
 	<div style="clear: both;"></div>	
 	
@@ -65,7 +66,8 @@ $('#start-trigger').click(function(){
 			<table id="list3" class="trans-details">
 				<tr><td>Select a Location</td></tr>
 				<tr><td></td></tr>
-				<tr><td><select id="locations" name="locations"></select>
+				<tr><td><select id="locations" name="locations">
+						</select>
 				
 				</td></tr>
 			</table>
@@ -74,21 +76,21 @@ $('#start-trigger').click(function(){
 				<a id="download" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Download</a>
 				</div>
 				<br>
-			<form action="${pageContext.request.contextPath}/uploadfile/upload.form" method="post" enctype="multipart/form-data">
-			<input type="file" name="file" class="fileUpload" >
-		 
+		
+		<form:form action="${pageContext.request.contextPath}/reports/processfile.form" method="post" commandName="fileForm" enctype="multipart/form-data">
+			<input type="file" name="file" class="fileUpload" />
 			<button id="px-submit" type="submit">Upload</button>
 			<button id="px-clear" type="reset">Clear</button>
 			
-		</form>
+		</form:form>
 			
 			
 		</div>
-		<div id="start-trigger" align="left" class="actions">
+		<!--<div id="start-trigger" align="left" class="actions">
 				<a id="start-trigger" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Start</a>
 				</div>
 			
-		</div>	
+		</div>-->	
 		
 	
 	<br>

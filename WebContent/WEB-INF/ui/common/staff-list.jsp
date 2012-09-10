@@ -34,7 +34,7 @@
 	  var mygrid =  jQuery("#staff-list").jqGrid({
 		   	url:'${pageContext.request.contextPath}/common/liststaffs.form',
 			datatype: "json",
-		   	colNames:['Id','First Name', 'Last Name', 'Middle Name', 'Division','Extension','Active','Created Time','Last Updated Time'],
+		   	colNames:['Id','First Name', 'Last Name', 'Middle Name', 'Division','Extension','Active'],
 		   	colModel:[
 				{name:'staffId',index:'staffId', align:'center',width:50},
 		   		{name:'firstName',index:'firstName', align:'center'},
@@ -43,8 +43,6 @@
 		   		{name:'division',index:'classNumber', align:'center'},
 		   		{name:'extension',index:'extension', align:'center',width:90},
 		   		{name:'enabled',index:'enabled', align:'center', stype:'select', editoptions:{value:":All;true:true;false:false"},width:80},
-		   		{name:'createdDttmStr',index:'createdDttm', align:'center',search:false},
-		   		{name:'lastUpdateDttmStr',index:'lastUpdateDttm', align:'center',search:false}
 		   	],
 		   	rowNum:20,
 		   	mtype: "POST",
@@ -102,6 +100,9 @@
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	
+	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
+	
 	<br />
 	<div style="clear: both;"></div>
 		<div style="padding: 10px;">

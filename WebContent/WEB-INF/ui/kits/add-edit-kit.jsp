@@ -58,6 +58,7 @@
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
 	<br />
 	<div style="clear: both;"></div>
 		
@@ -134,6 +135,11 @@
      				</c:if>
 				</tbody>
 		</table> 		
+		</div>
+		
+		<div id="heading" class="ui-widget-header">Import Kits</div>
+		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">
+			<form:input path="kitFile" type="file"/>
 		</div>
 		
 		<div id="actions" align="left" class="actions">

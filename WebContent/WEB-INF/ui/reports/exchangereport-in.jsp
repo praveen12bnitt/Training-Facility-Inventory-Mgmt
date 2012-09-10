@@ -43,6 +43,9 @@ $(document).ready(
 	<div id="top-navigation" class="top-navigation">
 	<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	
+	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
+	
 	<br />
 	<div id="heading12" class="ui-widget-header">Exchange Report Input</div>
 	<div style="clear: both;"></div>	

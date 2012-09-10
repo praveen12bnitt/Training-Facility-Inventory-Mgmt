@@ -53,6 +53,7 @@
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
 	<br />
 	<div style="clear: both;"></div>
 	<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>

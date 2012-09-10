@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.util.AutoPopulatingList;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.smartworks.invtmgmt.business.ItemSku;
 import com.smartworks.invtmgmt.core.domain.Product;
@@ -24,6 +25,16 @@ public class ProductForm {
 	
 	private List<String> itemNames = new ArrayList<String>();
 
+	 private MultipartFile kitFile;
+
+     public void setkitFile(MultipartFile kitFile) {
+         this.kitFile = kitFile;
+     }
+
+     public MultipartFile getkitFile() {
+         return kitFile;
+     }
+	
 	public Product getProduct() {
 		return product;
 	}

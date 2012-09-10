@@ -78,13 +78,14 @@ $(document).ready(function($) {
 </head>
 <body class="body-class" >	
 	
-	
-	
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
 	<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	
+	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
+	
 	<br />
 	<div style="clear: both;"></div>	
 	

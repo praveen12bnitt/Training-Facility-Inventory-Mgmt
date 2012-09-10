@@ -35,7 +35,7 @@ $(document).ready(
 
 
 </head>
-<body class="body-class" >	
+<body class="body-class" >
 <form method="post" action='<c:url value="/reports/issue-export.form"/>'>
 	
 	<div id="main-content" class="ui-widget main-content" style="background: white;">
@@ -43,6 +43,9 @@ $(document).ready(
 	<div id="top-navigation" class="top-navigation">
 	<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	
+	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
+	
 	<br />
 	<div id="heading12" class="ui-widget-header">Issue Return Input</div>
 	<div style="clear: both;"></div>	

@@ -110,6 +110,9 @@
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
+	
+	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
+	
 	<br />
 	<input type="hidden" name="fromDate" id="fromDate" value='<%= request.getParameter("fromDate") %>'/>
 	<input type="hidden" name="toDate" id="toDate" value='<%= request.getParameter("toDate") %>'/>
