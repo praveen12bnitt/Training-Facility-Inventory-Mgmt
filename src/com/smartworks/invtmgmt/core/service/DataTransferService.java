@@ -447,40 +447,40 @@ public class DataTransferService  {
 	}
 
 	private void processUserSheet(HSSFSheet sheet) {
-		Iterator<Row> rows = sheet.rowIterator();
-		if(rows.hasNext()) {
-			rows.next(); // skip the first row, as it is heading
-		}
-		while(rows.hasNext()){
-			Row row = rows.next();
-			com.smartworks.invtmgmt.core.domain.Class cls = new com.smartworks.invtmgmt.core.domain.Class();
-			Iterator<Cell> cellIterator = row.cellIterator();
-			int k = -1;
-			while(cellIterator.hasNext()){
-				k++;
-				Cell cell = cellIterator.next();
-				switch( k ){
-					case 1:
-						cls.setClassName(cell.getStringCellValue());
-						break;
-					case 2:
-						cls.setClassDesc(cell.getStringCellValue());
-						break;
-					case 3:
-						String kitName = cell.getStringCellValue();
-						Product product = productDao.findByName(kitName);
-						break;
-					case 4:
-						String traineeName = cell.getStringCellValue();
-						Trainee trainee = traineeDao.findByName(traineeName);
-//						cls.setTraineeId(trainee.getTraineeId());
-						break;
-				}
-			}
-			classDao.saveOrUpdate(cls);
-			
-		
-		}
+//		Iterator<Row> rows = sheet.rowIterator();
+//		if(rows.hasNext()) {
+//			rows.next(); // skip the first row, as it is heading
+//		}
+//		while(rows.hasNext()){
+//			Row row = rows.next();
+//			com.smartworks.invtmgmt.core.domain.Class cls = new com.smartworks.invtmgmt.core.domain.Class();
+//			Iterator<Cell> cellIterator = row.cellIterator();
+//			int k = -1;
+//			while(cellIterator.hasNext()){
+//				k++;
+//				Cell cell = cellIterator.next();
+//				switch( k ){
+//					case 1:
+//						cls.setClassName(cell.getStringCellValue());
+//						break;
+//					case 2:
+//						cls.setClassDesc(cell.getStringCellValue());
+//						break;
+//					case 3:
+//						String kitName = cell.getStringCellValue();
+//						Product product = productDao.findByName(kitName);
+//						break;
+//					case 4:
+//						String traineeName = cell.getStringCellValue();
+//						Trainee trainee = traineeDao.findByName(traineeName);
+////						cls.setTraineeId(trainee.getTraineeId());
+//						break;
+//				}
+//			}
+//			classDao.saveOrUpdate(cls);
+//			
+//		
+//		}
 	
 	}
 }
