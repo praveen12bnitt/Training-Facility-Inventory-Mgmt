@@ -1,6 +1,7 @@
 package com.smartworks.invtmgmt.core.domain;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,7 +50,33 @@ public class Class implements Serializable{
 	@JsonIgnore
 	private Set<Trainee> trainees =  new HashSet<Trainee>(0);
 	
+	@Column(name="CLASS_START_DATE")
+	private String startDate;
 	
+	@Column(name="CLASS_END_DATE")
+	private String endDate;
+	
+	@Column(name="COMMENT")
+	private String comments;
+	
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 	public Set<Trainee> getTrainees() {
 		return trainees;
 	}

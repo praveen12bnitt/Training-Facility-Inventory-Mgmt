@@ -86,12 +86,13 @@ $(document).ready(function($) {
 			
 				<%@ include file="/WEB-INF/ui/transaction-result.jsp" %>
 			
-				<div id="heading12" class="ui-widget-header">Class List</div>
+				<div id="heading12" class="ui-widget-header">Product(Kit) List</div>
 				
 				<div id="content" class="ui-widget-content" style="padding: 10px;">	
 				
 				<div id="create-trainee-div">
 					<a id="add-kits" href="<c:url value='/kits/add-kit.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Create New Kit</a>
+					<a id="add-kits" href="<c:url value='/kits/import-kit.form' />" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em;">Import Kits</a>
 				</div>
 				
 				<br/>    

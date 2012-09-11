@@ -77,7 +77,10 @@
 	  
 	  </c:if>
 	  
-	  
+	  $(function() {
+			$( "#startdatepicker" ).datepicker();
+			$( "#enddatepicker" ).datepicker();
+	});
 	  	
 });
 
@@ -105,6 +108,15 @@
 				<tr>
 					<td>Class Description</td> <td><form:input type="text" path="cls.classDesc" /></td>
 				</tr>
+				<tr>
+					<td>Class Start Date</td> <td><form:input type="text" path="cls.startDate" id="startdatepicker"/></td>
+				</tr>				
+				<tr>
+					<td>Class End Date</td> <td><form:input type="text" path="cls.endDate" id="enddatepicker"/></td>
+				</tr>
+				<tr>
+					<td>Comments</td> <td><form:textarea path="cls.comments"/></td>
+				</tr>				
 				</table> 				
 		</div>
 		<br/>

@@ -197,4 +197,19 @@ public class ProductController {
 		
 	}
 	
+	@RequestMapping(value="/import-kit.form", method=RequestMethod.GET)
+	public ModelAndView importKits(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mav = new ModelAndView("kits/upload-kit");
+		ProductForm prodForm = new ProductForm();
+		mav.addObject("prodForm", prodForm);
+		return mav;
+	}
+	
+	@RequestMapping(value="/import-kit.form", method=RequestMethod.POST)
+	public ModelAndView processKits(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("prodForm") ProductForm productForm){
+		productMgr.saveOrUpdate(productForm.getkitFile());
+		return viewKits();
+		
+	}
+	
 }

@@ -11,6 +11,8 @@ public interface ProductMgr {
 
 	public void saveOrUpdate(Product product, List<ItemSku> itemSkus, MultipartFile kitFile);
 	
+	public void saveOrUpdate(MultipartFile kitFile);
+	
 	public List<Product> getAllProducts();
 
 }

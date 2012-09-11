@@ -129,5 +129,16 @@ public class ProductMgrImpl implements ProductMgr {
 	public List<Product> getAllProducts() {
 		return productDao.loadAll();
 	}
+
+
+	@Override
+	public void saveOrUpdate(MultipartFile kitFile) {
+		try {
+			processKitDetails(kitFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

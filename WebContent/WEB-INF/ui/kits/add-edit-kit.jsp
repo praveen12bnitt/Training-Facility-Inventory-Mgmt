@@ -137,11 +137,6 @@
 		</table> 		
 		</div>
 		
-		<div id="heading" class="ui-widget-header">Import Kits</div>
-		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">
-			<form:input path="kitFile" type="file"/>
-		</div>
-		
 		<div id="actions" align="left" class="actions">
 			<button id="save" type="submit" class="ui-state-default ui-corner-all form-button" style="width: 50px;height: 25px; ">Save</button>
 		</div>	
