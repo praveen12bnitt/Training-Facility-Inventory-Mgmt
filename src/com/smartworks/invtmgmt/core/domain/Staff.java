@@ -160,6 +160,93 @@ public class Staff implements Serializable {
 		return this.lastName +" , " 
 				+ this.firstName;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((createdDttm == null) ? 0 : createdDttm.hashCode());
+		result = prime * result + ((createdDttmStr == null) ? 0 : createdDttmStr.hashCode());
+		result = prime * result + ((division == null) ? 0 : division.hashCode());
+		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
+		result = prime * result + ((extension == null) ? 0 : extension.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((lastUpdateDttm == null) ? 0 : lastUpdateDttm.hashCode());
+		result = prime * result + ((lastUpdateDttmStr == null) ? 0 : lastUpdateDttmStr.hashCode());
+		result = prime * result + ((middleName == null) ? 0 : middleName.hashCode());
+		result = prime * result + ((staffId == null) ? 0 : staffId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Staff other = (Staff) obj;
+		if (createdDttm == null) {
+			if (other.createdDttm != null)
+				return false;
+		} else if (!createdDttm.equals(other.createdDttm))
+			return false;
+		if (createdDttmStr == null) {
+			if (other.createdDttmStr != null)
+				return false;
+		} else if (!createdDttmStr.equals(other.createdDttmStr))
+			return false;
+		if (division == null) {
+			if (other.division != null)
+				return false;
+		} else if (!division.equals(other.division))
+			return false;
+		if (enabled == null) {
+			if (other.enabled != null)
+				return false;
+		} else if (!enabled.equals(other.enabled))
+			return false;
+		if (extension == null) {
+			if (other.extension != null)
+				return false;
+		} else if (!extension.equals(other.extension))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (lastUpdateDttm == null) {
+			if (other.lastUpdateDttm != null)
+				return false;
+		} else if (!lastUpdateDttm.equals(other.lastUpdateDttm))
+			return false;
+		if (lastUpdateDttmStr == null) {
+			if (other.lastUpdateDttmStr != null)
+				return false;
+		} else if (!lastUpdateDttmStr.equals(other.lastUpdateDttmStr))
+			return false;
+		if (middleName == null) {
+			if (other.middleName != null)
+				return false;
+		} else if (!middleName.equals(other.middleName))
+			return false;
+		if (staffId == null) {
+			if (other.staffId != null)
+				return false;
+		} else if (!staffId.equals(other.staffId))
+			return false;
+		return true;
+	}
+
+	
 	
 	
 }

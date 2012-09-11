@@ -93,6 +93,61 @@ public class Product implements Serializable {
 		pd.setProduct(this);
 		this.getProductDetails().add(pd);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((productDesc == null) ? 0 : productDesc.hashCode());
+		result = prime * result + ((productDetails == null) ? 0 : productDetails.hashCode());
+		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
+		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (productDesc == null) {
+			if (other.productDesc != null)
+				return false;
+		} else if (!productDesc.equals(other.productDesc))
+			return false;
+		if (productDetails == null) {
+			if (other.productDetails != null)
+				return false;
+		} else if (!productDetails.equals(other.productDetails))
+			return false;
+		if (productId == null) {
+			if (other.productId != null)
+				return false;
+		} else if (!productId.equals(other.productId))
+			return false;
+		if (productName == null) {
+			if (other.productName != null)
+				return false;
+		} else if (!productName.equals(other.productName))
+			return false;
+		return true;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
