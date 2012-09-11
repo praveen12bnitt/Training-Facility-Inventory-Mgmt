@@ -182,7 +182,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
-	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
+		<br/> <a id="goback" href="javascript:history.go(-1)" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; " >Go back</a> <br/>
 	<br />
 	<div style="clear: both;"></div>
 	<div id="heading" class="ui-widget-header">Transaction Details</div>

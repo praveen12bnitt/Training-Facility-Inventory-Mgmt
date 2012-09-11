@@ -44,7 +44,7 @@ $(document).ready(
 	<%@ include file="/WEB-INF/ui/menu.jsp" %>
 	</div>
 	
-	<a id="goback" href="javascript:history.go(-1)" onMouseOver="self.status=document.referrer;return true">Go back</a>
+		<br/> <a id="goback" href="javascript:history.go(-1)" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; " >Go back</a> <br/>
 	
 	<br />
 	<div id="heading12" class="ui-widget-header">Exchange Report Input</div>
