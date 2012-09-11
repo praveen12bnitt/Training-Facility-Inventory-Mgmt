@@ -69,6 +69,7 @@
 						<li><a href='<c:url value="/common/list-all-staff.form" />'>Staff Management</a></li>
 						<li><a href='<c:url value="/common/list-all-user.form" />'>User Management</a></li>
 						<li><a href='<c:url value="/class/class.form" />'>Class Management</a></li>
+						<li><a href='<c:url value="/reports/filetransfer.form" />'>Sync Inventory from Excel</a></li>
 						<li><a href='<c:url value="/Inventory/AdjustInventory.form" />'>Adjust Inventory</a></li>
 					</ul>
 					
@@ -79,10 +80,9 @@
 					<a href="#">Report</a>
 					<ul class="sub_menu">
 						
-						<li><a href='<c:url value="/reports/inventory-locn.form" />'>Location</a></li>
-						<li><a href="#">Item Inventory</a></li>
-						<li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>						
-						<li><a href='<c:url value="/reports/filetransfer.form" />'>Export/Import</a></li>
+						<li><a href='<c:url value="/reports/inventory-locn.form" />'>View Inventory Across Locations</a></li>
+						<li><a href='<c:url value="/reports/filetransfer.form" />'>Inventory Inventory Report</a></li>
+						<!-- <li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>	 -->								
 						<li><a href='<c:url value="/reports/laundryreport-in.form" />'>Laundry Report</a></li>
 						<li><a href='<c:url value="/reports/issue-in.form" />'>Issue/Return Report</a></li>
 						<li><a href='<c:url value="/reports/exchange-in.form" />'>Exchange Report</a></li>

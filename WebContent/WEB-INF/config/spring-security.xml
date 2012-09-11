@@ -14,7 +14,8 @@
 	    <intercept-url pattern="/inbound/**" access="isAuthenticated()"  />
 	    <intercept-url pattern="/inventory/**" access="isAuthenticated()"  />
 	    <intercept-url pattern="/class/**" access="isAuthenticated()"  />
-	    <intercept-url pattern="/kits/**" access="isAuthenticated()"  /> 	    
+	    <intercept-url pattern="/kits/**" access="isAuthenticated()"  /> 	
+	    <intercept-url pattern="/common/**" access="isAuthenticated()"  /> 	    
 	    <intercept-url pattern="/auth/welcome.form" access="isAuthenticated()"  />
 	
 		<form-login login-processing-url="/auth/j_spring_security_check" login-page="/auth/auth.form" default-target-url="/inbound/receive.form"
