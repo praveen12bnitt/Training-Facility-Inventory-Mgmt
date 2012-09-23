@@ -13,9 +13,14 @@ public class LaundryConverter {
 		laundry.setLaundryType(uiLaundry.getLaundryType());
 		laundry.setUnitNo(uiLaundry.getUnitNo());
 		String clientInfo = uiLaundry.getClientInfo();
-		if(clientInfo != null && clientInfo.indexOf('-') != -1) {
-			String clientGroup = clientInfo.substring(0, clientInfo.indexOf('-'));
-			String clientSubGroup = clientInfo.substring( clientInfo.indexOf('-')+1);
+		if(clientInfo != null) {
+			clientInfo = clientInfo.trim();
+			String clientGroup = clientInfo;
+			String clientSubGroup = null;
+			if(clientInfo.indexOf('-') != -1) {
+				clientGroup = clientInfo.substring(0, clientInfo.indexOf('-')).trim();
+				clientSubGroup = clientInfo.substring( clientInfo.indexOf('-')+1).trim();
+			}
 			laundry.setClientGroup(clientGroup);
 			laundry.setClientSubGroup(clientSubGroup);
 		}

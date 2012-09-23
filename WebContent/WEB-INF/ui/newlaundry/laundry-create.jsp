@@ -100,19 +100,19 @@
 				<td>Client Info</td>
 				<td>
 					<select name="client" id="client">
-						<option value="1006A-TSE"> 1006A - TSE </option>
-						<option value="1006A-TOWEL"> 1006A - Towel </option>
-						<option value="1006A-GYM"> 1006A - Gym </option>
-						<option value="1006A-Uniform"> 1006A - Uniform </option>
-						<option value="1006A-REGLAUNDRY"> 1006A - Regular Laundry </option>
-						<option value="1006A-JACKSOCK"> 1006A - JackSockBra </option>
-						<option value="1006B-USBOPB0006B"> 1006B - USBOPB0006B </option>
-						<option value="1006C-FPS0006C">1006C - FPS0006C </option>
-						<option value="1006D-CTD0006D"> 1006D - CTD0006D </option>
-						<option value="1006E-FAD0006E">1006E - FAD0006E </option>
-						<option value="1006F-PTD0006F">1006F - PTD0006F </option>
-						<option value="1006G-DMD0006G"> 1006G - DMD0006G </option>
-						<option value="1006F-ATFSABT0006H">1006H - ATFSABT0006H </option>
+						<option value="TSE">A - TSE </option>
+						<option value="Towel">A - Towel </option>
+						<option value="Gym">A - Gym </option>
+						<option value="Uniform">A - Uniform </option>
+						<option value="Regular Laundry">A - Regular Laundry </option>
+						<option value="JackSockBra">A - JackSockBra </option>
+						<option value="BOP">B - BOP </option>
+						<option value="FPS">C - FPS </option>
+						<option value="CTD">D - CTD </option>
+						<option value="FAD_OTA">E - FAD_OTA </option>
+						<option value="PTD">F - PTD </option>
+						<option value="DMD">G - DMD </option>
+						<option value="ATFSABT">H - ATFSABT </option>
 					</select>
 				</td>
 			</tr>

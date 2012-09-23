@@ -1,7 +1,7 @@
 			<ul class="dropdown">
 				<security:authorize access="hasRole('ROLE_WHSE')">
 				<li >
-					<a href="#">Warehouse</a>
+					<a href="#">BLDG252ST</a>
 					<ul class="sub_menu">						
 						<li><a href='<c:url value="/inbound/receive.form"/>'>Receive Inventory from Vendor</a></li>						
 						<li><a href='<c:url value="/inbound/outbound.form"/>'>Move Inventory to Vendor</a></li>
@@ -11,28 +11,28 @@
 				</security:authorize>
 				<security:authorize access="hasRole('ROLE_UNIFORM')">
 				<li>
-					<a href="#">Uniform</a>
+					<a href="#">BLDG28</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Trainee Issue</a></li>
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&locationId=2" />'>Staff Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Student Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&locationId=2" />'>Instructor Issue</a></li>
 						<li><a href='<c:url value="/inventory/listopentrans-exchange.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2&exchange=true" />'>Student Exchange</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Trainee Return</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Staff Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Student Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Instructor Return</a></li>
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=2" />'>Receive From Laundry</a></li>
-						<li><a href='<c:url value="/inbound/transferToMW.form?locationId=2" />'>Transfer to Main Warehouse</a></li>
+						<li><a href='<c:url value="/inbound/transferToMW.form?locationId=2" />'>Transfer to BLDG252ST</a></li>
 					</ul>
 				</li>
 				</security:authorize>
 				<security:authorize access="hasRole('ROLE_TEG')">
 				<li >
-					<a href="#">TEG</a>
+					<a href="#">BLDG252TSE</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&locationId=1" />'>Trainee Issue</a></li>
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_EQUIPMENT_STAFF&locationId=1" />'>Staff Issue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&userId=100&locationId=1" />'>Trainee Return</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_EQUIPMENT_STAFF&userId=100&locationId=1" />'>Staff Return</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&locationId=1" />'>Student Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_EQUIPMENT_STAFF&locationId=1" />'>Instructor Issue</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_EQUIPMENT_STUDENT&userId=100&locationId=1" />'>Student Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_EQUIPMENT_STAFF&userId=100&locationId=1" />'>Instructor Return</a></li>
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=1" />'>Receive From Laundry</a></li>
-						<li><a href='<c:url value="/inbound/transferToMW.form?locationId=1" />'>Transfer to Main Warehouse</a></li>
+						<li><a href='<c:url value="/inbound/transferToMW.form?locationId=1" />'>Transfer to BLDG252ST</a></li>
 					</ul>
 				</li>
 				</security:authorize>
@@ -40,12 +40,12 @@
 				<li >
 					<a href="#">Gym</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_GYM_STUDENT&locationId=3" />'>Trainee Issue</a></li>
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_GYM_STAFF&locationId=3" />'>Staff Issue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_GYM_STUDENT&userId=100&locationId=3" />'>Trainee Return</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_GYM_STAFF&userId=100&locationId=3" />'>Staff Return</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_GYM_STUDENT&locationId=3" />'>Student Issue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_GYM_STAFF&locationId=3" />'>Instructor Issue</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_GYM_STUDENT&userId=100&locationId=3" />'>Student Return</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_GYM_STAFF&userId=100&locationId=3" />'>Instructor Return</a></li>
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=3" />'>Receive From Laundry</a></li>
-						<li><a href='<c:url value="/inbound/transferToMW.form?locationId=3" />'>Transfer to Main Warehouse</a></li>
+						<li><a href='<c:url value="/inbound/transferToMW.form?locationId=3" />'>Transfer to BLDG252ST</a></li>
 					</ul>
 				</li>
 				</security:authorize>
@@ -65,8 +65,8 @@
 					<a href="#">Administration</a>
 					<ul class="sub_menu">
 						<li><a href='<c:url value="/kits/list-kit.form" />'>Kit Management</a></li>
-						<li><a href='<c:url value="/common/list-all-trainee.form" />'>Trainee Management</a></li>
-						<li><a href='<c:url value="/common/list-all-staff.form" />'>Staff Management</a></li>
+						<li><a href='<c:url value="/common/list-all-trainee.form" />'>Student Management</a></li>
+						<li><a href='<c:url value="/common/list-all-staff.form" />'>Instructor Management</a></li>
 						<li><a href='<c:url value="/common/list-all-user.form" />'>User Management</a></li>
 						<li><a href='<c:url value="/class/class.form" />'>Class Management</a></li>
 						<li><a href='<c:url value="/reports/filetransfer.form" />'>Sync Inventory from Excel</a></li>

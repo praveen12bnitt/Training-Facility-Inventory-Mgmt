@@ -9,6 +9,8 @@
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
 	<context:component-scan base-package="com.smartworks.invtmgmt.*" />
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
 
 	<bean id="appCtxHolder" class="com.smartworks.platform.AppContextHolder" />
 
@@ -31,16 +33,16 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 			</props>
 		</property>
 	</bean>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/invtmgmt" />
-		<property name="username" value="root" />
-		<property name="password" value="password" />
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:invtmgt" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
 	</bean>
 
 	<bean id="testBean" class="com.smartworks.test.TestBean" />

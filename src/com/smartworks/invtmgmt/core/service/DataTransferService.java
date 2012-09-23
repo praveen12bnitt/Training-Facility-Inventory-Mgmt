@@ -3,6 +3,7 @@ package com.smartworks.invtmgmt.core.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,7 +37,6 @@ import com.smartworks.invtmgmt.core.domain.ItemAttribute;
 import com.smartworks.invtmgmt.core.domain.ItemAttributeMapping;
 import com.smartworks.invtmgmt.core.domain.ItemAttributeValue;
 import com.smartworks.invtmgmt.core.domain.Location;
-import com.smartworks.invtmgmt.core.domain.Product;
 import com.smartworks.invtmgmt.core.domain.Trainee;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
 import com.smartworks.invtmgmt.core.manager.InventoryManager;
@@ -200,7 +200,9 @@ public class DataTransferService  {
 						item.setItemNumber(cell.getStringCellValue());
 						break;
 					case 4:
-						item.setPrice(cell.getStringCellValue());
+						double dVal = cell.getNumericCellValue();
+						BigDecimal bd = new BigDecimal(String.valueOf(dVal));						
+						item.setPrice(bd.floatValue());
 						break;
 					case 5:
 						inventory.setAvailableQty((int)cell.getNumericCellValue());

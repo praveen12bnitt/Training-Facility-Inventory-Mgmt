@@ -11,7 +11,7 @@ public class UIInventory {
 	String skuCode;	
 	Integer locationId;
 	String itemNumber;
-	String price;
+	Float price;
 	
 	public String getSkuCode() {
 		return skuCode;
@@ -77,10 +77,10 @@ public class UIInventory {
 	public void setItemNumber(String itemNumber) {
 		this.itemNumber = itemNumber;
 	}
-	public String getPrice() {
+	public Float getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 	

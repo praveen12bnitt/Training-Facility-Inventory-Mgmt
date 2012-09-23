@@ -44,8 +44,8 @@ public class Item implements Serializable {
 	@Column(name="ITEM_NUMBER", length=100)
 	private String itemNumber;
 	
-	@Column(name="PRICE", length=100)
-	private String price;
+	@Column(name="PRICE")
+	private Float price;
 	
 	@OneToMany (mappedBy="item", fetch=FetchType.EAGER)
 	Set<ItemAttributeMapping> attributeMappings = new HashSet<ItemAttributeMapping>();
@@ -200,11 +200,11 @@ public class Item implements Serializable {
 		this.itemNumber = itemNumber;
 	}
 
-	public String getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 

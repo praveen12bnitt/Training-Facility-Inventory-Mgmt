@@ -1,6 +1,5 @@
 package com.smartworks.invtmgmt.web.ui.view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +104,9 @@ public class LaundryReportExcelView extends AbstractExcelView {
 				HSSFRow row = sheet.createRow(rowNum++);
 				row.createCell(0).setCellValue(laundry.getUnitNo());
 				row.createCell(1).setCellValue(DateUtil.getExpandedTimeStamp(laundry.getCreatedDttm()));
-				row.createCell(2).setCellValue(laundry.getClientGroup()+"-"+laundry.getClientSubGroup());
+				String subGroup = "";
+				if(laundry.getClientSubGroup() != null) subGroup = laundry.getClientSubGroup();
+				row.createCell(2).setCellValue(laundry.getClientGroup()+"-"+subGroup);
 				row.createCell(3).setCellValue(laundry.getTotalWeight());
 				row.createCell(4).setCellValue(laundry.getBuggyWeight());
 				row.createCell(5).setCellValue(laundry.getWeight());

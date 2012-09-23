@@ -34,12 +34,12 @@ public class LaundryController {
 		if("W".equals(laundryType)) {
 			fieldsMap.put("Header", "Washer Details");
 			fieldsMap.put("Unit", "Washing Machine No");
-			fieldsMap.put("Weight", "Dirty Laundry Weight");
+			fieldsMap.put("Weight", "Total Weight");
 			fieldsMap.put("Time", "Time of Washing");
 		} else {
 			fieldsMap.put("Header", "Dryer Details");
 			fieldsMap.put("Unit", "Dryer No");
-			fieldsMap.put("Weight", "Clean Weight");
+			fieldsMap.put("Weight", "Total Weight");
 			fieldsMap.put("Time", "Time of Drying");
 		}
 		fieldsMap.put("LaundryType", laundryType);

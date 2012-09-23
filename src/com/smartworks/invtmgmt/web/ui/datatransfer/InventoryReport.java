@@ -39,7 +39,7 @@ public class InventoryReport extends AbstractExcelView {
 	  {
 		  
 		  response.setContentType("application/vnd.ms-excel");
-		  response.setHeader("Content-disposition", "attachment; filename=Report.xls");
+		  response.setHeader("Content-disposition", "attachment; filename=InventoryByLocation.xls");
 		  
 		  List<Inventory> invtList = (List<Inventory>) model.get("inventoryList");
 		 
