@@ -96,6 +96,13 @@ public class LaundryReportExcelView extends AbstractExcelView {
 			cell.setCellValue("UOM");
 			cell.setCellStyle(cellStyle);
 			
+			cell = header.createCell(7);
+			cell.setCellValue("Items Washed");
+			cell.setCellStyle(cellStyle);
+			
+			cell = header.createCell(8);
+			cell.setCellValue("Comments");
+			cell.setCellStyle(cellStyle);
 			
 			
 			int rowNum = 2;
@@ -111,6 +118,8 @@ public class LaundryReportExcelView extends AbstractExcelView {
 				row.createCell(4).setCellValue(laundry.getBuggyWeight());
 				row.createCell(5).setCellValue(laundry.getWeight());
 				row.createCell(6).setCellValue("LB");
+				row.createCell(7).setCellValue(laundry.getItemsWashed());
+				row.createCell(8).setCellValue(laundry.getComments());
 			}
 			
 			/**for(LaundryTracking laundryTracking : laundryList) {

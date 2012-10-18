@@ -8,7 +8,21 @@ public class UILaundry {
 	private String weight;
 	private String buggyWeight;
 	private String itemWeight;
+	private String itemsWashed;
+	private String comments;
 	
+	public String getItemsWashed() {
+		return itemsWashed;
+	}
+	public void setItemsWashed(String itemsWashed) {
+		this.itemsWashed = itemsWashed;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 	public String getLaundryType() {
 		return laundryType;
 	}

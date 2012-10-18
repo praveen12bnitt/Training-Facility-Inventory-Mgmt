@@ -47,6 +47,28 @@ public class Laundry {
 	
 	@Column(name="CLIENT_SUB_GROUP")	
 	String clientSubGroup;
+	
+	@Column(name="ITEMS_WASHED")
+	String itemsWashed;
+	
+	@Column(name="COMMENTS")
+	String comments;
+	
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getItemsWashed() {
+		return itemsWashed;
+	}
+
+	public void setItemsWashed(String itemsWashed) {
+		this.itemsWashed = itemsWashed;
+	}
 
 	public Integer getLaundryId() {
 		return laundryId;

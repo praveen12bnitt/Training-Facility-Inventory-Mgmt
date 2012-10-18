@@ -29,6 +29,8 @@ public class LaundryConverter {
 		Integer buggyWeight = Integer.valueOf(uiLaundry.getBuggyWeight());
 		laundry.setTotalWeight(totalWeight);
 		laundry.setBuggyWeight(buggyWeight);
+		laundry.setItemsWashed(uiLaundry.getItemsWashed());
+		laundry.setComments(uiLaundry.getComments());
 		laundry.setWeight(totalWeight-buggyWeight);
 		Date timestamp = DateUtil.convertToTimeStamp(uiLaundry.getTime());
 		laundry.setCreatedDttm(new Timestamp(timestamp.getTime()));

@@ -48,7 +48,8 @@
 	 	uiLaundry.time=$('#time').val();
 	 	uiLaundry.weight=$('#weight').val();
 	 	uiLaundry.buggyWeight=$('#buggyWeight').val();
-	 	
+	 	uiLaundry.itemsWashed=$('#itemsWashed').val();
+	 	uiLaundry.comments=$('#comments').val();
 	 	
 	   $.ajax({
               url : '${pageContext.request.contextPath}/newlaundry/save-load.form',
@@ -128,6 +129,14 @@
 			<tr>
 				<td>Buggy Weight </td>
 				<td><input type="text" size="4" id="buggyWeight" value="48"/> &nbsp; LB</td>
+			</tr>
+			<tr>
+				<td>Items to be washed </td>
+				<td><input type="text" id="itemsWashed"/></td>
+			</tr>
+			<tr>
+				<td>Comments </td>
+				<td><textarea id="comments" ></textarea></td>
 			</tr>
 		</table>
 		
