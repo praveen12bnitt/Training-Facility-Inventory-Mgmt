@@ -131,8 +131,8 @@
 				<td><input type="text" size="4" id="buggyWeight" value="48"/> &nbsp; LB</td>
 			</tr>
 			<tr>
-				<td>Items to be washed </td>
-				<td><input type="text" id="itemsWashed"/></td>
+				<td><%= fieldsMap.get("Items") %></td>
+				<td><textarea id="itemsWashed" ></textarea></td>
 			</tr>
 			<tr>
 				<td>Comments </td>

@@ -36,11 +36,13 @@ public class LaundryController {
 			fieldsMap.put("Unit", "Washing Machine No");
 			fieldsMap.put("Weight", "Total Weight");
 			fieldsMap.put("Time", "Time of Washing");
+			fieldsMap.put("Items", "Items Washed");
 		} else {
 			fieldsMap.put("Header", "Dryer Details");
 			fieldsMap.put("Unit", "Dryer No");
 			fieldsMap.put("Weight", "Total Weight");
 			fieldsMap.put("Time", "Time of Drying");
+			fieldsMap.put("Items", "Items Dried");
 		}
 		fieldsMap.put("LaundryType", laundryType);
 		ModelAndView mav = new ModelAndView("newlaundry/laundry-create");
