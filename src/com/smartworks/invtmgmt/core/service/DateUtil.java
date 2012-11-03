@@ -29,6 +29,15 @@ public class DateUtil {
 		
 	}
 	
+	public static Date getToDate(String date) {
+		try {
+			return sdf.parse(date+" 23:59");
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return new Date(System.currentTimeMillis());
+		}
+	}
+	
 	public static Date convertToTimeStamp(String date) {
 		try {
 			return sdfampm.parse(date);

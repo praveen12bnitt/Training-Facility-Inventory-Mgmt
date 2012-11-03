@@ -33,7 +33,7 @@ public class LaundryDaoImpl  extends HibernateDaoSupport implements LaundryDao {
 				"createdDttm between :fromDate and :toDate";
 		String[] params = {"laundryType","fromDate", "toDate"};
 		Date fromTimeDtamp = DateUtil.getDate(fromDate);
-		Date toTimeDtamp = DateUtil.getDate(toDate);
+		Date toTimeDtamp = DateUtil.getToDate(toDate);
 		Object[] values = {laundryType, new Timestamp(fromTimeDtamp.getTime()), new Timestamp(toTimeDtamp.getTime())};
 		
 		List<Laundry> laundryList = new ArrayList<Laundry>();
@@ -47,7 +47,7 @@ public class LaundryDaoImpl  extends HibernateDaoSupport implements LaundryDao {
 				"createdDttm between :fromDate and :toDate group by clientGroup";
 		String[] params = {"laundryType","fromDate", "toDate"};
 		Date fromTimeDtamp = DateUtil.getDate(fromDate);
-		Date toTimeDtamp = DateUtil.getDate(toDate);
+		Date toTimeDtamp = DateUtil.getToDate(toDate);
 		Object[] values = {laundryType, new Timestamp(fromTimeDtamp.getTime()), new Timestamp(toTimeDtamp.getTime())};
 		List<Object[]> l = getHibernateTemplate().findByNamedParam(query,params, values);
 		return l;
