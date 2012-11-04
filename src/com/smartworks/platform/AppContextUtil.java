@@ -8,6 +8,10 @@ public class AppContextUtil {
 		return (T) AppContextHolder.getAppCtx().getBean(beanName);
 	}
 	
+	public static <T> T getBean(Class beanClass) {
+		return (T) AppContextHolder.getAppCtx().getBean(beanClass);
+	}
+	
 	public static ApplicationContext getApplicationContext() {
 		return AppContextHolder.getAppCtx();
 	}

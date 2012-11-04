@@ -31,6 +31,7 @@
 		<dependency org="org.json" name="json" rev="20090211" />
 		<dependency org="org.apache.velocity" name="velocity" rev="1.7"/>
 		<dependency org="org.apache.poi" name="poi-scratchpad" rev="3.8-beta2"/>
+		<dependency org="org.apache.poi" name="poi-ooxml" rev="3.8-beta2"/>
 		<dependency org="org.springframework.security" name="org.springframework.security.taglibs" rev="3.0.4.RELEASE" conf="runtime" />
 		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.2"/>
 		<dependency org="commons-io" name="commons-io" rev="2.4"/>    

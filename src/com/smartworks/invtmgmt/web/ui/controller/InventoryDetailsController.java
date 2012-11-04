@@ -24,10 +24,12 @@ import com.smartworks.invtmgmt.converter.InventoryConverter;
 import com.smartworks.invtmgmt.converter.LaundryLoadConverter;
 import com.smartworks.invtmgmt.core.dao.impl.ExchangeSkuDaoImpl;
 import com.smartworks.invtmgmt.core.domain.ExchangeSkuRecord;
+import com.smartworks.invtmgmt.core.domain.HistoricIssues;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.Laundry;
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
+import com.smartworks.invtmgmt.core.manager.HistoricDataService;
 import com.smartworks.invtmgmt.core.manager.InventoryManager;
 import com.smartworks.invtmgmt.core.manager.InvtTransManager;
 import com.smartworks.invtmgmt.core.manager.LaundryMgr;
@@ -64,6 +66,9 @@ public class InventoryDetailsController {
 	
 	@Autowired
 	ExchangeSkuDaoImpl exchangeSkuDao;
+	
+	@Autowired
+	private HistoricDataService historicDataService;
 
 	protected static Logger logger = Logger
 			.getLogger(InventoryDetailsController.class);
@@ -73,6 +78,13 @@ public class InventoryDetailsController {
 	public ModelAndView getAllInventory() {
 		logger.error("Received request to show all inventory");
 		ModelAndView mav = new ModelAndView("reports/inventory-all");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/historic-issues.form", method = RequestMethod.GET)
+	public ModelAndView getHistoricIssues() {
+		logger.error("Received request show historic issues");
+		ModelAndView mav = new ModelAndView("reports/historic-issues");
 		return mav;
 	}
 	
@@ -160,6 +172,18 @@ public class InventoryDetailsController {
 		response.setPage("1");
 		response.setTotal("10");
 		response.setRecords(String.valueOf(uiInvtList.size()));
+		return response;
+	}
+	
+	@RequestMapping(value = "/allhistissue.form", method = RequestMethod.GET)
+	public @ResponseBody
+	ReportDetailsResponse getAllHistoricIssues() {
+		ReportDetailsResponse response = new ReportDetailsResponse();
+		List<HistoricIssues> hissuesList = historicDataService.getAllHistoricIsssues();
+		response.setRows(hissuesList);
+		response.setPage("1");
+		response.setTotal("10");
+		response.setRecords(String.valueOf(hissuesList.size()));
 		return response;
 	}
 	

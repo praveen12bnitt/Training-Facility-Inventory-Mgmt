@@ -34,6 +34,7 @@
 			<props>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
 			</props>
 		</property>
 	</bean>
@@ -81,6 +82,8 @@
 	<bean id="exchangeSkuDao" class="com.smartworks.invtmgmt.core.dao.impl.ExchangeSkuDaoImpl" parent="abstractDao" />
 	
 	<bean id="classDao" class="com.smartworks.invtmgmt.core.dao.impl.ClassDaoImpl" parent="abstractDao" />
+	
+	<bean id="historicIssuesDao" class="com.smartworks.invtmgmt.core.dao.HistoricIssuesDao" parent="abstractDao" />
 
 
 	<!-- Converters -->

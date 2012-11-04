@@ -1,3 +1,4 @@
+<%@page import="com.smartworks.invtmgmt.core.manager.HistoricDataService"%>
 <%@page import="com.smartworks.invtmgmt.core.dao.impl.ProductDaoImpl"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Set"%>
@@ -21,9 +22,8 @@
 <body>
 <%
 
-ProductDaoImpl pdao = AppContextUtil.getBean("productDao");
-
-pdao.productNames("Class 1", 2);
+HistoricDataService hService = AppContextUtil.getBean(HistoricDataService.class); 
+hService.importHistoricIssues("C:/all-issues.xlsx");
 
 %>
 </body>
