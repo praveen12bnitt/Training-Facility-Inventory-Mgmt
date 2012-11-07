@@ -13,6 +13,8 @@ public class DateUtil {
 	
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
+	
+	
 	public static String getExpandedTimeStamp(Timestamp timeStamp) {		
 		if(timeStamp != null)
 			return sdf.format(timeStamp);

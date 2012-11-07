@@ -25,6 +25,7 @@ import com.smartworks.invtmgmt.converter.LaundryLoadConverter;
 import com.smartworks.invtmgmt.core.dao.impl.ExchangeSkuDaoImpl;
 import com.smartworks.invtmgmt.core.domain.ExchangeSkuRecord;
 import com.smartworks.invtmgmt.core.domain.HistoricIssues;
+import com.smartworks.invtmgmt.core.domain.HistoricReturns;
 import com.smartworks.invtmgmt.core.domain.Inventory;
 import com.smartworks.invtmgmt.core.domain.Laundry;
 import com.smartworks.invtmgmt.core.domain.LaundryTracking;
@@ -85,6 +86,13 @@ public class InventoryDetailsController {
 	public ModelAndView getHistoricIssues() {
 		logger.error("Received request show historic issues");
 		ModelAndView mav = new ModelAndView("reports/historic-issues");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/historic-returns.form", method = RequestMethod.GET)
+	public ModelAndView getHistoricReturns() {
+		logger.error("Received request show historic issues");
+		ModelAndView mav = new ModelAndView("reports/historic-returns");
 		return mav;
 	}
 	
@@ -180,6 +188,18 @@ public class InventoryDetailsController {
 	ReportDetailsResponse getAllHistoricIssues() {
 		ReportDetailsResponse response = new ReportDetailsResponse();
 		List<HistoricIssues> hissuesList = historicDataService.getAllHistoricIsssues();
+		response.setRows(hissuesList);
+		response.setPage("1");
+		response.setTotal("10");
+		response.setRecords(String.valueOf(hissuesList.size()));
+		return response;
+	}
+	
+	@RequestMapping(value = "/allhistreturns.form", method = RequestMethod.GET)
+	public @ResponseBody
+	ReportDetailsResponse getAllHistoricReturns() {
+		ReportDetailsResponse response = new ReportDetailsResponse();
+		List<HistoricReturns> hissuesList = historicDataService.getAllHistoricReturns();
 		response.setRows(hissuesList);
 		response.setPage("1");
 		response.setTotal("10");

@@ -84,6 +84,7 @@
 	<bean id="classDao" class="com.smartworks.invtmgmt.core.dao.impl.ClassDaoImpl" parent="abstractDao" />
 	
 	<bean id="historicIssuesDao" class="com.smartworks.invtmgmt.core.dao.HistoricIssuesDao" parent="abstractDao" />
+	<bean id="historicReturnsDao" class="com.smartworks.invtmgmt.core.dao.HistoricReturnsDao" parent="abstractDao" />
 
 
 	<!-- Converters -->

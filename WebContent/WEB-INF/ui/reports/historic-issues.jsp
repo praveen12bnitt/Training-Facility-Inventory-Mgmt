@@ -87,6 +87,9 @@ $(document).ready(function($) {
 		
 		
 		<div id="content" class="ui-widget ui-widget-content" style="padding: 10px;">	
+			
+			<a href="${pageContext.request.contextPath}/data/historic-issues.xlsx"> Download Historic Issues</a>
+ 			<br/>
 			<table id="list3" class="trans-details"></table>
 			<div id="pager3"></div>
 		</div>

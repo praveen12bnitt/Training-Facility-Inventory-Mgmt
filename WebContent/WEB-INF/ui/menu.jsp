@@ -83,7 +83,8 @@
 						<li><a href='<c:url value="/reports/inventory-locn.form" />'>View Inventory Across Locations</a></li>
 						<li><a href='<c:url value="/reports/filetransfer.form" />'>Inventory Inventory Report</a></li>
 						<!-- <li><a href='<c:url value="/reports/inventory-all.form" />'>Inventory - Misc</a></li>	 -->	
-						<li><a href='<c:url value="/reports/historic-issues.form" />'>Historic Issues</a></li>							
+						<li><a href='<c:url value="/reports/historic-issues.form" />'>Historic Issues</a></li>		
+						<li><a href='<c:url value="/reports/historic-returns.form" />'>Historic Returns</a></li>							
 						<li><a href='<c:url value="/reports/laundryreport-in.form" />'>Laundry Report</a></li>
 						<li><a href='<c:url value="/reports/issue-in.form" />'>Issue/Return Report</a></li>
 						<li><a href='<c:url value="/reports/exchange-in.form" />'>Exchange Report</a></li>
