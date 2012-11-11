@@ -84,8 +84,13 @@ public class HistoricDataServiceImpl implements HistoricDataService {
 				Integer addNsn = Integer.valueOf(splitarray[4].trim());
 				hReturns.setAddNsn(addNsn);
 				
-				Long ssn = Long.valueOf(splitarray[5].trim());
-				hReturns.setSsn(ssn);
+				try {
+					Long ssn = Long.valueOf(splitarray[5].trim());
+					hReturns.setSsn(ssn);
+				} catch(Exception e) {
+					
+				}
+				
 				
 				String lastName = splitarray[6].trim();
 				hReturns.setLastName(lastName);
@@ -302,11 +307,11 @@ public class HistoricDataServiceImpl implements HistoricDataService {
 	public static void main(String[] args) throws IOException, ParseException {
 		HistoricDataServiceImpl hServ = new HistoricDataServiceImpl();
 //		hServ.importHistoricIssues("C:/all-issues.xlsx");
-////		hServ.importHistoricIssues("C:/a.xlsx");
+//		hServ.importHistoricIssues("C:/missing-issues.xlsx");
 		
 //		hServ.importHistoricReturns("C:\\temp\\srm\\VAM - Transactions RETURNS 110112 5PM.xlsx");
 		
-		hServ.importHistoricReturns1("C:\\returns.txt");
+		hServ.importHistoricReturns1("C:\\temp\\srm\\5.txt");
 		
 		
 		System.out.println("Completed");

@@ -23,7 +23,7 @@
 <%
 
 HistoricDataService hService = AppContextUtil.getBean(HistoricDataService.class); 
-hService.importHistoricReturns1("C:\\temp\\srm\\1.txt");
+hService.importHistoricIssues("C:/all-issues.xlsx");
 
 %>
 </body>
