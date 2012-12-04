@@ -9,7 +9,7 @@ public class DateUtil {
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 	
-	static SimpleDateFormat sdfampm = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+	static SimpleDateFormat sdfampm = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 	
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
