@@ -86,7 +86,7 @@ public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 	public Integer getNextItemId() {
 		String query = "select max(ia.id) from Item ia";
 		List<Integer> itemId = getHibernateTemplate().find(query);
-		if(itemId !=null && itemId.size()>0) {
+		if(itemId !=null && itemId.size()>0 && itemId.get(0) != null) {
 			return itemId.get(0)+1;
 		} else {
 			return 1;

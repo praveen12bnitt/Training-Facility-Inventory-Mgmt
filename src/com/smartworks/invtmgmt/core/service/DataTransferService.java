@@ -114,8 +114,8 @@ public class DataTransferService  {
 		System.out.println("done.");
 	}
 	
-	public void syncInventory(File file) throws Exception {
-		FileInputStream fin = new FileInputStream(file);
+	public void syncInventory(MultipartFile file) throws Exception {
+		InputStream fin = file.getInputStream();
 		try {
 			HSSFWorkbook workBook = new HSSFWorkbook(fin);
 			HSSFSheet sheet = workBook.getSheetAt(0);
@@ -167,8 +167,10 @@ public class DataTransferService  {
 					case 2:
 						String attributes = cell.getStringCellValue();
 						String[] itemAttrs = attributes.split("\\r?\\n");
+						if(itemAttrs.length == 0) break;
 						for(String itemAttr: itemAttrs) {
 							String[] attrs = itemAttr.split(":");
+							if(attrs.length < 2) break;
 							String attributeName= attrs[0].trim();
 							String attributeValue= attrs[1].trim();
 							ItemAttribute itemAttribute = itemAttributeDao.findByAttributeName(attributeName);
@@ -223,14 +225,16 @@ public class DataTransferService  {
 			ItemSku itemSku = new ItemSku(item, itemAttributeDetails);
 			if(item.getId() == null) {
 				HashSet<ItemAttributeMapping> attributeMappings = new HashSet<ItemAttributeMapping>();
-				for(ItemAttributeDetails itemAttrDetail: itemAttributeDetails) {
-					int mappingId = itemDao.getNextMappingId();
-					ItemAttributeMapping itemAttributeMapping = new ItemAttributeMapping();
-					itemAttributeMapping.setAttribute(itemAttrDetail.getItemAttribute());
-					itemAttributeMapping.setAttributeValue(itemAttrDetail.getItemAttributeValue());
-					itemAttributeMapping.setMappingId(mappingId);
-					attributeMappings.add(itemAttributeMapping);
-				}
+				if(itemAttributeDetails != null && itemAttributeDetails.size() > 0) {
+					for(ItemAttributeDetails itemAttrDetail: itemAttributeDetails) {
+						int mappingId = itemDao.getNextMappingId();
+						ItemAttributeMapping itemAttributeMapping = new ItemAttributeMapping();
+						itemAttributeMapping.setAttribute(itemAttrDetail.getItemAttribute());
+						itemAttributeMapping.setAttributeValue(itemAttrDetail.getItemAttributeValue());
+						itemAttributeMapping.setMappingId(mappingId);
+						attributeMappings.add(itemAttributeMapping);
+					}
+				} 				
 				item.setAttributeMappings(attributeMappings);
 				item.setId(itemDao.getNextItemId());
 				itemDao.save(item);

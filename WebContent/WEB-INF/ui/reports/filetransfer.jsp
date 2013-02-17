@@ -35,11 +35,8 @@ $.getJSON("${pageContext.request.contextPath}/common/getlocations.form", functio
 $(document).ready(function($) {
 $('#download').click(function(){
 	 $(location).attr('href','${pageContext.request.contextPath}/reports/inventoryReport.form?locationId='+$("select").val() );		 
-}); 
+});  
 
-$('#start-trigger').click(function(){
-	 $(location).attr('href','${pageContext.request.contextPath}/reports/processfile.form' );		 
-});
 });
 
 
@@ -77,20 +74,17 @@ $('#start-trigger').click(function(){
 				</div>
 				<br>
 		
-		<form:form action="${pageContext.request.contextPath}/reports/processfile.form" method="post" commandName="fileForm" enctype="multipart/form-data">
-			<input type="file" name="file" class="fileUpload" />
-			<button id="px-submit" type="submit">Upload</button>
-			<button id="px-clear" type="reset">Clear</button>
-			
-		</form:form>
-			
+		<form:form method="post" commandName="fileUploadForm"  enctype="multipart/form-data">
+			<form:input path="file" type="file" />
+			<button id="save" type="submit" class="ui-state-default ui-corner-all form-button" style="width: 50px;height: 25px; ">Upload</button>
+		</form:form> 			
 			
 		</div>
 		<!--<div id="start-trigger" align="left" class="actions">
 				<a id="start-trigger" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Start</a>
-				</div>
+				</div> -->
 			
-		</div>-->	
+		</div>
 		
 	
 	<br>

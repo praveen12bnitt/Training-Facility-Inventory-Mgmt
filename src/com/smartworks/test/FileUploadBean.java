@@ -1,9 +1,8 @@
 package com.smartworks.test;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.SimpleFormController;
 
-public class FileUploadBean extends SimpleFormController {
+public class FileUploadBean  {
 
 
         private MultipartFile file;

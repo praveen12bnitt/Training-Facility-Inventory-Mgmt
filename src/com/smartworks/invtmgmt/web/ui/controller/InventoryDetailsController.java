@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,9 +38,11 @@ import com.smartworks.invtmgmt.core.manager.LaundryMgr;
 import com.smartworks.invtmgmt.core.manager.LaundryTransMgr;
 import com.smartworks.invtmgmt.core.service.DataTransferService;
 import com.smartworks.invtmgmt.core.service.DateUtil;
+import com.smartworks.invtmgmt.web.ui.form.ProductForm;
 import com.smartworks.invtmgmt.web.ui.transfer.UILaundryLoad;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.ReportDetailsResponse;
 import com.smartworks.invtmgmt.web.ui.transfer.inventory.UIInventory;
+import com.smartworks.test.FileUploadBean;
 
 @Controller
 @RequestMapping("/reports")
@@ -238,29 +241,15 @@ public class InventoryDetailsController {
 	public ModelAndView showExportImport() {
 		logger.error("Received request to show all export import");
 		ModelAndView mav = new ModelAndView("reports/filetransfer");
+		FileUploadBean fileUploadBean = new FileUploadBean();
+		mav.addObject("fileUploadForm", fileUploadBean);
 		return mav;
 	}
 	
-	@RequestMapping(value = "/processfile.form", method = RequestMethod.GET)
-	public ModelAndView processfile() throws Exception {
-		logger.error("Received request to show all export import");
-		String	path = System.getProperty("uploaddirectory", "d:/Hari/temp");
-		 File folder = new File(path);
-		  File[] listOfFiles = folder.listFiles(); 
-		 
-		  for (int i = 0; i < listOfFiles.length; i++) 
-		  {
-		 
-		   if (listOfFiles[i].isFile()) 
-		   {
-			  String files = listOfFiles[i].getName();
-			  File fileObj = new File(path+"/"+files);
-			  dataTransferService.syncInventory(fileObj);
-			  fileObj.delete();
-		      }
-		  }
-
-		
+	@RequestMapping(value = "/filetransfer.form", method = RequestMethod.POST)
+	public ModelAndView processfile(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("fileUploadForm") FileUploadBean fileUploadBean) throws Exception {
+		logger.error("Received request to show all export import"); 
+		dataTransferService.syncInventory(fileUploadBean.getFile()); 			 
 		ModelAndView mav = new ModelAndView("reports/inventory-all");
 		return mav;
 	}
