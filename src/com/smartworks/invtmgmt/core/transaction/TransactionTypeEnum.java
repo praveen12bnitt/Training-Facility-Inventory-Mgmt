@@ -1,6 +1,11 @@
 package com.smartworks.invtmgmt.core.transaction;
 
 public enum TransactionTypeEnum {
+	
+	PREISSUE_UNIFORM_STUDENT,
+	PREISSUE_UNIFORM_STAFF,
+	PREISSUE_EQUIPMENT_STUDENT,
+	PREISSUE_EQUIPMENT_STAFF,	
 
 	ISSUE_UNIFORM_STUDENT,
 	ISSUE_UNIFORM_STAFF,
@@ -91,7 +96,7 @@ public enum TransactionTypeEnum {
 	
 	public boolean isStaffTransaction() {
 		if(this.equals(ISSUE_EQUIPMENT_STAFF) || this.equals(ISSUE_GYM_STAFF) || this.equals(ISSUE_UNIFORM_STAFF) || 
-				this.equals(RETURN_UNIFORM_STAFF) || this.equals(RETURN_GYM_STAFF) || this.equals(RETURN_EQUIPMENT_STAFF) ) return true;
+				this.equals(RETURN_UNIFORM_STAFF) || this.equals(RETURN_GYM_STAFF) || this.equals(RETURN_EQUIPMENT_STAFF) || this.equals(PREISSUE_UNIFORM_STAFF) || this.equals(PREISSUE_EQUIPMENT_STAFF)) return true;
 		else return false;
 	}
 	

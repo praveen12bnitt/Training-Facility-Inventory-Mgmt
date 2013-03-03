@@ -7,6 +7,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.smartworks.invtmgmt.core.dao.TransactionTraceDao;
 import com.smartworks.invtmgmt.core.db.util.DateUtil;
+import com.smartworks.invtmgmt.core.domain.TransactionDetails;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 
@@ -17,6 +18,10 @@ public class TransactionTraceDaoImpl extends HibernateDaoSupport implements Tran
 	public void save(TransactionTrace transTrace) {
 		transTrace.setCreatedDttm(dateUtil.getCurrentDBTimeStamp());
 		getHibernateTemplate().save(transTrace);
+	}
+	
+	public void save(TransactionDetails transactionDetails) {
+		getHibernateTemplate().save(transactionDetails);
 	}
 	
 	public TransactionTrace load(Integer transactionTraceId) {

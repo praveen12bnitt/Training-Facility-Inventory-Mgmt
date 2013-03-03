@@ -19,9 +19,14 @@
 			<value>1000000000</value>
 		</property>
 	</bean>
+	
+	<bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+      <property name="dataSource" ref="dataSource" />
+      <property name="changeLog" value="classpath:master.xml" />     
+ 	</bean>
 
 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" depends-on="liquibase">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan">
 			<list>
@@ -162,6 +167,7 @@
 	
 	<bean id="inventoryProcessorFactory" class="com.smartworks.invtmgmt.core.inventoryprocessor.InventoryProcessorFactory">
 		<property name="dispatchInventoryProcessor" ref="dispatchInventoryProcessor" />
+		<property name="preIssueInventoryProcessor" ref="preIssueInventoryProcessor" />
 		<property name="returnsInventoryProcessor" ref="returnsInventoryProcessor" />
 		<property name="missingInventoryProcessor" ref="missingInventoryProcessor" />
 		<property name="transferInventoryProcessor" ref="transferInventoryProcessor" />
@@ -181,6 +187,7 @@
 	<bean id="returnsInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.ReturnsInventoryProcessor" parent="abstractInventoryProcessor" />
 	<bean id="missingInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.MissingInventoryProcessor" parent="abstractInventoryProcessor" />
 	<bean id="dispatchInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.DispatchInventoryProcessor" parent="abstractInventoryProcessor" />
+	<bean id="preIssueInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.PreIssueInventoryProcessor" parent="abstractInventoryProcessor" />
 	<bean id="laundryReturnsProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.LaundryReturnsProcessor" parent="abstractInventoryProcessor" />
 	<bean id="transferInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.TransferInventoryProcessor" parent="abstractInventoryProcessor" />
 	<bean id="exchangeInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.ExchangeInventoryProcessor" parent="abstractInventoryProcessor">
@@ -194,6 +201,10 @@
 	</bean>
 
 	<bean id="inventoryReport" class="com.smartworks.invtmgmt.web.ui.datatransfer.InventoryReport">
+	</bean>
+	
+	<bean id="preissueService" class="com.smartworks.invtmgmt.core.service.PreissueServiceImpl" >
+		<property name="transactionTraceDao" ref="transactionTraceDao" />
 	</bean>
 
 

@@ -34,9 +34,13 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 			throw new NoItemsForTransactionException("No items to issue");
 		}
 		
+		saveTransactionTrace(transDetails);
+	}
+	
+	protected void saveTransactionTrace(TransactionDetailsHolder transDetails) 
+	{
 		TransactionTrace transTrace = transactionTraceObjectConverter.getTransactionTrace(transDetails);
 		transactionTraceDao.save(transTrace);		
-		// Add entry in inventory Trace table about this 
 	}
 
 	public InventoryDao getInventoryDao() {

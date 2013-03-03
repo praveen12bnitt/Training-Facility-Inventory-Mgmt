@@ -37,5 +37,6 @@
 		<dependency org="commons-io" name="commons-io" rev="2.4"/>    
 		<dependency org="org.testng" name="testng" rev="6.7"/>   
 		<dependency org="com.h2database" name="h2" rev="1.3.170"/> 
+		<dependency org="org.liquibase" name="liquibase-core" rev="2.0.5"/>
 	</dependencies>
 </ivy-module>

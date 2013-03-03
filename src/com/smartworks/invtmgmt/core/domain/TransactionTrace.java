@@ -61,7 +61,7 @@ public class TransactionTrace implements Serializable {
 	@Column(name="CLOSED")
 	private Boolean closed = false;
 	
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "trasactionTrace" )
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "trasactionTrace", orphanRemoval=true )
 	List<TransactionDetails> transDetails;
 	
 	

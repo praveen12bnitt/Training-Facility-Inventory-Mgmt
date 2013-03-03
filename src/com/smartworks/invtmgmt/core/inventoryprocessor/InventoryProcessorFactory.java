@@ -4,6 +4,7 @@ import com.smartworks.invtmgmt.core.transaction.TransactionTypeEnum;
 
 public class InventoryProcessorFactory {
 	DispatchInventoryProcessor dispatchInventoryProcessor;
+	PreIssueInventoryProcessor preIssueInventoryProcessor;
 	ReturnsInventoryProcessor returnsInventoryProcessor;
 	ExchangeInventoryProcessor exchangeInventoryProcessor;
 	MissingInventoryProcessor missingInventoryProcessor;
@@ -16,6 +17,14 @@ public class InventoryProcessorFactory {
 		InventoryChangeProcessor processor = null;
 
 		switch (tranType) {
+		
+		case PREISSUE_UNIFORM_STAFF:
+		case PREISSUE_UNIFORM_STUDENT:
+		case PREISSUE_EQUIPMENT_STAFF:
+		case PREISSUE_EQUIPMENT_STUDENT:
+			processor = preIssueInventoryProcessor;
+			break;
+		
 		case ISSUE_UNIFORM_STUDENT:
 		case ISSUE_UNIFORM_STAFF:
 		case ISSUE_EQUIPMENT_STUDENT:
@@ -106,6 +115,14 @@ public class InventoryProcessorFactory {
 
 	public void setExchangeInventoryProcessor(ExchangeInventoryProcessor exchangeInventoryProcessor) {
 		this.exchangeInventoryProcessor = exchangeInventoryProcessor;
+	}
+
+	public PreIssueInventoryProcessor getPreIssueInventoryProcessor() {
+		return preIssueInventoryProcessor;
+	}
+
+	public void setPreIssueInventoryProcessor(PreIssueInventoryProcessor preIssueInventoryProcessor) {
+		this.preIssueInventoryProcessor = preIssueInventoryProcessor;
 	}
 	
 	
