@@ -18,4 +18,5 @@ public interface ItemDao {
 	public void save(Item item);
 	public Integer getNextMappingId();
 	public Integer getNextItemId();
+	public List<Item> getItemsByNumber(String itemNumber);	
 }

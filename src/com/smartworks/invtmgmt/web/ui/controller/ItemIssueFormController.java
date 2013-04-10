@@ -389,9 +389,14 @@ public class ItemIssueFormController {
 
 	@RequestMapping(value = "/itemHtmlEl.form", method = RequestMethod.GET)
 	public @ResponseBody
-	String getItemHtmlData(HttpServletRequest request, @RequestParam String itemName, @RequestParam Integer rowNum) {
+	String getItemHtmlData(HttpServletRequest request, @RequestParam String itemName, @RequestParam Integer rowNum, String itemNumber) {
+		List<Item> items = null;
+		if(itemNumber != null && !itemNumber.isEmpty() && !itemNumber.trim().isEmpty()) {
+			 items = itemMgr.getItemsByNumber(itemNumber);
+		} else {
 
-		List<Item> items = itemMgr.getItemsByName(itemName);
+		 items = itemMgr.getItemsByName(itemName);
+		}
 		// Convert this object into html el data
 		String htmlData = getTemplateData(request, items, rowNum);
 		return htmlData;
