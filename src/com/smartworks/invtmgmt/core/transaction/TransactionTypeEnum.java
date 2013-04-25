@@ -100,4 +100,27 @@ public enum TransactionTypeEnum {
 		else return false;
 	}
 	
+	public boolean isOfTypePreissue() 
+	{
+		if(this == PREISSUE_EQUIPMENT_STAFF || this == PREISSUE_EQUIPMENT_STUDENT || this == PREISSUE_UNIFORM_STAFF || this == PREISSUE_UNIFORM_STUDENT) return true;
+		else return false;
+	}
+	
+	public TransactionTypeEnum getIssueTrans()
+	{
+		switch(this){
+		case PREISSUE_EQUIPMENT_STAFF:
+			return ISSUE_EQUIPMENT_STAFF;
+		case PREISSUE_EQUIPMENT_STUDENT:
+			return ISSUE_EQUIPMENT_STUDENT;
+		case PREISSUE_UNIFORM_STAFF:
+			return ISSUE_UNIFORM_STAFF;
+		case PREISSUE_UNIFORM_STUDENT:
+			return ISSUE_UNIFORM_STUDENT;
+		default:
+			throw new RuntimeException("Unsupported transaction type");		
+		}
+			
+	}
+	
 }

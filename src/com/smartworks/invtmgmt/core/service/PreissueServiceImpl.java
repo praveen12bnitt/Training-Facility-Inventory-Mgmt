@@ -1,5 +1,7 @@
 package com.smartworks.invtmgmt.core.service;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smartworks.invtmgmt.business.ItemSku;
@@ -19,28 +21,36 @@ public class PreissueServiceImpl implements PreissueService {
 	@Override
 	public void updatePreIssue(IssueSkuForm issueSkuForm) {
 		Integer transactionId = issueSkuForm.getRefTransactionId();
-		TransactionTrace transactionTrace = transactionTraceDao.load(transactionId);
-		for (ItemSku itemSku : issueSkuForm.getItemSkus()) { 
+		TransactionTrace transactionTrace = alterTransactionTrace(issueSkuForm.getItemSkus(), transactionId);
+		transactionTraceDao.update(transactionTrace);
+	}
+
+	@Override
+	public TransactionTrace alterTransactionTrace(List<ItemSku> itemSkus, Integer transactionTraceId) {
+		TransactionTrace transactionTrace = transactionTraceDao.load(transactionTraceId);
+		if(!transactionTrace.getTransType().isOfTypePreissue())
+		{
+			throw new RuntimeException("Transaction is not in PRE_ISSUE state");
+		}
+		for (ItemSku itemSku : itemSkus) {
 			if (itemSku.getQuantity() == null || itemSku.getQuantity() < 0) {
 				continue;
 			}
 			String itemSkuCode = itemSkuConverter.getItemSkuCode(itemSku);
 			TransactionDetails transactionDetails = getTransactionDetails(transactionTrace, itemSkuCode);
-			if (itemSku.getQuantity() == null || itemSku.getQuantity() < 1 ) {
-				if(transactionDetails != null) 
-				{
+			if (itemSku.getQuantity() == null || itemSku.getQuantity() < 1) {
+				if (transactionDetails != null) {
 					transactionTrace.getTransDetails().remove(transactionDetails);
-					transactionDetails.setTrasactionTrace(null);					
-				}				
+					transactionDetails.setTrasactionTrace(null);
+				}
 				continue;
 			}
 			transactionDetails.setQuantity(itemSku.getQuantity());
-			if(transactionDetails.getTransactionDetailsId() == null)
-			{
+			if (transactionDetails.getTransactionDetailsId() == null) {
 				transactionTraceDao.save(transactionDetails);
 			}
-		}		
-		transactionTraceDao.update(transactionTrace);
+		}
+		return transactionTrace;
 	}
 
 	public TransactionDetails getTransactionDetails(TransactionTrace transactionTrace, String skuCode) {

@@ -51,7 +51,7 @@ $(document).ready(function($) {
 		if(responseReceived) {
 			$.ajax({
 			    type: "POST",
-			    url: "${pageContext.request.contextPath}/inventory/${targetPage}",
+			    url: "${pageContext.request.contextPath}/inventory/preIssueEdit.form",
 			    data: formData,
 			    beforeSend: function() {
 			    	responseReceived = false;		            

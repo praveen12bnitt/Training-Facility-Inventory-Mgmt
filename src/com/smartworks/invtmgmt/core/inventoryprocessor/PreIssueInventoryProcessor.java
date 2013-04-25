@@ -4,11 +4,15 @@ import com.smartworks.invtmgmt.business.TransactionDetailsHolder;
 import com.smartworks.invtmgmt.core.dao.InventoryDao;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 
-public class PreIssueInventoryProcessor extends InventoryChangeProcessor {
+public class PreIssueInventoryProcessor extends DispatchInventoryProcessor {
 	
-	public void process(TransactionDetailsHolder transDetails) {
+	@Override
+	protected void saveTransactionTrace(TransactionDetailsHolder transDetails) {
 		TransactionTrace transTrace = transactionTraceObjectConverter.getTransactionTrace(transDetails);
-		transactionTraceDao.save(transTrace);		
+		transTrace.setTransType(transTrace.getTransType().getIssueTrans());
+		transTrace.setTrasactionId(transTrace.getRefTransactionId());
+		transTrace.setRefTransactionId(null);
+		transactionTraceDao.update(transTrace);	
 	}
 
 	public InventoryDao getInventoryDao() {

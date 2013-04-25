@@ -28,7 +28,9 @@ public class TransactionTraceDaoImpl extends HibernateDaoSupport implements Tran
 		return getHibernateTemplate().load(TransactionTrace.class, transactionTraceId);
 	}
 	
+	@Override
 	public void update(TransactionTrace transTrace) {
+		transTrace.setCreatedDttm(dateUtil.getCurrentDBTimeStamp());
 		getHibernateTemplate().update(transTrace);		
 	}
 	

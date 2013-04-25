@@ -123,6 +123,10 @@ public class ItemIssueFormController {
 	public ModelAndView preIssueEdit(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {
 
 		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
+		if(!transDetails.getTransactionType().isOfTypePreissue()) 
+		{
+			throw new RuntimeException("Transaction is not in PRE_ISSUE state");
+		}
 		Trainee trainee = null;
 		Staff staff = null;
 		if (transDetails.getTransactionType().isStaffTransaction()) {
@@ -152,6 +156,8 @@ public class ItemIssueFormController {
 		ModelAndView mav = new ModelAndView("transaction/preIssueEdit");
 		mav.addObject("transDetails", transDetails);
 		mav.addObject("issueSkuForm", issueSkuForm);
+		mav.addObject("targetPage","preIssueEdit.form");
+		
 		return mav;
 	}
 
@@ -168,7 +174,45 @@ public class ItemIssueFormController {
 		}
 		return preIssueEdit(request, response, issueSkuForm.getRefTransactionId());
 	}
+	
+	@RequestMapping(value = "/issueSkuFromPreIssue.form", method = RequestMethod.GET)
+	public ModelAndView issueFromPreIssue(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {
 
+		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
+		Trainee trainee = null;
+		Staff staff = null;
+		if (transDetails.getTransactionType().isStaffTransaction()) {
+			staff = staffDao.load(transDetails.getStaffId());
+		} else {
+			trainee = traineeDao.load(transDetails.getTraineeId());
+		}
+
+		logger.info(transDetails.getItemSkus());
+		IssueSkuForm issueSkuForm = new IssueSkuForm();
+		TransactionTypeEnum transactionTypeEnum = transDetails.getTransactionType();
+		issueSkuForm.setTransactionType(transactionTypeEnum);
+		TransactionType transactionType = transactionTypeDao.load(transactionTypeEnum);
+		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
+		if (transDetails.getTransactionType().isStaffTransaction()) {
+			issueSkuForm.setStaff(staff);
+		} else {
+			issueSkuForm.setTrainee(trainee);
+		}
+
+		issueSkuForm.setRefTransactionId(transactionId);
+		issueSkuForm.setLocationId(transDetails.getLocationId());
+
+		List<String> itemNames = itemDao.getItemNames();
+		issueSkuForm.setItemNames(itemNames);
+
+		ModelAndView mav = new ModelAndView("transaction/preIssueEdit");
+		mav.addObject("transDetails", transDetails);
+		mav.addObject("issueSkuForm", issueSkuForm);
+		mav.addObject("targetPage","issue.form");
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "/issue.form", method = RequestMethod.GET)
 	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam TransactionTypeEnum transactionTypeEnum,
 			@RequestParam Integer locationId) {
