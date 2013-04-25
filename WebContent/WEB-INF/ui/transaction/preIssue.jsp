@@ -141,7 +141,13 @@ $(document).ready(function($) {
 	 $('#item-add-btn').click(function(){
 		var itemName = $("#itemCombo").val();
 		var rowCount = $('#tblTransactionForm >tbody >tr').length;
-		addItem('${pageContext.request.contextPath}',itemName,rowCount);
+		addItem('${pageContext.request.contextPath}',itemName,rowCount,"");
+	 });
+	 
+	  $('#itemnumber-add-btn').click(function(){
+			var itemNumber = $("#itemNumber").val();
+			var rowCount = $('#tblTransactionForm >tbody >tr').length;
+			addItem('${pageContext.request.contextPath}',"",rowCount,itemNumber);
 	 });
 
 	 
@@ -273,6 +279,13 @@ $(document).ready(function($) {
 					</c:forEach>
 				</select>
         		<a id="item-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
+			</label>
+			<br/>
+			<br/>
+			<label class="ui-widget">
+        		<span> Item Number: </span>
+        		<input type="text" id="itemNumber" value="" />
+        		<a id="itemnumber-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
 			</label>	
 		</div>
 		<div id="content" class="ui-widget-content" style="padding: 10px; ">	

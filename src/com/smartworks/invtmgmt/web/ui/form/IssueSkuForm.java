@@ -19,6 +19,8 @@ public class IssueSkuForm {
 	String transactionDescription;
 	Integer locationId;
 	String locationName;
+	String itemNumber;
+	
 	
 	Integer refTransactionId;
 	
@@ -125,7 +127,14 @@ public class IssueSkuForm {
 		this.itemNames = itemNames;
 	}
 	
-	
+	public String getItemNumber() {
+		return itemNumber;
+	}
+
+	public void setItemNumber(String itemNumber) {
+		this.itemNumber = itemNumber;
+	}
+
 	
 	
 }

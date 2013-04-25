@@ -1,9 +1,11 @@
-function addItem(contextPath,itemName,romNum) {
+function addItem(contextPath,itemName,romNum, itemNumber) {
 	$.ajax({
 		  url: contextPath+'/inventory/itemHtmlEl.form',
 		  data: {
 			  itemName : itemName,
-			  rowNum : romNum			  
+			  rowNum : romNum,
+			  itemNumber : itemNumber
+			  
 		  },
 		  success: function(html){
 			  $('#tblTransactionForm').append(html);

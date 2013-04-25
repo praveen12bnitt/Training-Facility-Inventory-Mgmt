@@ -36,9 +36,19 @@
 	  $("#itemCombo").chosen();
 	  
 	  $('#item-add-btn').click(function(){
+		  alert("test123");
 			var itemName = $("#itemCombo").val();
 			var rowCount = $('#tblTransactionForm >tbody >tr').length;
-			addItem('${pageContext.request.contextPath}',itemName,rowCount);
+			addItem('${pageContext.request.contextPath}',itemName,rowCount,"");
+	 });
+	  
+	$("#itemNumber").chosen();
+	  
+	  $('#itemnumber-add-btn').click(function(){
+		  alert('test');
+			var itemNumber = $("#itemNumber").val();
+			var rowCount = $('#tblTransactionForm >tbody >tr').length;
+			addItem('${pageContext.request.contextPath}',"",rowCount,itemNumber);
 	 });
 	  
 	  

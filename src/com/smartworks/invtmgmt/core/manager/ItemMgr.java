@@ -16,4 +16,5 @@ public interface ItemMgr  {
 	public List<Item> getItemsByName(String name);
 	public Map<Integer, String> getItemMaps(String name);
 	public List<Item> getItemsByProductId(Integer productId);
+	public List<Item> getItemsByNumber(String itemNumber) ;
 }

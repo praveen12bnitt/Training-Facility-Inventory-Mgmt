@@ -77,6 +77,14 @@ public class ItemMgrImpl implements ItemMgr {
 		return itemList;
 	}
 	
+
+	public List<Item> getItemsByNumber(String itemNumber) {
+		List<Item> itemList = itemDao.getItemsByNumber(itemNumber);
+		for (Item item : itemList) {
+			item.getAttributeDetails();
+		}		
+		return itemList;
+	}
 	
 	@Override
 	public Map<Integer, String> getItemMaps(String name) {

@@ -51,6 +51,12 @@ public class ItemDaoImpl  extends HibernateDaoSupport implements ItemDao {
 		return items;
 		
 	}
+	
+	public List<Item> getItemsByNumber(String itemNumber) {
+		String query = "from Item where itemNumber =  :itemNumber" ;
+		List<Item> items = getHibernateTemplate().findByNamedParam(query, "itemNumber", itemNumber);
+		return items;
+	}
 
 	@Override
 	public Map<Integer, String> getItemNamesByIds(List itemIds) {
