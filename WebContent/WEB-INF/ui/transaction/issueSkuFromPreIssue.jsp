@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Returns</title>
+<title>Issue</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
@@ -51,7 +51,7 @@ $(document).ready(function($) {
 		if(responseReceived) {
 			$.ajax({
 			    type: "POST",
-			    url: "${pageContext.request.contextPath}/inventory/preIssueEdit.form",
+			    url: "${pageContext.request.contextPath}/inventory/issue.form",
 			    data: formData,
 			    beforeSend: function() {
 			    	responseReceived = false;		            

@@ -26,7 +26,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	jQuery("#list3").jqGrid({
 	   	url:'${pageContext.request.contextPath}/inventory/opentransactions.form?traineeStaffId='+traineeStaffId+'&transactionTypeEnum='+transactionType+'&locationId='+locationId,
 		datatype: "json",
-	   	colNames:['Transaction Id', 'Location Name', 'Issued Time'],
+	   	colNames:['Transaction Id', 'Location Name', 'Created Time'],
 	   	colModel:[
 	   		{name:'transactionId',index:'transactionId', align:'center', width:200},
 	   		{name:'locationName',index:'locationName', align:'center', width:200},

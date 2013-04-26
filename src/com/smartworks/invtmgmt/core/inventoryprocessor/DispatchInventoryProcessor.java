@@ -7,8 +7,11 @@ import com.smartworks.invtmgmt.core.domain.Location;
 import com.smartworks.invtmgmt.core.domain.TransactionTrace;
 import com.smartworks.invtmgmt.core.domain.pk.InventoryPk;
 import com.smartworks.invtmgmt.core.exception.NoItemsForTransactionException;
+import com.smartworks.invtmgmt.core.service.PreissueService;
 
 public class DispatchInventoryProcessor extends InventoryChangeProcessor {
+	
+	private PreissueService preissueService;
 	
 	public void process(TransactionDetailsHolder transDetails) {
 		// First reduce the inventory 				
@@ -34,10 +37,25 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 			throw new NoItemsForTransactionException("No items to issue");
 		}
 		
-		saveTransactionTrace(transDetails);
+		if(transDetails.getRefTransactionId() != null)
+		{
+			saveTransactionTracePreIssue(transDetails);
+		}
+		else
+		{
+			saveTransactionTraceDirectIssue(transDetails);
+		}
+		
 	}
 	
-	protected void saveTransactionTrace(TransactionDetailsHolder transDetails) 
+	protected void saveTransactionTracePreIssue(TransactionDetailsHolder transDetails) 
+	{
+		TransactionTrace transactionTrace = preissueService.alterTransactionTrace(transDetails.getItemSkus(), transDetails.getRefTransactionId());
+		transactionTrace.setTransType(transDetails.getTransactionType());
+		transactionTraceDao.update(transactionTrace);		
+	}
+	
+	protected void saveTransactionTraceDirectIssue(TransactionDetailsHolder transDetails) 
 	{
 		TransactionTrace transTrace = transactionTraceObjectConverter.getTransactionTrace(transDetails);
 		transactionTraceDao.save(transTrace);		
@@ -49,5 +67,13 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 
 	public void setInventoryDao(InventoryDao inventoryDao) {
 		this.inventoryDao = inventoryDao;
+	}
+
+	public PreissueService getPreissueService() {
+		return preissueService;
+	}
+
+	public void setPreissueService(PreissueService preissueService) {
+		this.preissueService = preissueService;
 	}
 }

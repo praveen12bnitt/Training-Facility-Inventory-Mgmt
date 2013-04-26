@@ -22,9 +22,10 @@ public class PreissueServiceImpl implements PreissueService {
 	public void updatePreIssue(IssueSkuForm issueSkuForm) {
 		Integer transactionId = issueSkuForm.getRefTransactionId();
 		TransactionTrace transactionTrace = alterTransactionTrace(issueSkuForm.getItemSkus(), transactionId);
+		transactionTrace.setRefTransactionId(null);
 		transactionTraceDao.update(transactionTrace);
 	}
-
+	
 	@Override
 	public TransactionTrace alterTransactionTrace(List<ItemSku> itemSkus, Integer transactionTraceId) {
 		TransactionTrace transactionTrace = transactionTraceDao.load(transactionTraceId);

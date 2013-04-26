@@ -78,6 +78,15 @@ public enum TransactionTypeEnum {
 			case ISSUE_GYM_STAFF:
 				returnEnum = RETURN_GYM_STAFF;
 				break;
+				
+			case PREISSUE_UNIFORM_STUDENT:
+				returnEnum = PREISSUE_UNIFORM_STUDENT;
+				break;
+				
+			case PREISSUE_UNIFORM_STAFF:
+				returnEnum = PREISSUE_UNIFORM_STUDENT;
+				break;
+			
 		}
 		
 		return returnEnum;

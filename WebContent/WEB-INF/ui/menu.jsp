@@ -14,11 +14,12 @@
 					<a href="#">BLDG28</a>
 					<ul class="sub_menu">
 						<li><a href='<c:url value="/inventory/preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&locationId=2" />'>Student Preissue</a></li>
-						<li><a href='<c:url value="/inventory/preIssueEdit.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&locationId=2" />'>Edit Student Preissue</a></li>
+						<li><a href='<c:url value="/inventory/edit-preissues.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Edit Student Preissue</a></li>
 						<li><a href='<c:url value="/inventory/preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STAFF&locationId=2" />'>Instructor PreIssue</a></li>
-						<li><a href='<c:url value="/inventory/issueSkuFromPreIssue?transactionId=1&transactionTypeEnum=ISSUE_UNIFORM_STUDENT" />'>Student Issue</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans-preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>List Perissue</a></li>
+						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Student Issue</a></li>
 						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&locationId=2" />'>Instructor Issue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans-exchange.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2&exchange=true" />'>Student Exchange</a></li>
+						<li><a href='<c:url value="/inventory/listopentrans-exchange.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Student Exchange</a></li>
 						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Student Return</a></li>
 						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Instructor Return</a></li>
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=2" />'>Receive From Laundry</a></li>

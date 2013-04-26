@@ -186,7 +186,9 @@
 
 	<bean id="returnsInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.ReturnsInventoryProcessor" parent="abstractInventoryProcessor" />
 	<bean id="missingInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.MissingInventoryProcessor" parent="abstractInventoryProcessor" />
-	<bean id="dispatchInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.DispatchInventoryProcessor" parent="abstractInventoryProcessor" />
+	<bean id="dispatchInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.DispatchInventoryProcessor" parent="abstractInventoryProcessor">
+		<property name="preissueService" ref="preissueService" />
+	</bean>
 	<bean id="preIssueInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.PreIssueInventoryProcessor" parent="abstractInventoryProcessor" />
 	<bean id="laundryReturnsProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.LaundryReturnsProcessor" parent="abstractInventoryProcessor" />
 	<bean id="transferInventoryProcessor" class="com.smartworks.invtmgmt.core.inventoryprocessor.TransferInventoryProcessor" parent="abstractInventoryProcessor" />

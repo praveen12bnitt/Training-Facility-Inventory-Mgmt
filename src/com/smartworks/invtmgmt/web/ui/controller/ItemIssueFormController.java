@@ -176,7 +176,7 @@ public class ItemIssueFormController {
 	}
 	
 	@RequestMapping(value = "/issueSkuFromPreIssue.form", method = RequestMethod.GET)
-	public ModelAndView issueFromPreIssue(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {
+	public ModelAndView issueFromPreIssueSave(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {
 
 		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
 		Trainee trainee = null;
@@ -189,7 +189,7 @@ public class ItemIssueFormController {
 
 		logger.info(transDetails.getItemSkus());
 		IssueSkuForm issueSkuForm = new IssueSkuForm();
-		TransactionTypeEnum transactionTypeEnum = transDetails.getTransactionType();
+		TransactionTypeEnum transactionTypeEnum = transDetails.getTransactionType().getIssueTrans();
 		issueSkuForm.setTransactionType(transactionTypeEnum);
 		TransactionType transactionType = transactionTypeDao.load(transactionTypeEnum);
 		issueSkuForm.setTransactionDescription(transactionType.getTransactionDesc());
@@ -197,10 +197,9 @@ public class ItemIssueFormController {
 			issueSkuForm.setStaff(staff);
 		} else {
 			issueSkuForm.setTrainee(trainee);
-		}
-
-		issueSkuForm.setRefTransactionId(transactionId);
+		} 		
 		issueSkuForm.setLocationId(transDetails.getLocationId());
+		issueSkuForm.setRefTransactionId(transactionId);
 
 		List<String> itemNames = itemDao.getItemNames();
 		issueSkuForm.setItemNames(itemNames);
@@ -261,23 +260,33 @@ public class ItemIssueFormController {
 
 	@RequestMapping(value = "/listopentrans.form", method = RequestMethod.GET)
 	public ModelAndView openReceive(@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId) {
-		return listOpenTrans(transactionTypeEnum, locationId, false);
+		return openTransactionsUI(transactionTypeEnum, locationId, "receive.form");
 	}
 
 	@RequestMapping(value = "/listopentrans-exchange.form", method = RequestMethod.GET)
-	public ModelAndView listOpenTrans(@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId, @RequestParam boolean exchange) {
+	public ModelAndView listOpenTrans(@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId) {
+		return openTransactionsUI(transactionTypeEnum, locationId, "exchange.form");
+	}
+	
+	@RequestMapping(value = "/listopentrans-preissue.form", method = RequestMethod.GET)
+	public ModelAndView listOpenTransPreIssue(@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId) {
+		return openTransactionsUI(transactionTypeEnum, locationId, "issueSkuFromPreIssue.form");
+	}
+	
+	@RequestMapping(value = "/edit-preissues.form", method = RequestMethod.GET)
+	public ModelAndView editPreIssues(@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId) {
+		return openTransactionsUI(transactionTypeEnum, locationId, "preIssueEdit.form");
+	}
+	
+	public ModelAndView openTransactionsUI(@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId, String targetForm)
+	{
 		logger.info("Received request to show all received transactions");
 		ModelAndView mav = new ModelAndView("transaction/opentransactions");
 		mav.addObject("transactionTypeEnum", transactionTypeEnum);
 		TransactionType returnTrans = transactionTypeDao.load(TransactionTypeEnum.getReturnTransaction(transactionTypeEnum));
 		mav.addObject("transactionDetail", returnTrans.getTransactionDesc());
 		mav.addObject("locationId", locationId);
-		if (exchange) {
-			mav.addObject("targetForm", "exchange.form");
-		} else {
-			mav.addObject("targetForm", "receive.form");
-		}
-
+		mav.addObject("targetForm", targetForm);
 		return mav;
 	}
 
@@ -305,7 +314,8 @@ public class ItemIssueFormController {
 		response.setRecords(String.valueOf(uiTransTraceList.size()));
 		return response;
 	}
-
+	
+	
 	@RequestMapping(value = "/receive.form", method = RequestMethod.GET)
 	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {
 

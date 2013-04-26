@@ -86,6 +86,5 @@ public class TransactionDetailsHolder {
 	}
 	public void setExchangeInvt(List<ExchangeInvt> exchangeInvt) {
 		this.exchangeInvt = exchangeInvt;
-	}
-	
+	} 	
 }
