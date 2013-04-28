@@ -13,15 +13,28 @@
 				<li>
 					<a href="#">BLDG28</a>
 					<ul class="sub_menu">
-						<li><a href='<c:url value="/inventory/preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&locationId=2" />'>Student Preissue</a></li>
-						<li><a href='<c:url value="/inventory/edit-preissues.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Edit Student Preissue</a></li>
-						<li><a href='<c:url value="/inventory/preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STAFF&locationId=2" />'>Instructor PreIssue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans-preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>List Perissue</a></li>
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Student Issue</a></li>
-						<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&locationId=2" />'>Instructor Issue</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans-exchange.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Student Exchange</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Student Return</a></li>
-						<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Instructor Return</a></li>
+						<li> <a href="#">Students</a>
+							<ul class="sub_menu">
+								<li><a href='<c:url value="/inventory/preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&locationId=2" />'>Preissue</a></li>
+								<li><a href='<c:url value="/inventory/edit-preissues.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Edit Preissue</a></li>
+								<li><a href='<c:url value="/inventory/listopentrans-preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Find Perissue</a></li>
+								<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Direct Issue</a></li>
+								<li><a href='<c:url value="/inventory/show-issues.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&locationId=2" />'>Show Issue</a></li>
+								<li><a href='<c:url value="/inventory/listopentrans-exchange.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Exchange</a></li>
+								<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STUDENT&userId=100&locationId=2" />'>Return</a></li>
+							</ul>
+						</li>
+						<li> <a href="#">Instructor</a>
+							<ul class="sub_menu">
+								<li><a href='<c:url value="/inventory/preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STAFF&locationId=2" />'>PreIssue</a></li>
+								<li><a href='<c:url value="/inventory/edit-preissues.form?transactionTypeEnum=PREISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Edit Preissue</a></li>
+								<li><a href='<c:url value="/inventory/listopentrans-preissue.form?transactionTypeEnum=PREISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Find Perissue</a></li>
+								<li><a href='<c:url value="/inventory/issue.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&locationId=2" />'>Direct Issue</a></li>	
+								<li><a href='<c:url value="/inventory/show-issues.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&locationId=2" />'>Show Issue</a></li>	
+								<li><a href='<c:url value="/inventory/listopentrans-exchange.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Exchange</a></li>				
+								<li><a href='<c:url value="/inventory/listopentrans.form?transactionTypeEnum=ISSUE_UNIFORM_STAFF&userId=100&locationId=2" />'>Return</a></li>	
+							</ul>
+						</li>						
 						<li><a href='<c:url value="/inventory/receive-laundry.form?locationId=2" />'>Receive From Laundry</a></li>
 						<li><a href='<c:url value="/inbound/transferToMW.form?locationId=2" />'>Transfer to BLDG252ST</a></li>
 					</ul>

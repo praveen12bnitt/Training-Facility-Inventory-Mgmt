@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Returns</title>
+<title>Issue</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
@@ -21,6 +21,7 @@
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/invt-common.js" />' type="text/javascript"></script>
 <script src='<c:url value="/choosen/chosen.jquery.js" />' type="text/javascript"></script>
+<script src='<c:url value="/js/sign.js" />' type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
 	$('#tran-result-error-div').hide();
@@ -48,6 +49,21 @@ $(document).ready(function($) {
 		$('#tran-result-error-div').hide();
 		$('#tran-result-success-div').hide();
 		var formData =  $('#issueSkuForm').serialize();	 
+		<c:if test='${issueFromPreIssue == true }'>
+			var signObj = document.getElementById("sign");
+			isSigned = signObj.isSigned();
+			if(isSigned == true)
+			{
+				x = signObj.getString();
+				pngstr=signObj.getPNGString(x,125,60,true);		
+				$("#userSign").val(pngstr);
+			} else {
+				alert("Before Submit user must be signed");
+				return;
+			} 			
+		</c:if>
+			
+		
 		if(responseReceived) {
 			$.ajax({
 			    type: "POST",
@@ -146,6 +162,50 @@ $(document).ready(function($) {
 						
 				  	</c:otherwise>
 			  	</c:choose>
+			  	<c:if test="${issueFromPreIssue == true }" >
+			  		<tr>
+					<td>User Sign</td>
+					<td>				
+						<OBJECT  classid=clsid:E634B267-B8E7-406C-A308-988636B7D7E1 NAME=websignsup width=0 height=0 codebase=websignsup.cab#Version=10,2,0,1>
+							<param name=useslibrary value=websignsup>
+							<param name="useslibrarycodebase" value=websignsup.cab>
+							<param name="useslibraryversion" value=10,2,0,1>
+						</OBJECT><br/>
+					 <!--[if !IE]>-->
+				      <object id="sign" name="Sign" width="125" height="65" classid="java:integrisign.webclient.WebSign.class" 
+				              type="application/x-java-applet"
+				              archive="websignsunjvm.jar">				       
+				        <param name="archive" value="websignsunjvm.jar" />
+				        <param name="scriptable" value="true">
+				        <param name="cache_option" value="Plugin">
+				        <param name="cache_archive" value="websignsunjvm.jar">
+				        <param name="cache_version" value="10.5.0.1">
+				        <param name="MAYSCRIPT" value="true">
+				        <param name="borderstyle" value="1">			        
+				        
+				      <!--<![endif]-->
+				        <object id="sign" name="Sign" width="125" height="65" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"> 
+					        <param name="archive" value="websignsunjvm.jar" />
+					        <param name="code" value="integrisign.webclient.WebSign">
+					        <param name="scriptable" value="true">
+					        <param name="cache_option" value="Plugin">
+					        <param name="cache_archive" value="websignsunjvm.jar">
+					        <param name="cache_version" value="10.5.0.1">
+					        <param name="MAYSCRIPT" value="true">
+					        <param name="borderstyle" value="1">	
+				        </object> 
+				      <!--[if !IE]>-->
+				      Java Plugin not enabled</object>
+				      <!--<![endif]-->		
+
+						
+						<br/>
+						<input type="button" value="Sign Now" name="B1" onClick="signNow()">
+						<input type="hidden" name="pngstr">
+					</td>
+				</tr>				
+			  	</c:if>
+			  	
 			</tbody>
 		</table>					
 		</div>

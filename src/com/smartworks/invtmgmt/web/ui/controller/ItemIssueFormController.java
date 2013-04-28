@@ -206,6 +206,7 @@ public class ItemIssueFormController {
 
 		ModelAndView mav = new ModelAndView("transaction/preIssueEdit");
 		mav.addObject("transDetails", transDetails);
+		mav.addObject("issueFromPreIssue", true);
 		mav.addObject("issueSkuForm", issueSkuForm);
 		mav.addObject("targetPage","issue.form");
 		
@@ -278,6 +279,11 @@ public class ItemIssueFormController {
 		return openTransactionsUI(transactionTypeEnum, locationId, "preIssueEdit.form");
 	}
 	
+	@RequestMapping(value = "/show-issues.form", method = RequestMethod.GET)
+	public  ModelAndView showIssue (@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId) {
+		return openTransactionsUI(transactionTypeEnum, locationId, "show-issue.form");
+	}
+	
 	public ModelAndView openTransactionsUI(@RequestParam TransactionTypeEnum transactionTypeEnum, @RequestParam int locationId, String targetForm)
 	{
 		logger.info("Received request to show all received transactions");
@@ -289,6 +295,8 @@ public class ItemIssueFormController {
 		mav.addObject("targetForm", targetForm);
 		return mav;
 	}
+	
+	
 
 	@RequestMapping(value = "/opentransactions.form", method = RequestMethod.GET)
 	public @ResponseBody
@@ -316,8 +324,17 @@ public class ItemIssueFormController {
 	}
 	
 	
+	@RequestMapping(value = "/show-issue.form", method = RequestMethod.GET)
+	public ModelAndView displayReadOnlyTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {
+		return displayTransaction(request, response, transactionId, true);
+	}
+	
 	@RequestMapping(value = "/receive.form", method = RequestMethod.GET)
-	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {
+	public ModelAndView displayReceiveTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId) {
+		return displayTransaction(request, response, transactionId, false);
+	}	
+	
+	public ModelAndView displayTransaction(HttpServletRequest request, HttpServletResponse response, @RequestParam int transactionId, Boolean readonly) {
 
 		TransactionDetailsHolder transDetails = invtTransMgr.getTransDetails(transactionId);
 		Trainee trainee = null;
@@ -342,6 +359,7 @@ public class ItemIssueFormController {
 
 		issueSkuForm.setRefTransactionId(transactionId);
 		issueSkuForm.setLocationId(transDetails.getLocationId());
+		issueSkuForm.setUserSign(transDetails.getUserSign());
 
 		// Reason Code
 		List<String> reasonCodeList = ReasonCodeEnum.getReasonCodeList();
@@ -349,6 +367,7 @@ public class ItemIssueFormController {
 		ModelAndView mav = new ModelAndView("transaction/receiveSku");
 		mav.addObject("transDetails", transDetails);
 		mav.addObject("issueSkuForm", issueSkuForm);
+		mav.addObject("readOnly", readonly.booleanValue());
 		mav.addObject("reasonCodeList", reasonCodeList);
 		return mav;
 	}

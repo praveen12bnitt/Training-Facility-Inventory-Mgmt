@@ -28,6 +28,8 @@ public class IssueSkuForm {
 	
 	Staff staff;
 	
+	String userSign;
+	
 	@Deprecated
 	private List<Item> items;	
 	
@@ -133,6 +135,14 @@ public class IssueSkuForm {
 
 	public void setItemNumber(String itemNumber) {
 		this.itemNumber = itemNumber;
+	}
+
+	public String getUserSign() {
+		return userSign;
+	}
+
+	public void setUserSign(String userSign) {
+		this.userSign = userSign;
 	}
 
 	

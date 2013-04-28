@@ -17,6 +17,7 @@ public class UIDomainConverter {
 		transDetails.setExchangeInvt(issueSkuForm.getExchangeInvt());
 		transDetails.setLocationId(issueSkuForm.getLocationId());
 		transDetails.setUserId(100);
+		transDetails.setUserSign(issueSkuForm.getUserSign());
 		if(issueSkuForm.getTransactionType().isStaffTransaction()) {
 			transDetails.setStaffId(issueSkuForm.getStaff().getStaffId());
 		} else {

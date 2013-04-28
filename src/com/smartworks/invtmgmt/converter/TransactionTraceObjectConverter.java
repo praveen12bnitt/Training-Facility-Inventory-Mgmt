@@ -46,6 +46,7 @@ public class TransactionTraceObjectConverter {
 		transTrace.setRefTransactionId(transDetails.getRefTransactionId());
 		transTrace.setStaffId(transDetails.getStaffId());
 		transTrace.setUserId(transDetails.getUserId());
+		transTrace.setSign(transDetails.getUserSign());
 		
 		return transTrace;
 	}
@@ -76,6 +77,7 @@ public class TransactionTraceObjectConverter {
 		holder.setStaffId(transTrace.getStaffId());
 		holder.setTransactionType(transTrace.getTransType());
 		holder.setUserId(transTrace.getUserId());
+		holder.setUserSign(transTrace.getSign());
 		return holder;
 	}
 	

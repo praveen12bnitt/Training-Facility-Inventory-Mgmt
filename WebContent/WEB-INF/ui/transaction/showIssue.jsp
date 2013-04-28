@@ -6,12 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Issue</title>
+<title>Returns</title>
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/styles.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/redmond/jquery-ui-1.8.16.custom.css" />' />
 <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="/css/jqgrid/ui.jqgrid.css" />' />
 <link rel="stylesheet" type="text/css" 	href='<c:url value="/css/dropdown.css" />'/>
-<link rel="stylesheet" type="text/css" 	href='<c:url value="/choosen/chosen.css" />'/>
 <script src='<c:url value="/js/jquery/jquery-1.6.2.min.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jquery/jquery-ui-1.8.16.custom.min.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/jqgrid/grid.locale-en.js" />' type="text/javascript"></script>
@@ -19,8 +18,6 @@
 <script src='<c:url value="/js/jquery.json-2.3.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/jquery.dropdown.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
-<script src='<c:url value="/js/invt-common.js" />' type="text/javascript"></script>
-<script src='<c:url value="/choosen/chosen.jquery.js" />' type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function($) {
 	$('#tran-result-error-div').hide();
@@ -34,15 +31,6 @@ $(document).ready(function($) {
 				$(this).removeClass("ui-state-hover"); 
 			}
 		);
-	
-	
-	  
-	 $('#item-add-btn').click(function(){
-		var itemName = $("#itemCombo").val();
-		var rowCount = $('#tblTransactionForm >tbody >tr').length;
-		addItem('${pageContext.request.contextPath}',itemName,rowCount);
-	 });
-	 
 	var responseReceived = true;
 	$('#submit-form').click(function(){	 
 		$('#tran-result-error-div').hide();
@@ -51,7 +39,7 @@ $(document).ready(function($) {
 		if(responseReceived) {
 			$.ajax({
 			    type: "POST",
-			    url: "${pageContext.request.contextPath}/inventory/issue.form",
+			    url: "${pageContext.request.contextPath}/inventory/receive.form",
 			    data: formData,
 			    beforeSend: function() {
 			    	responseReceived = false;		            
@@ -155,25 +143,15 @@ $(document).ready(function($) {
 
 		<div id="heading" class="ui-widget-header">Inventory Details</div>
 		
-		<div style="padding: 10px;">
-			<label class="ui-widget">
-        		<span> Item Name: </span>
-        		<select id="itemCombo" data-placeholder="Select Item to add..." style="width:350px;">
-					<c:forEach var="itemName" items="${issueSkuForm.itemNames}" varStatus="i">
-						<option value="${itemName}">${itemName}</option>
-					</c:forEach>
-				</select>
-        		<a id="item-add-btn" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Add</a>                                
-			</label>	
-		</div>
-		
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	
 			<table id="tblTransactionForm" class="ui-widget item-table">
 				<thead class="ui-state-default item-table-header">
 					<tr id="rowx">
 						<th>Item</th>
 						<th>Item Specification</th>
-						<th>Quantity</th>						
+						<th>Issued Quantity</th>
+						<th>Return Quantity</th>
+						<th>Reason Code </th>
 					</tr>				
 				</thead>
 				<tbody class="ui-widget-content" >
@@ -181,7 +159,8 @@ $(document).ready(function($) {
       			<tr>
      			<td style="width: 400px;">     
      		    <form:input type="hidden" path="itemSkus[${itemSkuRow.index}].item.id" value="${itemSku.item.id}"/>${itemSku.item.desc}
-     		 	</td>
+     		    <form:input type="hidden" path="itemSkus[${itemSkuRow.index}].item.requiresProcessing" value="${itemSku.item.requiresProcessing}"/>
+     		 </td>
      		 
      		 <td style="width: 300px;">
      		 <c:forEach var="itemAttributeDetails" items="${itemSku.itemAttributeDtls}" varStatus="itemAttributeRow">
@@ -194,19 +173,58 @@ $(document).ready(function($) {
      		
      		</td>     		
      		<td>
-     			<form:input type="text"  path="itemSkus[${itemSkuRow.index}].quantity"  value="${ itemSku.quantity }" />
-     		</td>     		
+     		<form:input type="hidden" path="itemSkus[${itemSkuRow.index}].orginalQty" value="${ itemSku.quantity }" />
+     		<form:input type="text"  path="itemSkus[${itemSkuRow.index}].orginalQty" disabled="true" value="${ itemSku.quantity }" />
+     		</td>
+     		<td>
+     		<form:input type="text" path="itemSkus[${itemSkuRow.index}].quantity" value="${ itemSku.quantity }" onfocus="this.oldvalue = this.value;"
+     		onBlur="validateInput('itemSkus${itemSkuRow.index}.quantity','${ itemSku.quantity }', 'itemSkus${itemSkuRow.index}.reasonCode')"/></td>
+     		<td>
+					<form:select path="itemSkus[${itemSkuRow.index}].reasonCode" disabled="true">
+								<c:forEach items="${reasonCodeList}" var="reasonCode">
+									<form:option value="${reasonCode}">
+     										${reasonCode}
+     								</form:option>
+     						</c:forEach>
+     					</form:select>
+					</td>
      		</tr>
      		</c:forEach>
 			</tbody>
 			</table>
-			<div id="actions" align="center" class="actions">
-					<a id="submit-form" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Save</a> 
-				</div>			
+		
 		</div>	
 	
 	</div>
 	<br>
 	</form:form>	
 </body>
+<script type="text/javascript" language="JavaScript">
+
+
+function validateInput(val,oldVal, reasoncodeid) {
+	
+var newVal = document.getElementById(val).value;
+
+//var oldVal = document.getElementById(ov).value;
+//alert("oldVal"+oldVal);
+var set = document.getElementById(reasoncodeid);
+ if (newVal < oldVal ){
+
+    var r=window.confirm("Is Item Missing or Damaged ?");
+    if (r==true)
+      {
+    	document.getElementById(reasoncodeid).disabled=false;
+      } 
+ }  else if (newVal == oldVal) {
+	 document.getElementById(reasoncodeid).disabled=true;
+ }
+ 
+ if(newVal > oldVal){
+	alert ("Invalid Entry.");
+    set.enabled = false;
+    }
+}
+
+</script>
 </html>

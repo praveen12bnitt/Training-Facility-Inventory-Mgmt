@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -61,8 +62,14 @@ public class TransactionTrace implements Serializable {
 	@Column(name="CLOSED")
 	private Boolean closed = false;
 	
+	@Lob
+	@Column(name="SIGNATURE")
+	private String sign;
+	
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "trasactionTrace", orphanRemoval=true )
 	List<TransactionDetails> transDetails;
+	
+
 	
 	
 
@@ -165,6 +172,14 @@ public class TransactionTrace implements Serializable {
 
 	public void setTraineeId(Integer traineeId) {
 		this.traineeId = traineeId;
+	}
+
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 	
 	

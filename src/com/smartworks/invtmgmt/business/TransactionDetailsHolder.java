@@ -16,6 +16,7 @@ public class TransactionDetailsHolder {
 	Integer srcLocationId;
 	Integer refTransactionId;
 	boolean staffIssue = false;
+	String userSign;
 	
 	List<ExchangeInvt> exchangeInvt;
 	
@@ -86,5 +87,11 @@ public class TransactionDetailsHolder {
 	}
 	public void setExchangeInvt(List<ExchangeInvt> exchangeInvt) {
 		this.exchangeInvt = exchangeInvt;
+	}
+	public String getUserSign() {
+		return userSign;
+	}
+	public void setUserSign(String userSign) {
+		this.userSign = userSign;
 	} 	
 }

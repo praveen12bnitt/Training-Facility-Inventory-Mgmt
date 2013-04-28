@@ -41,7 +41,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 	    loadonce: false,	    
 	    caption: "Open User Transactions",
 	    height: 200,
-	    width: 750,
+	    width: 500,
 	    onSelectRow: function(rowId){	    	
 	    	var rowData = $("#list3").jqGrid('getGridParam','selrow');
 	    	var transactionId = $("#list3").jqGrid('getCell',rowId,0);
@@ -177,7 +177,7 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 </script>
 </head>
 <body class="body-class" >	
-<div id="main-content" class="ui-widget main-content" style="background: white;">
+	<div id="main-content" class="ui-widget main-content" style="background: white;">
 	<%@ include file="/WEB-INF/ui/header.jsp" %>
 	<div id="top-navigation" class="top-navigation">
 		<%@ include file="/WEB-INF/ui/menu.jsp" %>
@@ -201,21 +201,22 @@ loadOpenTrans = function(traineeStaffId, transactionType, locationId) {
 		
 		
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	
-		<table id="list2" class="trans-details"></table>
-			<div id="pager2"></div>
-		</div>
-		
-		
-		<div id="content" class="ui-widget-content" style="padding: 10px;">	
-		<table id="list3" class="trans-details"></table>
-			<div id="pager3"></div>
-		</div>
-		<br/>
-		
+			<table>
+				<tr>
+					<td>
+						Select trainee/staff from the list below :
+						<table id="list2" class="trans-details"></table>
+						<div id="pager2"></div>
+					</td>
+					<td style="padding-left: 10px;">
+						Select a transaction from list below :
+						<table id="list3" class="trans-details"></table>
+						<div id="pager3"></div>
+					</td>
+				</tr>
+			</table>
 			
-		</div>
-		
-
-
+		</div>				
+	</div>
 </body>
 </html>

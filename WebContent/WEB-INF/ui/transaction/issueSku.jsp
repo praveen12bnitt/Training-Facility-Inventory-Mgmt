@@ -22,6 +22,7 @@
 <script src='<c:url value="/js/dropdown/hoverIntent.js" />' type="text/javascript"></script>
 <script src='<c:url value="/js/invt-common.js" />' type="text/javascript"></script>
 <script src='<c:url value="/choosen/chosen.jquery.js" />' type="text/javascript"></script>
+<script src='<c:url value="/js/sign.js" />' type="text/javascript"></script>
 
 <script type="text/javascript">
 $(document).ready(function($) {
@@ -203,6 +204,18 @@ $(document).ready(function($) {
 	var responseReceived = true;
 	
 	$('#submit-form').click(function(){	 
+		
+		var signObj = document.getElementById("sign");
+		isSigned = signObj.isSigned();
+		if(isSigned == true)
+		{
+			x = signObj.getString();
+			pngstr=signObj.getPNGString(x,125,60,true);		
+			$("#userSign").val(pngstr);
+		} else {
+			alert("Before Submit user must be signed");
+			return;
+		} 			
 		if(responseReceived) {
 			$('#tran-result-error-div').hide();
 			$('#tran-result-success-div').hide();
@@ -240,6 +253,9 @@ $(document).ready(function($) {
 		$('#tblTransactionForm >tbody').append(data);
 	}
 	
+	
+	
+	
 
 
 </script>
@@ -247,6 +263,7 @@ $(document).ready(function($) {
 <body class="body-class" >	
 	<form:form method="post" commandName="issueSkuForm" >
 	<form:hidden path="transactionType" />
+	<form:hidden path="userSign" />
 	<form:input type="hidden" path="locationId"/>
 	<c:choose>
     	<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
@@ -273,31 +290,35 @@ $(document).ready(function($) {
 		
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	
 		
-		<br/>    
-		<table id="list2" class="trans-details"></table>
-			<div id="pager2"></div>
-		</div>
-		
-		  
-		
-		<div id="header-contents" class="ui-widget-content" align="left" style="padding: 10px;">
-		
-		<table id="transDetails" class="ui-widget item-table trans-details">				
-			<tbody class="ui-widget-content trans-details" >
+		<table>
+			<tr>
+				<td>
+					Select a Trainee/Staff from the list below <br/>
+					<table id="list2" class="trans-details"></table>
+					<div id="pager2"></div>
+				</td>
+				<td style="padding-left: 10px;">
+				Selected trainee/staff :
+				<table id="transDetails" class="ui-widget item-table trans-details">				
+					<tbody class="ui-widget-content trans-details" >
 				<tr>
 					<td>Transaction Description</td><td>${issueSkuForm.transactionDescription}</td>
+				</tr>				
+				<tr>
+					<td>Last Name</td><td><input class="lastName" type="text" name="lastName" value="" readOnly="true"/></td>
 				</tr>
 				<tr>
-					<td>Last Name</td><td><input type="text" name="lastName" value="" readOnly="true"/></td>
-				</tr>
-				<tr>
-					<td>First Name</td><td><input type="text" name="firstName" value=""  readOnly="true" /></td>
+					<td>First Name</td><td><input class="firstName" type="text" name="firstName" value=""  readOnly="true" /></td>
 				</tr>
 				<tr>
 					<td>MiddleName Name</td><td><input type="text" name="middleName" value="" readOnly="true" /></td>
 				</tr>
+				
 				<c:choose>
 					<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+					<tr>
+						<td>Staff ID</td><td><input type="text" name="staffId" value="" readOnly="true" /></td>
+					</tr>
     				<tr>
 						<td>Division</td><td><input type="text" name="division" value="" readOnly="true" /></td>
 					</tr>
@@ -309,14 +330,59 @@ $(document).ready(function($) {
     				<tr>
 						<td>Class</td><td><input type="text" name="cls.className" value="" readOnly="true" /></td>
 					</tr>
+					<tr>
+						<td>user ID</td><td><input class="uid" type="text" name="traineeId" value="" readOnly="true" /></td>
+					</tr>
     				</c:otherwise>
 				</c:choose>
 				
-			</tbody>
-		</table>					
-		</div>
-				
+				<tr>
+					<td>User Sign</td>
+					<td>				
+						<OBJECT  classid=clsid:E634B267-B8E7-406C-A308-988636B7D7E1 NAME=websignsup width=0 height=0 codebase=websignsup.cab#Version=10,2,0,1>
+							<param name=useslibrary value=websignsup>
+							<param name="useslibrarycodebase" value=websignsup.cab>
+							<param name="useslibraryversion" value=10,2,0,1>
+						</OBJECT><br/>
+					 <!--[if !IE]>-->
+				      <object id="sign" name="Sign" width="125" height="65" classid="java:integrisign.webclient.WebSign.class" 
+				              type="application/x-java-applet"
+				              archive="websignsunjvm.jar">				       
+				        <param name="archive" value="websignsunjvm.jar" />
+				        <param name="scriptable" value="true">
+				        <param name="cache_option" value="Plugin">
+				        <param name="cache_archive" value="websignsunjvm.jar">
+				        <param name="cache_version" value="10.5.0.1">
+				        <param name="MAYSCRIPT" value="true">
+				        <param name="borderstyle" value="1">			        
+				        
+				      <!--<![endif]-->
+				        <object id="sign" name="Sign" width="125" height="65" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"> 
+					        <param name="archive" value="websignsunjvm.jar" />
+					        <param name="code" value="integrisign.webclient.WebSign">
+					        <param name="scriptable" value="true">
+					        <param name="cache_option" value="Plugin">
+					        <param name="cache_archive" value="websignsunjvm.jar">
+					        <param name="cache_version" value="10.5.0.1">
+					        <param name="MAYSCRIPT" value="true">
+					        <param name="borderstyle" value="1">	
+				        </object> 
+				      <!--[if !IE]>-->
+				      Java Plugin not enabled</object>
+				      <!--<![endif]-->		
 
+						
+						<br/>
+						<input type="button" value="Sign Now" name="B1" onClick="signNow()">
+						<input type="hidden" name="pngstr">
+					</td>
+				</tr>				
+			</tbody>
+		</table>				
+				</td>
+			</tr>			
+		</table>			
+		</div>
 		<br />
 		<div id="transactionDiv">
 		<div id="heading" class="ui-widget-header">Inventory Details</div>

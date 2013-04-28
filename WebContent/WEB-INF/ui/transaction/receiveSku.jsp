@@ -134,6 +134,12 @@ $(document).ready(function($) {
 						
 				  	</c:otherwise>
 			  	</c:choose>
+			  	<c:if test="${readOnly == true}">
+			  	<tr>
+			  		<td>Sign</td>
+			  		<td><img src="data:image/png;base64,${issueSkuForm.userSign}" alt="Signature" /></td>
+			  	</tr>
+			  	</c:if>
 			</tbody>
 		</table>					
 		</div>
@@ -150,8 +156,10 @@ $(document).ready(function($) {
 						<th>Item</th>
 						<th>Item Specification</th>
 						<th>Issued Quantity</th>
-						<th>Return Quantity</th>
-						<th>Reason Code </th>
+						<c:if test="${readOnly == false }">
+							<th>Return Quantity</th>
+							<th>Reason Code </th>
+						</c:if>
 					</tr>				
 				</thead>
 				<tbody class="ui-widget-content" >
@@ -176,6 +184,7 @@ $(document).ready(function($) {
      		<form:input type="hidden" path="itemSkus[${itemSkuRow.index}].orginalQty" value="${ itemSku.quantity }" />
      		<form:input type="text"  path="itemSkus[${itemSkuRow.index}].orginalQty" disabled="true" value="${ itemSku.quantity }" />
      		</td>
+     		<c:if test="${readOnly == false}">     			     		
      		<td>
      		<form:input type="text" path="itemSkus[${itemSkuRow.index}].quantity" value="${ itemSku.quantity }" onfocus="this.oldvalue = this.value;"
      		onBlur="validateInput('itemSkus${itemSkuRow.index}.quantity','${ itemSku.quantity }', 'itemSkus${itemSkuRow.index}.reasonCode')"/></td>
@@ -188,15 +197,17 @@ $(document).ready(function($) {
      						</c:forEach>
      					</form:select>
 					</td>
+     		</c:if>
      		</tr>
      		</c:forEach>
 			</tbody>
 			</table>
+			<c:if test="${readOnly == false}">     
 			<div id="actions" align="center" class="actions">
 					<a id="submit-form" href="#" class="form-button ui-state-default ui-corner-all" style="padding: .2em 1em; ">Return</a> 
-				</div>			
-		</div>	
-	
+				</div>				
+			</c:if>			
+		</div>		
 	</div>
 	<br>
 	</form:form>	

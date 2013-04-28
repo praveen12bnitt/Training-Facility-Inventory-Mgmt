@@ -222,52 +222,51 @@ $(document).ready(function($) {
 		<div id="heading12" class="ui-widget-header">Transaction Details</div>
 		
 		<div id="content" class="ui-widget-content" style="padding: 10px;">	
+		<table>
+			<tr>
+				<td>
+					Select a trainee/staff from the list below : <br/> 					
+					<table id="list2" class="trans-details"></table>
+					<div id="pager2"></div>
+				</td>
+				<td style="padding-left: 10px;">
+					Selected trainee/staff :
+					<table id="transDetails" class="ui-widget item-table trans-details">				
+						<tbody class="ui-widget-content trans-details" >
+						<tr>
+							<td>Transaction Description</td><td>${issueSkuForm.transactionDescription}</td>
+						</tr>
+						<tr>
+							<td>Last Name</td><td><input type="text" name="lastName" value="" readOnly="true"/></td>
+						</tr>
+						<tr>
+							<td>First Name</td><td><input type="text" name="firstName" value=""  readOnly="true" /></td>
+						</tr>
+						<tr>
+							<td>MiddleName Name</td><td><input type="text" name="middleName" value="" readOnly="true" /></td>
+						</tr>
+						<c:choose>
+							<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
+		    				<tr>
+								<td>Division</td><td><input type="text" name="division" value="" readOnly="true" /></td>
+							</tr>
+							<tr>
+								<td>Extension</td><td><input type="text" name="extension" value="" readOnly="true" /></td>
+							</tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    				<tr>
+								<td>Class</td><td><input type="text" name="cls.className" value="" readOnly="true" /></td>
+							</tr>
+		    				</c:otherwise>
+						</c:choose>				
+						</tbody>
+					</table>	
+				</td>
+			</tr>
+		</table>  			
+		</div>	  		
 		
-		<br/>    
-		<table id="list2" class="trans-details"></table>
-			<div id="pager2"></div>
-		</div>
-		
-		  
-		
-		<div id="header-contents" class="ui-widget-content" align="left" style="padding: 10px;">
-		
-		<table id="transDetails" class="ui-widget item-table trans-details">				
-			<tbody class="ui-widget-content trans-details" >
-				<tr>
-					<td>Transaction Description</td><td>${issueSkuForm.transactionDescription}</td>
-				</tr>
-				<tr>
-					<td>Last Name</td><td><input type="text" name="lastName" value="" readOnly="true"/></td>
-				</tr>
-				<tr>
-					<td>First Name</td><td><input type="text" name="firstName" value=""  readOnly="true" /></td>
-				</tr>
-				<tr>
-					<td>MiddleName Name</td><td><input type="text" name="middleName" value="" readOnly="true" /></td>
-				</tr>
-				<c:choose>
-					<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
-    				<tr>
-						<td>Division</td><td><input type="text" name="division" value="" readOnly="true" /></td>
-					</tr>
-					<tr>
-						<td>Extension</td><td><input type="text" name="extension" value="" readOnly="true" /></td>
-					</tr>
-    				</c:when>
-    				<c:otherwise>
-    				<tr>
-						<td>Class</td><td><input type="text" name="cls.className" value="" readOnly="true" /></td>
-					</tr>
-    				</c:otherwise>
-				</c:choose>
-				
-			</tbody>
-		</table>					
-		</div>
-				
-
-		<br />
 		<div id="transactionDiv">
 		<div id="heading" class="ui-widget-header">Inventory Details</div>
 		<div style="padding: 10px;">
