@@ -101,6 +101,7 @@ $(document).ready(function($) {
 	<form:form method="post" commandName="issueSkuForm" >
 	<form:hidden path="transactionType" />
 	<form:input type="hidden" path="locationId" />
+	<form:hidden path="userSign" />
 	 <c:choose>
 	  	<c:when test='${issueSkuForm.transactionType.staffTransaction}'>
 	  		<form:hidden path="staff.staffId" />

@@ -51,6 +51,7 @@ public class DispatchInventoryProcessor extends InventoryChangeProcessor {
 	protected void saveTransactionTracePreIssue(TransactionDetailsHolder transDetails) 
 	{
 		TransactionTrace transactionTrace = preissueService.alterTransactionTrace(transDetails.getItemSkus(), transDetails.getRefTransactionId());
+		transactionTrace.setSign(transDetails.getUserSign());
 		transactionTrace.setTransType(transDetails.getTransactionType());
 		transactionTraceDao.update(transactionTrace);		
 	}
